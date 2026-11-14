@@ -132,7 +132,7 @@ The safety line describes the current crew's abstract operational margin. It doe
 
 ## Applying a Decision
 
-The next implementation step is an engine API such as `makeDecision(state, choiceId)`. The current module contains the data for that engine; it does not export a working decision function.
+The engine is implemented in `src/game/engine.js` (`createGame`, `getChoices`, `choose`, `finishFeedback`, `finishTransition`). The scene module itself stays data-only. The steps below are the contract that the engine follows and that `tools/check_engine.mjs` verifies against the independent reference model.
 
 The engine should:
 

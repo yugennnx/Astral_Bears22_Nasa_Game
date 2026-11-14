@@ -23,8 +23,8 @@ See [data/source-audit.json](../../data/source-audit.json) for retrieval checks,
 ## Tools Used
 
 - OpenAI ChatGPT/Codex: story/detail drafting, English translation, initial JavaScript data/reference model, integration documentation, source/audit work, and Git operations.
-- Anthropic Claude: initial design/Python model/data curation and v1.2 revisions, as reported by the team.
-- JavaScript and Node.js built-ins: scene-data checks and metadata checks; no third-party JavaScript package is currently bundled.
+- Anthropic Claude: initial design/Python model/data curation, v1.2 revisions, the 1.2.1 restructure, and the 1.3.0 playable prototype (engine, interface, SVG illustrations, Turkish translation), as reported by the team.
+- JavaScript and Node.js built-ins: scene-data, engine, translation and metadata checks. The browser game vendors Anime.js and canvas-confetti (see below); no package manager install is needed to run it.
 - Python standard library: archived reference model and the current source-verification utility.
 - Git and GitHub CLI: version control and publication at the user's request.
 
@@ -32,7 +32,31 @@ These tool names are credits, not product endorsements or competition-rule autho
 
 ## Media and Future Assets
 
-No image, video, audio, font package, or third-party visual template has been added to the reviewed repository. Suggested visual concepts and source links are not selected/licensed asset files.
+Status as of version 1.3.0 (playable prototype). No video or audio asset is included.
+
+### NASA photographs (downloaded from the NASA Image and Video Library on November 14, 2026)
+
+| File | NASA ID and title | Credit line | Use |
+| --- | --- | --- | --- |
+| `assets/nasa/gale-crater-sunset-PIA19400.jpg` | [PIA19400 — Sunset in Mars' Gale Crater](https://images.nasa.gov/details/PIA19400) (Curiosity, Sol 956, April 15, 2015) | NASA/JPL-Caltech/MSSS/Texas A&M Univ. | Title background; Scene 5 science card |
+| `assets/nasa/jezero-crater-rim-PIA26373.jpg` | [PIA26373 — Perseverance Rover's View Up Crater](https://images.nasa.gov/details/PIA26373) (August 4, 2024) | NASA/JPL-Caltech/ASU/MSSS | Scene 2 science card |
+| `assets/nasa/jezero-crater-floor-PIA24765.jpg` | [PIA24765 — Perseverance's Office on Mars](https://images.nasa.gov/details/PIA24765) (2021) | NASA/JPL-Caltech/ASU/MSSS | Briefing background |
+
+The files are the resized versions served by NASA (`~orig`, `~large`, `~medium`) and are otherwise unmodified; the interface crops and darkens them with CSS only. Each photograph is credited in the game (caption or credit line, and the NASA Sources window). The photographs illustrate Mars; they are not measurements of the events described in the science cards, and their captions give their own dates. The team should still confirm NASA media usage guidance before the final submission.
+
+### Illustrations
+
+DUTİ, the outpost scene, the icons, the compass mark and the favicon are original SVG drawings written in code with Anthropic Claude's assistance (`src/ui/art.js`, `src/ui/app.js`, `assets/favicon.svg`). They contain no NASA insignia or branding. Because they are AI-assisted, the interface shows a visible "AI-assisted illustration" label on scene art and a note on the title, briefing, ending and credits views.
+
+### Third-party libraries and typeface (vendored, unmodified)
+
+| Component | Version | License | Files |
+| --- | --- | --- | --- |
+| [Anime.js](https://animejs.com/) | 4.5.0 | MIT | `assets/vendor/animejs/` |
+| [canvas-confetti](https://github.com/catdad/canvas-confetti) | 1.9.4 | ISC | `assets/vendor/canvas-confetti/` |
+| [Fredoka](https://fonts.google.com/specimen/Fredoka) via Fontsource | 5.3.0 | SIL Open Font License 1.1 | `assets/fonts/fredoka/` |
+
+License texts are stored next to the files. These components keep their own licenses regardless of the project's eventual license.
 
 Before adding an asset, record its exact source, creator/credit line, applicable permission/license, modifications, and any generation tool. NASA branding has separate restrictions. The official submission guide links [NASA's Brand Guidelines](https://www.nasa.gov/nasa-brand-center/brand-guidelines/); media guidance is available at [NASA Images and Media](https://www.nasa.gov/nasa-brand-center/images-and-media/). Do not apply the project's eventual license to NASA or third-party material or imply NASA endorsement.
 

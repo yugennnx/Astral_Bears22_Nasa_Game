@@ -174,7 +174,7 @@ function titleScreen() {
         </div>
       </div>
     </div>
-    <p class="photo-credit enter">${esc(t("title.photoCredit"))}</p>
+    <p class="photo-credit enter">${esc(t("title.photoCredit"))} ${esc(t("art.aiNote"))}</p>
   </section>`;
 }
 
@@ -216,7 +216,7 @@ function briefingScreen() {
         </div>
       </div>
     </div>
-    <p class="photo-credit enter">${esc(t(PHOTOS.floor.creditKey))}</p>
+    <p class="photo-credit enter">${esc(t(PHOTOS.floor.creditKey))} ${esc(t("art.aiNote"))}</p>
   </section>`;
 }
 
@@ -227,6 +227,7 @@ function artPanel({ phase = "day", dusty = false, tag = "", flags = app.game.fla
     ${outpostArt({ sceneId: scene.id, flags, dusty, phase, label: ts(scene.title) })}
     <div class="art-duti">${duti(dutiMood())}</div>
     ${tag ? `<div class="art-tag">${tag}</div>` : ""}
+    <span class="art-ai">${esc(t("art.aiLabel"))}</span>
   </div>`;
 }
 
@@ -460,7 +461,7 @@ function endingScreen() {
       <button class="btn btn--primary btn--big" data-action="new-game">${icon("restart")}${esc(ts(MISSION.messages.tryAgain))}</button>
       <button class="btn btn--ghost" data-action="sources">${icon("satellite")}${esc(t("nav.sources"))}</button>
     </div>
-    <p class="fineprint center enter">${esc(t("ending.newForecast"))} ${esc(ts(MISSION.messages.disclaimer))}</p>
+    <p class="fineprint center enter">${esc(t("ending.newForecast"))} ${esc(ts(MISSION.messages.disclaimer))} ${esc(t("art.aiNote"))}</p>
   </section>`;
 }
 

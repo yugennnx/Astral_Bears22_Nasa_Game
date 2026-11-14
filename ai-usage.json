@@ -88,7 +88,7 @@
     {
       "path": "docs/design/story-data-contract.md",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex initial guide/current disclosure edits and Claude-assisted v1.2 contract updates. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
+      "scope": "ChatGPT/Codex initial guide/current disclosure edits and Claude-assisted v1.2 contract updates. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -151,7 +151,7 @@
     {
       "path": "AI_USAGE.md",
       "status": "ai-generated",
-      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
+      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -160,7 +160,7 @@
     {
       "path": "ai-usage.json",
       "status": "ai-generated",
-      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
+      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -169,7 +169,7 @@
     {
       "path": "AGENTS.md",
       "status": "ai-generated",
-      "scope": "Repository instructions for preserving attribution and verified requirements. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
+      "scope": "Repository instructions for preserving attribution and verified requirements. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -178,7 +178,7 @@
     {
       "path": "docs/compliance/compliance-audit.md",
       "status": "ai-generated",
-      "scope": "Source-linked audit findings, corrections, and unresolved submission requirements. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
+      "scope": "Source-linked audit findings, corrections, and unresolved submission requirements. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -187,7 +187,7 @@
     {
       "path": "docs/compliance/references.md",
       "status": "ai-generated",
-      "scope": "Source inventory, usage and licensing status; no claim that licenses were granted. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
+      "scope": "Source inventory, usage and licensing status; no claim that licenses were granted. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -350,13 +350,42 @@
       "scope": "canvas-confetti 1.9.4, ISC, unmodified third-party library.",
       "tools": [],
       "sha256": "d29dc7b2dae5d04baf55666e4f677bbf7f8b0bf587e1ace6098823c4363e7589"
+    },
+    {
+      "path": "tools/check_i18n.mjs",
+      "status": "ai-generated",
+      "scope": "Claude-generated Turkish translation coverage check.",
+      "tools": [
+        "Anthropic Claude"
+      ]
     }
   ],
   "media": {
-    "generatedImages": [],
+    "generatedImages": [
+      "src/ui/art.js",
+      "assets/favicon.svg"
+    ],
     "generatedVideos": [],
     "generatedAudio": [],
-    "status": "none-present-in-reviewed-snapshot"
+    "status": "ai-assisted-svg-illustrations-and-nasa-photographs-present",
+    "aiAssistedIllustrations": {
+      "present": true,
+      "tool": "Anthropic Claude",
+      "files": [
+        "src/ui/art.js",
+        "src/ui/app.js",
+        "assets/favicon.svg"
+      ],
+      "format": "SVG drawn in code",
+      "visibleLabel": "AI-assisted illustration",
+      "containsNasaBranding": false
+    },
+    "nasaPhotographs": [
+      "assets/nasa/gale-crater-sunset-PIA19400.jpg",
+      "assets/nasa/jezero-crater-rim-PIA26373.jpg",
+      "assets/nasa/jezero-crater-floor-PIA24765.jpg"
+    ],
+    "generatedVideoOrAudio": false
   },
   "nasaMeasurementsGeneratedByAi": false,
   "notes": [

@@ -32,6 +32,8 @@ The user confirmed that **Anthropic Claude** was used for the original ten-sol d
 
 Anthropic Claude was also used, at the user's request on November 14, 2026, for the **1.2.1 repository restructure**: grouping documentation under `docs/design/`, `docs/compliance/` and `docs/changelog/`, renaming the curated data files to `data/nasa-events.json` and `data/meda-jezero.json`, adding `package.json`, `CHANGELOG.md`, `.gitattributes` and `.editorconfig`, and updating path references. No gameplay values, story text or data values were changed.
 
+Anthropic Claude was also used, at the user's request on November 14, 2026, for the **1.3.0 playable prototype**: the decision engine (`src/game/engine.js`), the browser interface and styles (`index.html`, `src/ui/`), the SVG illustrations, the Turkish translation of story and interface text (`src/i18n/`), the engine and translation checks, the selection and crediting of three NASA photographs, and the vendoring of open-source libraries. The team chose the direction in answer to design questions: dark space theme with warm Mars tones, DUTİ as a brown teddy-bear-like robot, code-drawn SVG plus NASA photographs, phone and desktop layouts, English as the main language with a Turkish option, soft animations without sound, and the use of additional libraries. Claude generated the implementation; it has not yet been reviewed line by line by the team or playtested with children.
+
 This audit adds OpenAI ChatGPT/Codex-assisted English translations, metadata, primary-source checks, and wording corrections to those contributions. It does not claim that Claude generated NASA's underlying observations. Claude's exact prompts and model version were not provided in this session.
 
 ## Selected Prompt Record
@@ -60,7 +62,7 @@ The user reported that its 2026 NASA Space Apps event began **November 14, 2026 
 
 ## Media and Branding
 
-No generated image, video, or audio asset is present in the reviewed repository snapshot. If such assets are added later, disclose the generating tool and scope. The 2026 guide requires visible generation labels/watermarks for generated images/videos and descriptive text plus metadata for generated audio. Do not generate, contain, alter, or imitate NASA branding/design elements in generated content.
+As of version 1.3.0 the game contains **AI-assisted illustrations**: DUTİ, the outpost scene, the icons, the compass mark and the favicon are SVG drawings written in code with Anthropic Claude. They are not NASA images and contain no NASA insignia. The interface labels scene art "AI-assisted illustration" and repeats the note on the title, briefing, ending and credits views. No generated video or audio asset is present. If such assets are added later, disclose the generating tool and scope. The 2026 guide requires visible generation labels/watermarks for generated images/videos and descriptive text plus metadata for generated audio. Do not generate, contain, alter, or imitate NASA branding/design elements in generated content. The team should confirm that the label used here satisfies the guide's wording before submission.
 
 NASA photographs/data require their own attribution and usage checks. A reference link is not a license for NASA logos or third-party copyrighted content. Participation in Space Apps does not mean NASA endorses this game.
 

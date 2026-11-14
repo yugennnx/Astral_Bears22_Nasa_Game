@@ -17,7 +17,17 @@ The eventual interface must retain the source cards and show the supplied credit
 
 ## Current Implementation
 
-The repository contains a scene-data module, curated NASA-data summaries, design documents, and reference validation tools. The production decision engine, playable frontend, deployed game, and submission demo are not yet implemented here.
+The repository contains a **playable browser prototype**: a decision engine, a responsive interface (phone and desktop), six scenes with DUTİ, NASA science cards, an ending report, and save/resume. English is the primary language; Turkish is an optional interface language chosen by the team. A public deployment link and the submission demo are still to be added, and no playtest with children has been run yet.
+
+## Play Locally
+
+Requires Python 3 (any static file server works). From the repository root:
+
+```sh
+npm start
+```
+
+Then open <http://localhost:5173>. The game has no build step and no runtime network requests: libraries, fonts, and photographs are stored in `assets/`.
 
 **Active ruleset:** [docs/design/story-plan.md](docs/design/story-plan.md) and [src/game/scenes.js](src/game/scenes.js), including the v1.2 mission profiles and low-power life-support rule.
 
@@ -25,7 +35,12 @@ The repository contains a scene-data module, curated NASA-data summaries, design
 
 ```text
 .
+├── index.html                    # Game entry point (no build step)
 ├── src/game/scenes.js            # Scene data, rules, NASA source cards, credits metadata
+├── src/game/engine.js            # Decision engine (pure functions)
+├── src/ui/                       # Interface, SVG artwork drawn in code, styles
+├── src/i18n/                     # English interface strings and optional Turkish translation
+├── assets/                       # NASA photographs, vendored libraries, typeface
 ├── data/
 │   ├── nasa-events.json          # Curated DONKI CME record + attributed NASA Mars finding
 │   ├── meda-jezero.json          # Perseverance MEDA temperature summaries (with source hashes)
@@ -50,7 +65,12 @@ The repository contains a scene-data module, curated NASA-data summaries, design
 | [data/nasa-events.json](data/nasa-events.json) | Curated DONKI record and a separately attributed NASA Mars observation |
 | [data/meda-jezero.json](data/meda-jezero.json) | Recomputed MEDA sensor-temperature summaries with source-file hashes |
 | [data/source-audit.json](data/source-audit.json) | Source audit receipts and precise verification method |
+| [src/game/engine.js](src/game/engine.js) | Decision engine used by the game; pure functions over a JSON state |
+| [src/ui/app.js](src/ui/app.js) · [src/ui/art.js](src/ui/art.js) | Interface screens and AI-assisted SVG illustrations drawn in code |
+| [src/i18n/](src/i18n/) | Interface strings (English) and the optional Turkish translation |
 | [tools/check_story_data.mjs](tools/check_story_data.mjs) | Scene and mission-profile reference checks |
+| [tools/check_engine.mjs](tools/check_engine.mjs) | Plays every path through the engine and compares it with the reference model |
+| [tools/check_i18n.mjs](tools/check_i18n.mjs) | Turkish translation coverage and placeholder checks |
 | [tools/check_disclosures.mjs](tools/check_disclosures.mjs) | AI/SI metadata and attribution checks |
 | [tools/verify_nasa_sources.py](tools/verify_nasa_sources.py) | Optional online recheck of the cited original data |
 | [CHANGELOG.md](CHANGELOG.md) · [docs/changelog/v1.2.md](docs/changelog/v1.2.md) | Version history and the detailed v1.2 report |
@@ -64,13 +84,13 @@ Requires Node.js 20 or newer. From the repository root:
 npm run check
 ```
 
-This runs `node tools/check_story_data.mjs` and `node tools/check_disclosures.mjs`. Optional primary-source verification with Python and network access:
+This runs the story, engine, translation and disclosure checks. Optional primary-source verification with Python and network access:
 
 ```sh
 npm run verify:sources
 ```
 
-This is a data/reference-model check, not a browser playtest or NASA eligibility approval.
+These are data, rule and metadata checks. The interface was exercised manually in a desktop and a phone-sized browser viewport; this is not a child playtest or NASA eligibility approval.
 
 ## Data and Rights
 

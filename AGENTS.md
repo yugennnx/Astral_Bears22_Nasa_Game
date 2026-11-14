@@ -4,8 +4,8 @@
 
 - Use `docs/design/story-plan.md`, `src/game/scenes.js`, and `docs/design/story-data-contract.md` as the active six-sol prototype. Preserve the latest mission profiles and low-power life-support rules unless the team explicitly changes them.
 - The companion's display name is **DUTİ**; its code ID is `duti`.
-- Use English in code, story, UI, documentation, and materials linked for submission. Save UTF-8 files.
-- Archive files are historical context, not the active game engine.
+- Use English in code, story, documentation, and materials linked for submission. English is the game's primary and default interface language. By team decision (November 14, 2026) the game also offers an optional Turkish interface in `src/i18n/`; keep English complete and keep Turkish in sync (`npm run check:i18n`). Save UTF-8 files.
+- The playable game is `index.html` + `src/game/engine.js` + `src/ui/`. Keep rules in the engine, not in the interface. Archive files are historical context, not the active game engine.
 - Layout: design docs in `docs/design/`, rules/references in `docs/compliance/`, release notes in `CHANGELOG.md` and `docs/changelog/`, curated data in `data/` (kebab-case names), unmodified NASA responses in `data/raw/`.
 
 ## AI/SI Attribution
@@ -29,8 +29,8 @@
 ## Checks Before Publishing
 
 ```sh
-npm run check   # = node tools/check_story_data.mjs && node tools/check_disclosures.mjs
+npm run check   # story data, engine, translations and disclosures
 git diff --check
 ```
 
-Review current upstream changes before editing or pushing. Preserve other contributors' work. Keep the reference checker distinct from a production engine and do not describe a data-only module as a playable game.
+Review current upstream changes before editing or pushing. Preserve other contributors' work. Keep the reference checker (`tools/check_story_data.mjs`) independent from the production engine so that `tools/check_engine.mjs` remains a real comparison. Illustrations drawn with AI assistance must keep their visible label.

@@ -246,6 +246,7 @@ body[data-screen="title"] .stage { width: 100%; max-width: none; padding: 0; }
 .art-duti .duti { width: 100%; height: auto; display: block; filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.5)); }
 .art-tag { position: absolute; left: 12px; top: 12px; display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 7px 14px; border-radius: 999px; background: rgba(8, 12, 31, 0.76); border: 1px solid var(--line-strong); font-size: 0.92rem; backdrop-filter: blur(6px); max-width: calc(100% - 24px); }
 .art-tag span { color: var(--sand); font-weight: 600; }
+.art-ai { position: absolute; right: 10px; bottom: 8px; padding: 2px 10px; border-radius: 999px; background: rgba(8, 12, 31, 0.72); border: 1px solid var(--line); font-size: 0.72rem; color: #e6e3f3; letter-spacing: 0.02em; }
 .art-tag .icon { color: var(--sand); }
 
 .panel { display: grid; gap: 14px; min-width: 0; }

@@ -71,3 +71,17 @@ The first checker covers the data model and all profiles. The second checks prov
 - Submit through the official project page before the applicable deadline. A GitHub push is not the project submission.
 
 The audit does not mark these unfinished items as passed and cannot promise that disqualification is impossible.
+
+## Status Update — Version 1.3.0 (November 14, 2026)
+
+> AI/SI disclosure: this addendum was drafted with Anthropic Claude. The audit above was prepared with OpenAI ChatGPT/Codex and reflects baseline `ca5b5ec`; it is left unchanged.
+
+Changes since the audit that affect its findings:
+
+- **Playable prototype added.** `index.html`, `src/game/engine.js`, `src/ui/` and `src/i18n/` implement the six-sol game. The engine is compared path-by-path with the reference model by `tools/check_engine.mjs`. This addresses the first remaining task in part: the game exists and shows sources, archival labels, data qualifications and AI/SI credits, but it has **not** been playtested with children and is **not yet deployed** to a public link.
+- **NASA data is displayed in the product.** The Scene 2 (MEDA) and Scene 5 (DONKI / Mars article) science cards show the source titles, observation dates, archival labels, the full `dataNote`, and links. The NASA Sources window lists every source and photograph.
+- **Media added.** Three NASA photographs and AI-assisted SVG illustrations are now included; see [references.md](references.md). Illustrations carry a visible "AI-assisted illustration" label. The team should confirm the label wording against the official guide and confirm NASA media usage guidance.
+- **Third-party components added.** Anime.js (MIT), canvas-confetti (ISC) and the Fredoka typeface (OFL-1.1) are vendored with their license texts.
+- **Language.** English remains the primary and default language of the game and all linked materials. An optional Turkish interface was added by team decision. The submission page, demo and documentation must still be in English.
+
+Still open: public deployment and link check without login, demo (30-second video or seven slides), human review of generated code and text, project license decision, registration/event checks, and the official form submission.
