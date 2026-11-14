@@ -34,6 +34,8 @@ Anthropic Claude was also used, at the user's request on November 14, 2026, for 
 
 Anthropic Claude was also used, at the user's request on November 14, 2026, for the **1.3.0 playable prototype**: the decision engine (`src/game/engine.js`), the browser interface and styles (`index.html`, `src/ui/`), the SVG illustrations, the Turkish translation of story and interface text (`src/i18n/`), the engine and translation checks, the selection and crediting of three NASA photographs, and the vendoring of open-source libraries. The team chose the direction in answer to design questions: dark space theme with warm Mars tones, DUTİ as a brown teddy-bear-like robot, code-drawn SVG plus NASA photographs, phone and desktop layouts, English as the main language with a Turkish option, soft animations without sound, and the use of additional libraries. Claude generated the implementation; it has not yet been reviewed line by line by the team or playtested with children.
 
+Anthropic Claude was also used for the **1.4.0 redesign** requested by the team after playtesting the prototype themselves: a full-screen pop-up flow without page scrolling, a separate illustrated location for each sol (`src/ui/world.js`), richer animations, and a rewrite of the Turkish text in simpler language. The team's feedback (too static, one location, scrolling needed, weak Turkish) set the goals; Claude generated the implementation.
+
 This audit adds OpenAI ChatGPT/Codex-assisted English translations, metadata, primary-source checks, and wording corrections to those contributions. It does not claim that Claude generated NASA's underlying observations. Claude's exact prompts and model version were not provided in this session.
 
 ## Selected Prompt Record

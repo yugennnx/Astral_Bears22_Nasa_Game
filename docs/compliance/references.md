@@ -38,15 +38,15 @@ Status as of version 1.3.0 (playable prototype). No video or audio asset is incl
 
 | File | NASA ID and title | Credit line | Use |
 | --- | --- | --- | --- |
-| `assets/nasa/gale-crater-sunset-PIA19400.jpg` | [PIA19400 — Sunset in Mars' Gale Crater](https://images.nasa.gov/details/PIA19400) (Curiosity, Sol 956, April 15, 2015) | NASA/JPL-Caltech/MSSS/Texas A&M Univ. | Title background; Scene 5 science card |
-| `assets/nasa/jezero-crater-rim-PIA26373.jpg` | [PIA26373 — Perseverance Rover's View Up Crater](https://images.nasa.gov/details/PIA26373) (August 4, 2024) | NASA/JPL-Caltech/ASU/MSSS | Scene 2 science card |
-| `assets/nasa/jezero-crater-floor-PIA24765.jpg` | [PIA24765 — Perseverance's Office on Mars](https://images.nasa.gov/details/PIA24765) (2021) | NASA/JPL-Caltech/ASU/MSSS | Briefing background |
+| `assets/nasa/gale-crater-sunset-PIA19400.jpg` | [PIA19400 — Sunset in Mars' Gale Crater](https://images.nasa.gov/details/PIA19400) (Curiosity, Sol 956, April 15, 2015) | NASA/JPL-Caltech/MSSS/Texas A&M Univ. | Scene 5 science card |
+| `assets/nasa/jezero-crater-rim-PIA26373.jpg` | [PIA26373 — Perseverance Rover's View Up Crater](https://images.nasa.gov/details/PIA26373) (August 4, 2024) | NASA/JPL-Caltech/ASU/MSSS | Background of the Sol 6 crater-rim location and the ending |
+| `assets/nasa/jezero-crater-floor-PIA24765.jpg` | [PIA24765 — Perseverance's Office on Mars](https://images.nasa.gov/details/PIA24765) (2021) | NASA/JPL-Caltech/ASU/MSSS | Scene 2 science card |
 
 The files are the resized versions served by NASA (`~orig`, `~large`, `~medium`) and are otherwise unmodified; the interface crops and darkens them with CSS only. Each photograph is credited in the game (caption or credit line, and the NASA Sources window). The photographs illustrate Mars; they are not measurements of the events described in the science cards, and their captions give their own dates. The team should still confirm NASA media usage guidance before the final submission.
 
 ### Illustrations
 
-DUTİ, the outpost scene, the icons, the compass mark and the favicon are original SVG drawings written in code with Anthropic Claude's assistance (`src/ui/art.js`, `src/ui/app.js`, `assets/favicon.svg`). They contain no NASA insignia or branding. Because they are AI-assisted, the interface shows a visible "AI-assisted illustration" label on scene art and a note on the title, briefing, ending and credits views.
+DUTİ, the Mars locations (`src/ui/world.js`), the icons, the compass mark and the favicon are original SVG drawings written in code with Anthropic Claude's assistance (`src/ui/art.js`, `src/ui/world.js`, `src/ui/app.js`, `assets/favicon.svg`). They contain no NASA insignia or branding. Because they are AI-assisted, the interface shows a persistent "AI-assisted illustration" label in the corner of the screen and a note on the title screen and in the credits window.
 
 ### Third-party libraries and typeface (vendored, unmodified)
 

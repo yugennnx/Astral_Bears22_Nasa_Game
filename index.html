@@ -12,10 +12,13 @@
   <link rel="stylesheet" href="src/ui/styles.css">
 </head>
 <body data-screen="title">
-  <div class="backdrop" aria-hidden="true"><div class="backdrop-stars"></div><div class="backdrop-glow"></div></div>
-  <a class="skip-link" href="#stage">Skip to the game</a>
-  <header id="topbar" class="topbar"></header>
-  <main id="stage" class="stage" tabindex="-1"></main>
+  <div id="app" class="app">
+    <div id="world" class="world" aria-hidden="true"></div>
+    <header id="topbar" class="topbar"></header>
+    <div id="hud" class="hud" hidden></div>
+    <main id="layer" class="layer"></main>
+    <span class="ai-badge" aria-hidden="true">AI-assisted illustration</span>
+  </div>
   <dialog id="modal" class="modal" aria-label="Information"></dialog>
   <noscript>
     <p class="noscript">Compass Outpost needs JavaScript to run. Please turn it on in your browser and reload this page.</p>
