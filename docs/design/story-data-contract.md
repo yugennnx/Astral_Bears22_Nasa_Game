@@ -1,10 +1,10 @@
 # Six-Sol Story Data: Integration Guide
 
-> AI/SI disclosure: generated/revised with OpenAI ChatGPT/Codex and Anthropic Claude. See [AI_USAGE.md](../AI_USAGE.md) and [ai-usage.json](../ai-usage.json) for contribution scope and the team's idea-origin attestation.
+> AI/SI disclosure: generated/revised with OpenAI ChatGPT/Codex and Anthropic Claude. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json) for contribution scope and the team's idea-origin attestation.
 
 This guide describes the English scene data in `src/game/scenes.js`, based on `story-plan.md`. The companion's display name is **DUTİ** and the code identifier is `duti`.
 
-The retired ten-sol design and its Python simulator are kept only for history in `archive/ten-sol-design-v0/`. The active rules are `story-plan.md` (v1.2) and this scene data. See `docs/CHANGES-v1.2.md` for what changed.
+The retired ten-sol design and its Python simulator are kept only for history in `archive/ten-sol-design-v0/`. The active rules are `story-plan.md` (v1.2) and this scene data. See `docs/changelog/v1.2.md` for what changed.
 
 ## Exports
 

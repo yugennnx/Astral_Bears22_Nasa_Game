@@ -36,13 +36,23 @@
       "status": "claude-use-confirmed-by-user",
       "tool": "Anthropic Claude",
       "confirmedDate": "2026-11-14"
+    },
+    {
+      "commit": null,
+      "scope": [
+        "1.2.1 repository restructure: docs grouping, data file renames, package.json, CHANGELOG.md, .gitattributes, .editorconfig, path updates"
+      ],
+      "status": "claude-use-in-session-requested-by-user",
+      "tool": "Anthropic Claude",
+      "confirmedDate": "2026-11-14",
+      "note": "Commit hash is the 1.2.1 restructure commit that follows ad37f8c."
     }
   ],
   "artifacts": [
     {
-      "path": "story-plan.md",
+      "path": "docs/design/story-plan.md",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex story draft, translation and current audit edits; Claude-assisted v1.2 revisions.",
+      "scope": "ChatGPT/Codex story draft, translation and current audit edits; Claude-assisted v1.2 revisions. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -51,7 +61,7 @@
     {
       "path": "src/game/scenes.js",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex initial module and current provenance/source wording; Claude-assisted v1.2 rules and cards. NASA observations remain external.",
+      "scope": "ChatGPT/Codex initial module and current provenance/source wording; Claude-assisted v1.2 rules and cards. NASA observations remain external. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -60,16 +70,16 @@
     {
       "path": "tools/check_story_data.mjs",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex initial reference checker and current source checks; Claude-assisted v1.2 profile checks.",
+      "scope": "ChatGPT/Codex initial reference checker and current source checks; Claude-assisted v1.2 profile checks. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
       ]
     },
     {
-      "path": "docs/story-data-contract.md",
+      "path": "docs/design/story-data-contract.md",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex initial guide/current disclosure edits and Claude-assisted v1.2 contract updates.",
+      "scope": "ChatGPT/Codex initial guide/current disclosure edits and Claude-assisted v1.2 contract updates. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -78,33 +88,34 @@
     {
       "path": "README.md",
       "status": "ai-assisted",
-      "scope": "Documentation links and current English rewrite/status disclosure.",
+      "scope": "Documentation links and current English rewrite/status disclosure. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
-        "OpenAI ChatGPT/Codex"
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
       ]
     },
     {
-      "path": "data/nasa_events.json",
+      "path": "data/nasa-events.json",
       "status": "ai-assisted-curation-and-translation",
-      "scope": "Claude-assisted initial curation; ChatGPT/Codex English translation, original-source verification and metadata. NASA observations are not AI-generated.",
+      "scope": "Claude-assisted initial curation; ChatGPT/Codex English translation, original-source verification and metadata. NASA observations are not AI-generated. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
       ]
     },
     {
-      "path": "data/meda_jezero.json",
+      "path": "data/meda-jezero.json",
       "status": "ai-assisted-curation-and-translation",
-      "scope": "Claude-assisted initial curation; ChatGPT/Codex English translation, original CSV recomputation and metadata. NASA observations are not AI-generated.",
+      "scope": "Claude-assisted initial curation; ChatGPT/Codex English translation, original CSV recomputation and metadata. NASA observations are not AI-generated. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
       ]
     },
     {
-      "path": "docs/CHANGES-v1.2.md",
+      "path": "docs/changelog/v1.2.md",
       "status": "ai-translated-and-annotated",
-      "scope": "Claude-assisted original report; ChatGPT/Codex English translation and source-audit qualifications.",
+      "scope": "Claude-assisted original report; ChatGPT/Codex English translation and source-audit qualifications. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -113,7 +124,7 @@
     {
       "path": "archive/ten-sol-design-v0/GAME_DESIGN.md",
       "status": "ai-translated-and-annotated",
-      "scope": "Claude-assisted retired design; ChatGPT/Codex English rendering and historical-status notes.",
+      "scope": "Claude-assisted retired design; ChatGPT/Codex English rendering and historical-status notes. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -131,49 +142,55 @@
     {
       "path": "AI_USAGE.md",
       "status": "ai-generated",
-      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing.",
+      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
-        "OpenAI ChatGPT/Codex"
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
       ]
     },
     {
       "path": "ai-usage.json",
       "status": "ai-generated",
-      "scope": "Machine-readable disclosure and artifact inventory.",
+      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
-        "OpenAI ChatGPT/Codex"
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
       ]
     },
     {
       "path": "AGENTS.md",
       "status": "ai-generated",
-      "scope": "Repository instructions for preserving attribution and verified requirements.",
+      "scope": "Repository instructions for preserving attribution and verified requirements. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
-        "OpenAI ChatGPT/Codex"
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
       ]
     },
     {
-      "path": "docs/compliance-audit.md",
+      "path": "docs/compliance/compliance-audit.md",
       "status": "ai-generated",
-      "scope": "Source-linked audit findings, corrections, and unresolved submission requirements.",
+      "scope": "Source-linked audit findings, corrections, and unresolved submission requirements. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
-        "OpenAI ChatGPT/Codex"
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
       ]
     },
     {
-      "path": "docs/references.md",
+      "path": "docs/compliance/references.md",
       "status": "ai-generated",
-      "scope": "Source inventory, usage and licensing status; no claim that licenses were granted.",
+      "scope": "Source inventory, usage and licensing status; no claim that licenses were granted. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
-        "OpenAI ChatGPT/Codex"
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
       ]
     },
     {
       "path": "tools/check_disclosures.mjs",
       "status": "ai-generated",
-      "scope": "Metadata integrity and provenance-file checks.",
+      "scope": "Metadata integrity and provenance-file checks. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
       "tools": [
-        "OpenAI ChatGPT/Codex"
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
       ]
     },
     {
@@ -195,9 +212,26 @@
       "path": "tools/verify_nasa_sources.py",
       "status": "ai-generated",
       "tools": [
-        "OpenAI ChatGPT/Codex"
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
       ],
-      "scope": "Reproducible primary-source checks for curated data."
+      "scope": "Reproducible primary-source checks for curated data. Claude-assisted path/link updates in the 1.2.1 repository restructure."
+    },
+    {
+      "path": "package.json",
+      "status": "ai-generated",
+      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure).",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "CHANGELOG.md",
+      "status": "ai-generated",
+      "scope": "Claude-generated version history (1.2.1 restructure).",
+      "tools": [
+        "Anthropic Claude"
+      ]
     }
   ],
   "media": {

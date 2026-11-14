@@ -22,13 +22,15 @@ The user specified a browser-based project, a narrative decision-tree format, a 
 
 ### Material proposed or produced by the assistant
 
-The assistant proposed or expanded the six-scene story, working title, DUTİ dialogue, detailed choices, numerical costs and rewards, state-flag connections, ending descriptions, English translation, `src/game/scenes.js`, the initial `tools/check_story_data.mjs`, and `docs/story-data-contract.md`. The assistant ran automated checks and Git commands at the user's request.
+The assistant proposed or expanded the six-scene story, working title, DUTİ dialogue, detailed choices, numerical costs and rewards, state-flag connections, ending descriptions, English translation, `src/game/scenes.js`, the initial `tools/check_story_data.mjs`, and `docs/design/story-data-contract.md`. The assistant ran automated checks and Git commands at the user's request.
 
 The assistant also generated the English wording, metadata, and source-audit corrections added by the current compliance review. AI-assisted source summaries are distinct from NASA's original observations. Resource scores and mission profiles are game assumptions; they are not NASA measurements.
 
 ### Claude-assisted contributions confirmed by the team
 
 The user confirmed that **Anthropic Claude** was used for the original ten-sol design, its Python simulator, and initial curated DONKI/MEDA JSON files in commit `d304c77`. The user also confirmed Claude use for commit `ca5b5ec`, which revised the active prototype with NASA-data cards, mission profiles, low-power life support, the next-crew report, and supporting documentation/checks.
+
+Anthropic Claude was also used, at the user's request on November 14, 2026, for the **1.2.1 repository restructure**: grouping documentation under `docs/design/`, `docs/compliance/` and `docs/changelog/`, renaming the curated data files to `data/nasa-events.json` and `data/meda-jezero.json`, adding `package.json`, `CHANGELOG.md`, `.gitattributes` and `.editorconfig`, and updating path references. No gameplay values, story text or data values were changed.
 
 This audit adds OpenAI ChatGPT/Codex-assisted English translations, metadata, primary-source checks, and wording corrections to those contributions. It does not claim that Claude generated NASA's underlying observations. Claude's exact prompts and model version were not provided in this session.
 

@@ -1,7 +1,7 @@
 /**
  * English story data for the six-sol Compass Outpost prototype.
  * All numeric effects are game-design assumptions, not NASA measurements.
- * See story-plan.md and docs/story-data-contract.md before integration.
+ * See story-plan.md and docs/design/story-data-contract.md before integration.
  * AI-assisted generation/revision: OpenAI ChatGPT/Codex and Anthropic Claude.
  * File-level provenance and team attestations: AI_USAGE.md and ai-usage.json.
  */
@@ -518,7 +518,7 @@ export const NASA_SOURCES = {
     url: "https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1",
     kind: "archival-record",
     observationPeriod: "May 20, 2024",
-    localData: "data/nasa_events.json",
+    localData: "data/nasa-events.json",
   },
   "mars-solar-storm-2024": {
     title: "NASA Watches Mars Light Up During Epic Solar Storm",
@@ -531,7 +531,7 @@ export const NASA_SOURCES = {
     url: "https://pds.nasa.gov/ds-view/pds/viewBundle.jsp?identifier=urn:nasa:pds:mars2020_meda",
     kind: "archival-dataset",
     observationPeriod: "Sol 290 (December 13, 2021)",
-    localData: "data/meda_jezero.json",
+    localData: "data/meda-jezero.json",
   },
   "space-plants": {
     title: "Growing Plants in Space",

@@ -28,7 +28,7 @@ def retrieve(url, cache_dir, cache_name):
 
 
 def verify_meda(cache_dir):
-    data = read_json(ROOT / "data/meda_jezero.json")
+    data = read_json(ROOT / "data/meda-jezero.json")
     for item in data["sols"]:
         raw = retrieve(item["file"], cache_dir, f"meda-sol-{item['sol']}.csv")
         digest = hashlib.sha256(raw).hexdigest()
@@ -57,7 +57,7 @@ def verify_meda(cache_dir):
 
 
 def verify_donki(cache_dir):
-    data = read_json(ROOT / "data/nasa_events.json")
+    data = read_json(ROOT / "data/nasa-events.json")
     curated = data["events"][0]
     raw = retrieve(curated["apiUrl"], cache_dir, "donki-cme-2024-05-20.json")
     records = json.loads(raw)

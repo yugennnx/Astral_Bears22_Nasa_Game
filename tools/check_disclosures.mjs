@@ -50,14 +50,14 @@ for (const path of ["src/game/scenes.js", "tools/check_story_data.mjs", "tools/c
   const text = await readFile(new URL(`../${path}`, import.meta.url), "utf8");
   assert(text.slice(0, 900).includes("AI-assisted"), `Missing source notice: ${path}`);
 }
-for (const path of ["data/nasa_events.json", "data/meda_jezero.json"]) {
+for (const path of ["data/nasa-events.json", "data/meda-jezero.json"]) {
   const data = await readJson(path);
   assert.equal(data._provenance.aiAssistanceUsed, true);
   assert.equal(data._provenance.originalMeasurementsGeneratedByAi, false);
   assert(data._provenance.tools.includes("Anthropic Claude"));
 }
 
-const events = await readJson("data/nasa_events.json");
+const events = await readJson("data/nasa-events.json");
 const raw = await readJson("data/raw/donki-cme-2024-05-20.json");
 const event = events.events[0];
 const original = raw.find(item => item.activityID === event.id);
@@ -67,7 +67,7 @@ assert.deepEqual(event.speed_km_s_most_accurate,
   original.cmeAnalyses.filter(item => item.isMostAccurate).map(item => item.speed));
 const audit = await readJson("data/source-audit.json");
 assert.equal(audit.donki.marsEventMatch, "not-established");
-const meda = await readJson("data/meda_jezero.json");
+const meda = await readJson("data/meda-jezero.json");
 for (const item of meda.sols) {
   const receipt = audit.meda.find(row => row.sol === item.sol);
   assert(receipt);

@@ -7,10 +7,10 @@ import { MISSION, SCENE_ORDER, SCENES, ENDINGS, NASA_SOURCES } from "../src/game
 const effectKeys = [...MISSION.resourceKeys, "science"];
 const flagNames = new Set(Object.keys(MISSION.initialState.flags));
 const choiceIds = new Set();
-const plan = await readFile(new URL("../story-plan.md", import.meta.url), "utf8");
+const plan = await readFile(new URL("../docs/design/story-plan.md", import.meta.url), "utf8");
 const sourceText = await readFile(new URL("../src/game/scenes.js", import.meta.url), "utf8");
-const medaSummary = JSON.parse(await readFile(new URL("../data/meda_jezero.json", import.meta.url), "utf8"));
-const nasaEvents = JSON.parse(await readFile(new URL("../data/nasa_events.json", import.meta.url), "utf8"));
+const medaSummary = JSON.parse(await readFile(new URL("../data/meda-jezero.json", import.meta.url), "utf8"));
+const nasaEvents = JSON.parse(await readFile(new URL("../data/nasa-events.json", import.meta.url), "utf8"));
 
 function checkEffects(effects) {
   assert.deepEqual(Object.keys(effects).sort(), [...effectKeys].sort());

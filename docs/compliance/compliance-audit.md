@@ -3,7 +3,7 @@
 **Date:** November 14, 2026
 **Baseline reviewed:** `ca5b5ec`
 **Scope:** The repository's story, scene data, reference checker, curated NASA summaries, active documentation, and archived design.
-**AI/SI disclosure:** Prepared with OpenAI ChatGPT/Codex; Claude contributions are separately credited in [AI_USAGE.md](../AI_USAGE.md).
+**AI/SI disclosure:** Prepared with OpenAI ChatGPT/Codex; Claude contributions are separately credited in [AI_USAGE.md](../../AI_USAGE.md).
 
 This is a project-maintenance audit, not official NASA approval or a guarantee of eligibility. The user asked that **only official 2026 Space Apps website pages** establish competition requirements. The audit follows that restriction. Earlier chat recommendations are design context, not official rules.
 

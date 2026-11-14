@@ -90,7 +90,7 @@ The one-sol reply delay was a compressed decision structure. Actual signal trave
 
 - DONKI CME `2024-05-20T05:36:00-CME-001`: [record](https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1) and [alert](https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/31039/1). Near-Sun speed estimates describe different shock/bulk analyses. This is not a Mars surface-dose measurement.
 - [NASA's June 10, 2024 Mars solar-storm article](https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/): an independently cited report, not an established event-level match to that DONKI record.
-- [MEDA Atmospheres Node archive](https://pds-atmospheres.nmsu.edu/data_and_services/atmospheres_data/PERSEVERANCE/meda.html): the current summaries and corrected values are in `data/meda_jezero.json` at the repository root.
+- [MEDA Atmospheres Node archive](https://pds-atmospheres.nmsu.edu/data_and_services/atmospheres_data/PERSEVERANCE/meda.html): the current summaries and corrected values are in `data/meda-jezero.json` at the repository root.
 - [Mars Trek](https://trek.nasa.gov/mars/): considered for imagery; no selected image asset is claimed in this archive.
 
 Other considered resources included NASA Open APIs, OSDR, RadLab, and the Canadian Space Agency's food-production toolkit. Considered resources are not claimed as implemented. Absence of a flare catalogue entry is not used as evidence in the active game.

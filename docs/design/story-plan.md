@@ -1,8 +1,8 @@
 # Compass Outpost: Six Sols on Mars
 
-> AI/SI disclosure: story text, code, and documentation include OpenAI ChatGPT/Codex and Anthropic Claude contributions. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json) for contribution scope and the team's idea-origin attestation.
+> AI/SI disclosure: story text, code, and documentation include OpenAI ChatGPT/Codex and Anthropic Claude contributions. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json) for contribution scope and the team's idea-origin attestation.
 
-Story and Decision Plan for the First Playable Prototype — v1.2 (see `docs/CHANGES-v1.2.md`)
+Story and Decision Plan for the First Playable Prototype — v1.2 (see `docs/changelog/v1.2.md`)
 
 **Language:** English for all story text, dialogue, interface labels, code identifiers, and code comments.
 
@@ -148,7 +148,7 @@ Every profile has dust after Scene 2 because Scene 2's story is a power shortage
 
 **Learning goal:** Research, life support, and outside work share a limited resource budget. Oxygen production needs electricity, and outside tasks use suit oxygen.
 
-**Science card (real NASA data):** *“Mars nights are very cold.”* Perseverance's MEDA instrument measured the air in Jezero Crater on Sol 290 (December 13, 2021): warmest about −3 °C, coldest about −77 °C. A base needs batteries and heaters when the Sun goes down. Source: NASA Planetary Data System, Mars 2020 MEDA bundle; summary in `data/meda_jezero.json`.
+**Science card (real NASA data):** *“Mars nights are very cold.”* Perseverance's MEDA instrument measured the air in Jezero Crater on Sol 290 (December 13, 2021): warmest about −3 °C, coldest about −77 °C. A base needs batteries and heaters when the Sun goes down. Source: NASA Planetary Data System, Mars 2020 MEDA bundle; summary in `data/meda-jezero.json`.
 
 **Visual preparation:** Choice cards show an oxygen system, a sample container, and a measurement display. If collected, show the rock container on a laboratory shelf in later scenes.
 
@@ -284,7 +284,7 @@ Show this warning on 5C before selection: **“High risk: Safety −4. The final
 
 Add an information card labeled **“Real NASA event: the May 2024 solar storm (archival data, not live).”**
 
-- **DONKI record:** `2024-05-20T05:36:00-CME-001`, a fast CME that started on May 20, 2024 at 05:36 UTC (speed estimates 1,927–2,678 km/s). Downloaded from NASA's DONKI service and stored in `data/nasa_events.json`.
+- **DONKI record:** `2024-05-20T05:36:00-CME-001`, a fast CME that started on May 20, 2024 at 05:36 UTC (speed estimates 1,927–2,678 km/s). Downloaded from NASA's DONKI service and stored in `data/nasa-events.json`.
 - **What happened at Mars:** NASA reported that a huge solar storm on May 20, 2024 reached Mars. Curiosity's RAD instrument showed that an astronaut standing next to the rover would have received 8,100 micrograys, about the same as 30 chest X-rays, the biggest jump since the rover landed.
 - **Source boundary (show in the details card):** DONKI describes a near-Sun CME; the record's listed impact forecasts do not identify Mars. An event-level match to the separately reported Mars observation has not been established. Present the records as independent archival examples. DONKI is not a measured surface radiation dose on Mars.
 
@@ -445,9 +445,9 @@ This check covers numerical consistency and completion through different strateg
 ## 12. Scientific Basis and NASA Sources
 
 1. **Mars communication delay:** NASA explains that commands can take approximately 3–22 minutes to reach Perseverance one way, depending on Earth–Mars geometry. The story's 20 minutes is a selected scenario value. Source: [Speaking Percy's Language](https://science.nasa.gov/blog/speaking-percys-language-how-to-talk-so-perseverance-will-listen/).
-2. **Real radiation event (DONKI):** CME `2024-05-20T05:36:00-CME-001`, NASA DONKI. Source: [DONKI record](https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1), local copy `data/nasa_events.json`.
+2. **Real radiation event (DONKI):** CME `2024-05-20T05:36:00-CME-001`, NASA DONKI. Source: [DONKI record](https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1), local copy `data/nasa-events.json`.
 3. **Radiation at Mars (May 2024):** Curiosity/RAD and MAVEN observations of the May 2024 storm. No numerical conversion into the game's Safety scale has been made. Source: [NASA Watches Mars Light Up During Epic Solar Storm](https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/).
 4. **Plant-growing research:** NASA projects such as Veggie investigate fresh food production in space. Do not present those studies as an existing Mars greenhouse or a system that produces all crew food in six days. Source: [Growing Plants in Space](https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/).
-5. **Mars temperatures (MEDA):** Perseverance MEDA air temperature, Jezero Crater, Sols 290, 313 and 330. Source: [NASA PDS — Mars 2020 MEDA bundle](https://pds.nasa.gov/ds-view/pds/viewBundle.jsp?identifier=urn:nasa:pds:mars2020_meda), local summary `data/meda_jezero.json`.
+5. **Mars temperatures (MEDA):** Perseverance MEDA air temperature, Jezero Crater, Sols 290, 313 and 330. Source: [NASA PDS — Mars 2020 MEDA bundle](https://pds.nasa.gov/ds-view/pds/viewBundle.jsp?identifier=urn:nasa:pds:mars2020_meda), local summary `data/meda-jezero.json`.
 
 Sources were checked on November 14, 2026 during the original plan's research. The 2017 references were replaced in v1.2 by the downloaded 2024 DONKI record and MEDA data. This file is a story design, not a working API integration, a downloaded raw dataset, or a finished interface. Include the source name, observation date, archival-data label, and link in the science card. Select individual photographs and record their credits before use; image assets have not been selected or downloaded as part of this document.

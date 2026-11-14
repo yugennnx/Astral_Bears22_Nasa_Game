@@ -1,6 +1,6 @@
 # References, Provenance, and Rights Status
 
-> AI/SI disclosure: this inventory was drafted with OpenAI ChatGPT/Codex. Earlier curated data and v1.2 contributions used Anthropic Claude, as confirmed by the team. See [AI_USAGE.md](../AI_USAGE.md) and [ai-usage.json](../ai-usage.json).
+> AI/SI disclosure: this inventory was drafted with OpenAI ChatGPT/Codex. Earlier curated data and v1.2 contributions used Anthropic Claude, as confirmed by the team. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
 
 ## Competition Rules
 
@@ -10,15 +10,15 @@ Only the official 2026 Space Apps website pages listed in [compliance-audit.md](
 
 | Source | Local Record / Use | Qualification |
 | --- | --- | --- |
-| [NASA DONKI](https://ccmc.gsfc.nasa.gov/tools/DONKI/) and [CME record 2024-05-20T05:36:00-CME-001](https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1) | `data/nasa_events.json`, unmodified `data/raw/donki-cme-2024-05-20.json`; Scene 5 archival science card | Near-Sun CME analyses, not measured Mars dose. No confirmed match to the independently reported Mars event. DONKI is listed on the challenge's Resources tab. |
-| [NASA — May 2024 Mars solar-storm observations](https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/) | Attributed findings in `data/nasa_events.json`; Scene 5 science card | The 8,100-microgray figure comes from this article. It is not converted to the game's Safety score. |
-| [NASA PDS MEDA catalogue](https://pds.nasa.gov/ds-view/pds/viewBundle.jsp?identifier=urn:nasa:pds:mars2020_meda) and [official PDS Atmospheres Node MEDA archive](https://pds-atmospheres.nmsu.edu/data_and_services/atmospheres_data/PERSEVERANCE/meda.html) | `data/meda_jezero.json`; Scene 2 science card | Source CSV URLs and hashes are recorded. Simple sensor sample extrema are not a global climate description, dust measurement, or fully quality-filtered derived product. |
+| [NASA DONKI](https://ccmc.gsfc.nasa.gov/tools/DONKI/) and [CME record 2024-05-20T05:36:00-CME-001](https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1) | `data/nasa-events.json`, unmodified `data/raw/donki-cme-2024-05-20.json`; Scene 5 archival science card | Near-Sun CME analyses, not measured Mars dose. No confirmed match to the independently reported Mars event. DONKI is listed on the challenge's Resources tab. |
+| [NASA — May 2024 Mars solar-storm observations](https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/) | Attributed findings in `data/nasa-events.json`; Scene 5 science card | The 8,100-microgray figure comes from this article. It is not converted to the game's Safety score. |
+| [NASA PDS MEDA catalogue](https://pds.nasa.gov/ds-view/pds/viewBundle.jsp?identifier=urn:nasa:pds:mars2020_meda) and [official PDS Atmospheres Node MEDA archive](https://pds-atmospheres.nmsu.edu/data_and_services/atmospheres_data/PERSEVERANCE/meda.html) | `data/meda-jezero.json`; Scene 2 science card | Source CSV URLs and hashes are recorded. Simple sensor sample extrema are not a global climate description, dust measurement, or fully quality-filtered derived product. |
 | [NASA — Speaking Percy's Language](https://science.nasa.gov/blog/speaking-percys-language-how-to-talk-so-perseverance-will-listen/) | Scene 4 communication explanation | The story's one-way 20-minute delay is a scenario value; actual delay varies. |
 | [NASA — Growing Plants in Space](https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/) | Scene 3 educational card | The fictional Mars greenhouse is not NASA's existing space-station facility. Plants are already growing before the mission. |
 
 MEDA citation supplied by the archive: **J.A. Rodriguez-Manfredi et al. (2021), The Mars Environmental Dynamics Analyzer, MEDA, NASA Planetary Data System, DOI 10.17189/1522849.** The NMSU domains above host NASA's PDS Atmospheres Node; they are the identified scientific archive, not a third-party participant rule guide.
 
-See [data/source-audit.json](../data/source-audit.json) for retrieval checks, source hashes and the exact decimal/rounding method. NASA records are external observations. Claude/ChatGPT/Codex-assisted wording, selection, curation, and fictional coefficients are labeled separately.
+See [data/source-audit.json](../../data/source-audit.json) for retrieval checks, source hashes and the exact decimal/rounding method. NASA records are external observations. Claude/ChatGPT/Codex-assisted wording, selection, curation, and fictional coefficients are labeled separately.
 
 ## Tools Used
 
