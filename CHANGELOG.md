@@ -10,6 +10,7 @@ All notable changes to this project. Gameplay numbers are fictional educational 
 - Renamed curated data files to kebab-case: `data/nasa-events.json`, `data/meda-jezero.json`.
 - Added `package.json` (`npm run check`), `.gitattributes` (LF; `data/raw/**` kept byte-exact) and `.editorconfig`.
 - Updated every path reference, the provenance inventory and README. No gameplay values, story text or data values changed.
+- Follow-up from the Codex review of `e0e4e60`: fixed the remaining `story-plan.md` path in the `src/game/scenes.js` header, added `.gitignore`, `.gitattributes` and `.editorconfig` to `ai-usage.json`, and extended `tools/check_disclosures.mjs` so repository dotfiles also require file-level provenance.
 
 ## 1.2 — Compliance and AI/SI audit (`ad37f8c`)
 

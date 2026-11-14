@@ -1,7 +1,7 @@
 /**
  * English story data for the six-sol Compass Outpost prototype.
  * All numeric effects are game-design assumptions, not NASA measurements.
- * See story-plan.md and docs/design/story-data-contract.md before integration.
+ * See docs/design/story-plan.md and docs/design/story-data-contract.md before integration.
  * AI-assisted generation/revision: OpenAI ChatGPT/Codex and Anthropic Claude.
  * File-level provenance and team attestations: AI_USAGE.md and ai-usage.json.
  */

@@ -232,6 +232,30 @@
       "tools": [
         "Anthropic Claude"
       ]
+    },
+    {
+      "path": ".gitignore",
+      "status": "ai-generated",
+      "scope": "Claude-generated ignore rules in the initial commit d304c77.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": ".gitattributes",
+      "status": "ai-generated",
+      "scope": "Claude-generated line-ending rules; keeps data/raw/** byte-exact (1.2.1 restructure).",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": ".editorconfig",
+      "status": "ai-generated",
+      "scope": "Claude-generated editor settings (1.2.1 restructure).",
+      "tools": [
+        "Anthropic Claude"
+      ]
     }
   ],
   "media": {

@@ -35,7 +35,8 @@ for (const artifact of manifest.artifacts) {
 const files = execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard"], { cwd: root, encoding: "utf8" })
   .trim().split(/\r?\n/).filter(Boolean);
 for (const path of new Set(files)) {
-  if (/\.(md|js|mjs|py|json)$/i.test(path)) {
+  // Content files plus repository configuration dotfiles (e.g. .gitignore, .gitattributes, .editorconfig).
+  if (/\.(md|js|mjs|py|json)$/i.test(path) || /(^|\/)\.[^/]+$/.test(path)) {
     assert(inventory.has(path), `Missing file-level provenance: ${path}`);
   }
   assert(!/^LICENSE(?:\..+)?$/i.test(path), "User deferred project licensing; no LICENSE file should be added.");
