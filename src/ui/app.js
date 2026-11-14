@@ -191,7 +191,7 @@ function renderTopbar() {
     <div class="topbar-actions">
       ${hasFact ? `<button class="pill pill--fact" data-action="science-card">${icon("satellite")}<span>${esc(t("nav.fact"))}</span></button>` : ""}
       <button class="pill pill--icon" data-action="sources" aria-label="${esc(t("nav.sources"))}" title="${esc(t("nav.sources"))}">${icon("info")}</button>
-      <button class="pill" data-action="language" aria-label="${esc(t("lang.label"))}">${icon("globe")}<span>${esc(t("lang.switchTo"))}</span></button>
+      <button class="pill pill--lang" data-action="language" aria-label="${esc(t("lang.label"))}">${icon("globe")}<span class="lang-long">${esc(t("lang.switchTo"))}</span><span class="lang-short">${getLanguage() === "en" ? "TR" : "EN"}</span></button>
     </div>`;
 }
 
@@ -203,7 +203,7 @@ function gaugeHtml(key, value) {
     <span class="gauge-body">
       <span class="gauge-top"><span class="gauge-name">${esc(t(`res.${key}`))}</span><b class="gauge-num">${value}</b></span>
       <span class="gauge-bar">${Array.from({ length: 10 }, (_, i) => `<i class="${i < value ? "on" : ""}"></i>`).join("")}</span>
-      <span class="gauge-level">${level === "good" ? "" : icon("warning")}${esc(t(`level.${level}`))}</span>
+      <span class="gauge-level">${level === "good" ? "" : icon("warning")}<span class="gl-text">${esc(t(`level.${level}`))}</span></span>
     </span>
   </div>`;
 }
@@ -225,12 +225,22 @@ function renderHud(resources, science) {
     hudEl.innerHTML = "";
     hudEl.hidden = true;
     app.hudShown = null;
+    syncHudHeight();
     return;
   }
   hudEl.hidden = false;
-  hudEl.innerHTML = RESOURCE_KEYS.map(key => gaugeHtml(key, resources[key])).join("") + scienceHtml(science);
+  hudEl.innerHTML = RESOURCE_KEYS.map(key => gaugeHtml(key, resources[key])).join("") + scienceHtml(science)
+    + `<span class="ai-label">${icon("info")}${esc(t("art.aiLabel"))}</span>`;
   app.hudShown = { resources: { ...resources }, science };
+  syncHudHeight();
 }
+
+/** Pop-ups, tasks and top dialogs sit below the HUD, whatever its real height. */
+function syncHudHeight() {
+  const height = hudEl.hidden ? 0 : Math.ceil(hudEl.getBoundingClientRect().height);
+  document.documentElement.style.setProperty("--hud-h", `${height}px`);
+}
+window.addEventListener("resize", syncHudHeight);
 
 function bumpGauge(key, delta) {
   const el = hudEl.querySelector(`[data-gauge="${key}"]`);
@@ -548,7 +558,7 @@ function showChoices({ animateIn = true } = {}) {
       </div>
       <button class="btn btn--small btn--ghost" data-action="reread">${icon("restart")}<span>${esc(t("choices.reread"))}</span></button>
     </div>
-    <div class="cards cards--${options.length}">${options.map(option => cardHtml(option, scene)).join("")}</div>
+    <div class="cards cards--${options.length}${app.selected ? " has-selection" : ""}">${options.map(option => cardHtml(option, scene)).join("")}</div>
     ${app.selected ? "" : `<p class="hint">${esc(t("choices.pick"))}</p>`}
   </div>`;
   if (animateIn) {
@@ -939,7 +949,6 @@ function finishRender({ focus = true } = {}) {
   document.documentElement.lang = getLanguage();
   document.title = ts(MISSION.title);
   document.body.dataset.screen = app.screen;
-  $(".ai-badge").textContent = t("art.aiLabel");
   renderTopbar();
   if (focus) layerEl.querySelector("[data-focus]")?.focus({ preventScroll: true });
   save();

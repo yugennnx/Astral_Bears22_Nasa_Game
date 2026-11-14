@@ -4,6 +4,15 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.5.1 — Clean layout (2026-11-14)
+
+- The "AI-assisted illustration" label moved from a fixed corner (where it covered dialogs and pop-ups) to a small line under the HUD.
+- Pop-ups, task banners and top dialogs are placed below the HUD's real height.
+- Phones: one compact HUD row (icon, number, bar; warning icon when low), short language button, unselected choice cards collapse to one line, compact briefing and ending.
+- Short desktop screens (720 px high): briefing, choices and morning summary fit without scrolling.
+- Activity targets that sat under the task banner or off-screen were moved (night-temperature graph, checklist, rocks).
+- Checked with an automated overlap test on every screen of several full games, at 1280 x 720 and 375 x 812, in English and Turkish: no overlaps, no off-screen targets, no scrolling pop-ups.
+
 ## 1.5.0 — A scene for every choice (2026-11-14)
 
 - Before each decision, DUTİ points at the parts of the location that matter (spotlight with a short explanation, e.g. how many battery bars are left).

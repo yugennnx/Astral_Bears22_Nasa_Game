@@ -109,7 +109,7 @@ function tankFill() {
 
 function graphPanel() {
   return `
-    <g class="act-panel">
+    <g class="act-panel" transform="translate(0 250)">
       <rect x="560" y="90" width="480" height="270" rx="34" fill="#071028" stroke="#58d3ff" stroke-width="6"/>
       <path d="M610 130v190h400" stroke="#3a4686" stroke-width="4" fill="none"/>
       <path d="M610 168h400" stroke="#3a4686" stroke-width="2" stroke-dasharray="8 10"/>
@@ -119,7 +119,9 @@ function graphPanel() {
     </g>`;
 }
 
+const GRAPH_OFFSET = 250;
 const GRAPH_POINTS = [[690, 175], [800, 235], [900, 300], [990, 200]];
+const GRAPH_TARGETS = GRAPH_POINTS.map(([x, y]) => [x, y + GRAPH_OFFSET]);
 
 function lightMasks(startDark) {
   return [0, 1].map(row => `<rect class="act-sprite act-mask" data-sprite="${row}" x="400" y="${300 + row * 210}" width="800" height="200" fill="#040b0b" opacity="${startDark ? 0.72 : 0}"/>`).join("")
@@ -132,7 +134,7 @@ function lightMasks(startDark) {
 
 function checklistPanel(labels) {
   return `
-    <g class="act-panel">
+    <g class="act-panel" transform="translate(0 170)">
       <rect x="560" y="150" width="480" height="330" rx="30" fill="#fff7ea" stroke="#e7c79b" stroke-width="8"/>
       <rect x="740" y="130" width="120" height="40" rx="12" fill="#8b93a8"/>
       ${labels.map((label, i) => `
@@ -234,13 +236,13 @@ const checklist = (task, labelKeys) => ({
   backdrop: "message-from-earth",
   task,
   sprites: (t) => checklistPanel(labelKeys.map(key => t(key))),
-  targets: labelKeys.map((_, i) => ({ x: 636, y: 230 + i * 85, r: 48 })),
+  targets: labelKeys.map((_, i) => ({ x: 636, y: 400 + i * 85, r: 48 })),
   order: "sequence",
   onTap(svg, i) {
     const tick = svg.querySelector(`[data-tick="${i}"]`);
     tick.setAttribute("opacity", "1");
     anim(tick, { scale: [0.2, 1], duration: 400, ease: "outBack(3)" });
-    burst(svg, 636, 230 + i * 85, "#7be495");
+    burst(svg, 636, 400 + i * 85, "#7be495");
   },
 });
 
@@ -275,8 +277,8 @@ export const ACTIVITIES = {
   "2B": {
     backdrop: "welcome-to-mars",
     task: "act.2B",
-    sprites: () => rock(560, 800, 0, 0.95) + rock(720, 845, 1, 0.85) + rock(890, 815, 2, 1) + rock(1050, 840, 3, 0.9),
-    targets: [{ x: 560, y: 800, r: 70 }, { x: 720, y: 845, r: 66 }, { x: 890, y: 815, r: 70 }, { x: 1050, y: 840, r: 66 }],
+    sprites: () => rock(560, 770, 0, 0.95) + rock(720, 800, 1, 0.85) + rock(890, 775, 2, 1) + rock(1050, 795, 3, 0.9),
+    targets: [{ x: 560, y: 770, r: 66 }, { x: 720, y: 800, r: 62 }, { x: 890, y: 775, r: 66 }, { x: 1050, y: 795, r: 62 }],
     order: "find",
     onTap(svg, i, _step, _target, ctx) {
       const rockEl = sprite(svg, i);
@@ -296,7 +298,7 @@ export const ACTIVITIES = {
     backdrop: "power-shortage",
     task: "act.2C",
     sprites: graphPanel,
-    targets: GRAPH_POINTS.map(([x, y]) => ({ x, y, r: 40 })),
+    targets: GRAPH_TARGETS.map(([x, y]) => ({ x, y, r: 40 })),
     order: "sequence",
     onTap(svg, i) {
       const line = svg.querySelector(".act-line");
@@ -305,7 +307,7 @@ export const ACTIVITIES = {
       dot.setAttribute("cx", GRAPH_POINTS[i][0]); dot.setAttribute("cy", GRAPH_POINTS[i][1]); dot.setAttribute("r", "12"); dot.setAttribute("fill", "#ffd65c");
       svg.querySelector(".act-panel").append(dot);
       anim(dot, { scale: [0, 1], duration: 400, ease: "outBack(3)" });
-      burst(svg, GRAPH_POINTS[i][0], GRAPH_POINTS[i][1]);
+      burst(svg, GRAPH_TARGETS[i][0], GRAPH_TARGETS[i][1]);
     },
   },
   "3A": {

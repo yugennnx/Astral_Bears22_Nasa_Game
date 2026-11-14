@@ -229,7 +229,7 @@
     {
       "path": "package.json",
       "status": "ai-generated",
-      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -237,7 +237,7 @@
     {
       "path": "CHANGELOG.md",
       "status": "ai-generated",
-      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -317,7 +317,7 @@
     {
       "path": "src/ui/app.js",
       "status": "ai-generated",
-      "scope": "Claude-generated browser interface. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "Claude-generated browser interface. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -370,7 +370,7 @@
     {
       "path": "src/ui/activities.js",
       "status": "ai-generated",
-      "scope": "Claude-generated hands-on activities (one per choice), DUTİ spotlights before choices, and their SVG sprites drawn in code.",
+      "scope": "Claude-generated hands-on activities (one per choice), DUTİ spotlights before choices, and their SVG sprites drawn in code. Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling).",
       "tools": [
         "Anthropic Claude"
       ]
