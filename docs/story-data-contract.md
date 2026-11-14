@@ -1,5 +1,7 @@
 # Six-Sol Story Data: Integration Guide
 
+> AI/SI disclosure: generated/revised with OpenAI ChatGPT/Codex and Anthropic Claude. See [AI_USAGE.md](../AI_USAGE.md) and [ai-usage.json](../ai-usage.json) for contribution scope and the team's idea-origin attestation.
+
 This guide describes the English scene data in `src/game/scenes.js`, based on `story-plan.md`. The companion's display name is **DUTİ** and the code identifier is `duti`.
 
 The retired ten-sol design and its Python simulator are kept only for history in `archive/ten-sol-design-v0/`. The active rules are `story-plan.md` (v1.2) and this scene data. See `docs/CHANGES-v1.2.md` for what changed.
@@ -31,6 +33,7 @@ The relative import above assumes the caller is `src/main.js`. Adjust the path f
 - `SCENES`: complete English story blocks, choices, conditional variants, feedback, transitions, and source-card references.
 - `ENDINGS`: English outcome messages. Add actual totals and specific causes from game state.
 - `NASA_SOURCES`: attribution links. These are reference records, not live API responses or raw measurement datasets.
+- `AI_DISCLOSURE`: exported AI/SI provenance metadata. It is also exposed as `MISSION.aiDisclosure`; show `MISSION.creditsCard` in the eventual credits/about/source view.
 
 Treat all exports as read-only templates. Clone the starting state for every new game. Keep the game state in the engine or the application's state store, rather than mutating scene definitions.
 
@@ -125,6 +128,8 @@ In particular:
 
 Every ending (success, partial, stopped) shows `MISSION.nextCrewReport.title`, the food line for `flags.greenhouseMode` (`full`, `minimum`, `off`; use `off` if Scene 3 was never reached), and the safety line (`ready` if Safety ≥ 6, otherwise `low`). This report does not change the win/lose result.
 
+The safety line describes the current crew's abstract operational margin. It does not diagnose health or assign the current crew's exposure to a future crew.
+
 ## Applying a Decision
 
 The next implementation step is an engine API such as `makeDecision(state, choiceId)`. The current module contains the data for that engine; it does not export a working decision function.
@@ -157,6 +162,7 @@ Tuğra can use the first scene immediately to build the shared layout:
 4. Show each resolved choice's label, resource changes, Science gain, future consequence, and warning.
 5. Show disabled reasons with text, such as `Requires Safety 6. Current Safety: 4.`
 6. Add decision feedback, transition forecasts, source cards, and the ending screen.
+7. Show `MISSION.creditsCard` and the AI/SI disclosure link in a credits/about/source view. Preserve archival labels and the complete `scienceCard.dataNote` when present. A short card must not hide the qualification that the DONKI record has not been matched to the Mars radiation observation.
 
 For mockups of later scenes, explicitly select the desired flag values and resolve variants. Rendering raw later-scene choices would show only their default version. Keep live rules in the engine so the frontend displays the same values it applies.
 
@@ -166,8 +172,9 @@ From the repository root, run:
 
 ```sh
 node tools/check_story_data.mjs
+node tools/check_disclosures.mjs
 ```
 
 The checker verifies scene links, source references, flag names, variant effects, all 17 choices, mission profiles, the documented example paths, and the reachable ending counts for every profile (every choice must stay winnable in every profile). It is a reference model for checking the data, not a production engine or a browser playtest.
 
-No external JavaScript dependencies are needed. Use a Node.js version with ES module syntax detection for `.js` files, such as Node.js 26 (installed on the team machines). A frontend project with `"type": "module"` can import the scene file normally.
+No external JavaScript dependencies are needed. The current audit ran on local Node.js 26.8.1; installations on other team machines are not certified here. A frontend project with `"type": "module"` can import the scene file normally.

@@ -1,0 +1,79 @@
+{
+  "auditDate": "2026-11-14",
+  "aiAssistanceUsed": true,
+  "tools": [
+    "OpenAI ChatGPT",
+    "Codex"
+  ],
+  "disclosureDocument": "../AI_USAGE.md",
+  "method": "Take the minimum and maximum of calibrated ATS_LOCAL_TEMP1 samples satisfying 100 < Kelvin < 400; subtract exactly 273.15 using decimal arithmetic; round to 0.1 Celsius with ROUND_HALF_UP. This is a simple recorded-sample summary; additional quality flags are not applied and it is not a derived global-weather product.",
+  "tlsVerification": "Enabled. Original data downloads completed outside the restricted shell after its certificate-store access failed. No certificate verification was disabled.",
+  "meda": [
+    {
+      "sol": 290,
+      "sourceUrl": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0180_0299/sol_0290/WE__0290___________CAL_ATS_________________P01.CSV",
+      "sha256": "b48690f820cf884439972f8c21a14302cd25cb3947c254d9aba8ad379fe61955",
+      "samples": 51357,
+      "previousSummary_C": [
+        -76.9,
+        -3.1
+      ],
+      "recomputedSummary_C": [
+        -76.8,
+        -3.1
+      ]
+    },
+    {
+      "sol": 313,
+      "sourceUrl": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0300_0419/sol_0313/WE__0313___________CAL_ATS_________________P01.CSV",
+      "sha256": "50cc034f7c5961ff15a1a35ee277572b255386d489462175c503f42eae846f4d",
+      "samples": 76255,
+      "previousSummary_C": [
+        -78.5,
+        -1.6
+      ],
+      "recomputedSummary_C": [
+        -78.5,
+        -1.5
+      ]
+    },
+    {
+      "sol": 330,
+      "sourceUrl": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0300_0419/sol_0330/WE__0330___________CAL_ATS_________________P01.CSV",
+      "sha256": "0335d93462d5d01f683fdaf6c8998409fed6b4e77a759fbf64a22a7c20d48cee",
+      "samples": 82016,
+      "previousSummary_C": [
+        -79.3,
+        -9.7
+      ],
+      "recomputedSummary_C": [
+        -79.3,
+        -9.6
+      ]
+    }
+  ],
+  "donki": {
+    "id": "2024-05-20T05:36:00-CME-001",
+    "apiUrl": "https://ccmc.gsfc.nasa.gov/DONKI/WS/get/CME?startDate=2024-05-20&endDate=2024-05-20",
+    "rawResponse": "raw/donki-cme-2024-05-20.json",
+    "sha256": "469a405b51f04890be0b41a3ff2b9130d0d6e1ab18e9e5042a889ab468557072",
+    "analyses": [
+      {
+        "speed": 2678.0,
+        "latitude": 2.0,
+        "longitude": 172.0,
+        "halfAngle": 45.0,
+        "featureCode": "SH"
+      },
+      {
+        "speed": 1927.0,
+        "latitude": 0.0,
+        "longitude": 176.0,
+        "halfAngle": 43.0,
+        "featureCode": "LE"
+      }
+    ],
+    "marsEventMatch": "not-established"
+  },
+  "scope": "Verifies the selected archived record and the stated sample-summary computation. Not a certification of all science, rights, data quality, or competition eligibility."
+}

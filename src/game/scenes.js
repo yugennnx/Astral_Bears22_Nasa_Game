@@ -2,12 +2,30 @@
  * English story data for the six-sol Compass Outpost prototype.
  * All numeric effects are game-design assumptions, not NASA measurements.
  * See story-plan.md and docs/story-data-contract.md before integration.
+ * AI-assisted generation/revision: OpenAI ChatGPT/Codex and Anthropic Claude.
+ * File-level provenance and team attestations: AI_USAGE.md and ai-usage.json.
  */
+
+export const AI_DISCLOSURE = {
+  aiAssistanceUsed: true,
+  providers: ["OpenAI", "Anthropic"],
+  tools: ["ChatGPT", "Codex", "Claude"],
+  description: "Story text, code, summaries, and documentation include AI-assisted contributions. NASA observations are attributed separately from fictional game values.",
+  detailsDocument: "AI_USAGE.md",
+  metadataDocument: "ai-usage.json",
+  reviewStatus: "The team attests that it originated the underlying idea; final human review and submission remain the team's responsibility.",
+};
 
 export const MISSION = {
   id: "compass-outpost-six-sols",
   title: "Compass Outpost: Six Sols on Mars",
   language: "en",
+  aiDisclosure: AI_DISCLOSURE,
+  creditsCard: {
+    title: "Project credits and tools",
+    text: "Story and code include AI-assisted contributions from OpenAI ChatGPT/Codex and Anthropic Claude. NASA observations have separate source credits. This project is not endorsed by NASA.",
+    detailsDocument: "AI_USAGE.md",
+  },
   robot: { id: "duti", displayName: "DUTİ" },
   resourceKeys: ["energy", "oxygen", "safety"],
   resourceBounds: { min: 0, max: 10 },
@@ -66,8 +84,8 @@ export const MISSION = {
       off: { status: "at-risk", text: "Fresh food: at risk. The greenhouse is off, so the next crew must restart it and rely on packaged food for longer." },
     },
     safety: {
-      ready: { minSafety: 6, text: "Crew health margin: good." },
-      low: { text: "Crew health margin: low. The next crew should avoid risky outdoor work at first." },
+      ready: { minSafety: 6, text: "Current crew safety margin: good." },
+      low: { text: "Current crew safety margin: low. Review protection procedures before further outdoor work." },
     },
   },
 
@@ -173,7 +191,7 @@ export const SCENES = {
     scienceCard: {
       title: "Real NASA data: Mars nights are very cold",
       text: "NASA's Perseverance rover measured the air in Jezero Crater on Sol 290 (December 13, 2021). The warmest reading was about −3 °C and the coldest was about −77 °C. A Mars base needs batteries and heaters when the Sun goes down. Our dust and recharge values are game values.",
-      dataNote: "Daily minimum and maximum of MEDA air temperature sensor 1, rounded. The game's dust forecast is fictional, not measured Mars weather.",
+      dataNote: "Recorded sample minimum/maximum of calibrated MEDA air temperature sensor 1 for the selected sol, rounded. The summary uses a simple plausibility filter; additional instrument quality flags are not applied. It is not a global climate or dust measurement. The game's dust forecast is fictional.",
       sourceIds: ["meda-pds-bundle"],
     },
     choices: [
@@ -371,8 +389,8 @@ export const SCENES = {
     ],
     scienceCard: {
       title: "Real NASA event: the May 2024 solar storm (archival data, not live)",
-      text: "On May 20, 2024, NASA's DONKI space weather database recorded a very fast cloud of material leaving the Sun (a CME). NASA reported that a huge solar storm from that day reached Mars. The Curiosity rover measured its biggest radiation jump since landing: an astronaut standing next to it would have received about as much radiation as 30 chest X-rays. In this game, Safety points are game values, not radiation doses.",
-      dataNote: "DONKI describes the CME near the Sun and does not mention Mars. Matching this record to the Mars event by date and direction is our interpretation. The 8,100 microgray figure comes from NASA's article, not from DONKI.",
+      text: "NASA's DONKI database recorded a fast cloud leaving the Sun on May 20, 2024. Separately, NASA reported a large radiation event at Mars that day. These records help us explore why astronauts need protection. Our Safety points are fictional game values.",
+      dataNote: "DONKI record 2024-05-20T05:36:00-CME-001 describes a near-Sun CME; its listed impact forecasts do not identify Mars. This project has not established an event-level match to the Mars article. The article reports 8,100 micrograys for a hypothetical astronaut beside Curiosity, independently of the DONKI record. No dose-to-Safety conversion is made.",
       sourceIds: ["donki-cme-2024-05-20", "mars-solar-storm-2024"],
     },
     transition: {

@@ -1,34 +1,58 @@
 {
-  "_readme": "Gerçek NASA Perseverance MEDA ölçümleri (PDS arşivinden indirildi, tarafımızdan özetlendi). Oyun kuralları burada değil, GAME_DESIGN.md'de.",
+  "_readme": "Curated NASA PDS Perseverance MEDA sensor-reading summaries. Recomputed from the cited calibrated CSV files during the source audit; gameplay rules are separate.",
   "retrieved": "2026-11-14",
   "dataset": "Mars 2020 Perseverance MEDA, calibrated environment data (PDS4)",
   "archive": "https://pds-atmospheres.nmsu.edu/data_and_services/atmospheres_data/PERSEVERANCE/meda.html",
-  "location": "Jezero Krateri, Mars",
-  "method": "ATS_LOCAL_TEMP1 (Air Temperature Sensor 1) sütununun bir sol boyunca en düşük ve en yüksek değeri. Kelvin -> Celsius: K - 273,15. Yuvarlanmıştır.",
+  "location": "Jezero Crater, Mars",
+  "method": "Take the minimum and maximum of calibrated ATS_LOCAL_TEMP1 samples satisfying 100 < Kelvin < 400; subtract exactly 273.15 using decimal arithmetic; round to 0.1 Celsius with ROUND_HALF_UP. This is a simple recorded-sample summary; additional quality flags are not applied and it is not a derived global-weather product.",
   "sols": [
     {
       "sol": 290,
       "earthDate": "2021-12-13",
-      "airTemp_minC": -76.9,
+      "airTemp_minC": -76.8,
       "airTemp_maxC": -3.1,
-      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0180_0299/sol_0290/WE__0290___________CAL_ATS_________________P01.CSV"
+      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0180_0299/sol_0290/WE__0290___________CAL_ATS_________________P01.CSV",
+      "previousSummary_minC": -76.9,
+      "previousSummary_maxC": -3.1,
+      "sourceFileSha256": "b48690f820cf884439972f8c21a14302cd25cb3947c254d9aba8ad379fe61955",
+      "validSampleCount": 51357
     },
     {
       "sol": 313,
       "earthDate": "2022-01-05",
       "airTemp_minC": -78.5,
-      "airTemp_maxC": -1.6,
-      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0300_0419/sol_0313/WE__0313___________CAL_ATS_________________P01.CSV"
+      "airTemp_maxC": -1.5,
+      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0300_0419/sol_0313/WE__0313___________CAL_ATS_________________P01.CSV",
+      "previousSummary_minC": -78.5,
+      "previousSummary_maxC": -1.6,
+      "sourceFileSha256": "50cc034f7c5961ff15a1a35ee277572b255386d489462175c503f42eae846f4d",
+      "validSampleCount": 76255
     },
     {
       "sol": 330,
       "earthDate": "2022-01-23",
       "airTemp_minC": -79.3,
-      "airTemp_maxC": -9.7,
-      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0300_0419/sol_0330/WE__0330___________CAL_ATS_________________P01.CSV"
+      "airTemp_maxC": -9.6,
+      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0300_0419/sol_0330/WE__0330___________CAL_ATS_________________P01.CSV",
+      "previousSummary_minC": -79.3,
+      "previousSummary_maxC": -9.7,
+      "sourceFileSha256": "0335d93462d5d01f683fdaf6c8998409fed6b4e77a759fbf64a22a7c20d48cee",
+      "validSampleCount": 82016
     }
   ],
-  "kidFact": "Perseverance'ın ölçümüne göre Jezero'da gündüz yaklaşık -3 °C, gece yaklaşık -77 °C oluyor. Tek bir solda 70 dereceden fazla fark var!",
-  "unverified": "RDS (Radiation and Dust Sensor) ışık kanallarını da indirdik ama hangi kanalın toplam güneş ışığını ölçtüğünü veri belgesinden (RDR SIS) doğrulamadık. Kanallar farklı yönde değiştiği için tozun güneşi yüzde kaç azalttığını henüz oyunda gerçek veri olarak KULLANMIYORUZ.",
-  "usageInGame": "Sol 3 bilgi kartı: gece-gündüz sıcaklık farkı. Bu, ısıtıcıların neden enerji harcadığını ve gece güneş paneli çalışmadığında bataryanın neden önemli olduğunu anlatır. Toz-enerji kuralları oyun varsayımıdır."
+  "kidFact": "For the selected MEDA sensor readings on Sol 290, the recorded range was about -3 to -77 Celsius. This is one place and one sol, not the climate of all Mars.",
+  "unverified": "RDS light-channel interpretation is not established here. No measured dust-to-power conversion is claimed. Raw-source quality flags were not used in this simple temperature summary.",
+  "usageInGame": "Active Scene 2 science card: recorded temperature variation supports discussion of heaters and battery storage. Fictional mission-profile dust forecasts are separate from these observations.",
+  "_provenance": {
+    "aiAssistanceUsed": true,
+    "tools": [
+      "Anthropic Claude",
+      "OpenAI ChatGPT/Codex"
+    ],
+    "assistanceScope": "Initial summary curation with Claude; English translation and recomputation/metadata with ChatGPT/Codex.",
+    "originalMeasurementsGeneratedByAi": false,
+    "disclosureDocument": "../AI_USAGE.md",
+    "verifiedDate": "2026-11-14"
+  },
+  "citation": "J.A. Rodriguez-Manfredi et al. (2021), The Mars Environmental Dynamics Analyzer, MEDA, NASA Planetary Data System, DOI 10.17189/1522849."
 }

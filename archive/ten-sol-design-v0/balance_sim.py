@@ -1,5 +1,9 @@
 # ARCHIVED: balance model for the retired ten-sol design. The active check is tools/check_story_data.mjs.
-"""Denge testi: tasarim belgesindeki kurallarin tum karar kombinasyonlarini dener."""
+"""Archived balance check: enumerate decisions in the retired design.
+AI-assisted original: Anthropic Claude; English annotations: OpenAI ChatGPT/Codex.
+See AI_USAGE.md and ai-usage.json at the repository root.
+Historical internal keys are retained to preserve model behavior.
+"""
 import itertools, collections
 
 START = dict(E=6, O=7, Y=6, G=7, B=0)
@@ -15,7 +19,7 @@ def clamp(s):
 
 
 def options(sol, s, f):
-    """Her sol icin secenekler: (ad, maliyet/etki sozlugu, bayrak fonksiyonu)."""
+    """Return choices for a sol: (internal name, resource effects, flags)."""
     lab = 1 if f.get('lab') else 0
     if sol == 1:
         return [('sera', dict(E=-2), {'sera_sol': 1}),
@@ -76,7 +80,7 @@ def options(sol, s, f):
 def run(path):
     s, f = dict(START), {}
     for sol in range(1, 11):
-        # 1) Uretim
+        # 1) Production
         w = SUN[sol]
         p = PROD[w]
         if f.get('robot') and w == 'tozlu':
@@ -85,38 +89,38 @@ def run(path):
             p += 1
         s['E'] += p
         clamp(s)
-        # 2) Karar
+        # 2) Decision
         opts = options(sol, s, f)
         i = path[sol - 1]
         if i >= len(opts):
             return None
         name, eff, flags = opts[i]
         if s['E'] + eff.get('E', 0) < 0:
-            return None  # buton gri: yetersiz enerji
+            return None  # Disabled: insufficient Energy
         for k, v in eff.items():
             s[k] += v
         f.update(flags)
-        # 3) Sabit tuketim: yasam destegi
+        # 3) Shared consumption: life support
         eko = sol in f.get('eko', set())
         need = 1 if eko else 2
         if s['E'] >= need:
             s['E'] -= need
             s['O'] += -1 if eko else 0
         else:
-            s['O'] -= 2  # yasam destegi durdu
-        # Ariza: oksijen uretici bozuk
+            s['O'] -= 2  # Life support stopped
+        # Fault: oxygen generator offline
         if f.get('ariza') and sol >= 8:
             s['O'] -= 2
         if f.get('oto_onarim_9') and sol == 9:
             s['E'] -= 1
-        # Sera
+        # Greenhouse
         if 'sera_sol' in f and f.get('sera_kapali') != sol:
             if s['E'] >= 1:
                 s['E'] -= 1
                 ready = f['sera_sol'] + 3 + (1 if 'sera_kapali' in f else 0)
                 if sol >= ready:
                     s['Y'] += 1
-        # Yiyecek
+        # Food
         s['Y'] -= 1
         if s['Y'] < 0:
             s['Y'] = 0
@@ -145,19 +149,19 @@ for path in itertools.product(range(4), repeat=10):
     if r[0] in ('basari', 'yildiz'):
         best.append((r[2]['B'], path))
 
-print('Sonuclar:', dict(res))
+print('Results:', dict(res))
 for k, v in sorted(by_first.items()):
-    print(' Sol1 secenek', k, dict(v))
-print('Max bilim:', max(best)[0] if best else None)
+    print(' Sol 1 option', k, dict(v))
+print('Maximum Science:', max(best)[0] if best else None)
 
-# Ornek stratejiler
+# Example strategies
 named = {
-    'hep guvenli': (0, 2, 0, 0, 1, 0, 0, 0, 2, 2),
-    'acgozlu bilim': (1, 0, 1, 0, 2, 1, 1, 2, 0, 0),
-    'dengeli sera': (0, 1, 1, 0, 0, 0, 0, 0, 1, 0),
-    'dengeli lab': (1, 0, 2, 0, 1, 1, 0, 0, 0, 0),
-    'hep sor': (0, 1, 2, 0, 0, 0, 0, 1, 1, 0),
-    'robot+bilim': (2, 0, 1, 0, 1, 1, 0, 0, 0, 0),
+    'always safe': (0, 2, 0, 0, 1, 0, 0, 0, 2, 2),
+    'greedy science': (1, 0, 1, 0, 2, 1, 1, 2, 0, 0),
+    'balanced greenhouse': (0, 1, 1, 0, 0, 0, 0, 0, 1, 0),
+    'balanced lab': (1, 0, 2, 0, 1, 1, 0, 0, 0, 0),
+    'always ask Earth': (0, 1, 2, 0, 0, 0, 0, 1, 1, 0),
+    'robot + science': (2, 0, 1, 0, 1, 1, 0, 0, 0, 0),
 }
 for n, p in named.items():
     print(n, run(p))

@@ -1,0 +1,244 @@
+{
+  "schemaVersion": "1.0",
+  "updated": "2026-11-14",
+  "project": "Compass Outpost: Six Sols on Mars",
+  "aiAssistanceUsed": true,
+  "tools": [
+    "ChatGPT",
+    "Codex",
+    "Claude"
+  ],
+  "modelIdentifier": null,
+  "modelIdentifierNote": "Exact model/version was not reliably recorded.",
+  "disclosureDocument": "AI_USAGE.md",
+  "originalityReviewStatus": "team-attested-underlying-idea-origin",
+  "humanReviewStatus": "not-certified-by-this-audit",
+  "priorContributionProvenance": [
+    {
+      "commit": "d304c77",
+      "scope": [
+        "original ten-sol design",
+        "archived Python simulator",
+        "initial NASA JSON summaries"
+      ],
+      "status": "claude-use-confirmed-by-user",
+      "tool": "Anthropic Claude",
+      "confirmedDate": "2026-11-14"
+    },
+    {
+      "commit": "ca5b5ec",
+      "scope": [
+        "mission profiles",
+        "low-power life support",
+        "2024 DONKI/MEDA scene cards",
+        "v1.2 report"
+      ],
+      "status": "claude-use-confirmed-by-user",
+      "tool": "Anthropic Claude",
+      "confirmedDate": "2026-11-14"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "story-plan.md",
+      "status": "ai-generated-and-revised",
+      "scope": "ChatGPT/Codex story draft, translation and current audit edits; Claude-assisted v1.2 revisions.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "src/game/scenes.js",
+      "status": "ai-generated-and-revised",
+      "scope": "ChatGPT/Codex initial module and current provenance/source wording; Claude-assisted v1.2 rules and cards. NASA observations remain external.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "tools/check_story_data.mjs",
+      "status": "ai-generated-and-revised",
+      "scope": "ChatGPT/Codex initial reference checker and current source checks; Claude-assisted v1.2 profile checks.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "docs/story-data-contract.md",
+      "status": "ai-generated-and-revised",
+      "scope": "ChatGPT/Codex initial guide/current disclosure edits and Claude-assisted v1.2 contract updates.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "README.md",
+      "status": "ai-assisted",
+      "scope": "Documentation links and current English rewrite/status disclosure.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "data/nasa_events.json",
+      "status": "ai-assisted-curation-and-translation",
+      "scope": "Claude-assisted initial curation; ChatGPT/Codex English translation, original-source verification and metadata. NASA observations are not AI-generated.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "data/meda_jezero.json",
+      "status": "ai-assisted-curation-and-translation",
+      "scope": "Claude-assisted initial curation; ChatGPT/Codex English translation, original CSV recomputation and metadata. NASA observations are not AI-generated.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "docs/CHANGES-v1.2.md",
+      "status": "ai-translated-and-annotated",
+      "scope": "Claude-assisted original report; ChatGPT/Codex English translation and source-audit qualifications.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "archive/ten-sol-design-v0/GAME_DESIGN.md",
+      "status": "ai-translated-and-annotated",
+      "scope": "Claude-assisted retired design; ChatGPT/Codex English rendering and historical-status notes.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "archive/ten-sol-design-v0/balance_sim.py",
+      "status": "ai-assisted-translation",
+      "scope": "Claude-assisted original model; ChatGPT/Codex English annotations/display labels. Model function ASTs preserved.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "AI_USAGE.md",
+      "status": "ai-generated",
+      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "ai-usage.json",
+      "status": "ai-generated",
+      "scope": "Machine-readable disclosure and artifact inventory.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "AGENTS.md",
+      "status": "ai-generated",
+      "scope": "Repository instructions for preserving attribution and verified requirements.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "docs/compliance-audit.md",
+      "status": "ai-generated",
+      "scope": "Source-linked audit findings, corrections, and unresolved submission requirements.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "docs/references.md",
+      "status": "ai-generated",
+      "scope": "Source inventory, usage and licensing status; no claim that licenses were granted.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "tools/check_disclosures.mjs",
+      "status": "ai-generated",
+      "scope": "Metadata integrity and provenance-file checks.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "data/source-audit.json",
+      "status": "ai-assisted-computation-record",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ],
+      "scope": "Recorded source hashes, verified DONKI fields and recomputed MEDA summaries."
+    },
+    {
+      "path": "data/raw/donki-cme-2024-05-20.json",
+      "status": "external-unmodified",
+      "tools": [],
+      "scope": "Unmodified response downloaded from NASA CCMC DONKI; observations were not generated by AI.",
+      "sha256": "469a405b51f04890be0b41a3ff2b9130d0d6e1ab18e9e5042a889ab468557072"
+    },
+    {
+      "path": "tools/verify_nasa_sources.py",
+      "status": "ai-generated",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ],
+      "scope": "Reproducible primary-source checks for curated data."
+    }
+  ],
+  "media": {
+    "generatedImages": [],
+    "generatedVideos": [],
+    "generatedAudio": [],
+    "status": "none-present-in-reviewed-snapshot"
+  },
+  "nasaMeasurementsGeneratedByAi": false,
+  "notes": [
+    "Resource scores, weather profiles, and safety penalties are fictional game assumptions.",
+    "The assistant is a tool, not a registered teammate or NASA representative.",
+    "This manifest is not a NASA certification or a completed project submission.",
+    "Update this inventory and AI_USAGE.md for every new AI-assisted artifact."
+  ],
+  "providers": [
+    "OpenAI",
+    "Anthropic"
+  ],
+  "originalityAttestation": {
+    "date": "2026-11-14",
+    "basis": "User statement in this session",
+    "statement": "The team determined the underlying game idea before AI assistance.",
+    "plannedHumanFeatures": [
+      "Unique events triggered by specific choice sequences",
+      "Special DUTİ conversations"
+    ],
+    "plannedFeaturesImplemented": false,
+    "independentOrganizerApproval": false
+  },
+  "eventTiming": {
+    "teamReportedStart": "2026-11-14 09:00",
+    "registeredEventNameReported": "2026 NASA Space Apps Challenge",
+    "localEventIdentifierVerified": false,
+    "timeZoneIndependentlyVerified": false,
+    "firstVisibleCommit": "2026-11-14T13:35:44+03:00",
+    "commitTimeProvesCreationTime": false
+  },
+  "licenseDecision": {
+    "status": "deferred-by-user",
+    "date": "2026-11-14",
+    "projectLicenseAdded": false
+  }
+}

@@ -1,5 +1,7 @@
 # Compass Outpost: Six Sols on Mars
 
+> AI/SI disclosure: story text, code, and documentation include OpenAI ChatGPT/Codex and Anthropic Claude contributions. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json) for contribution scope and the team's idea-origin attestation.
+
 Story and Decision Plan for the First Playable Prototype — v1.2 (see `docs/CHANGES-v1.2.md`)
 
 **Language:** English for all story text, dialogue, interface labels, code identifiers, and code comments.
@@ -87,7 +89,7 @@ Every profile has dust after Scene 2 because Scene 2's story is a power shortage
 
 | ID | Button Label | Energy | Oxygen | Safety | Science | Later Consequence |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1A | Service the solar panels | −2 | −1 | 0 | 0 | Adds +1 Energy to the recharge after every dusty stage (two or three, depending on the mission profile). |
+| 1A | Service the solar panels | −2 | −1 | 0 | 0 | Adds +1 Energy to the recharge after every dusty stage (one, two, or three, depending on the mission profile). |
 | 1B | Prepare the storm shelter | −1 | 0 | +1 | 0 | Reduces the preparation cost of Choice 5A from 1 Energy to 0. |
 
 ### DUTİ's Feedback
@@ -284,7 +286,7 @@ Add an information card labeled **“Real NASA event: the May 2024 solar storm (
 
 - **DONKI record:** `2024-05-20T05:36:00-CME-001`, a fast CME that started on May 20, 2024 at 05:36 UTC (speed estimates 1,927–2,678 km/s). Downloaded from NASA's DONKI service and stored in `data/nasa_events.json`.
 - **What happened at Mars:** NASA reported that a huge solar storm on May 20, 2024 reached Mars. Curiosity's RAD instrument showed that an astronaut standing next to the rover would have received 8,100 micrograys, about the same as 30 chest X-rays, the biggest jump since the rover landed.
-- **Honesty note (show in the details card):** DONKI describes the CME near the Sun and its alert does not mention Mars. Matching this record to the Mars event by date and direction is our interpretation. DONKI is not a measured surface radiation dose on Mars.
+- **Source boundary (show in the details card):** DONKI describes a near-Sun CME; the record's listed impact forecasts do not identify Mars. An event-level match to the separately reported Mars observation has not been established. Present the records as independent archival examples. DONKI is not a measured surface radiation dose on Mars.
 
 **Safety −4 and Science +2 are game-design effects, not NASA-measured doses or predicted human health outcomes.** The timing and characters' decisions are educational fiction, not an exact reconstruction of the 2024 event. The September 2017 event is no longer used.
 
@@ -361,7 +363,7 @@ All of the following must be true:
 > **Mission complete, Commander!**
 > You kept the base running and reached our research goal. Your earlier choices helped make today's success possible!
 
-Use specific history in the report, for example: **“Your panel maintenance provided two extra recharge points,” “Your rock sample strengthened the final analysis,”** or **“The energy you invested in the greenhouse made the harvest study possible.”** Only report outcomes that actually occurred.
+Use specific history in the report, for example: **“Your panel maintenance provided [actual bonus count] extra recharge points,” “Your rock sample strengthened the final analysis,”** or **“The energy you invested in the greenhouse made the harvest study possible.”** Count only transitions the player actually reached; profiles have different numbers of dusty stages. Only report outcomes that actually occurred.
 
 ### Partial Success
 
@@ -381,7 +383,7 @@ Stop the mission if Energy, Oxygen, or Safety reaches 0 at any application step,
 
 Example explanation: **“Our oxygen reserve ran out between stages. Producing oxygen in Scene 4 could have helped us reach the final day.”** Check that any suggested alternative was actually available in that player's earlier state before displaying it.
 
-**Next-crew readiness report (v1.2):** Every ending shows *“Is the base ready for the next crew?”* with a fresh-food line (full → ready, minimum → limited, off → at risk) and a crew-health line (Safety 6+ → good, otherwise low). This makes food production a long-term consequence without making the greenhouse a victory condition.
+**Next-crew readiness report (v1.2):** Every ending shows *“Is the base ready for the next crew?”* with a fresh-food line (full → ready, minimum → limited, off → at risk). A separate current-crew safety line reports Safety 6+ as good, otherwise low. This is an abstract operational margin, not a medical assessment or an inherited health condition of the next crew. Food production has a long-term consequence without being a victory condition.
 
 **Report the greenhouse outcome separately:** Full production, smaller production, or a greenhouse that needs restarting. Packaged food lasts through this short mission; shutting down the greenhouse does not cause immediate starvation. Its cost is the loss of fresh food production and the related research opportunity. Greenhouse success is not an additional mandatory victory condition.
 

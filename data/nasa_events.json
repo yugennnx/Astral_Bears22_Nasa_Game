@@ -1,27 +1,57 @@
 {
-  "_readme": "Gerçek NASA verisi. Oyun varsayımları bu dosyada YOK; onlar GAME_DESIGN.md içindeki 'oyun varsayımı' tablolarındadır.",
+  "_readme": "Curated NASA archival records and attributed findings. Gameplay coefficients are defined separately in story-plan.md and src/game/scenes.js.",
   "retrieved": "2026-11-14",
   "events": [
     {
       "id": "2024-05-20T05:36:00-CME-001",
-      "type": "CME (Koronal Kütle Atımı)",
+      "type": "CME (coronal mass ejection)",
       "dataset": "NASA DONKI (Space Weather Database Of Notifications, Knowledge, Information)",
       "startTime": "2024-05-20T05:36Z",
-      "observedBy": ["SOHO LASCO C2", "SOHO LASCO C3", "STEREO A COR2"],
-      "speed_km_s_most_accurate": [2678, 1927],
-      "speed_note": "DONKI'de iki analiz 'en doğru' olarak işaretli: 2678 (şok ölçümü) ve 1927. İkisini de gösteriyoruz.",
-      "halfAngle_deg": [45, 43],
-      "sourceNote": "DONKI notuna göre hızlı, halo tipi bir CME. Kaynağı Güneş'in Dünya'dan görünmeyen arka yüzü olarak değerlendirilmiş.",
-      "direction_lon_lat_HEEQ": [176, 0],
+      "observedBy": [
+        "SOHO: LASCO/C2",
+        "SOHO: LASCO/C3",
+        "STEREO A: SECCHI/COR2"
+      ],
+      "speed_km_s_most_accurate": [
+        2678,
+        1927
+      ],
+      "speed_note": "Two analyses are marked most accurate: 2678 km/s for the shock feature and 1927 km/s for the bulk leading edge. These are distinct analyses, not a measured Mars dose or a statistical uncertainty interval.",
+      "halfAngle_deg": [
+        45,
+        43
+      ],
+      "sourceNote": "The DONKI note describes a fast halo CME with a believed backsided source. A concurrent C6.7 flare is explicitly excluded as its source in that note.",
+      "direction_lon_lat_HEEQ": [
+        176,
+        0
+      ],
       "apiUrl": "https://ccmc.gsfc.nasa.gov/DONKI/WS/get/CME?startDate=2024-05-20&endDate=2024-05-20",
       "viewUrl": "https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1",
       "alert": {
         "messageID": "20240520-AL-001",
         "issued": "2024-05-20T15:52Z",
-        "summary": "O tipi CME. NASA'nın Moon to Mars Space Weather Analysis Office ön analizine göre Juno ve Solar Orbiter'a ulaşabileceği tahmin edildi. Mars'tan bahsetmiyor.",
+        "summary": "The linked alert and model outputs list predictions for spacecraft including Juno and Solar Orbiter; Mars is not an identified impact target in this record.",
         "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/31039/1"
       },
-      "noFlareRecord": "DONKI'de 2024-05-20 için güneş patlaması (FLR) kaydı yok; kaynak Dünya'dan görünmeyen arka yüzde olduğu için beklenen durum. 19-23 Mayıs arası FLR ve SEP sorguları ana sunucuda kontrol edildi (SEP sonucu boş)."
+      "analyses_most_accurate": [
+        {
+          "speed": 2678.0,
+          "latitude": 2.0,
+          "longitude": 172.0,
+          "halfAngle": 45.0,
+          "featureCode": "SH"
+        },
+        {
+          "speed": 1927.0,
+          "latitude": 0.0,
+          "longitude": 176.0,
+          "halfAngle": 43.0,
+          "featureCode": "LE"
+        }
+      ],
+      "direction_note": "The existing [176, 0] longitude/latitude pair refers to the bulk analysis. The shock analysis has [172, 2]; see analyses_most_accurate.",
+      "flareCatalogueNote": "No inference about missing FLR/SEP catalogue entries is required or established by this source audit."
     }
   ],
   "findings": [
@@ -32,14 +62,27 @@
       "date": "2024-06-10",
       "url": "https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/",
       "facts": [
-        "En büyük olay 20 Mayıs 2024'te oldu; Solar Orbiter verisine göre X12 sınıfı bir güneş patlaması olarak tahmin edildi.",
-        "Curiosity'nin RAD cihazına göre rover'ın yanında duran bir astronot 8.100 mikrogray doz alırdı; NASA bunu 30 göğüs röntgenine eşdeğer ve ölümcül olmayan bir doz olarak açıkladı.",
-        "Bu, Curiosity'nin 12 yıllık görevindeki en büyük radyasyon artışıydı.",
-        "MAVEN ekibi bunu MAVEN'in gördüğü en büyük güneş enerjili parçacık olayı olarak tanımladı.",
-        "NASA'ya göre Mars yörüngesinde veya derin uzayda doz çok daha yüksek olurdu; yüzeyde kayalıklar veya lav tüpleri ek koruma sağlayabilir."
+        "NASA reports a major May 20, 2024 solar event affecting Mars; its estimated X12 flare classification used Solar Orbiter data.",
+        "The article reports 8100 micrograys for a hypothetical astronaut beside Curiosity, describing it as equivalent to about 30 chest X-rays and not deadly in that reported case.",
+        "The article describes the largest surge measured by Curiosity RAD during its first 12 years on Mars.",
+        "MAVEN observations documented a strong solar energetic particle event and ultraviolet auroras.",
+        "The article explains that terrain can provide additional shielding; this game does not calculate human exposure or medical outcomes."
       ]
     }
   ],
-  "linkNote": "DONKI kaydı ile NASA makalesi aynı güne (20 Mayıs 2024) aittir. Bu CME kaydının makaledeki olayla birebir aynı olduğu bizim yorumumuzdur; DONKI kaydında bu bağlantı açıkça yazmaz.",
-  "usageInGame": "Sol 5'teki 'Güneş Fırtınası Uyarısı' sahnesi bu olaya dayanır. Oyundaki Güvenlik kaybı sayıları ölçüm değildir, oyun varsayımıdır. 8.100 mikrogray yalnızca bilgi kartında, gerçek ölçüm etiketiyle gösterilir."
+  "linkNote": "The DONKI record and NASA Mars article refer to the same date, but an event-level match has not been established. Present them as independently cited archival examples. DONKI is not a Mars surface-dose measurement.",
+  "usageInGame": "Active Scene 5 science card: independent examples of a near-Sun CME record and a Mars radiation observation. Safety effects are fictional. Detailed attribution must remain visible in the interface.",
+  "_provenance": {
+    "aiAssistanceUsed": true,
+    "tools": [
+      "Anthropic Claude",
+      "OpenAI ChatGPT/Codex"
+    ],
+    "assistanceScope": "Initial curation with Claude; English translation, metadata and source verification with ChatGPT/Codex.",
+    "originalMeasurementsGeneratedByAi": false,
+    "disclosureDocument": "../AI_USAGE.md",
+    "verifiedDate": "2026-11-14",
+    "rawResponse": "raw/donki-cme-2024-05-20.json",
+    "rawResponseSha256": "469a405b51f04890be0b41a3ff2b9130d0d6e1ab18e9e5042a889ab468557072"
+  }
 }

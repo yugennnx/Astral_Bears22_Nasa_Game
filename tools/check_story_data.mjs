@@ -1,4 +1,5 @@
 // Reference model for validating story data. This is not the production engine.
+// AI-assisted generation/revision: OpenAI ChatGPT/Codex and Anthropic Claude. See AI_USAGE.md and ai-usage.json.
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { MISSION, SCENE_ORDER, SCENES, ENDINGS, NASA_SOURCES } from "../src/game/scenes.js";
@@ -8,6 +9,8 @@ const flagNames = new Set(Object.keys(MISSION.initialState.flags));
 const choiceIds = new Set();
 const plan = await readFile(new URL("../story-plan.md", import.meta.url), "utf8");
 const sourceText = await readFile(new URL("../src/game/scenes.js", import.meta.url), "utf8");
+const medaSummary = JSON.parse(await readFile(new URL("../data/meda_jezero.json", import.meta.url), "utf8"));
+const nasaEvents = JSON.parse(await readFile(new URL("../data/nasa_events.json", import.meta.url), "utf8"));
 
 function checkEffects(effects) {
   assert.deepEqual(Object.keys(effects).sort(), [...effectKeys].sort());
@@ -120,7 +123,15 @@ for (const source of Object.values(NASA_SOURCES)) {
   const url = new URL(source.url);
   assert.equal(url.protocol, "https:");
   assert(url.hostname === "nasa.gov" || url.hostname.endsWith(".nasa.gov"));
+  if (source.localData) {
+    await readFile(new URL(`../${source.localData}`, import.meta.url), "utf8");
+  }
 }
+const selectedSol = medaSummary.sols.find(item => item.sol === 290);
+assert(selectedSol && Math.round(selectedSol.airTemp_minC) === -77 && Math.round(selectedSol.airTemp_maxC) === -3);
+assert.equal(nasaEvents.events[0].id, "2024-05-20T05:36:00-CME-001");
+assert(SCENES["solar-radiation-alert"].scienceCard.dataNote.includes("has not established"));
+assert(SCENES["power-shortage"].scienceCard.dataNote.includes("quality flags are not applied"));
 
 function available(choice, state) {
   if (state.resources.safety < (choice.requirements?.minSafety ?? 0)) return false;

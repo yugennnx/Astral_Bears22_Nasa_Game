@@ -1,21 +1,61 @@
 # Compass Outpost: Six Sols on Mars
 
-NASA Space Apps Challenge 2026 — *Build a Junior Astronaut Mission Trainer*
+An English narrative decision game for ages 7–12, developed for the 2026 NASA Space Apps challenge [Build a Junior Astronaut Mission Trainer](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details).
 
-7–12 yaş için hikâye ve karar tabanlı bir Mars üssü oyunu. Oyuncu robot arkadaşı DUTİ ile 6 sol boyunca enerji, oksijen ve güvenliği dengeler, en az 6 bilim puanı toplamaya çalışır; her kararın bir bedeli vardır.
+Players manage Energy, Oxygen, and Safety alongside companion robot **DUTİ**, aiming to earn at least 6 Science Points over six sols. Decisions have resource or opportunity costs and can change later options.
 
-- [story-plan.md](story-plan.md) — English six-scene prototype story, DUTİ dialogue, choices, costs, delayed consequences, and implementation notes
-- [src/game/scenes.js](src/game/scenes.js) — English scene data ready for the prototype frontend and decision engine
-- [docs/story-data-contract.md](docs/story-data-contract.md) — integration guide and shared data contract
-- [data/](data/) — gerçek NASA verileri (DONKI, MEDA) ve kaynakları
-- [tools/check_story_data.mjs](tools/check_story_data.mjs) — veri ve denge testi: `node tools/check_story_data.mjs`
-- [docs/CHANGES-v1.2.md](docs/CHANGES-v1.2.md) — v1.2 değişiklik raporu (inceleme için)
-- [archive/ten-sol-design-v0/](archive/ten-sol-design-v0/) — arşiv: eski 10 sollu taslak ve Python simülatörü (artık geçerli değil)
+## AI/SI Attribution
 
-## English story prototype
+This repository contains AI-assisted text, code, translations, and documentation produced with **OpenAI ChatGPT/Codex and Anthropic Claude**. The team attests that it determined the underlying game idea before using AI. Substantial generated implementation/story details remain explicitly attributed.
 
-Start with [story-plan.md](story-plan.md) to build the six-scene story prototype with DUTİ. It includes scene IDs, state flags, English interface text, ending conditions, and checked example paths.
+- [AI_USAGE.md](AI_USAGE.md): tools, contribution history, selected prompt summaries, team attestation, and a submission-form draft.
+- [ai-usage.json](ai-usage.json): machine-readable file-level provenance.
+- [docs/compliance-audit.md](docs/compliance-audit.md): verified requirements, corrections, and outstanding submission tasks.
+- [docs/references.md](docs/references.md): data, tools, sources, and licensing status.
 
-**Active ruleset:** `story-plan.md` (v1.2) and `src/game/scenes.js`. The older ten-sol design was archived in `archive/ten-sol-design-v0/` and must not be mixed with the active rules. Real NASA data used by the game is in `data/` (DONKI 2024 CME, Perseverance MEDA temperatures).
+The eventual interface must retain the source cards and show the supplied credits/about information. A repository disclosure does not complete the official submission form.
 
-Validate the six-sol scene data with `node tools/check_story_data.mjs`. The scene module contains story data and conditional rules; the decision engine is the next implementation step.
+## Current Implementation
+
+The repository contains a scene-data module, curated NASA-data summaries, design documents, and reference validation tools. The production decision engine, playable frontend, deployed game, and submission demo are not yet implemented here.
+
+**Active ruleset:** [story-plan.md](story-plan.md) and [src/game/scenes.js](src/game/scenes.js), including the v1.2 mission profiles and low-power life-support rule.
+
+| File | Purpose |
+| --- | --- |
+| [story-plan.md](story-plan.md) | Six-scene story, dialogue, choices, costs, and delayed consequences |
+| [src/game/scenes.js](src/game/scenes.js) | English scene data, conditional choices, credits metadata, and NASA source cards |
+| [docs/story-data-contract.md](docs/story-data-contract.md) | Shared data contract and frontend/engine handoff |
+| [data/nasa_events.json](data/nasa_events.json) | Curated DONKI record and a separately attributed NASA Mars observation |
+| [data/meda_jezero.json](data/meda_jezero.json) | Recomputed MEDA sensor-temperature summaries with source-file hashes |
+| [data/source-audit.json](data/source-audit.json) | Source audit receipts and precise verification method |
+| [tools/check_story_data.mjs](tools/check_story_data.mjs) | Scene and mission-profile reference checks |
+| [tools/check_disclosures.mjs](tools/check_disclosures.mjs) | AI/SI metadata and attribution checks |
+| [tools/verify_nasa_sources.py](tools/verify_nasa_sources.py) | Optional online recheck of the cited original data |
+| [docs/CHANGES-v1.2.md](docs/CHANGES-v1.2.md) | English account of the earlier v1.2 update |
+| [archive/ten-sol-design-v0/](archive/ten-sol-design-v0/) | Retired design history; excluded from the active gameplay rules |
+
+## Local Checks
+
+With Node.js available, run from the repository root:
+
+```sh
+node tools/check_story_data.mjs
+node tools/check_disclosures.mjs
+```
+
+Optional primary-source verification with Python and network access:
+
+```sh
+python tools/verify_nasa_sources.py
+```
+
+This is a data/reference-model check, not a browser playtest or NASA eligibility approval.
+
+## Data and Rights
+
+DONKI is listed in the challenge's NASA resources. MEDA data are provided through NASA's Planetary Data System. The scene module links these references to science cards; the frontend must still demonstrate their actual use. Curated summaries are archival, not live, and all gameplay coefficients are fictional educational values. The DONKI record is not a Mars surface-dose measurement or a confirmed match to the separately reported Mars event.
+
+**License decision deferred by the team on November 14, 2026.** No project-wide license has been selected or added. Do not describe this repository as Apache-2.0-licensed. The competition's licensing requirements and NASA's default distribution provision are documented in [docs/references.md](docs/references.md); final rights/license review remains outstanding.
+
+This is an independent participant project. NASA data citations do not imply NASA endorsement or permission to use NASA branding.
