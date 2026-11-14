@@ -46,6 +46,15 @@
       "tool": "Anthropic Claude",
       "confirmedDate": "2026-11-14",
       "note": "Commit hash is the 1.2.1 restructure commit that follows ad37f8c."
+    },
+    {
+      "commit": null,
+      "scope": [
+        "1.3.0 playable prototype: engine, browser interface, SVG artwork, Turkish translation, vendored open-source libraries, NASA photographs"
+      ],
+      "status": "claude-use-in-session-requested-by-user",
+      "tool": "Anthropic Claude",
+      "confirmedDate": "2026-11-14"
     }
   ],
   "artifacts": [
@@ -88,7 +97,7 @@
     {
       "path": "README.md",
       "status": "ai-assisted",
-      "scope": "Documentation links and current English rewrite/status disclosure. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
+      "scope": "Documentation links and current English rewrite/status disclosure. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -220,7 +229,7 @@
     {
       "path": "package.json",
       "status": "ai-generated",
-      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure).",
+      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "Anthropic Claude"
       ]
@@ -228,7 +237,7 @@
     {
       "path": "CHANGELOG.md",
       "status": "ai-generated",
-      "scope": "Claude-generated version history (1.2.1 restructure).",
+      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "Anthropic Claude"
       ]
@@ -236,7 +245,7 @@
     {
       "path": ".gitignore",
       "status": "ai-generated",
-      "scope": "Claude-generated ignore rules in the initial commit d304c77.",
+      "scope": "Claude-generated ignore rules in the initial commit d304c77. Claude-assisted updates for the 1.3.0 playable prototype.",
       "tools": [
         "Anthropic Claude"
       ]
@@ -256,6 +265,91 @@
       "tools": [
         "Anthropic Claude"
       ]
+    },
+    {
+      "path": "src/game/engine.js",
+      "status": "ai-generated",
+      "scope": "Claude-generated decision engine implementing the documented rules.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "tools/check_engine.mjs",
+      "status": "ai-generated",
+      "scope": "Claude-generated engine verification against the reference model.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "tools/list_story_strings.mjs",
+      "status": "ai-generated",
+      "scope": "Claude-generated string extractor for translation coverage.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "src/i18n/index.js",
+      "status": "ai-generated",
+      "scope": "Claude-generated language helper.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "src/i18n/ui.js",
+      "status": "ai-generated",
+      "scope": "Claude-generated English interface strings and Turkish translations.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "src/i18n/story.tr.js",
+      "status": "ai-generated",
+      "scope": "Claude-assisted Turkish translation of the story strings.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "src/ui/app.js",
+      "status": "ai-generated",
+      "scope": "Claude-generated browser interface.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "src/ui/art.js",
+      "status": "ai-generated",
+      "scope": "Claude-generated SVG illustrations (DUTİ, outpost, icons) drawn in code; no NASA branding.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "assets/vendor/animejs/anime.esm.min.js",
+      "status": "external-unmodified",
+      "scope": "Anime.js 4.5.0, MIT, unmodified third-party library.",
+      "tools": [],
+      "sha256": "a19015a1a92d52025a2fb6703b6d67eadd1cc2aeaf880770e96e04cf6aa07be1"
+    },
+    {
+      "path": "assets/vendor/animejs/LICENSE.md",
+      "status": "external-unmodified",
+      "scope": "Anime.js license text, unmodified.",
+      "tools": [],
+      "sha256": "3f3e835a9952cfc2a6ca836fb95b3257c981f24fa3ef51249055acb09931897b"
+    },
+    {
+      "path": "assets/vendor/canvas-confetti/confetti.module.mjs",
+      "status": "external-unmodified",
+      "scope": "canvas-confetti 1.9.4, ISC, unmodified third-party library.",
+      "tools": [],
+      "sha256": "d29dc7b2dae5d04baf55666e4f677bbf7f8b0bf587e1ace6098823c4363e7589"
     }
   ],
   "media": {

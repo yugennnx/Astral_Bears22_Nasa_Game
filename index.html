@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- AI-assisted generation: Anthropic Claude. See AI_USAGE.md and ai-usage.json. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Compass Outpost: Six Sols on Mars</title>
+  <meta name="description" content="A narrative Mars mission game for ages 7–12. Manage energy, oxygen and safety with your robot friend DUTİ. Built for the NASA Space Apps Challenge 2026.">
+  <meta name="theme-color" content="#0b1026">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/fredoka/fredoka-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="src/ui/styles.css">
+</head>
+<body data-screen="title">
+  <div class="backdrop" aria-hidden="true"><div class="backdrop-stars"></div><div class="backdrop-glow"></div></div>
+  <a class="skip-link" href="#stage">Skip to the game</a>
+  <header id="topbar" class="topbar"></header>
+  <main id="stage" class="stage" tabindex="-1"></main>
+  <dialog id="modal" class="modal" aria-label="Information"></dialog>
+  <noscript>
+    <p class="noscript">Compass Outpost needs JavaScript to run. Please turn it on in your browser and reload this page.</p>
+  </noscript>
+  <script type="module" src="src/ui/app.js"></script>
+</body>
+</html>

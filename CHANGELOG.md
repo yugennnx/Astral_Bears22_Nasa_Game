@@ -4,6 +4,15 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.3.0 — Playable prototype (2026-11-14)
+
+- Added the decision engine (`src/game/engine.js`), verified path-by-path against the reference model (`npm run check:engine`).
+- Added the browser game (`index.html`, `src/ui/`): title, briefing, six scenes, feedback, transitions, NASA science cards, ending report, save/resume, phone and desktop layouts.
+- English is the primary language; Turkish is an optional interface language (`src/i18n/`).
+- DUTİ and the outpost are original SVG drawings made in code. Three NASA photographs (PIA19400, PIA26373, PIA24765) are credited in the game.
+- Vendored open-source libraries: Anime.js 4.5.0 (MIT), canvas-confetti 1.9.4 (ISC), Fredoka typeface (OFL-1.1).
+- Run locally with `npm start`, then open http://localhost:5173.
+
 ## 1.2.1 — Repository structure (2026-11-14)
 
 - Grouped documentation: `docs/design/` (story plan, data contract), `docs/compliance/` (rules audit, references), `docs/changelog/` (detailed release notes).
