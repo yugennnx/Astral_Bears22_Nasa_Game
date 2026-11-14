@@ -16,6 +16,12 @@ Only the official 2026 Space Apps website pages listed in [compliance-audit.md](
 | [NASA — Speaking Percy's Language](https://science.nasa.gov/blog/speaking-percys-language-how-to-talk-so-perseverance-will-listen/) | Scene 4 communication explanation | The story's one-way 20-minute delay is a scenario value; actual delay varies. |
 | [NASA — Growing Plants in Space](https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/) | Scene 3 educational card | The fictional Mars greenhouse is not NASA's existing space-station facility. Plants are already growing before the mission. |
 
+| [NASA — MOXIE completes Mars mission](https://www.nasa.gov/missions/mars-2020-perseverance/perseverance-rover/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/) (September 6, 2023) | Fact cards after choices 2A and 4C | 122 g of oxygen in total, about what a small dog breathes in 10 hours; best rate 12 g per hour. |
+| [NASA — Mars: Facts](https://science.nasa.gov/mars/facts/) | Fact cards after choices 1A, 3C and 6B | Dusty, cold desert world; thin atmosphere mostly of carbon dioxide, nitrogen and argon; as cold as about −153 °C; a sol lasts about 24.6 hours. |
+| [NASA — Mars Rock Samples](https://science.nasa.gov/mission/mars-2020-perseverance/mars-rock-samples/) | Fact cards after choices 2B and 6A | 43 tubes brought to Mars, 38 for samples; samples collected for potential future return. |
+
+Fact cards also reuse the DONKI/Mars-storm article, MEDA data, "Growing Plants in Space" and "Speaking Percy's Language" listed above. All fact cards were checked against their pages on November 14, 2026; claims that could not be verified were not used.
+
 MEDA citation supplied by the archive: **J.A. Rodriguez-Manfredi et al. (2021), The Mars Environmental Dynamics Analyzer, MEDA, NASA Planetary Data System, DOI 10.17189/1522849.** The NMSU domains above host NASA's PDS Atmospheres Node; they are the identified scientific archive, not a third-party participant rule guide.
 
 See [data/source-audit.json](../../data/source-audit.json) for retrieval checks, source hashes and the exact decimal/rounding method. NASA records are external observations. Claude/ChatGPT/Codex-assisted wording, selection, curation, and fictional coefficients are labeled separately.

@@ -36,6 +36,8 @@ Anthropic Claude was also used, at the user's request on November 14, 2026, for 
 
 Anthropic Claude was also used for the **1.4.0 redesign** requested by the team after playtesting the prototype themselves: a full-screen pop-up flow without page scrolling, a separate illustrated location for each sol (`src/ui/world.js`), richer animations, and a rewrite of the Turkish text in simpler language. The team's feedback (too static, one location, scrolling needed, weak Turkish) set the goals; Claude generated the implementation.
 
+Anthropic Claude was also used for the **1.5.0 update**: after playing 1.4.0 the team asked for a scene for every choice, longer and deeper scenes, hands-on tapping tasks, and DUTİ showing the situation before each decision. Claude generated `src/ui/activities.js`, `src/game/facts.js`, the fact-card texts and their Turkish translations. Each fact was checked against the linked NASA page with a web-fetch helper; facts that could not be verified (an InSight end-of-mission claim and an August 2015 lettuce claim) were left out.
+
 This audit adds OpenAI ChatGPT/Codex-assisted English translations, metadata, primary-source checks, and wording corrections to those contributions. It does not claim that Claude generated NASA's underlying observations. Claude's exact prompts and model version were not provided in this session.
 
 ## Selected Prompt Record

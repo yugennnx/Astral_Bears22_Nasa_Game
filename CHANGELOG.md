@@ -4,6 +4,14 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.5.0 — A scene for every choice (2026-11-14)
+
+- Before each decision, DUTİ points at the parts of the location that matter (spotlight with a short explanation, e.g. how many battery bars are left).
+- After each decision, the player does the chosen job by tapping the scene: 17 hands-on activities (clean the panels, carry boxes to the shelter, turn the oxygen valve, find the rock with crystals, draw the night-temperature graph, switch grow lights, send a message and wait for the reply, lead the crew into the shelter, plant flags on the new route, harvest plants, and more).
+- After DUTİ's feedback, a collectible "Did you know?" fact card appears. Each card cites a NASA page that was checked on November 14, 2026 (MOXIE, Veggie, Mars facts, Perseverance samples, signal delay, the May 2024 solar storm, MEDA temperatures). The ending shows how many cards were collected.
+- New NASA sources in the scene module: MOXIE (2023), Mars facts, Perseverance rock samples.
+- Game rules and resource values are unchanged; activities are presentation only.
+
 ## 1.4.0 — Immersive redesign (2026-11-14)
 
 - Full-screen game with no page scrolling: story, choices, results and transitions open as pop-ups; tap anywhere (or press Space) to continue.

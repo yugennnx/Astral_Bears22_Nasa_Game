@@ -308,4 +308,12 @@ export const STORY_TR = {
     "290. Mars günü (13 Aralık 2021)",
   ["Growing Plants in Space"]:
     "Growing Plants in Space (İngilizce)",
+  ["NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission"]:
+    "NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission (İngilizce)",
+  ["2021–2023 (published September 6, 2023)"]:
+    "2021–2023 (yayın tarihi: 6 Eylül 2023)",
+  ["Mars: Facts"]:
+    "Mars: Facts (İngilizce)",
+  ["Mars Rock Samples (Perseverance)"]:
+    "Mars Rock Samples (Perseverance) (İngilizce)",
 };

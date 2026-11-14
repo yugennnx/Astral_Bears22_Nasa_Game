@@ -533,6 +533,22 @@ export const NASA_SOURCES = {
     observationPeriod: "Sol 290 (December 13, 2021)",
     localData: "data/meda-jezero.json",
   },
+  "moxie-2023": {
+    title: "NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission",
+    url: "https://www.nasa.gov/missions/mars-2020-perseverance/perseverance-rover/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/",
+    kind: "archival-reference",
+    observationPeriod: "2021–2023 (published September 6, 2023)",
+  },
+  "mars-facts": {
+    title: "Mars: Facts",
+    url: "https://science.nasa.gov/mars/facts/",
+    kind: "reference",
+  },
+  "perseverance-samples": {
+    title: "Mars Rock Samples (Perseverance)",
+    url: "https://science.nasa.gov/mission/mars-2020-perseverance/mars-rock-samples/",
+    kind: "reference",
+  },
   "space-plants": {
     title: "Growing Plants in Space",
     url: "https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/",

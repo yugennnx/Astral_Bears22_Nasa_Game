@@ -12,6 +12,8 @@ import {
 import { t, ts, signed, getLanguage, setLanguage } from "../i18n/index.js";
 import { icon, duti, dutiAvatar, weatherIcon } from "./art.js";
 import { titleWorld, sceneWorld, nightWorld, LOCATIONS } from "./world.js";
+import { SPOTLIGHTS, spotlightSvg, activityFor, runActivity } from "./activities.js";
+import { FACTS, FACT_BY_CHOICE } from "../game/facts.js";
 import { animate, stagger } from "../../assets/vendor/animejs/anime.esm.min.js";
 import confetti from "../../assets/vendor/canvas-confetti/confetti.module.mjs";
 
@@ -42,6 +44,11 @@ const app = {
   hudShown: null,
   introToken: null,
   cinemaToken: null,
+  spot: 0,
+  facts: [], // collected fact-card ids
+  pendingFact: null,
+  activityId: null,
+  busy: false,
 };
 
 const $ = selector => document.querySelector(selector);
@@ -49,6 +56,7 @@ const worldEl = $("#world");
 const topbarEl = $("#topbar");
 const hudEl = $("#hud");
 const layerEl = $("#layer");
+const fxEl = $("#fx");
 const modal = $("#modal");
 
 let typing = null; // active typewriter
@@ -60,7 +68,7 @@ function save() {
     if (app.screen !== "title") app.resumeScreen = app.screen;
     localStorage.setItem(SAVE_KEY, JSON.stringify({
       language: getLanguage(), game: app.game, screen: app.resumeScreen,
-      lastProfileId: app.lastProfileId, seenCards: app.seenCards,
+      lastProfileId: app.lastProfileId, seenCards: app.seenCards, facts: app.facts,
     }));
   } catch { /* storage can be unavailable; the game still works */ }
 }
@@ -115,6 +123,7 @@ function dutiMood() {
 function setWorld(key, html, { zoom = true } = {}) {
   if (app.worldKey === key) return;
   app.worldKey = key;
+  focusX = 800;
   const next = document.createElement("div");
   next.className = "world-scene";
   next.innerHTML = html;
@@ -125,8 +134,27 @@ function setWorld(key, html, { zoom = true } = {}) {
     return;
   }
   animate(next, { opacity: [0, 1], scale: zoom ? [1.12, 1] : [1, 1], duration: 1100, ease: "outCubic" });
-  old.forEach(node => animate(node, { opacity: [1, 0], duration: 700, ease: "linear", onComplete: () => node.remove() }));
+  old.forEach(node => {
+    setTimeout(() => node.remove(), 900); // fallback when animations are paused
+    animate(node, { opacity: [1, 0], duration: 700, ease: "linear", onComplete: () => node.remove() });
+  });
 }
+
+/**
+ * On tall phone screens only the middle of a location fits. Pan the "camera" so the
+ * part that matters (a spotlight or the activity targets) is on screen.
+ */
+let focusX = 800;
+function setFocus(x = 800) {
+  focusX = x;
+  const box = worldEl.getBoundingClientRect();
+  const visible = box.height > 0 ? Math.min(1600, (box.width / box.height) * 900) : 1600;
+  const center = Math.max(visible / 2, Math.min(1600 - visible / 2, x));
+  const viewBox = `${(center - 800).toFixed(0)} 0 1600 900`;
+  const svgs = [worldEl.querySelector(".world-scene:last-child > svg"), ...fxEl.querySelectorAll("svg")];
+  svgs.forEach(svg => svg?.setAttribute("viewBox", viewBox));
+}
+window.addEventListener("resize", () => setFocus(focusX));
 
 const signLabels = () => ({ lab: t("sign.lab"), route: t("sign.route"), plants: t("sign.plants"), mars: t("sign.mars"), earth: t("sign.earth") });
 
@@ -232,10 +260,19 @@ async function flyEffects(fromEl, effects, after) {
     node.style.top = `${startY}px`;
     const dx = target ? target.left + target.width / 2 - startX - 30 : 0;
     const dy = target ? target.top + target.height / 2 - startY - 14 : -200;
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      node.remove();
+      resolve();
+    };
+    // Fallback: animations pause in hidden tabs, so never wait on them forever.
+    setTimeout(finish, 250 + index * 140 + 900 + 400);
     animate(node, {
       translateX: [0, dx], translateY: [0, dy], scale: [1.25, 0.6], opacity: [1, 1, 0],
       delay: 250 + index * 140, duration: 900, ease: "inOutCubic",
-      onComplete: () => { node.remove(); resolve(); },
+      onComplete: finish,
     });
   })));
   renderHud(after.resources, after.science);
@@ -283,7 +320,7 @@ function dialogHtml(block, counter) {
   </div>`;
 }
 
-function showLine(block, counter) {
+function showLine(block, counter, translated = null) {
   layerEl.innerHTML = dialogHtml(block, counter);
   const dialog = layerEl.querySelector(".dialog");
   if (!reducedMotion()) {
@@ -291,7 +328,7 @@ function showLine(block, counter) {
     const portrait = dialog.querySelector(".dialog-portrait");
     if (portrait) animate(portrait, { opacity: [0, 1], translateX: [-60, 0], rotate: [-8, 0], duration: 600, ease: "outBack(1.4)" });
   }
-  typeInto(dialog.querySelector("[data-text]"), ts(block.text));
+  typeInto(dialog.querySelector("[data-text]"), translated ?? ts(block.text));
   dialog.focus({ preventScroll: true });
 }
 
@@ -299,6 +336,7 @@ function showLine(block, counter) {
 
 function showTitle() {
   app.screen = "title";
+  fxEl.innerHTML = "";
   stopTyping();
   setWorld(`title:${getLanguage()}`, titleWorld(), { zoom: false });
   renderHud(null);
@@ -368,6 +406,7 @@ function showBriefing() {
 
 async function showIntro() {
   app.screen = "intro";
+  fxEl.innerHTML = "";
   stopTyping();
   const scene = getScene(app.game);
   worldForScene();
@@ -402,6 +441,7 @@ function startStory() {
 function renderStoryLine() {
   const scene = getScene(app.game);
   app.screen = "story";
+  fxEl.innerHTML = "";
   worldForScene();
   renderHud(app.game.resources, app.game.science);
   showLine(scene.story[app.line], `${app.line + 1} / ${scene.story.length}`);
@@ -409,6 +449,35 @@ function renderStoryLine() {
 }
 
 function afterStory() {
+  if (SPOTLIGHTS[app.game.sceneId]?.length) {
+    app.spot = 0;
+    showSpotlight();
+    return;
+  }
+  openChoicesAfterStory();
+}
+
+/** DUTİ points at the parts of the location that matter before the player decides. */
+function showSpotlight() {
+  app.screen = "spot";
+  const spots = SPOTLIGHTS[app.game.sceneId];
+  const spot = spots[app.spot];
+  worldForScene();
+  renderHud(app.game.resources, app.game.science);
+  fxEl.innerHTML = spotlightSvg(spot);
+  setFocus(spot.x);
+  if (!reducedMotion()) {
+    animate(fxEl.querySelector(".spot-dim"), { opacity: [0, 0.62], duration: 500 });
+    animate(fxEl.querySelector(".spot-ring"), { scale: [1.4, 1], opacity: [0, 1], duration: 600, ease: "outBack(1.6)" });
+  }
+  showLine({ speakerId: "duti", text: "" }, `${app.spot + 1} / ${spots.length}`, t(spot.key, { ...app.game.resources }));
+  if (spot.y > 520) layerEl.querySelector(".dialog")?.classList.add("dialog--top");
+  finishRender({ focus: false });
+}
+
+function openChoicesAfterStory() {
+  fxEl.innerHTML = "";
+  setFocus(800);
   const scene = getScene(app.game);
   showChoices();
   if (scene.scienceCard && !app.seenCards.includes(scene.id)) {
@@ -494,18 +563,19 @@ async function confirmChoice(choiceId) {
   app.busy = true;
   try {
     const before = { resources: { ...app.game.resources }, science: app.game.science };
-    const source = layerEl.querySelector(".card-choice.is-selected") ?? layerEl.querySelector(".popup");
+    const flagsBefore = { ...app.game.flags };
     app.game = choose(app.game, choiceId);
     app.selected = null;
-    app.screen = "result";
     const pending = app.game.pending;
+    app.pendingFact = FACT_BY_CHOICE[pending.choiceId] ?? null;
+    await playActivity(pending.choiceId, flagsBefore, before);
+    app.screen = "result";
     if (app.game.phase === "ended") {
-      await flyEffects(source, pending.effects, pending.after);
+      await flyEffects(layerEl.querySelector(".task") ?? layerEl, pending.effects, pending.after);
       await wait(500);
       showEnding();
       return;
     }
-    worldForScene();
     renderHud(before.resources, before.science);
     layerEl.innerHTML = `
     <div class="popup popup--result" role="dialog" aria-labelledby="result-title">
@@ -522,6 +592,110 @@ async function confirmChoice(choiceId) {
   } finally {
     app.busy = false;
   }
+}
+
+/** The player does the chosen job by tapping the scene. */
+async function playActivity(choiceId, flagsBefore, before) {
+  const { id, def } = activityFor(choiceId, flagsBefore);
+  if (!def) return;
+  app.screen = "activity";
+  app.activityId = id;
+  stopTyping();
+  setWorld(`act:${id}:${app.game.history.length}:${getLanguage()}`, sceneWorld(def.backdrop, app.game, {
+    dusty: false, photoSrc: PHOTOS.rim.src, labels: signLabels(),
+  }));
+  renderHud(before.resources, before.science);
+  const total = def.order === "find" ? 1 : (def.targets[0].repeat ?? def.targets.length);
+  layerEl.innerHTML = taskBanner(def, 0, total);
+  finishRender({ focus: false });
+  if (!reducedMotion()) animate(layerEl.querySelector(".task"), { translateY: [-60, 0], opacity: [0, 1], duration: 600, ease: "outBack(1.6)" });
+  await wait(450);
+  fxEl.innerHTML = "";
+  const xs = def.targets.map(target => target.x).concat(def.focusExtra ?? []);
+  const focusOn = (Math.min(...xs) + Math.max(...xs)) / 2;
+  setTimeout(() => setFocus(focusOn), 0);
+  await runActivity(fxEl, def, {
+    t,
+    ariaTarget: (n, count) => t("act.target", { n, total: count }),
+    onProgress: (n, count) => {
+      const banner = layerEl.querySelector(".task");
+      if (!banner) return;
+      banner.outerHTML = taskBanner(def, n, count, n >= count);
+      if (!reducedMotion() && n >= count) animate(layerEl.querySelector(".task"), { scale: [1.15, 1], duration: 500, ease: "outBack(3)" });
+    },
+  });
+  if (!reducedMotion()) confetti({ particleCount: 70, spread: 70, origin: { y: 0.45 }, colors: ["#ffc93c", "#7be495", "#4fd1ff"] });
+  await wait(600);
+  fxEl.innerHTML = "";
+  setFocus(800);
+  app.activityId = null;
+}
+
+function taskBanner(def, done, total, finished = false) {
+  const dots = Array.from({ length: total }, (_, i) => `<i class="${i < done ? "on" : ""}"></i>`).join("");
+  return `
+  <div class="task ${finished ? "is-finished" : ""}" role="status" aria-live="polite">
+    <div class="task-avatar">${dutiAvatar(finished ? "proud" : "happy")}</div>
+    <div class="task-body">
+      <p class="task-text">${esc(finished ? t("act.done") : t(def.task))}</p>
+      <p class="task-progress"><span class="task-dots">${dots}</span><span>${esc(t("act.progress", { n: done, total }))}</span></p>
+    </div>
+  </div>`;
+}
+
+/** "Did you know?" collectible card after DUTİ's feedback. */
+function showFact() {
+  const id = app.pendingFact;
+  if (!id || !FACTS[id]) return false;
+  app.screen = "fact";
+  stopTyping();
+  const source = NASA_SOURCES[FACTS[id].sourceId];
+  const isNew = !app.facts.includes(id);
+  const count = app.facts.length + (isNew ? 1 : 0);
+  layerEl.innerHTML = `
+  <div class="factcard-wrap" role="dialog" aria-labelledby="fact-title">
+    <article class="factcard">
+      <div class="factcard-shine" aria-hidden="true"></div>
+      <header class="factcard-head">
+        <span class="factcard-badge">${icon("satellite")}</span>
+        <h2 id="fact-title" data-focus tabindex="-1">${esc(t("fact.title"))}</h2>
+        ${isNew ? `<span class="factcard-new">${esc(t("fact.new"))}</span>` : ""}
+      </header>
+      <p class="factcard-text">${esc(t(`fact.${id}`))}</p>
+      <footer class="factcard-foot">
+        <span>${esc(t("fact.source"))}: <a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(ts(source.title))}</a></span>
+        <span class="factcard-count">${icon("star")}${esc(t("fact.count", { n: count }))}</span>
+      </footer>
+    </article>
+    <button class="btn btn--primary btn--big" data-action="collect-fact">${icon("star")}${esc(t("fact.collect"))}</button>
+  </div>`;
+  finishRender();
+  if (!reducedMotion()) {
+    animate(layerEl.querySelector(".factcard"), { rotateY: [-100, 0], scale: [0.6, 1], opacity: [0, 1], duration: 900, ease: "outBack(1.4)" });
+    animate(layerEl.querySelector(".factcard-wrap .btn"), { opacity: [0, 1], translateY: [20, 0], delay: 600, duration: 400 });
+  }
+  return true;
+}
+
+async function collectFact() {
+  const id = app.pendingFact;
+  if (id && !app.facts.includes(id)) app.facts.push(id);
+  app.pendingFact = null;
+  const card = layerEl.querySelector(".factcard");
+  if (card && !reducedMotion()) {
+    const target = topbarEl.querySelector(".brand")?.getBoundingClientRect();
+    const box = card.getBoundingClientRect();
+    await new Promise(resolve => {
+      setTimeout(resolve, 1000);
+      animate(card, {
+        translateX: target ? target.left - box.left - box.width / 2 + 20 : 0,
+        translateY: target ? target.top - box.top - box.height / 2 + 20 : -300,
+        scale: 0.1, rotate: -20, opacity: [1, 0.2], duration: 700, ease: "inBack(1.4)", onComplete: resolve,
+      });
+    });
+  }
+  app.game = finishFeedback(app.game);
+  screenForPhase();
 }
 
 function renderFeedbackLine() {
@@ -669,7 +843,7 @@ function showEnding() {
       <button class="btn btn--primary btn--big" data-action="new-game">${icon("restart")}${esc(ts(MISSION.messages.tryAgain))}</button>
       <button class="btn btn--ghost" data-action="mission-log">${icon("star")}${esc(t("ending.log"))}</button>
     </div>
-    <p class="fineprint center">${esc(t("ending.newForecast"))}</p>
+    <p class="fineprint center">${esc(t("ending.facts", { n: app.facts.length }))} ${esc(t("ending.newForecast"))}</p>
   </div>`;
   finishRender();
   pop(".popup", { duration: 600 });
@@ -773,12 +947,20 @@ function finishRender({ focus = true } = {}) {
 
 /** Re-draw the current screen in the new language without losing progress. */
 function redraw() {
-  app.worldKey = "";
+  if (app.screen !== "activity") app.worldKey = "";
   switch (app.screen) {
     case "title": return showTitle();
     case "briefing": return showBriefing();
     case "intro": return startStory();
     case "story": return renderStoryLine();
+    case "spot": return showSpotlight();
+    case "fact": return showFact();
+    case "activity": {
+      const banner = layerEl.querySelector(".task-text");
+      const current = app.activityId ? activityFor(app.activityId === "6C-report" ? "6C" : app.activityId, { greenhouseMode: app.activityId === "6C-report" ? "off" : "full" }).def : null;
+      if (banner && current && !layerEl.querySelector(".task.is-finished")) banner.textContent = t(current.task);
+      return renderTopbar();
+    }
     case "choices": return showChoices({ animateIn: false });
     case "result": return app.game.phase === "feedback" ? renderFeedbackLine() : showEnding();
     case "transition": case "ledger": app.screen = "transition"; return showLedger();
@@ -800,6 +982,16 @@ function screenForPhase() {
 
 function advance() {
   if (stopTyping(true)) return; // the first tap finishes the sentence
+  if (app.screen === "spot") {
+    const spots = SPOTLIGHTS[app.game.sceneId];
+    if (app.spot < spots.length - 1) {
+      app.spot += 1;
+      showSpotlight();
+    } else {
+      openChoicesAfterStory();
+    }
+    return;
+  }
   if (app.screen === "story") {
     const scene = getScene(app.game);
     if (app.line < scene.story.length - 1) {
@@ -816,6 +1008,7 @@ function advance() {
       renderFeedbackLine();
       return;
     }
+    if (showFact()) return;
     app.game = finishFeedback(app.game);
     screenForPhase();
   }
@@ -827,12 +1020,15 @@ function startNewGame() {
   app.lastProfileId = profileId;
   app.game = createGame(profileId);
   app.seenCards = [];
+  app.facts = [];
+  app.pendingFact = null;
   app.selected = null;
+  fxEl.innerHTML = "";
   showBriefing();
 }
 
 const actions = {
-  home: showTitle,
+  home() { if (app.screen !== "activity") showTitle(); },
   language() {
     setLanguage(getLanguage() === "en" ? "tr" : "en");
     if (modal.open) modal.close();
@@ -874,6 +1070,10 @@ const actions = {
   },
   confirm(target) { confirmChoice(target.dataset.choice); },
   "skip-cinema"() { if (app.screen === "transition") showLedger(); },
+  "collect-fact"(target) {
+    target.disabled = true;
+    collectFact();
+  },
   "next-sol"() {
     app.game = finishTransition(app.game);
     screenForPhase();
@@ -890,7 +1090,7 @@ document.addEventListener("keydown", event => {
   if (modal.open || (event.key !== " " && event.key !== "Enter")) return;
   const focused = document.activeElement;
   if (focused && (focused.tagName === "BUTTON" || focused.tagName === "A")) return;
-  if (app.screen === "story" || (app.screen === "result" && app.game?.phase === "feedback")) {
+  if (app.screen === "story" || app.screen === "spot" || (app.screen === "result" && app.game?.phase === "feedback")) {
     event.preventDefault();
     advance();
   } else if (app.screen === "intro") {
@@ -912,6 +1112,7 @@ const saved = load();
 setLanguage(saved?.language ?? "en"); // English first; Turkish is opt-in
 app.lastProfileId = saved?.lastProfileId ?? null;
 app.seenCards = saved?.seenCards ?? [];
+app.facts = saved?.facts ?? [];
 if (saved?.game?.phase && saved.screen) {
   app.game = saved.game;
   app.resumeScreen = saved.screen;
