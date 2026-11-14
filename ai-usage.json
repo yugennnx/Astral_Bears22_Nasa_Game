@@ -70,7 +70,7 @@
     {
       "path": "src/game/scenes.js",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex initial module and current provenance/source wording; Claude-assisted v1.2 rules and cards. NASA observations remain external. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "ChatGPT/Codex initial module and current provenance/source wording; Claude-assisted v1.2 rules and cards. NASA observations remain external. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -151,7 +151,7 @@
     {
       "path": "AI_USAGE.md",
       "status": "ai-generated",
-      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -160,7 +160,7 @@
     {
       "path": "ai-usage.json",
       "status": "ai-generated",
-      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -187,7 +187,7 @@
     {
       "path": "docs/compliance/references.md",
       "status": "ai-generated",
-      "scope": "Source inventory, usage and licensing status; no claim that licenses were granted. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "Source inventory, usage and licensing status; no claim that licenses were granted. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -229,7 +229,7 @@
     {
       "path": "package.json",
       "status": "ai-generated",
-      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling).",
+      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -237,7 +237,7 @@
     {
       "path": "CHANGELOG.md",
       "status": "ai-generated",
-      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling).",
+      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -301,7 +301,7 @@
     {
       "path": "src/i18n/ui.js",
       "status": "ai-generated",
-      "scope": "Claude-generated English interface strings and Turkish translations. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "Claude-generated English interface strings and Turkish translations. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -309,7 +309,7 @@
     {
       "path": "src/i18n/story.tr.js",
       "status": "ai-generated",
-      "scope": "Claude-assisted Turkish translation of the story strings. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards).",
+      "scope": "Claude-assisted Turkish translation of the story strings. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -317,7 +317,7 @@
     {
       "path": "src/ui/app.js",
       "status": "ai-generated",
-      "scope": "Claude-generated browser interface. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling).",
+      "scope": "Claude-generated browser interface. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -325,7 +325,7 @@
     {
       "path": "src/ui/art.js",
       "status": "ai-generated",
-      "scope": "Claude-generated SVG illustrations (DUTİ, outpost, icons) drawn in code; no NASA branding. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish).",
+      "scope": "Claude-generated SVG illustrations (DUTİ, outpost, icons) drawn in code; no NASA branding. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -382,6 +382,14 @@
       "tools": [
         "Anthropic Claude"
       ]
+    },
+    {
+      "path": "src/ui/discoveries.js",
+      "status": "ai-generated",
+      "scope": "Claude-generated free-exploration hotspots (36 discoveries, 6 secrets) and secret sprites drawn in code; NASA facts checked on 2026-11-14.",
+      "tools": [
+        "Anthropic Claude"
+      ]
     }
   ],
   "media": {
@@ -389,7 +397,8 @@
       "src/ui/art.js",
       "assets/favicon.svg",
       "src/ui/world.js",
-      "src/ui/activities.js"
+      "src/ui/activities.js",
+      "src/ui/discoveries.js"
     ],
     "generatedVideos": [],
     "generatedAudio": [],
@@ -402,7 +411,8 @@
         "src/ui/app.js",
         "assets/favicon.svg",
         "src/ui/world.js",
-        "src/ui/activities.js"
+        "src/ui/activities.js",
+        "src/ui/discoveries.js"
       ],
       "format": "SVG drawn in code",
       "visibleLabel": "AI-assisted illustration",

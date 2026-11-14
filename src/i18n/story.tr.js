@@ -316,4 +316,8 @@ export const STORY_TR = {
     "Mars: Facts (İngilizce)",
   ["Mars Rock Samples (Perseverance)"]:
     "Mars Rock Samples (Perseverance) (İngilizce)",
+  ["Sunset in Mars' Gale Crater"]:
+    "Sunset in Mars' Gale Crater (İngilizce)",
+  ["Sol 956 (April 15, 2015)"]:
+    "956. Mars günü (15 Nisan 2015)",
 };

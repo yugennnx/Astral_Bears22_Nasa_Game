@@ -20,6 +20,10 @@ Only the official 2026 Space Apps website pages listed in [compliance-audit.md](
 | [NASA — Mars: Facts](https://science.nasa.gov/mars/facts/) | Fact cards after choices 1A, 3C and 6B | Dusty, cold desert world; thin atmosphere mostly of carbon dioxide, nitrogen and argon; as cold as about −153 °C; a sol lasts about 24.6 hours. |
 | [NASA — Mars Rock Samples](https://science.nasa.gov/mission/mars-2020-perseverance/mars-rock-samples/) | Fact cards after choices 2B and 6A | 43 tubes brought to Mars, 38 for samples; samples collected for potential future return. |
 
+| [NASA — Sunset in Mars' Gale Crater](https://science.nasa.gov/resource/sunset-in-mars-gale-crater/) | Exploration discovery on the crater rim | Fine dust lets blue light glow near the Sun at sunset (Curiosity, Sol 956). |
+
+Exploration discoveries (`src/ui/discoveries.js`) reuse "Mars: Facts" (two moons Phobos and Deimos, red colour from rusting iron, Olympus Mons, dust storms, thin carbon-dioxide air, no global magnetic field, about 1.5 AU from the Sun, hazy reddish daytime sky), MOXIE, Veggie, Perseverance samples, the signal-delay blog, the DONKI record and the May 2024 storm article. Items about the fictional outpost are labelled "Our outpost" in the journal; general science items (photosynthesis, light speed, Earth's Moon) carry no source.
+
 Fact cards also reuse the DONKI/Mars-storm article, MEDA data, "Growing Plants in Space" and "Speaking Percy's Language" listed above. All fact cards were checked against their pages on November 14, 2026; claims that could not be verified were not used.
 
 MEDA citation supplied by the archive: **J.A. Rodriguez-Manfredi et al. (2021), The Mars Environmental Dynamics Analyzer, MEDA, NASA Planetary Data System, DOI 10.17189/1522849.** The NMSU domains above host NASA's PDS Atmospheres Node; they are the identified scientific archive, not a third-party participant rule guide.

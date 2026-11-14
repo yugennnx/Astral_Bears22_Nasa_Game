@@ -38,6 +38,8 @@ Anthropic Claude was also used for the **1.4.0 redesign** requested by the team 
 
 Anthropic Claude was also used for the **1.5.0 update**: after playing 1.4.0 the team asked for a scene for every choice, longer and deeper scenes, hands-on tapping tasks, and DUTİ showing the situation before each decision. Claude generated `src/ui/activities.js`, `src/game/facts.js`, the fact-card texts and their Turkish translations. Each fact was checked against the linked NASA page with a web-fetch helper; facts that could not be verified (an InSight end-of-mission claim and an August 2015 lettuce claim) were left out.
 
+Anthropic Claude was also used for the **1.6.0 update**: the team asked for more freedom and curiosity ("the child should discover things on their own, not only through fact cards and tasks"), the child's name, crew-style address and a predict-then-observe step. Claude generated `src/ui/discoveries.js`, the exploration and journal interface, the prediction step and their English/Turkish texts. Facts were checked against NASA pages with a web-fetch helper; claims that could not be verified (a gravity percentage, dust devils, the apparent size of the Sun) were left out.
+
 This audit adds OpenAI ChatGPT/Codex-assisted English translations, metadata, primary-source checks, and wording corrections to those contributions. It does not claim that Claude generated NASA's underlying observations. Claude's exact prompts and model version were not provided in this session.
 
 ## Selected Prompt Record

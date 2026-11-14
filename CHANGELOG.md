@@ -4,6 +4,15 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.6.0 — Explore freely (2026-11-14)
+
+- Free exploration: after DUTİ's spotlights, the child can tap anything in the location before deciding. Each location has five discoveries and one hidden secret (36 in total), with a short DUTİ line for each. Real facts are checked against NASA pages (Mars facts, MOXIE, Veggie, Perseverance samples, the May 2024 storm, the Curiosity sunset); story-world items are labelled as part of our outpost.
+- Mars Journal: every discovery is saved on the device across missions; undiscovered items show as "?" so children want to look again.
+- The child types their name in the briefing; DUTİ and the screens address them as Commander.
+- Predict, then observe: after each decision DUTİ asks whether Energy or Oxygen will go up, stay the same or go down tonight; the morning summary shows whether the guess was right. The ending shows the number of correct guesses.
+- Phones: look-left and look-right buttons to explore wide locations; morning summary in two columns on wide screens.
+- Checked with the automated overlap test (now including hotspots) on full games at 1280 x 720 and 375 x 812, English and Turkish.
+
 ## 1.5.1 — Clean layout (2026-11-14)
 
 - The "AI-assisted illustration" label moved from a fixed corner (where it covered dialogs and pop-ups) to a small line under the HUD.

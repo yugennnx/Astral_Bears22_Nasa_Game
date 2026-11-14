@@ -549,6 +549,12 @@ export const NASA_SOURCES = {
     url: "https://science.nasa.gov/mission/mars-2020-perseverance/mars-rock-samples/",
     kind: "reference",
   },
+  "mars-sunset": {
+    title: "Sunset in Mars' Gale Crater",
+    url: "https://science.nasa.gov/resource/sunset-in-mars-gale-crater/",
+    kind: "archival-reference",
+    observationPeriod: "Sol 956 (April 15, 2015)",
+  },
   "space-plants": {
     title: "Growing Plants in Space",
     url: "https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/",
