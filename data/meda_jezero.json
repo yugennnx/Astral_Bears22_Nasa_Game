@@ -1,0 +1,34 @@
+{
+  "_readme": "Gerçek NASA Perseverance MEDA ölçümleri (PDS arşivinden indirildi, tarafımızdan özetlendi). Oyun kuralları burada değil, GAME_DESIGN.md'de.",
+  "retrieved": "2026-11-14",
+  "dataset": "Mars 2020 Perseverance MEDA, calibrated environment data (PDS4)",
+  "archive": "https://pds-atmospheres.nmsu.edu/data_and_services/atmospheres_data/PERSEVERANCE/meda.html",
+  "location": "Jezero Krateri, Mars",
+  "method": "ATS_LOCAL_TEMP1 (Air Temperature Sensor 1) sütununun bir sol boyunca en düşük ve en yüksek değeri. Kelvin -> Celsius: K - 273,15. Yuvarlanmıştır.",
+  "sols": [
+    {
+      "sol": 290,
+      "earthDate": "2021-12-13",
+      "airTemp_minC": -76.9,
+      "airTemp_maxC": -3.1,
+      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0180_0299/sol_0290/WE__0290___________CAL_ATS_________________P01.CSV"
+    },
+    {
+      "sol": 313,
+      "earthDate": "2022-01-05",
+      "airTemp_minC": -78.5,
+      "airTemp_maxC": -1.6,
+      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0300_0419/sol_0313/WE__0313___________CAL_ATS_________________P01.CSV"
+    },
+    {
+      "sol": 330,
+      "earthDate": "2022-01-23",
+      "airTemp_minC": -79.3,
+      "airTemp_maxC": -9.7,
+      "file": "https://atmos.nmsu.edu/PDS/data/PDS4/Mars2020/mars2020_meda/data_calibrated_env/sol_0300_0419/sol_0330/WE__0330___________CAL_ATS_________________P01.CSV"
+    }
+  ],
+  "kidFact": "Perseverance'ın ölçümüne göre Jezero'da gündüz yaklaşık -3 °C, gece yaklaşık -77 °C oluyor. Tek bir solda 70 dereceden fazla fark var!",
+  "unverified": "RDS (Radiation and Dust Sensor) ışık kanallarını da indirdik ama hangi kanalın toplam güneş ışığını ölçtüğünü veri belgesinden (RDR SIS) doğrulamadık. Kanallar farklı yönde değiştiği için tozun güneşi yüzde kaç azalttığını henüz oyunda gerçek veri olarak KULLANMIYORUZ.",
+  "usageInGame": "Sol 3 bilgi kartı: gece-gündüz sıcaklık farkı. Bu, ısıtıcıların neden enerji harcadığını ve gece güneş paneli çalışmadığında bataryanın neden önemli olduğunu anlatır. Toz-enerji kuralları oyun varsayımıdır."
+}

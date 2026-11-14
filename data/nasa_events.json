@@ -1,0 +1,45 @@
+{
+  "_readme": "Gerçek NASA verisi. Oyun varsayımları bu dosyada YOK; onlar GAME_DESIGN.md içindeki 'oyun varsayımı' tablolarındadır.",
+  "retrieved": "2026-11-14",
+  "events": [
+    {
+      "id": "2024-05-20T05:36:00-CME-001",
+      "type": "CME (Koronal Kütle Atımı)",
+      "dataset": "NASA DONKI (Space Weather Database Of Notifications, Knowledge, Information)",
+      "startTime": "2024-05-20T05:36Z",
+      "observedBy": ["SOHO LASCO C2", "SOHO LASCO C3", "STEREO A COR2"],
+      "speed_km_s_most_accurate": [2678, 1927],
+      "speed_note": "DONKI'de iki analiz 'en doğru' olarak işaretli: 2678 (şok ölçümü) ve 1927. İkisini de gösteriyoruz.",
+      "halfAngle_deg": [45, 43],
+      "sourceNote": "DONKI notuna göre hızlı, halo tipi bir CME. Kaynağı Güneş'in Dünya'dan görünmeyen arka yüzü olarak değerlendirilmiş.",
+      "direction_lon_lat_HEEQ": [176, 0],
+      "apiUrl": "https://ccmc.gsfc.nasa.gov/DONKI/WS/get/CME?startDate=2024-05-20&endDate=2024-05-20",
+      "viewUrl": "https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1",
+      "alert": {
+        "messageID": "20240520-AL-001",
+        "issued": "2024-05-20T15:52Z",
+        "summary": "O tipi CME. NASA'nın Moon to Mars Space Weather Analysis Office ön analizine göre Juno ve Solar Orbiter'a ulaşabileceği tahmin edildi. Mars'tan bahsetmiyor.",
+        "url": "https://ccmc.gsfc.nasa.gov/DONKI/view/Alert/31039/1"
+      },
+      "noFlareRecord": "DONKI'de 2024-05-20 için güneş patlaması (FLR) kaydı yok; kaynak Dünya'dan görünmeyen arka yüzde olduğu için beklenen durum. 19-23 Mayıs arası FLR ve SEP sorguları ana sunucuda kontrol edildi (SEP sonucu boş)."
+    }
+  ],
+  "findings": [
+    {
+      "id": "mars-may-2024-solar-storm",
+      "title": "NASA Watches Mars Light Up During Epic Solar Storm",
+      "publisher": "NASA / JPL",
+      "date": "2024-06-10",
+      "url": "https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/",
+      "facts": [
+        "En büyük olay 20 Mayıs 2024'te oldu; Solar Orbiter verisine göre X12 sınıfı bir güneş patlaması olarak tahmin edildi.",
+        "Curiosity'nin RAD cihazına göre rover'ın yanında duran bir astronot 8.100 mikrogray doz alırdı; NASA bunu 30 göğüs röntgenine eşdeğer ve ölümcül olmayan bir doz olarak açıkladı.",
+        "Bu, Curiosity'nin 12 yıllık görevindeki en büyük radyasyon artışıydı.",
+        "MAVEN ekibi bunu MAVEN'in gördüğü en büyük güneş enerjili parçacık olayı olarak tanımladı.",
+        "NASA'ya göre Mars yörüngesinde veya derin uzayda doz çok daha yüksek olurdu; yüzeyde kayalıklar veya lav tüpleri ek koruma sağlayabilir."
+      ]
+    }
+  ],
+  "linkNote": "DONKI kaydı ile NASA makalesi aynı güne (20 Mayıs 2024) aittir. Bu CME kaydının makaledeki olayla birebir aynı olduğu bizim yorumumuzdur; DONKI kaydında bu bağlantı açıkça yazmaz.",
+  "usageInGame": "Sol 5'teki 'Güneş Fırtınası Uyarısı' sahnesi bu olaya dayanır. Oyundaki Güvenlik kaybı sayıları ölçüm değildir, oyun varsayımıdır. 8.100 mikrogray yalnızca bilgi kartında, gerçek ölçüm etiketiyle gösterilir."
+}
