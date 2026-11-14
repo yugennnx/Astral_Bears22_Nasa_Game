@@ -13,9 +13,68 @@ export const MISSION = {
   resourceBounds: { min: 0, max: 10 },
   scienceTarget: 6,
   successRequirements: { energy: 1, oxygen: 1, safety: 4, science: 6 },
+
+  // Shared transition rules. Every scene transition (Scenes 1–5) uses these values.
+  // All numbers are game-design values, not NASA measurements.
+  recharge: {
+    clear: 1, // net battery recharge after a clear stage
+    dusty: 0, // net battery recharge after a dusty stage
+    panelBonusWhenDusty: 1, // extra recharge on each dusty stage if panels were serviced (1A)
+  },
+  lifeSupport: {
+    oxygenPerStage: -1, // crew oxygen use between stages
+    lowPowerEnergyAtMost: 2, // if Energy after the decision is this low...
+    lowPowerExtraOxygen: -1, // ...life support runs in low-power mode and loses 1 more Oxygen
+  },
+
+  // Mission profiles give each new game a different, explainable starting situation.
+  // Pick one at random when a game starts and show its briefing before Scene 1.
+  // Every profile is checked by tools/check_story_data.mjs to keep all 17 choices winnable.
+  defaultProfileId: "standard",
+  profiles: [
+    {
+      id: "standard",
+      title: "Standard Mission",
+      briefing: "Dust is expected after Sol 2 and Sol 4. Supplies are full.",
+      dustyAfterScenes: [2, 4],
+      startResources: { energy: 8, oxygen: 8, safety: 8 },
+    },
+    {
+      id: "dusty-season",
+      title: "Dusty Season",
+      briefing: "Dust is expected after Sol 2, Sol 3, and Sol 4. Clean panels will matter more!",
+      dustyAfterScenes: [2, 3, 4],
+      startResources: { energy: 8, oxygen: 8, safety: 8 },
+    },
+    {
+      id: "small-oxygen-supply",
+      title: "Small Oxygen Supply",
+      briefing: "Clear skies are expected except after Sol 2, but the oxygen tanks are not full.",
+      dustyAfterScenes: [2],
+      startResources: { energy: 8, oxygen: 7, safety: 8 },
+    },
+  ],
+  profileNote: "Mission profiles and dust forecasts are fictional game settings, not measured Mars weather.",
+
+  // Long-term outcome shown in every ending report (story-plan Rule: greenhouse is not a
+  // victory condition, but neglecting food production must have a long-term consequence).
+  nextCrewReport: {
+    title: "Is the base ready for the next crew?",
+    food: {
+      full: { status: "ready", text: "Fresh food: ready. The greenhouse is growing well for the next crew." },
+      minimum: { status: "limited", text: "Fresh food: limited. The next crew will need to grow more plants." },
+      off: { status: "at-risk", text: "Fresh food: at risk. The greenhouse is off, so the next crew must restart it and rely on packaged food for longer." },
+    },
+    safety: {
+      ready: { minSafety: 6, text: "Crew health margin: good." },
+      low: { text: "Crew health margin: low. The next crew should avoid risky outdoor work at first." },
+    },
+  },
+
   initialState: {
     sol: 1,
     sceneId: "welcome-to-mars",
+    profileId: "standard",
     resources: { energy: 8, oxygen: 8, safety: 8 },
     science: 0,
     flags: {
@@ -44,6 +103,11 @@ export const MISSION = {
     insufficientOxygen: "Not enough oxygen",
     reserveWarning: "This choice will use up your reserve.",
     oxygenTransitionWarning: "Your oxygen will run out before the next stage.",
+    forecast: "Before the next stage: Energy {energy}, Oxygen {oxygen}.",
+    clearStage: "Clear sky: the battery receives a small net recharge. The crew uses oxygen between stages.",
+    dustyStage: "Dust: no net battery recharge. The crew uses oxygen between stages.",
+    panelBonus: "Your serviced panels add 1 extra Energy despite the dust.",
+    lowPower: "Battery very low! Life support runs in low-power mode, so we lose 1 extra Oxygen.",
     timeSkip: "Game time fast-forwarded",
     disclaimer: "All numerical effects are educational game-design values, not NASA measurements. Safety is an abstract game indicator, not a radiation dose.",
   },
@@ -75,7 +139,7 @@ export const SCENES = {
         label: "Service the solar panels",
         effects: { energy: -2, oxygen: -1, safety: 0, science: 0 },
         setFlags: { panelsServiced: true },
-        futureConsequence: "Gain 1 extra Energy after Scene 2 and another after Scene 4. The shelter remains unprepared.",
+        futureConsequence: "Gain 1 extra Energy after every dusty stage. The shelter remains unprepared.",
         feedback: [
           { speakerId: "duti", text: "The panels are ready! We used powered tools and oxygen from our suit tanks. We can recharge better later, but we did not organize the shelter today." },
         ],
@@ -91,10 +155,7 @@ export const SCENES = {
         ],
       },
     ],
-    transition: {
-      effects: { energy: 1, oxygen: -1, safety: 0, science: 0 },
-      explanation: "The battery receives a net recharge after essential systems use their share. The crew uses oxygen between stages.",
-    },
+    transition: {},
     nextSceneId: "power-shortage",
   },
 
@@ -109,6 +170,12 @@ export const SCENES = {
       { speakerId: "narrator", text: "The astronauts want to study some unusual rocks nearby. We could also fill our oxygen tank. There is a smaller research task we can do inside the base, too. Where should we use our energy?" },
     ],
     learningGoal: "Research, life support, and outside work share a limited resource budget.",
+    scienceCard: {
+      title: "Real NASA data: Mars nights are very cold",
+      text: "NASA's Perseverance rover measured the air in Jezero Crater on Sol 290 (December 13, 2021). The warmest reading was about −3 °C and the coldest was about −77 °C. A Mars base needs batteries and heaters when the Sun goes down. Our dust and recharge values are game values.",
+      dataNote: "Daily minimum and maximum of MEDA air temperature sensor 1, rounded. The game's dust forecast is fictional, not measured Mars weather.",
+      sourceIds: ["meda-pds-bundle"],
+    },
     choices: [
       {
         id: "2A",
@@ -139,19 +206,7 @@ export const SCENES = {
         ],
       },
     ],
-    transition: {
-      effects: { energy: 0, oxygen: -1, safety: 0, science: 0 },
-      explanation: "Dust leaves no net battery recharge. The crew uses oxygen between stages.",
-      variants: [
-        {
-          when: { flag: "panelsServiced", equals: true },
-          overrides: {
-            effects: { energy: 1, oxygen: -1, safety: 0, science: 0 },
-            explanation: "Your earlier panel maintenance provides 1 extra Energy despite the dust. The crew uses oxygen between stages.",
-          },
-        },
-      ],
-    },
+    transition: {},
     nextSceneId: "greenhouse-problem",
   },
 
@@ -203,8 +258,7 @@ export const SCENES = {
       sourceIds: ["space-plants"],
     },
     transition: {
-      effects: { energy: 1, oxygen: -1, safety: 0, science: 0 },
-      explanation: "The battery receives a net recharge. The crew uses oxygen between stages. Greenhouse research points are earned only if studied in Scene 6.",
+      note: "Greenhouse research points are earned only if studied in Scene 6.",
     },
     nextSceneId: "message-from-earth",
   },
@@ -255,19 +309,7 @@ export const SCENES = {
       text: "The 20-minute delay is a selected value for this fictional mission. Actual Earth–Mars communication delays vary with the planets' positions.",
       sourceIds: ["mars-communication"],
     },
-    transition: {
-      effects: { energy: 0, oxygen: -1, safety: 0, science: 0 },
-      explanation: "Dust leaves no net battery recharge. The crew uses oxygen between stages.",
-      variants: [
-        {
-          when: { flag: "panelsServiced", equals: true },
-          overrides: {
-            effects: { energy: 1, oxygen: -1, safety: 0, science: 0 },
-            explanation: "Your panel maintenance provides its second and final extra Energy point. The crew uses oxygen between stages.",
-          },
-        },
-      ],
-    },
+    transition: {},
     nextSceneId: "solar-radiation-alert",
   },
 
@@ -328,13 +370,13 @@ export const SCENES = {
       },
     ],
     scienceCard: {
-      title: "Inspired by NASA archival observations — not live data",
-      text: "A solar event in September 2017 was observed by MAVEN in Mars orbit and Curiosity/RAD on the Martian surface. This mission is a fictional adaptation. Its Safety values, Science Points, characters, and timing are educational game design.",
-      sourceIds: ["solar-event-2017", "radiation-graphic-2017"],
+      title: "Real NASA event: the May 2024 solar storm (archival data, not live)",
+      text: "On May 20, 2024, NASA's DONKI space weather database recorded a very fast cloud of material leaving the Sun (a CME). NASA reported that a huge solar storm from that day reached Mars. The Curiosity rover measured its biggest radiation jump since landing: an astronaut standing next to it would have received about as much radiation as 30 chest X-rays. In this game, Safety points are game values, not radiation doses.",
+      dataNote: "DONKI describes the CME near the Sun and does not mention Mars. Matching this record to the Mars event by date and direction is our interpretation. The 8,100 microgray figure comes from NASA's article, not from DONKI.",
+      sourceIds: ["donki-cme-2024-05-20", "mars-solar-storm-2024"],
     },
     transition: {
-      effects: { energy: 1, oxygen: -1, safety: 0, science: 0 },
-      explanation: "The battery receives a net recharge and the crew uses oxygen. Local sensors confirm that the fictional solar event has subsided before the final task. Safety is not automatically restored.",
+      note: "Local sensors confirm that the solar event has subsided before the final task. Safety is not automatically restored.",
     },
     nextSceneId: "final-mission",
   },
@@ -453,17 +495,25 @@ export const NASA_SOURCES = {
     url: "https://science.nasa.gov/blog/speaking-percys-language-how-to-talk-so-perseverance-will-listen/",
     kind: "reference",
   },
-  "solar-event-2017": {
-    title: "Large Solar Storm Sparks Global Aurora and Doubles Radiation Levels on the Martian Surface",
-    url: "https://www.jpl.nasa.gov/news/large-solar-storm-sparks-global-aurora-and-doubles-radiation-levels-on-the-martian-surface/",
-    kind: "archival-reference",
-    observationPeriod: "September 2017",
+  "donki-cme-2024-05-20": {
+    title: "NASA DONKI record 2024-05-20T05:36:00-CME-001",
+    url: "https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1",
+    kind: "archival-record",
+    observationPeriod: "May 20, 2024",
+    localData: "data/nasa_events.json",
   },
-  "radiation-graphic-2017": {
-    title: "Solar Storm's Radiation at Martian Orbit and Surface",
-    url: "https://science.nasa.gov/resource/solar-storms-radiation-at-martian-orbit-and-surface/",
+  "mars-solar-storm-2024": {
+    title: "NASA Watches Mars Light Up During Epic Solar Storm",
+    url: "https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/",
     kind: "archival-reference",
-    observationPeriod: "September 10–15, 2017",
+    observationPeriod: "May 2024 (published June 10, 2024)",
+  },
+  "meda-pds-bundle": {
+    title: "Mars 2020 Perseverance MEDA data (NASA Planetary Data System)",
+    url: "https://pds.nasa.gov/ds-view/pds/viewBundle.jsp?identifier=urn:nasa:pds:mars2020_meda",
+    kind: "archival-dataset",
+    observationPeriod: "Sol 290 (December 13, 2021)",
+    localData: "data/meda_jezero.json",
   },
   "space-plants": {
     title: "Growing Plants in Space",

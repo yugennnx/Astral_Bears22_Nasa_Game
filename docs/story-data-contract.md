@@ -2,7 +2,7 @@
 
 This guide describes the English scene data in `src/game/scenes.js`, based on `story-plan.md`. The companion's display name is **DUTİ** and the code identifier is `duti`.
 
-The repository also contains a ten-sol design and its Python simulator. The JavaScript scene data implements the six-sol story version, with three resource indicators starting at 8/10. Use the rules in `story-plan.md` for this prototype.
+The retired ten-sol design and its Python simulator are kept only for history in `archive/ten-sol-design-v0/`. The active rules are `story-plan.md` (v1.2) and this scene data. See `docs/CHANGES-v1.2.md` for what changed.
 
 ## Exports
 
@@ -26,7 +26,7 @@ console.log(firstScene.choices); // The first scene's two choices
 
 The relative import above assumes the caller is `src/main.js`. Adjust the path for another caller.
 
-- `MISSION`: identity, starting state, bounds, success thresholds, opening text, and common English labels.
+- `MISSION`: identity, starting state, bounds, success thresholds, opening text, common English labels, shared transition rules (`recharge`, `lifeSupport`), mission `profiles`, and the `nextCrewReport` texts.
 - `SCENE_ORDER`: the six scene IDs in order.
 - `SCENES`: complete English story blocks, choices, conditional variants, feedback, transitions, and source-card references.
 - `ENDINGS`: English outcome messages. Add actual totals and specific causes from game state.
@@ -45,7 +45,7 @@ Treat all exports as read-only templates. Clone the starting state for every new
   story: [{ speakerId: "duti", text: "..." }],
   learningGoal: "...",
   choices: [/* two or three choices */],
-  transition: {/* shared changes after the decision and feedback */},
+  transition: { note: "optional extra explanation" }, // values come from MISSION rules + profile
   nextSceneId: "greenhouse-problem"
 }
 ```
@@ -107,13 +107,23 @@ In particular:
 
 | Earlier State | Resolved Effect |
 | --- | --- |
-| `panelsServiced === true` | Recharge after Scenes 2 and 4 becomes +1 Energy; Oxygen is still −1. |
+| `panelsServiced === true` | Every dusty transition of the current profile gives +1 Energy instead of 0. |
 | `shelterPrepared === true` | 5A costs 0 Energy. |
 | `earthGuide === true` | 5B costs 1 Energy. |
 | `sampleCollected === true` | 6A awards 4 Science and uses rock-analysis feedback. |
 | `greenhouseMode === "full"` | 6C becomes the greenhouse study, awards 3 Science, and sets `finalTask: "greenhouse"`. |
 | `greenhouseMode === "minimum"` | 6C becomes the smaller greenhouse study and awards 2 Science. |
 | `greenhouseMode === "off"` | 6C keeps its base report label, 1 Science, and `finalTask: "report"`. |
+
+## Starting a Game: Mission Profiles
+
+1. Pick one entry of `MISSION.profiles` at random (or let a teacher choose).
+2. Clone `MISSION.initialState`, set `profileId`, and copy the profile's `startResources` into `resources`.
+3. Show the profile `title` and `briefing` (plus `MISSION.profileNote`) before Scene 1, so the player can plan.
+
+## Ending Report: Next-Crew Readiness
+
+Every ending (success, partial, stopped) shows `MISSION.nextCrewReport.title`, the food line for `flags.greenhouseMode` (`full`, `minimum`, `off`; use `off` if Scene 3 was never reached), and the safety line (`ready` if Safety ≥ 6, otherwise `low`). This report does not change the win/lose result.
 
 ## Applying a Decision
 
@@ -128,7 +138,10 @@ The engine should:
 5. Stop immediately if a resource is 0. Later recharge must not revive the mission.
 6. Show the feedback cards in order. A `caption` marks a time skip; it is not a real-time countdown.
 7. Apply `setFlagsAfterFeedback` only when feedback finishes.
-8. Resolve and apply the scene's shared transition exactly once. Check for 0 again. Include the forecast before selection.
+8. Calculate and apply the scene's shared transition exactly once, then check for 0 again. Include the forecast before selection:
+   - Energy: `recharge.clear` (+1) if the stage is clear; `recharge.dusty` (0) plus `recharge.panelBonusWhenDusty` (+1, only if `panelsServiced`) if the current profile lists this scene's sol in `dustyAfterScenes`.
+   - Oxygen: `lifeSupport.oxygenPerStage` (−1), plus `lifeSupport.lowPowerExtraOxygen` (−1) if Energy after the decision is at most `lifeSupport.lowPowerEnergyAtMost` (2). Show `messages.lowPower` when this happens.
+   - Show `scene.transition.note` when present.
 9. Advance to `nextSceneId` and the next sol, or evaluate the final ending if there is no next scene. Scene 6 has no shared transition.
 10. If no choice can be used, show a specific stopped-mission reason instead of an empty choice list.
 
@@ -155,6 +168,6 @@ From the repository root, run:
 node tools/check_story_data.mjs
 ```
 
-The checker verifies scene links, source references, flag names, variant effects, all 17 choices, the documented example paths, and the reachable ending counts. It is a reference model for checking the data, not a production engine or a browser playtest.
+The checker verifies scene links, source references, flag names, variant effects, all 17 choices, mission profiles, the documented example paths, and the reachable ending counts for every profile (every choice must stay winnable in every profile). It is a reference model for checking the data, not a production engine or a browser playtest.
 
-No external JavaScript dependencies are needed. Use a Node.js version with ES module syntax detection for `.js` files, such as the checked local Node.js 26 runtime. A frontend project with `"type": "module"` can import the scene file normally.
+No external JavaScript dependencies are needed. Use a Node.js version with ES module syntax detection for `.js` files, such as Node.js 26 (installed on the team machines). A frontend project with `"type": "module"` can import the scene file normally.

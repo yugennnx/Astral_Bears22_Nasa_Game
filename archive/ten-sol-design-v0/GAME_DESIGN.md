@@ -1,3 +1,5 @@
+> **ARŞİV (geçersiz kural seti).** Bu 10 sollu taslak, 6 sahnelik `story-plan.md` seçildiği için arşivlendi. Oyunun geçerli kuralları `story-plan.md` ve `src/game/scenes.js` içindedir. Bu belge yalnızca tasarım geçmişi ve NASA veri araştırması (DONKI, MEDA) için saklanıyor; gerçek veri dosyaları hâlâ `data/` klasöründe ve oyunda kullanılıyor.
+
 # Red Base: 10 Sols — Oyun Tasarım Belgesi
 
 Format: Hikâye ve karar tabanlı oyun (Narrative Decision Tree) + arka planda küçük bir kaynak simülasyonu

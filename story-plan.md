@@ -1,6 +1,6 @@
 # Compass Outpost: Six Sols on Mars
 
-Story and Decision Plan for the First Playable Prototype — v1.1
+Story and Decision Plan for the First Playable Prototype — v1.2 (see `docs/CHANGES-v1.2.md`)
 
 **Language:** English for all story text, dialogue, interface labels, code identifiers, and code comments.
 
@@ -41,18 +41,28 @@ Energy, Oxygen, and Safety are whole numbers between 0 and 10. Science is separa
 5. After each of the first five scenes, apply the shared transition below and check resources again.
 6. Open the next scene. After the sixth decision, evaluate the ending without applying another shared transition.
 
-| Completed Scene | Shared Energy Change | Shared Oxygen Change | Extra Energy if Panels Were Serviced |
+| Rule | Shared Energy Change | Shared Oxygen Change |
+| --- | --- | --- |
+| Clear stage | +1 | −1 |
+| Dusty stage | 0 (+1 if panels were serviced in 1A) | −1 |
+| Low-power life support: Energy is **2 or less** after the decision | (as above) | **one extra −1** (total −2) |
+| After Scene 6 | No transition | No transition |
+
+The Energy values represent **net battery recharge after essential systems have used their share**. Shared Oxygen loss represents the crew's life-support consumption between scenes. Decision effects are additional to these shared changes.
+
+**Low-power life support (v1.2):** Life support needs electricity. If the battery is very low after a decision, life support runs in low-power mode and the crew loses one extra Oxygen point before the next stage. DUTİ says: *“Battery very low! Life support runs in low-power mode, so we lose 1 extra Oxygen.”* This connects saving energy today with oxygen trouble later.
+
+### Mission Profiles (v1.2)
+
+Each new game randomly selects one fictional mission profile and shows its briefing before Scene 1. The profile decides which transitions are dusty and the starting supplies. All three keep every choice winnable (checked by `tools/check_story_data.mjs`).
+
+| Profile | Dusty after Scenes | Start (E/O/S) | Briefing |
 | --- | --- | --- | --- |
-| 1 | +1 | −1 | 0 |
-| 2 | 0 | −1 | +1 |
-| 3 | +1 | −1 | 0 |
-| 4 | 0 | −1 | +1 |
-| 5 | +1 | −1 | 0 |
-| 6 | No transition | No transition | 0 |
+| `standard` | 2, 4 | 8 / 8 / 8 | Dust is expected after Sol 2 and Sol 4. Supplies are full. |
+| `dusty-season` | 2, 3, 4 | 8 / 8 / 8 | Dust is expected after Sol 2, Sol 3, and Sol 4. Clean panels will matter more! |
+| `small-oxygen-supply` | 2 | 8 / 7 / 8 | Clear skies are expected except after Sol 2, but the oxygen tanks are not full. |
 
-The Energy values represent **net battery recharge after essential systems have used their share**. Fictional dusty conditions reduce net recharge during the second and fourth transitions. Serviced panels provide one additional Energy point during each of those two transitions. Shared Oxygen loss represents the crew's life-support consumption between scenes. Decision effects are additional to these shared changes.
-
-This weather sequence is fixed for the first prototype. Do not label it as measured Mars weather. Show the next transition forecast in every scene, for example: **“Before the next stage: Energy +0, Oxygen −1.”** Include any panel bonus in the displayed forecast. Clearly warn the player if the next transition would reduce Oxygen to 0.
+Every profile has dust after Scene 2 because Scene 2's story is a power shortage. Do not label the forecast as measured Mars weather. Show the next transition forecast in every scene, for example: **“Before the next stage: Energy +0, Oxygen −1.”** Include any panel bonus and low-power Oxygen loss in the displayed forecast. Clearly warn the player if the next transition would reduce Oxygen to 0.
 
 ### Costs and Mission Stops
 
@@ -77,7 +87,7 @@ This weather sequence is fixed for the first prototype. Do not label it as measu
 
 | ID | Button Label | Energy | Oxygen | Safety | Science | Later Consequence |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1A | Service the solar panels | −2 | −1 | 0 | 0 | Adds +1 Energy to the recharge after Scene 2 and another +1 after Scene 4. |
+| 1A | Service the solar panels | −2 | −1 | 0 | 0 | Adds +1 Energy to the recharge after every dusty stage (two or three, depending on the mission profile). |
 | 1B | Prepare the storm shelter | −1 | 0 | +1 | 0 | Reduces the preparation cost of Choice 5A from 1 Energy to 0. |
 
 ### DUTİ's Feedback
@@ -136,9 +146,11 @@ This weather sequence is fixed for the first prototype. Do not label it as measu
 
 **Learning goal:** Research, life support, and outside work share a limited resource budget. Oxygen production needs electricity, and outside tasks use suit oxygen.
 
+**Science card (real NASA data):** *“Mars nights are very cold.”* Perseverance's MEDA instrument measured the air in Jezero Crater on Sol 290 (December 13, 2021): warmest about −3 °C, coldest about −77 °C. A base needs batteries and heaters when the Sun goes down. Source: NASA Planetary Data System, Mars 2020 MEDA bundle; summary in `data/meda_jezero.json`.
+
 **Visual preparation:** Choice cards show an oxygen system, a sample container, and a measurement display. If collected, show the rock container on a laboratory shelf in later scenes.
 
-**Transition:** Apply the shared transition, then open Scene 3. If the player selected 1A, apply and explain the first +1 Energy panel bonus here.
+**Transition:** Apply the shared transition, then open Scene 3. This stage is dusty in every profile; if the player selected 1A, apply and explain the panel bonus here.
 
 ## 5. Scene 3 — Greenhouse Problem
 
@@ -224,7 +236,7 @@ Then advance the game's time:
 
 **Visual preparation:** Show a message icon traveling between Earth and Mars. Do not make the player wait 40 real minutes. Use short transition cards labeled **“Game time fast-forwarded.”** Complete the exchange within this scene rather than implying that the signal necessarily takes a full day.
 
-**Transition:** Apply the shared transition, then open Scene 5. If 1A was selected, apply its second and final +1 Energy panel bonus here.
+**Transition:** Apply the shared transition, then open Scene 5. If this stage is dusty in the current profile and 1A was selected, apply the panel bonus here.
 
 ## 7. Scene 5 — Solar Radiation Alert
 
@@ -268,11 +280,13 @@ Show this warning on 5C before selection: **“High risk: Safety −4. The final
 
 ### Connection to Real NASA Information
 
-Add an information card labeled **“Inspired by NASA archival observations — not live data.”** Use the September 2017 solar event observed by MAVEN in Mars orbit and Curiosity/RAD on the Martian surface. An optional details card can show the actual measurement graphic.
+Add an information card labeled **“Real NASA event: the May 2024 solar storm (archival data, not live).”**
 
-This plan does not claim that a DONKI API record has already been downloaded. A verified NASA archival event has been selected for the first version. If DONKI is added later, verify the event ID, date, observing instrument, and relevance to Mars. An event recorded near Earth is not automatically a measured surface radiation dose on Mars.
+- **DONKI record:** `2024-05-20T05:36:00-CME-001`, a fast CME that started on May 20, 2024 at 05:36 UTC (speed estimates 1,927–2,678 km/s). Downloaded from NASA's DONKI service and stored in `data/nasa_events.json`.
+- **What happened at Mars:** NASA reported that a huge solar storm on May 20, 2024 reached Mars. Curiosity's RAD instrument showed that an astronaut standing next to the rover would have received 8,100 micrograys, about the same as 30 chest X-rays, the biggest jump since the rover landed.
+- **Honesty note (show in the details card):** DONKI describes the CME near the Sun and its alert does not mention Mars. Matching this record to the Mars event by date and direction is our interpretation. DONKI is not a measured surface radiation dose on Mars.
 
-**Safety −4 and Science +2 are game-design effects, not NASA-measured doses or predicted human health outcomes.** The timing and characters' decisions are educational fiction, not an exact reconstruction of the 2017 event.
+**Safety −4 and Science +2 are game-design effects, not NASA-measured doses or predicted human health outcomes.** The timing and characters' decisions are educational fiction, not an exact reconstruction of the 2024 event. The September 2017 event is no longer used.
 
 **Visual preparation:** Show the shelter, remote robot, and warning symbols. Do not depict radiation as a visible fireball. If particles are illustrated, treat them as a conceptual illustration. If NASA's purple aurora imagery is used, explain that it represents ultraviolet observations rather than the same colors seen with the naked eye.
 
@@ -367,6 +381,8 @@ Stop the mission if Energy, Oxygen, or Safety reaches 0 at any application step,
 
 Example explanation: **“Our oxygen reserve ran out between stages. Producing oxygen in Scene 4 could have helped us reach the final day.”** Check that any suggested alternative was actually available in that player's earlier state before displaying it.
 
+**Next-crew readiness report (v1.2):** Every ending shows *“Is the base ready for the next crew?”* with a fresh-food line (full → ready, minimum → limited, off → at risk) and a crew-health line (Safety 6+ → good, otherwise low). This makes food production a long-term consequence without making the greenhouse a victory condition.
+
 **Report the greenhouse outcome separately:** Full production, smaller production, or a greenhouse that needs restarting. Packaged food lasts through this short mission; shutting down the greenhouse does not cause immediate starvation. Its cost is the loss of fresh food production and the related research opportunity. Greenhouse success is not an additional mandatory victory condition.
 
 ## 10. Decision Connections and Implementation Contract
@@ -377,7 +393,7 @@ This story branches and rejoins using game state. It does not require a separate
 
 | Earlier Decision | Stored State | Affected Content |
 | --- | --- | --- |
-| 1A | `panelsServiced: true` | Recharge after Scenes 2 and 4 |
+| 1A | `panelsServiced: true` | Recharge after every dusty stage of the mission profile |
 | 1B | `shelterPrepared: true` | Preparation cost of 5A |
 | 2B | `sampleCollected: true` | Text and Science reward of 6A |
 | 3A / 3B / 3C | `greenhouseMode: "full" / "minimum" / "off"` | 6C's title, visual, Science reward, and greenhouse report |
@@ -410,7 +426,7 @@ Required visual states: serviced/unserviced panels; prepared/unprepared shelter;
 
 ## 11. Numerically Checked Example Paths
 
-Starting state: 8 Energy, 8 Oxygen, 8 Safety, 0 Science. All transitions and requirements above are applied.
+Starting state: `standard` profile, 8 Energy, 8 Oxygen, 8 Safety, 0 Science. All transitions (including low-power life support) and requirements above are applied.
 
 | Strategy | Choices | Final Energy | Final Oxygen | Final Safety | Science | Outcome |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -420,15 +436,16 @@ Starting state: 8 Energy, 8 Oxygen, 8 Safety, 0 Science. All transitions and req
 | Conserving resources but doing too little research | 1B → 2A → 3B → 4A → 5A → 6C | 5 | 5 | 9 | 2 | Partial success |
 | Neglecting oxygen replenishment | 1A → 2B → 3A → 4B → 5A | 6 | 0 | 8 | 3 | Mission stops at the fifth transition |
 
-All reachable paths in the decision model were explored: 103 full-success endings, 219 partial-success endings, and 41 early mission stops. These are counts of terminal paths, not equally likely player behaviors or a success probability. Options whose requirements were not met were blocked separately. Each of the 17 choices appears on at least one full-success path with suitable earlier and later decisions.
+All reachable paths in the decision model were explored. `standard`: 103 full-success endings, 219 partial-success endings, and 41 early mission stops. `dusty-season`: 95 / 214 / 51. `small-oxygen-supply`: 77 / 199 / 45. In every profile the maximum Science is 8. These are counts of terminal paths, not equally likely player behaviors or a success probability. Options whose requirements were not met were blocked separately. In every profile, each of the 17 choices appears on at least one full-success path with suitable earlier and later decisions.
 
 This check covers numerical consistency and completion through different strategies. Playtesting with children has not yet been conducted. Values may change after playtesting; recalculate the example paths whenever they change.
 
 ## 12. Scientific Basis and NASA Sources
 
 1. **Mars communication delay:** NASA explains that commands can take approximately 3–22 minutes to reach Perseverance one way, depending on Earth–Mars geometry. The story's 20 minutes is a selected scenario value. Source: [Speaking Percy's Language](https://science.nasa.gov/blog/speaking-percys-language-how-to-talk-so-perseverance-will-listen/).
-2. **Real radiation event:** The September 2017 solar event was observed by MAVEN and Curiosity/RAD. The crewed Compass Outpost scenario is a fictional adaptation. Source: [NASA/JPL — Large Solar Storm Sparks Global Aurora and Doubles Radiation Levels on the Martian Surface](https://www.jpl.nasa.gov/news/large-solar-storm-sparks-global-aurora-and-doubles-radiation-levels-on-the-martian-surface/).
-3. **Actual measurement graphic:** NASA's graphic covering September 10–15, 2017 separates particle measurements in Mars orbit from surface radiation measurements. No numerical conversion into the game's Safety scale has been made. Source: [Solar Storm's Radiation at Martian Orbit and Surface](https://science.nasa.gov/resource/solar-storms-radiation-at-martian-orbit-and-surface/).
+2. **Real radiation event (DONKI):** CME `2024-05-20T05:36:00-CME-001`, NASA DONKI. Source: [DONKI record](https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1), local copy `data/nasa_events.json`.
+3. **Radiation at Mars (May 2024):** Curiosity/RAD and MAVEN observations of the May 2024 storm. No numerical conversion into the game's Safety scale has been made. Source: [NASA Watches Mars Light Up During Epic Solar Storm](https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/).
 4. **Plant-growing research:** NASA projects such as Veggie investigate fresh food production in space. Do not present those studies as an existing Mars greenhouse or a system that produces all crew food in six days. Source: [Growing Plants in Space](https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/).
+5. **Mars temperatures (MEDA):** Perseverance MEDA air temperature, Jezero Crater, Sols 290, 313 and 330. Source: [NASA PDS — Mars 2020 MEDA bundle](https://pds.nasa.gov/ds-view/pds/viewBundle.jsp?identifier=urn:nasa:pds:mars2020_meda), local summary `data/meda_jezero.json`.
 
-Sources were checked on November 14, 2026 during the original plan's research. This English edition retains those references. This file is a story design, not a working API integration, a downloaded raw dataset, or a finished interface. Include the source name, observation date, archival-data label, and link in the science card. Select individual photographs and record their credits before use; image assets have not been selected or downloaded as part of this document.
+Sources were checked on November 14, 2026 during the original plan's research. The 2017 references were replaced in v1.2 by the downloaded 2024 DONKI record and MEDA data. This file is a story design, not a working API integration, a downloaded raw dataset, or a finished interface. Include the source name, observation date, archival-data label, and link in the science card. Select individual photographs and record their credits before use; image assets have not been selected or downloaded as part of this document.

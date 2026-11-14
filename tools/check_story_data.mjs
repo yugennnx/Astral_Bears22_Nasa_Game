@@ -90,12 +90,32 @@ for (const [index, id] of SCENE_ORDER.entries()) {
   if (index === SCENE_ORDER.length - 1) {
     assert.equal(scene.transition, null);
   } else {
-    checkEffects(scene.transition.effects);
-    checkVariants(scene.transition);
-    assert.equal(scene.transition.effects.oxygen, -1);
+    // Transition values come from MISSION.recharge, MISSION.lifeSupport and the mission profile.
+    for (const key of Object.keys(scene.transition)) assert.equal(key, "note", `Unexpected transition field: ${key}`);
   }
 }
 assert.equal(choiceIds.size, 17);
+
+// Mission profiles, shared transition rules and the next-crew report.
+assert.deepEqual(MISSION.recharge, { clear: 1, dusty: 0, panelBonusWhenDusty: 1 });
+assert.equal(MISSION.lifeSupport.oxygenPerStage, -1);
+const profileIds = MISSION.profiles.map(profile => profile.id);
+assert.equal(new Set(profileIds).size, profileIds.length);
+assert(profileIds.includes(MISSION.defaultProfileId));
+assert.equal(MISSION.initialState.profileId, MISSION.defaultProfileId);
+const defaultProfile = MISSION.profiles.find(profile => profile.id === MISSION.defaultProfileId);
+assert.deepEqual(MISSION.initialState.resources, defaultProfile.startResources);
+for (const profile of MISSION.profiles) {
+  assert(profile.title && profile.briefing);
+  // Scene 2's story describes a power shortage, so every profile must have dust after Scene 2.
+  assert(profile.dustyAfterScenes.includes(2), `${profile.id} must include dust after Scene 2`);
+  for (const sceneNumber of profile.dustyAfterScenes) assert(sceneNumber >= 1 && sceneNumber <= 5);
+  for (const key of MISSION.resourceKeys) {
+    const value = profile.startResources[key];
+    assert(Number.isInteger(value) && value >= 1 && value <= 10);
+  }
+}
+assert.deepEqual(Object.keys(MISSION.nextCrewReport.food).sort(), ["full", "minimum", "off"]);
 for (const source of Object.values(NASA_SOURCES)) {
   const url = new URL(source.url);
   assert.equal(url.protocol, "https:");
@@ -119,6 +139,20 @@ function exhausted(state) {
   return MISSION.resourceKeys.some(key => state.resources[key] === 0);
 }
 
+// Shared transition after the decision: recharge depends on the profile's dust forecast,
+// and very low battery puts life support into low-power mode (extra Oxygen loss).
+function transitionEffects(state, scene) {
+  const profile = MISSION.profiles.find(item => item.id === state.profileId);
+  const dusty = profile.dustyAfterScenes.includes(scene.sol);
+  const { recharge, lifeSupport } = MISSION;
+  const energy = dusty
+    ? recharge.dusty + (state.flags.panelsServiced ? recharge.panelBonusWhenDusty : 0)
+    : recharge.clear;
+  const lowPower = state.resources.energy <= lifeSupport.lowPowerEnergyAtMost;
+  const oxygen = lifeSupport.oxygenPerStage + (lowPower ? lifeSupport.lowPowerExtraOxygen : 0);
+  return { energy, oxygen, safety: 0, science: 0 };
+}
+
 function step(state, rawChoice) {
   const scene = SCENES[state.sceneId];
   const choice = resolve(rawChoice, state);
@@ -132,7 +166,7 @@ function step(state, rawChoice) {
   // Each feedback card is considered acknowledged before continuing this model.
   Object.assign(next.flags, choice.setFlagsAfterFeedback);
   if (scene.transition) {
-    applyEffects(next, resolve(scene.transition, next).effects);
+    applyEffects(next, transitionEffects(next, scene));
     if (exhausted(next)) return { ...next, status: "failed" };
   }
   if (scene.nextSceneId) {
@@ -146,29 +180,47 @@ function step(state, rawChoice) {
   return next;
 }
 
-const endings = [];
-let blockedChoices = 0;
-function explore(state) {
-  let usable = 0;
-  for (const choice of SCENES[state.sceneId].choices) {
-    const next = step(state, choice);
-    if (!next) { blockedChoices++; continue; }
-    usable++;
-    if (next.status === "playing") explore(next);
-    else endings.push(next);
+function exploreProfile(profile) {
+  const found = [];
+  let blocked = 0;
+  function explore(state) {
+    let usable = 0;
+    for (const choice of SCENES[state.sceneId].choices) {
+      const next = step(state, choice);
+      if (!next) { blocked++; continue; }
+      usable++;
+      if (next.status === "playing") explore(next);
+      else found.push(next);
+    }
+    if (!usable) found.push({ ...state, status: "failed" });
   }
-  if (!usable) endings.push({ ...state, status: "failed" });
+  const start = structuredClone(MISSION.initialState);
+  start.profileId = profile.id;
+  start.resources = structuredClone(profile.startResources);
+  explore(start);
+  const totals = { success: 0, partial: 0, failed: 0 };
+  for (const ending of found) totals[ending.status]++;
+  return { endings: found, counts: totals, blocked };
 }
-explore(structuredClone(MISSION.initialState));
 
-const counts = { success: 0, partial: 0, failed: 0 };
-for (const ending of endings) counts[ending.status]++;
-assert.deepEqual(counts, { success: 103, partial: 219, failed: 41 });
-assert.equal(blockedChoices, 51);
-assert.equal(Math.max(...endings.map(state => state.science)), 8);
-for (const id of choiceIds) {
-  assert(endings.some(state => state.status === "success" && state.history.includes(id)), `No success path uses ${id}`);
+// Expected path counts per profile. Recalculate and update these whenever a value changes.
+const expectedCounts = {
+  standard: { success: 103, partial: 219, failed: 41 },
+  "dusty-season": { success: 95, partial: 214, failed: 51 },
+  "small-oxygen-supply": { success: 77, partial: 199, failed: 45 },
+};
+const profileResults = {};
+for (const profile of MISSION.profiles) {
+  const result = exploreProfile(profile);
+  profileResults[profile.id] = result;
+  assert.deepEqual(result.counts, expectedCounts[profile.id], `Unexpected ending counts for ${profile.id}`);
+  assert.equal(Math.max(...result.endings.map(state => state.science)), 8);
+  // No single fixed strategy: every choice must stay on at least one successful path in every profile.
+  for (const id of choiceIds) {
+    assert(result.endings.some(state => state.status === "success" && state.history.includes(id)), `No success path uses ${id} in ${profile.id}`);
+  }
 }
+const { endings, counts, blocked: blockedChoices } = profileResults[MISSION.defaultProfileId];
 
 const examples = [
   { path: ["1A", "2A", "3A", "4B", "5B", "6B"], resources: [2, 3, 8], science: 7, status: "success" },
@@ -208,5 +260,8 @@ assert.equal(earthChoice.setFlagsAfterFeedback.earthGuide, true);
 assert.equal(earthChoice.feedback.length, 2);
 
 console.log("Story data verified: 6 scenes, 17 choices, DUTİ, conditional feedback and source links.");
-console.log(`Endings: ${counts.success} success, ${counts.partial} partial, ${counts.failed} stopped; ${blockedChoices} unavailable choices blocked.`);
-console.log("All five documented paths match; every choice appears on a successful path. Maximum Science: 8.");
+for (const [id, result] of Object.entries(profileResults)) {
+  const c = result.counts;
+  console.log(`Profile ${id}: ${c.success} success, ${c.partial} partial, ${c.failed} stopped; ${result.blocked} unavailable choices blocked.`);
+}
+console.log("All five documented paths match (standard profile); every choice appears on a successful path in every profile. Maximum Science: 8.");

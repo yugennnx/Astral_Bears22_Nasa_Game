@@ -1,3 +1,4 @@
+# ARCHIVED: balance model for the retired ten-sol design. The active check is tools/check_story_data.mjs.
 """Denge testi: tasarim belgesindeki kurallarin tum karar kombinasyonlarini dener."""
 import itertools, collections
 
