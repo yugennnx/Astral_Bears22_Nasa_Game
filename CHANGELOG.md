@@ -4,6 +4,23 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.6 — Fixes from a full automated audit (2026-11-15)
+
+Four automated auditors (desktop English visuals, phone Turkish visuals and wording, interaction and state, code review and English proofreading) played the game in a headless browser. Fixes:
+
+- Replays: the hands-on heater and grow-light steps on Sols 2 and 3 now come back in a new game; only plain "look" spotlights are skipped on a replay.
+- Double taps: a prediction, a fact card or a Next press can no longer be handled twice. Leaving for the title screen or starting a new game stops any pending step, and a new game resets every leftover screen state.
+- Keyboard: Enter or Space on a focused button (top bar, Skip ahead, Back, the device button, source links) presses that button instead of advancing the story. In a tap sequence, focus moves to the next target.
+- Tasks: the task camera fills the play area without black bands. An activity tap that fails no longer freezes the task. The Sol 7 note cards are wider so "Beep-beep" fits.
+- Pop-ups: the "Got it!" / "Close" button of science cards and the ending buttons stay on screen on short screens. The last photo is cropped so the black mosaic corner is hidden.
+- Device button: it is placed relative to the whole dialog and repositioned when the window is resized.
+- Text: the typed name survives a language switch; the Mars Journal says when every discovery is found; the ending shows the mission profile label; several English and Turkish lines were corrected (safety-margin wording, "Görev Durdu", "Ekibin soluduğu hava" and others).
+- Accessibility: screen readers hear each dialog line once, as a whole sentence.
+- Resume ignores a saved game whose scene no longer exists; the ending celebration plays once.
+- Language switch: the resource bar now changes language on the prediction, fact-card and night screens too, and an open discovery keeps its "New discovery!" badge instead of saying it was found before.
+- A quick second Enter/Space press right after a screen change no longer skips the new screen (for example the next sol's intro card). The choice hint has more room below the cards.
+- Checked with `npm run check`, `git diff --check` and headless-browser measurements at 1920 × 1080, 1280 × 720, 1024 × 600 and 375 × 812. These were automated checks, not a human review.
+
 ## 1.11.5 — Readable dust forecast (2026-11-15)
 
 - Briefing: each forecast day now shows a short label ("Sol 3" / "3. gün") instead of the long "After Sol 3" / "3. Mars gününden sonra", which overlapped in the narrow columns. One line above the strip explains it ("Weather at the end of each sol"). The forecast gets two thirds of the row on wide screens and two rows of five on phones.

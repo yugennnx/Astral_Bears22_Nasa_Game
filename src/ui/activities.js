@@ -618,7 +618,8 @@ export function runActivity(host, def, { t, onProgress, ariaTarget, onSay }) {
         if (busy || g.classList.contains("is-done")) return;
         busy = true;
         svg.querySelector(".act-hand-hint")?.remove();
-        const result = await def.onTap(svg, index, done, target, ctx);
+        let result;
+        try { result = await def.onTap(svg, index, done, target, ctx); } catch (error) { console.error(error); busy = false; return; }
         if (order === "find" && result === "miss") {
           g.classList.add("is-done");
           g.remove();
@@ -634,7 +635,7 @@ export function runActivity(host, def, { t, onProgress, ariaTarget, onSay }) {
         }
         g.classList.add("is-done");
         g.remove();
-        if (order === "sequence" && !finished) showTarget(index + 1);
+        if (order === "sequence" && !finished) showTarget(index + 1)?.focus({ preventScroll: true });
         busy = false;
         if (finished) {
           if (def.outro) await def.outro(svg);
@@ -650,9 +651,7 @@ export function runActivity(host, def, { t, onProgress, ariaTarget, onSay }) {
       if (!reduced()) animate(g.querySelectorAll(".act-ring"), { scale: [0, 1], duration: 450, ease: "outBack(2)" });
       return g;
     };
-    const showTarget = index => {
-      if (index < def.targets.length) makeTarget(def.targets[index], index);
-    };
+    const showTarget = index => (index < def.targets.length ? makeTarget(def.targets[index], index) : null);
     const start = () => {
     if (order === "sequence") showTarget(0);
     else def.targets.forEach(makeTarget);
@@ -859,7 +858,7 @@ async function orderNotes(svg, api) {
     + notes.map((n, i) => `<g transform="translate(${660 + i * 140} 380)"><rect x="-52" y="-34" width="104" height="68" rx="16" fill="#1b2350" stroke="#9fe2ff" stroke-width="4"/>
       ${n.dots ? Array.from({ length: n.dots }, (_, k) => `<circle cx="${(k - (n.dots - 1) / 2) * 30}" cy="0" r="11" fill="#ffd65c"/>`).join("") : `<path d="M-22 0h44" stroke="#9fe2ff" stroke-width="6" stroke-linecap="round" stroke-dasharray="6 8"/>`}
       ${label(-38, -40, String(i + 1), 22, "#9fe2ff")}</g>`).join("")
-    + cards.map((n, i) => `<g transform="translate(${640 + i * 160} 610)"><rect x="-70" y="-46" width="140" height="92" rx="18" fill="#fff7ea" stroke="#e7c79b" stroke-width="5"/>${translatedLabel(0, 10, api, n.key, 26, "#2a2140")}</g>`).join(""));
+    + cards.map((n, i) => `<g transform="translate(${640 + i * 160} 610)"><rect x="-76" y="-46" width="152" height="92" rx="18" fill="#fff7ea" stroke="#e7c79b" stroke-width="5"/>${translatedLabel(0, 10, api, n.key, 22, "#2a2140")}</g>`).join(""));
   svg.querySelector(".act-sprites").append(art);
   const layer = svg.querySelector(".act-targets");
   let next = 0;

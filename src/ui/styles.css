@@ -959,3 +959,48 @@ body[data-screen="activity"] .world::after { display: none; }
   .forecast-note { display: none; }
   .popup--briefing { gap: 7px; }
 }
+
+/* ---------- 1.11.6: ending report fits without hunting for its buttons ---------- */
+/* The action row sticks to the bottom of the pop-up, so "Try Again" is always reachable. */
+.popup--ending { padding-bottom: 0; }
+.popup--ending .actions { position: sticky; bottom: 0; z-index: 2; margin: 4px -4px 0; padding: 10px 4px 12px; background: linear-gradient(180deg, rgba(14, 18, 46, 0), rgba(14, 18, 46, 0.97) 35%); }
+.popup--ending.is-success .actions { background: linear-gradient(180deg, rgba(16, 36, 42, 0), rgba(14, 18, 46, 0.97) 35%); }
+.popup--ending .fineprint.center { display: none; }
+.end-hero .lead { font-size: 0.98rem; line-height: 1.4; }
+.end-story { gap: 6px; padding: 10px 14px; }
+.end-story .fineprint { font-size: 0.78rem; }
+.end-box { padding: 10px 12px; gap: 6px; }
+.end-box h3 { font-size: 1rem; }
+.end-box .list li { font-size: 0.92rem; }
+.end-stats { font-size: 0.82rem; }
+.end-replay { font-size: 0.95rem; }
+@media (max-height: 760px) {
+  .popup--ending .end-duti { display: none; }
+  .end-hero { grid-template-columns: 1fr; }
+  .popup--ending .end-hero .lead { display: none; }
+}
+/* Night-prediction and morning pop-ups fit a 375 × 812 phone without scrolling. */
+@media (max-width: 640px) {
+  .popup--predict { gap: 8px; }
+  .predict-btn { padding: 10px 4px; gap: 4px; }
+  .popup--ledger { gap: 7px; }
+  .popup--ledger .lesson { padding: 8px 10px; }
+  .ledger li { gap: 8px; }
+  .forecast-note { display: block; font-size: 0.68rem; margin: -4px 0 2px; }
+}
+
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ---------- 1.11.6 (cont.): science cards and ending pages fit the screen ---------- */
+/* The science-card button stays visible: the actions row sticks to the bottom of the scrolling modal. */
+.modal { overflow: auto; overscroll-behavior: contain; }
+.modal-inner > .actions:last-child { position: sticky; bottom: 0; margin: 0 calc(-1 * clamp(18px, 3vw, 28px)) calc(-1 * clamp(18px, 3vw, 28px)); padding: 12px clamp(18px, 3vw, 28px) clamp(14px, 2vw, 20px); background: linear-gradient(180deg, rgba(18, 23, 56, 0), #121738 40%); }
+@media (max-height: 820px) { .photo img { max-height: 150px; } .modal-inner { gap: 9px; } }
+/* Ending pages keep one height, so Next stays in the same place. */
+@media (min-width: 641px) { .popup--endpage { min-height: min(430px, calc(100dvh - var(--topbar-h) - var(--hud-h, 70px) - 40px)); grid-template-rows: auto auto 1fr auto auto; } }
+/* Breathing room at the bottom of the ending report. */
+.popup--ending .actions { padding-bottom: 14px; }
+.popup--ending .end-stats { margin-bottom: 6px; }
+
+/* 1.11.6: keep the choice hint clear of the cards while they slide in */
+.popup--choices .hint { margin-top: 12px; }

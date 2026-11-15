@@ -72,8 +72,8 @@ export const STORY_TR = {
     "Taze yiyecek: tehlikede. Sera kapalı. Bir sonraki ekip serayı yeniden çalıştırmak zorunda ve uzun süre paket yemekle idare edecek.",
   ["Current crew safety margin: good."]:
     "Ekibin güvenliği: iyi.",
-  ["Current crew safety margin: low. Review protection procedures before further outdoor work."]:
-    "Ekibin güvenliği: düşük. Yeniden dışarı çıkmadan önce korunma planını gözden geçirmeliyiz.",
+  ["Current crew safety margin: enough, but not strong. Review protection steps before more outdoor work."]:
+    "Ekibin güvenlik payı: yeterli, ama güçlü değil. Dışarıda yeni bir iş yapmadan önce koruma adımlarını gözden geçir.",
   ["Welcome to Mars"]:
     "Mars'a Hoş Geldin",
   ["Red hills fill the window of Compass Outpost. Two astronauts wave from the airlock. Beside them, a small robot holds a badge almost as wide as its face."]:
@@ -416,7 +416,7 @@ export const STORY_TR = {
   ["We recorded what happened here, including the jobs that earned no Science Points. I put my smallest beep at the end."]:
     "Burada olanları kaydettik, Bilim Puanı kazandırmayan işler de dahil. Sonuna en küçük bip sesimi koydum.",
   ["Maintain life support during the record check"]:
-    "Kayıt kontrolü sırasında yaşam desteğini sürdür",
+    "Kayıtlara bakarken yaşam desteğini çalışır tut",
   ["Build oxygen reserves before the last sol. Keep existing records, but skip today's detailed comparison and crew recording."]:
     "Son Mars gününden önce oksijen yedeği oluştur. Mevcut kayıtları sakla, ama bugünkü ayrıntılı karşılaştırmayı ve ekip kaydını atla.",
   ["Our oxygen reserve is stronger. The computer checked the files for readable data, but it did not do the deeper comparison or record our crew story."]:
@@ -462,13 +462,13 @@ export const STORY_TR = {
   ["You reached the last page, but part of the research or safety goal remains unfinished. Your completed work still matters. DUTİ marks one place to prepare differently next time."]:
     "Son sayfaya ulaştın, ama araştırma ya da güvenlik hedefinin bir kısmı tamamlanmadı. Bitirdiğin işler yine de önemli. DUTİ bir dahaki sefere farklı hazırlanabilecek bir yeri işaretliyor.",
   ["Which earlier preparation might give your next mission more room to explore?"]:
-    "Hangi önceki hazırlık, bir sonraki görevine keşfetmek için daha çok alan açabilir?",
+    "Hangi hazırlık, bir sonraki görevde keşfetmeye daha çok yer açabilir?",
   ["A Safe Pause"]:
-    "Güvenli Mola",
+    "Görev Durdu",
   ["DUTİ helps the team stop work and begin the base's emergency procedures. Our research mission is paused."]:
     "DUTİ, ekibin işi durdurmasına ve üssün acil durum planını başlatmasına yardım ediyor. Araştırma görevimiz duraklatıldı.",
   ["We can try another plan. Which reserve needed help earlier?"]:
-    "Başka bir plan deneyebiliriz. Hangi yedek daha önce yardıma ihtiyaç duydu?",
+    "Başka bir plan deneyebiliriz. Hangi yedeğe daha önce ihtiyaç duyduk?",
   ["The Stone That Kept Time"]:
     "Zamanı Saklayan Taş",
   ["Your close-up rock images fill the screen. Beside them sit the measurements you carefully compared. The repeating signal did not come from the stone: it came from equipment. But following the pattern made you look at the stone in a new way."]:
@@ -556,7 +556,7 @@ export const STORY_TR = {
   ["One visitor raises a hand with four long fingers. DUTİ raises its little metal paw. For a moment, nobody moves."]:
     "Ziyaretçilerden biri dört uzun parmaklı bir el kaldırıyor. DUTİ de küçük metal pençesini kaldırıyor. Bir an için kimse kıpırdamıyor.",
   ["I have practised many greetings. Somehow, I forgot all of them."]:
-    "Onlarca selam çalıştım. Nedense hepsini unuttum.",
+    "Bir sürü selamlaşma öğrenmiştim. Şimdi hiçbiri aklıma gelmiyor.",
   ["DUTİ holds the notebook to the window, open at UNKNOWN LIGHTS. The visitor points toward the sky, then gently toward the notebook."]:
     "DUTİ defteri pencereye tutuyor; defter BİLİNMEYEN IŞIKLAR sayfasında açık. Ziyaretçi önce gökyüzüne, sonra nazikçe deftere işaret ediyor.",
   ["I do not know what that means. But I think we have another question."]:

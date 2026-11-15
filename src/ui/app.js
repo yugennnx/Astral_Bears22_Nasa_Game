@@ -226,9 +226,19 @@ function layoutActivity() {
     const bottom = app.activityId === "6C" ? 900 : Math.min(900, Math.max(...ys) + 180);
     viewBox = `${left} ${top} ${right - left} ${bottom - top}`;
   }
+  // Widen the region to the camera area's own aspect ratio so the artwork fills it (no black bars),
+  // staying inside the 1600 x 900 drawing. If the drawing is too small for that, cover and crop instead.
+  const area = worldEl.getBoundingClientRect();
+  let [x, y, w, h] = viewBox.split(" ").map(Number);
+  const aspect = area.width > 0 && area.height > 0 ? area.width / area.height : 16 / 9;
+  if (w / h < aspect) { const nw = h * aspect; x -= (nw - w) / 2; w = nw; } else { const nh = w / aspect; y -= (nh - h) / 2; h = nh; }
+  if (w > 1600) { w = 1600; x = 0; } else x = Math.max(0, Math.min(1600 - w, x));
+  if (h > 900) { h = 900; y = 0; } else y = Math.max(0, Math.min(900 - h, y));
+  const fits = Math.abs(w / h - aspect) < 0.02;
+  viewBox = `${x.toFixed(0)} ${y.toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}`;
   for (const svg of [worldEl.querySelector(".world-scene:last-child > svg"), fxEl.querySelector(".fx--activity")]) {
     svg?.setAttribute("viewBox", viewBox);
-    svg?.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    svg?.setAttribute("preserveAspectRatio", fits ? "xMidYMid meet" : "xMidYMid slice");
   }
   refreshActivityLanguage(fxEl, t, (n, total) => t("act.target", { n, total }));
 }
@@ -404,11 +414,11 @@ function dialogHtml(block, counter) {
   const isDuti = block.speakerId === "duti";
   const caption = block.caption ? `<span class="dialog-caption">${icon("clock")}${esc(ts(block.caption))}</span>` : "";
   return `
-  <div class="dialog ${isDuti ? "dialog--duti" : "dialog--narrator"}" data-action="advance" role="button" tabindex="0" aria-live="polite">
+  <div class="dialog ${isDuti ? "dialog--duti" : "dialog--narrator"}" data-action="advance" role="button" tabindex="0">
     ${isDuti ? `<div class="dialog-portrait">${duti(dutiMood())}</div>` : ""}
     <div class="dialog-box">
       <div class="dialog-name">${isDuti ? esc(MISSION.robot.displayName) : esc(t("dialog.story"))}${caption}</div>
-      <p class="dialog-text" data-text></p>
+      <p class="dialog-text" data-text aria-hidden="true"></p><p class="sr-only" data-text-full aria-live="polite"></p>
       <div class="dialog-foot"><span class="dialog-counter">${counter}</span><span class="dialog-next">${esc(t("dialog.next"))}${icon("arrow")}</span></div>
     </div>
   </div>`;
@@ -422,7 +432,9 @@ function showLine(block, counter, translated = null) {
     const portrait = dialog.querySelector(".dialog-portrait");
     if (portrait) animate(portrait, { opacity: [0, 1], translateX: [-60, 0], rotate: [-8, 0], duration: 600, ease: "outBack(1.4)" });
   }
-  typeInto(dialog.querySelector("[data-text]"), translated ?? ts(block.text));
+  const full = translated ?? ts(block.text);
+  dialog.querySelector("[data-text-full]").textContent = full;
+  typeInto(dialog.querySelector("[data-text]"), full);
   if (block.speakerId === "duti") play("duti");
   dialog.focus({ preventScroll: true });
 }
@@ -580,8 +592,11 @@ function renderStoryLine() {
 
 function afterStory() {
   markSeen(`story:${app.game.sceneId}`);
-  // Spotlights teach the place once; replays go straight to exploring.
-  if (SPOTLIGHTS[app.game.sceneId]?.length && !hasSeen(`spot:${app.game.sceneId}`)) {
+  // Plain spotlights teach the place once. The hands-on "try the device" spotlights return in
+  // every mission, so a new game on the same device still gets the heater and grow-light moments.
+  const all = SPOTLIGHTS[app.game.sceneId] ?? [];
+  app.spotList = hasSeen(`spot:${app.game.sceneId}`) ? all.filter(spot => spot.observe) : all;
+  if (app.spotList.length) {
     app.spot = 0;
     app.observed = null;
     showSpotlight();
@@ -593,8 +608,8 @@ function afterStory() {
 /** DUTİ points at the parts of the location that matter before the player decides. */
 function showSpotlight() {
   app.screen = "spot";
-  const spots = SPOTLIGHTS[app.game.sceneId];
-  const spot = spots[app.spot];
+  const spots = app.spotList?.length ? app.spotList : SPOTLIGHTS[app.game.sceneId];
+  const spot = spots[Math.min(app.spot, spots.length - 1)];
   worldForScene();
   renderHud(app.game.resources, app.game.science);
   fxEl.innerHTML = spotlightSvg(spot);
@@ -603,7 +618,7 @@ function showSpotlight() {
     animate(fxEl.querySelector(".spot-dim"), { opacity: [0, 0.62], duration: 500 });
     animate(fxEl.querySelector(".spot-ring"), { scale: [1.4, 1], opacity: [0, 1], duration: 600, ease: "outBack(1.6)" });
   }
-  const observe = spot.observe && app.observed !== app.spot;
+  const observe = spot.observe && app.observed !== app.spot && !app.observeRunning;
   app.observing = Boolean(observe);
   if (observe) {
     // The child tries the device first and watches the gauge; DUTİ explains afterwards.
@@ -640,7 +655,8 @@ function placeObserveButton(spot) {
   const box = button.getBoundingClientRect();
   const left = Math.max(8, Math.min(innerWidth - box.width - 8, at.x - box.width / 2));
   // Never under the dialog: keep the device's position if free, otherwise go just above or below the dialog.
-  const dialog = layerEl.querySelector(".dialog-box")?.getBoundingClientRect();
+  // Measure the dialog's resting place (the container is not animated; the box slides in).
+  const dialog = layerEl.querySelector(".dialog")?.getBoundingClientRect();
   const hudBottom = Math.ceil(hudEl.getBoundingClientRect().bottom) + 8;
   const clamp = y => Math.max(hudBottom, Math.min(innerHeight - box.height - 8, y));
   let top = clamp(at.y - box.height / 2);
@@ -656,8 +672,10 @@ function placeObserveButton(spot) {
 
 /** The device runs for a moment: the gauge visibly dips, then DUTİ explains what we saw. */
 async function observeDevice(spot) {
-  if (!app.observing) return;
+  if (!app.observing || app.observeRunning) return;
   app.observing = false;
+  app.observeRunning = true;
+  layerEl.querySelector(".observe-btn")?.remove();
   const key = spot.observe.gauge;
   const gauge = hudEl.querySelector(`[data-gauge="${key}"]`);
   const num = gauge?.querySelector(".gauge-num");
@@ -672,8 +690,13 @@ async function observeDevice(spot) {
   if (num) num.textContent = String(value);
   gauge?.classList.remove("is-observed");
   app.observed = app.spot;
+  app.observeRunning = false;
   if (app.screen === "spot") showSpotlight();
 }
+window.addEventListener("resize", () => {
+  const spot = (app.spotList?.length ? app.spotList : SPOTLIGHTS[app.game?.sceneId])?.[app.spot];
+  if (app.screen === "spot" && app.observing && spot?.observe) placeObserveButton(spot);
+});
 
 /* ---------- free exploration ---------- */
 
@@ -748,8 +771,9 @@ function discover(id, element, { replay = false } = {}) {
   const sceneId = app.game.sceneId;
   const item = DISCOVERIES[sceneId].find(d => d.id === id);
   if (!item) return;
-  const isNew = !replay && !profile.discoveries.includes(id);
-  if (isNew) {
+  const isNew = replay ? Boolean(app.exploreLineNew) : !profile.discoveries.includes(id);
+  app.exploreLineNew = isNew;
+  if (isNew && !replay) {
     profile.discoveries.push(id);
     saveProfile();
   }
@@ -877,7 +901,9 @@ async function confirmChoice(choiceId) {
       showEnding();
       return;
     }
+    const run = app.run ?? 0;
     await playActivity(pending.choiceId, flagsBefore, before);
+    if (run !== (app.run ?? 0)) return;
     app.screen = "result";
     if (app.game.phase === "ended") {
       await flyEffects(layerEl.querySelector(".task") ?? layerEl, pending.effects, pending.after);
@@ -896,6 +922,7 @@ async function confirmChoice(choiceId) {
     pop(".popup", { duration: 420 });
     await flyEffects(layerEl.querySelector(".result-chips"), pending.effects, pending.after);
     await wait(650);
+    if (run !== (app.run ?? 0)) return;
     app.line = 0;
     renderFeedbackLine();
   } finally {
@@ -958,6 +985,7 @@ async function playActivity(choiceId, flagsBefore, before) {
   if (!reducedMotion() && !SOBER_DONE[id]) confetti({ particleCount: 70, spread: 70, origin: { y: 0.45 }, colors: ["#ffc93c", "#7be495", "#4fd1ff"] });
   await wait(SOBER_DONE[id] ? 1100 : 600);
   fxEl.innerHTML = "";
+  worldEl.querySelectorAll(".world-scene > svg").forEach(svg => svg.setAttribute("preserveAspectRatio", "xMidYMid slice"));
   setFocus(800);
   app.activityId = null;
   app.activityDef = null;
@@ -1037,6 +1065,8 @@ function showFact() {
 }
 
 async function collectFact() {
+  if (app.collecting || app.game?.phase !== "feedback") return; // a second tap or key press must not advance twice
+  app.collecting = true;
   const id = app.pendingFact;
   if (id && !app.facts.includes(id)) app.facts.push(id);
   if (id && !profile.facts.includes(id)) {
@@ -1057,6 +1087,8 @@ async function collectFact() {
       });
     });
   }
+  app.collecting = false;
+  if (app.screen !== "fact" || app.game.phase !== "feedback") return;
   app.game = finishFeedback(app.game);
   screenForPhase();
   const journal = topbarEl.querySelector(".pill--journal");
@@ -1255,7 +1287,9 @@ function showEnding() {
     if (!items.length) items.push(["info", t("ending.hl.none")]);
   }
   const tips = failed ? [t(`ending.tip.${ending.reasonKey ?? "noChoices"}`), t("ending.tip.cards")] : [];
-  play(ending.status === "success" ? "win" : failed ? "fail" : "partial");
+  const celebrate = !ending.celebrated;
+  ending.celebrated = true;
+  if (celebrate) play(ending.status === "success" ? "win" : failed ? "fail" : "partial");
   const reasons = [];
   if (ending.status === "failed") {
     reasons.push(ts(ENDINGS.failed.reasons[ending.reasonKey]));
@@ -1283,7 +1317,7 @@ function showEnding() {
     <div class="end-hero">
       <div class="end-duti">${duti(dutiMood(), { wave: ending.status === "success" })}</div>
       <div>
-        <p class="eyebrow">${esc(ts(getProfile(game).title))}</p>
+        <p class="eyebrow">${esc(t("briefing.profile"))}: ${esc(ts(getProfile(game).title))}</p>
         ${playerName() && ending.status === "success" ? `<p class="end-name">${esc(t("ending.byName", { name: playerName() }))}</p>` : ""}
         ${special ? `<p class="end-badge">${icon("star")}${esc(t(newEnding ? "ending.specialNew" : "ending.specialAgain"))}</p>` : ""}
         <h2 id="end-title" data-focus tabindex="-1">${esc(ts(special?.title ?? copy.title))}</h2>
@@ -1325,11 +1359,13 @@ function showEnding() {
     <p class="fineprint center">${esc(t("ending.newForecast"))}</p>
   </div>`;
   finishRender();
+  const endPopup = layerEl.querySelector(".popup--ending");
+  if (endPopup) endPopup.scrollTop = 0;
   pop(".popup", { duration: 600 });
   if (!reducedMotion()) {
     animate(layerEl.querySelector(".end-duti"), { translateY: [80, 0], rotate: [-10, 0], duration: 1000, delay: 200, ease: "outElastic(1, .6)" });
     animate(layerEl.querySelectorAll(".end-box"), { opacity: [0, 1], translateY: [30, 0], delay: stagger(140, { start: 450 }), duration: 520, ease: "outCubic" });
-    if (ending.status === "success") {
+    if (ending.status === "success" && celebrate) {
       setTimeout(() => {
         confetti({ particleCount: 160, spread: 95, origin: { y: 0.35 }, colors: ["#ffc93c", "#4fd1ff", "#7be495", "#e2703a", "#c79bff"] });
         setTimeout(() => confetti({ particleCount: 90, angle: 60, spread: 70, origin: { x: 0, y: 0.7 } }), 400);
@@ -1407,7 +1443,7 @@ function journalModal() {
   openModal(`
     ${modalHead(t("journal.open"))}
     <h2 data-focus tabindex="-1">${esc(name ? t("journal.title", { name }) : t("journal.titleNoName"))}</h2>
-    <p>${esc(t("journal.intro"))}</p>
+    <p>${esc(t(profile.discoveries.filter(id => all.some(d => d.id === id)).length >= all.length ? "journal.introDone" : "journal.intro"))}</p>
     <nav class="journal-jump">
       <a class="pill" href="#journal-facts">${icon("satellite")}${esc(t("journal.factsTotal", { n: profile.facts.length, total: Object.keys(FACTS).length }))}</a>
       <a class="pill" href="#journal-places">${icon("star")}${esc(t("journal.total", { n: profile.discoveries.filter(id => all.some(d => d.id === id)).length, total: all.length }))}</a>
@@ -1481,6 +1517,10 @@ function finishRender({ focus = true } = {}) {
 /** Re-draw the current screen in the new language without losing progress. */
 function redraw() {
   if (app.screen !== "activity") app.worldKey = "";
+  if (["predict", "fact", "transition"].includes(app.screen) && app.hudShown) {
+    document.documentElement.lang = getLanguage();
+    renderHud(app.hudShown.resources, app.hudShown.science);
+  }
   switch (app.screen) {
     case "title": return showTitle();
     case "briefing": return showBriefing();
@@ -1556,7 +1596,7 @@ function advance() {
       if (target) { target.classList.remove("is-nudged"); void target.offsetWidth; target.classList.add("is-nudged"); target.focus({ preventScroll: true }); }
       return;
     }
-    const spots = SPOTLIGHTS[app.game.sceneId];
+    const spots = app.spotList?.length ? app.spotList : SPOTLIGHTS[app.game.sceneId];
     if (app.spot < spots.length - 1) {
       app.spot += 1;
       showSpotlight();
@@ -1589,6 +1629,7 @@ function advance() {
     }
     if (needsPrediction()) return showPredict();
     if (showFact()) return;
+    if (app.game.phase !== "feedback") return;
     app.game = finishFeedback(app.game);
     screenForPhase();
   }
@@ -1651,7 +1692,8 @@ function showPredict() {
 
 async function makeGuess(dir) {
   const info = predictionFor(app.game);
-  if (!info) return;
+  if (!info || app.screen !== "predict" || app.guessing) return; // one guess per night, even on a double tap
+  app.guessing = true;
   app.predict = { sol: info.sol, resource: info.resource, kind: info.kind, change: info.change, guess: dir, actual: info.actual };
   app.score.total += 1;
   if (dir === info.actual) app.score.right += 1;
@@ -1662,7 +1704,10 @@ async function makeGuess(dir) {
   const lead = layerEl.querySelector(".popup--predict .lead");
   if (lead) lead.textContent = t("predict.wait");
   save();
+  const run = app.run ?? 0;
   await wait(1100);
+  app.guessing = false;
+  if (run !== (app.run ?? 0) || app.screen !== "predict" || app.game.phase !== "feedback") return;
   saveFactQuietly();
   app.game = finishFeedback(app.game);
   screenForPhase();
@@ -1691,13 +1736,23 @@ function startNewGame() {
   app.predict = null;
   app.score = { right: 0, total: 0 };
   app.selected = null;
+  Object.assign(app, { quietCard: null, ledgerSol: null, line: 0, storyLines: null, spotList: null, exploreLineId: null, guessing: false, collecting: false, observing: false, observed: null, taskLine: null, introToken: null, cinemaToken: null });
+  app.run = (app.run ?? 0) + 1;
   fxEl.innerHTML = "";
   showBriefing();
 }
 
 const actions = {
-  home() { if (app.screen !== "activity") showTitle(); },
+  home() {
+    if (app.screen === "activity") return;
+    app.run = (app.run ?? 0) + 1; // pending async flows (result, guess, card) check this and stop
+    app.guessing = false;
+    app.collecting = false;
+    showTitle();
+  },
   language() {
+    const nameField = document.getElementById("player-name");
+    if (nameField) profile.name = nameField.value.replace(/[<>]/g, "").trim().slice(0, 16);
     setLanguage(getLanguage() === "en" ? "tr" : "en");
     if (modal.open) modal.close();
     stopTyping();
@@ -1731,7 +1786,7 @@ const actions = {
   ready: () => openChoicesAfterStory(),
   "pan-left": () => setFocus(focusX - 280),
   observe() {
-    const spot = SPOTLIGHTS[app.game?.sceneId]?.[app.spot];
+    const spot = (app.spotList?.length ? app.spotList : SPOTLIGHTS[app.game?.sceneId])?.[app.spot];
     if (app.screen === "spot" && spot?.observe) observeDevice(spot);
   },
   "end-next"() {
@@ -1847,9 +1902,17 @@ function nextByKeyOrClick(event) {
 
 document.addEventListener("keydown", event => {
   if (modal.open || event.repeat || ![" ", "Enter", "ArrowRight"].includes(event.key)) return;
+  const now = performance.now();
+  const lastKey = app.lastKey;
+  app.lastKey = { screen: app.screen, time: now };
+  if (lastKey && lastKey.screen !== app.screen && now - lastKey.time < 450) { event.preventDefault(); return; }
   const focused = document.activeElement;
   if (focused && ["INPUT", "TEXTAREA", "SELECT"].includes(focused.tagName)) return;
-  if (focused?.classList?.contains("observe-btn")) return; // Space/Enter press the device button itself
+  // A focused button or link (top bar, Skip ahead, Back, the device button, a source link) keeps its own
+  // Enter/Space. Only the big tap areas (dialog, intro card, night scene) and the page itself mean "next".
+  const control = focused && focused !== document.body && !focused.matches(".dialog, .intro, .cinema")
+    && (focused.tagName === "BUTTON" || focused.tagName === "A" || focused.getAttribute("role") === "button");
+  if (control) return;
   // On reading screens these keys always mean "next", even if a button still has focus.
   const reading = ["story", "spot", "explore-line", "intro", "transition", "fact", "ledger", "endpage"].includes(app.screen) || (app.screen === "result" && app.game?.phase === "feedback");
   if (!reading && focused && (focused.tagName === "BUTTON" || focused.tagName === "A" || focused.getAttribute("role") === "button")) return;
@@ -1872,7 +1935,7 @@ app.predict = saved?.predict ?? null;
 app.score = saved?.score ?? { right: 0, total: 0 };
 // A card that was shown but not yet collected before a reload is offered again.
 app.pendingFact = saved?.game?.phase === "feedback" ? saved?.pendingFact ?? null : null;
-if (saved?.game?.phase && saved.screen) {
+if (saved?.game?.phase && saved.screen && SCENES[saved.game.sceneId]) {
   app.game = saved.game;
   app.resumeScreen = saved.screen;
 }

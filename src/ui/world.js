@@ -381,7 +381,7 @@ function finalWorld(state, photoSrc, labels = {}) {
     </g>`;
   return frame("final", `
     <rect width="${W}" height="${H}" fill="#2a1a2e"/>
-    <image class="w-photo" href="${photoSrc}" x="-420" y="-150" width="2600" height="720" preserveAspectRatio="xMidYMid slice" opacity=".95"/>
+    <image class="w-photo" href="${photoSrc}" x="-420" y="-150" width="2600" height="720" preserveAspectRatio="xMidYMax slice" opacity=".95"/>
     <rect width="${W}" height="560" fill="url(#wSkyDay)" opacity=".28"/>
     <path d="M0 520q300-40 600 0t600-10 400 0v390H0Z" fill="#8d3b24"/>
     <rect y="600" width="${W}" height="300" fill="url(#wGround)"/>

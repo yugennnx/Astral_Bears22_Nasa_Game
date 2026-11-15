@@ -100,7 +100,7 @@ export const MISSION = {
     livingTray: { text: "Living plant tray: protected, with its care notes, for the next crew." },
     safety: {
       ready: { minSafety: 6, text: "Current crew safety margin: good." },
-      low: { text: "Current crew safety margin: low. Review protection procedures before further outdoor work." },
+      low: { text: "Current crew safety margin: enough, but not strong. Review protection steps before more outdoor work." },
     },
   },
 
