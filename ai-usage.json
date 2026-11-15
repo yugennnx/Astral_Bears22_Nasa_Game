@@ -452,6 +452,14 @@
       ]
     },
     {
+      "path": "docs/design/playtest-suggestions-status.md",
+      "status": "ai-generated",
+      "scope": "Claude-generated status report (1.10.0) for the teammate who wrote the twelve play-test suggestions: what is done, partly done or left for the team, with code locations and check results.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
       "path": "tools/check_ten_sol_design.mjs",
       "status": "ai-generated",
       "scope": "OpenAI ChatGPT/Codex generated an independent proposed-design enumerator and prose/predicate/boundary checks; this is not the production engine. Claude made a small 1.9.0 status/integration change: it rebuilds Sols 1-6 from base mechanics plus JSON overrides and checks runtime scene order and forecasts against the JSON. It remains independent of the production engine.",
