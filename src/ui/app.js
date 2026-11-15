@@ -454,8 +454,6 @@ function showTitle() {
       <h1 data-focus tabindex="-1">${esc(ts(MISSION.title))}</h1>
       <p class="lead">${esc(t("brand.tagline"))}</p>
       <ul class="badges">
-        <li>${icon("star")}${esc(t("title.badgeAges"))}</li>
-        <li>${icon("clock")}${esc(t("title.badgeTime"))}</li>
         <li>${icon("satellite")}${esc(t("title.badgeData"))}</li>
       </ul>
       <div class="actions">

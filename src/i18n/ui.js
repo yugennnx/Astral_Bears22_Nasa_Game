@@ -7,8 +7,6 @@
 export const UI_EN = {
   "brand.name": "Compass Outpost",
   "brand.tagline": "Run a research base on Mars with your robot friend DUTİ. Every choice has a cost!",
-  "title.badgeAges": "Ages 7–12",
-  "title.badgeTime": "About 20 minutes",
   "title.badgeData": "Real NASA data",
   "title.resume": "Continue Mission",
   "title.newMission": "New Mission",
@@ -508,8 +506,6 @@ export const UI_EN = {
 export const UI_TR = {
   "brand.name": "Pusula Üssü",
   "brand.tagline": "Robot arkadaşın DUTİ ile Mars'ta bir araştırma üssünü yönet. Her seçimin bir bedeli var!",
-  "title.badgeAges": "7–12 yaş",
-  "title.badgeTime": "Yaklaşık 20 dakika",
   "title.badgeData": "Gerçek NASA verisi",
   "title.resume": "Kaldığın Yerden Devam Et",
   "title.newMission": "Yeni Görev",

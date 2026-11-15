@@ -4,6 +4,11 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.8 — Simpler title screen (2026-11-15)
+
+- Title screen: removed the "Ages 7–12" and "About 20 minutes" badges (and their Turkish strings) at the team's request. Only the "Real NASA data" badge remains.
+- Checked with `npm run check` and title-screen screenshots at 1280 × 720 and 375 × 812 in English and Turkish.
+
 ## 1.11.7 — Dialog accessibility (2026-11-15)
 
 - The story dialog is now a labelled group ("Next" / "İleri") instead of a button, so the "Skip ahead" button inside it is no longer a button nested in a button. Clicking, tapping, Enter and Space still advance the story, and Skip ahead still works. Found in an independent Antigravity review of 1.11.6.
