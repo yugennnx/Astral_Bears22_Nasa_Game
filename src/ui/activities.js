@@ -2,10 +2,11 @@
  * Hands-on moments around each decision.
  *  - SPOTLIGHTS: before choosing, DUTİ points at the parts of the location that matter.
  *  - ACTIVITIES: after choosing, the player does the chosen job by tapping the scene.
- * Everything is drawn on an SVG overlay that shares the location's viewBox (1600 x 900,
- * "xMidYMid slice"), so coordinates match the artwork in world.js exactly.
+ * The overlay and location share 1600 x 900 artwork coordinates. During a task, app.js
+ * fits the active region of both into a camera area clear of the HUD and instructions.
  * These are presentation only: game rules and resource changes stay in src/game/engine.js.
  * AI-assisted generation: Anthropic Claude. See AI_USAGE.md and ai-usage.json.
+ * AI-assisted 1.11.1 revisions: OpenAI Codex (target spacing, live SVG translations, note-task feedback).
  */
 import { animate } from "../../assets/vendor/animejs/anime.esm.min.js";
 
@@ -185,16 +186,16 @@ function lightMasks(startDark) {
     </g>`).join("");
 }
 
-function checklistPanel(labels) {
+function checklistPanel(keys, t) {
   return `
     <g class="act-panel" transform="translate(0 170)">
       <rect x="560" y="150" width="480" height="330" rx="30" fill="#fff7ea" stroke="#e7c79b" stroke-width="8"/>
       <rect x="740" y="130" width="120" height="40" rx="12" fill="#8b93a8"/>
-      ${labels.map((label, i) => `
+      ${keys.map((key, i) => `
         <g transform="translate(610 ${230 + i * 85})">
           <rect x="0" y="-26" width="52" height="52" rx="12" fill="#fff" stroke="#2a2140" stroke-width="5"/>
           <path class="act-tick" data-tick="${i}" d="M10 0l12 12 22-24" fill="none" stroke="#3fae6a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0"/>
-          <text x="76" y="10" font-family="Fredoka, sans-serif" font-size="34" font-weight="600" fill="#2a2140">${label}</text>
+          <text data-i18n="${key}" x="76" y="10" font-family="Fredoka, sans-serif" font-size="34" font-weight="600" fill="#2a2140">${escSvg(t(key))}</text>
         </g>`).join("")}
     </g>`;
 }
@@ -288,7 +289,7 @@ const valveActivity = {
 const checklist = (task, labelKeys) => ({
   backdrop: "message-from-earth",
   task,
-  sprites: (t) => checklistPanel(labelKeys.map(key => t(key))),
+  sprites: (t) => checklistPanel(labelKeys, t),
   targets: labelKeys.map((_, i) => ({ x: 636, y: 400 + i * 85, r: 48 })),
   order: "sequence",
   onTap(svg, i) {
@@ -304,7 +305,7 @@ export const ACTIVITIES = {
     backdrop: "welcome-to-mars",
     task: "act.1A",
     sprites: panelDust,
-    targets: [0, 1, 2, 3].map(i => ({ x: 1177 + i * 92, y: 663 + i * 6, r: 62 })),
+    targets: [0, 1, 2, 3].map(i => ({ x: 1177 + i * 92, y: 663 + i * 6, r: 44 })),
     onTap(svg, i) {
       const dust = sprite(svg, i);
       anim(dust, { opacity: [0.92, 0], duration: 600, ease: "outQuad" });
@@ -419,7 +420,7 @@ export const ACTIVITIES = {
     backdrop: "solar-radiation-alert",
     task: "act.5A",
     sprites: () => shelterDoor() + astronautSprite(900, 730, 0) + astronautSprite(1030, 745, 1) + roverSprite(1220, 750, 2),
-    targets: [{ x: 900, y: 720, r: 72 }, { x: 1030, y: 735, r: 72 }, { x: 1220, y: 725, r: 75 }],
+    targets: [{ x: 900, y: 720, r: 62 }, { x: 1030, y: 735, r: 62 }, { x: 1220, y: 725, r: 75 }],
     focusExtra: [620],
     async onTap(svg, i, step, target) {
       await intoShelter(svg, sprite(svg, i), [target.x, target.y], { duration: i === 2 ? 1300 : 1000 });
@@ -519,8 +520,8 @@ export const ACTIVITIES = {
   "6C": {
     backdrop: "greenhouse-problem",
     task: "act.6C",
-    sprites: () => basket() + [630, 710, 790, 870].map((x, i) => plantSprite(x, 470, i)).join(""),
-    targets: [630, 710, 790, 870].map(x => ({ x, y: 440, r: 50 })),
+    sprites: () => basket() + [600, 740, 880, 1020].map((x, i) => plantSprite(x, 470, i)).join(""),
+    targets: [600, 740, 880, 1020].map(x => ({ x, y: 440, r: 65 })),
     focusExtra: [1240],
     onTap(svg, i, _step, target) {
       const plant = sprite(svg, i);
@@ -608,6 +609,8 @@ export function runActivity(host, def, { t, onProgress, ariaTarget, onSay }) {
       g.setAttribute("tabindex", "0");
       g.setAttribute("role", "button");
       g.setAttribute("aria-label", ariaTarget(index + 1, def.targets.length));
+      g.dataset.targetIndex = index + 1;
+      g.dataset.targetCount = def.targets.length;
       g.innerHTML = `<circle class="act-hit" r="${target.r}" fill="transparent"/>
         <circle class="act-ring" r="${target.r * 0.72}" fill="none" stroke="#ffd65c" stroke-width="6"/>
         <circle class="act-ring act-ring--2" r="${target.r * 0.72}" fill="none" stroke="#fff3c4" stroke-width="3"/>`;
@@ -679,10 +682,14 @@ const svgEl = (tag, attrs = {}, html = "") => {
 };
 
 /** A tappable spot used by the thinking tasks. `correct` lets the Hint button point at it. */
-function tapSpot(layer, { x, y, r, label: name, correct = false }, onTap) {
+function tapSpot(layer, { x, y, r, label: name, labelKey, labelValues = {}, correct = false }, onTap) {
   const g = svgEl("g", { class: `act-target ${correct ? "is-correct" : ""}`, transform: `translate(${x} ${y})`, tabindex: 0, role: "button", "aria-label": name },
     `<circle class="act-hit" r="${r}" fill="transparent"/><circle class="act-ring" r="${r * 0.82}" fill="none" stroke="#ffd65c" stroke-width="5" stroke-dasharray="14 10"/>`);
   const fire = event => { event.stopPropagation(); onTap(g); };
+  if (labelKey) {
+    g.dataset.i18nAria = labelKey;
+    g.dataset.i18nValues = JSON.stringify(labelValues);
+  }
   g.addEventListener("click", fire);
   g.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); fire(event); } });
   layer.append(g);
@@ -692,6 +699,37 @@ function tapSpot(layer, { x, y, r, label: name, correct = false }, onTap) {
 const panelBox = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="30" fill="#071028" opacity=".93" stroke="#58d3ff" stroke-width="6"/>`;
 const escSvg = text => String(text).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
 const label = (x, y, text, size = 30, fill = "#fff7ea") => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="${size}" font-weight="700" fill="${fill}">${escSvg(text)}</text>`;
+const translatedLabel = (x, y, api, key, size = 30, fill = "#fff7ea", wrapWidth = 0) =>
+  label(x, y, api.t(key), size, fill).replace("<text ", `<text data-i18n="${key}"${wrapWidth ? ` data-wrap-width="${wrapWidth}"` : ""} `);
+
+/** Translate existing SVG nodes without rebuilding targets or resetting a task's local state. */
+export function refreshActivityLanguage(host, t, ariaTarget) {
+  for (const node of host.querySelectorAll("[data-i18n], [data-i18n-aria], [data-target-index]")) {
+    const values = JSON.parse(node.dataset.i18nValues ?? "{}");
+    if (node.dataset.i18n) node.textContent = t(node.dataset.i18n, values);
+    if (node.dataset.i18nAria) node.setAttribute("aria-label", t(node.dataset.i18nAria, values));
+    if (node.dataset.targetIndex) node.setAttribute("aria-label", ariaTarget(Number(node.dataset.targetIndex), Number(node.dataset.targetCount)));
+  }
+  // The source/date/unit note is readable inside its panel in both languages.
+  for (const node of host.querySelectorAll("text[data-wrap-width]")) {
+    const words = node.textContent.split(/\s+/);
+    const lines = [];
+    let line = "";
+    for (const word of words) {
+      node.textContent = line ? `${line} ${word}` : word;
+      if (line && node.getComputedTextLength() > Number(node.dataset.wrapWidth)) {
+        lines.push(line);
+        line = word;
+      } else line = node.textContent;
+    }
+    lines.push(line);
+    node.replaceChildren(...lines.map((text, index) => {
+      const span = svgEl("tspan", { x: node.getAttribute("x"), dy: index ? "1.2em" : 0 });
+      span.textContent = index ? ` ${text}` : text;
+      return span;
+    }));
+  }
+}
 
 /** 2A: share three power cubes between the air machine, the heater and the lamp. */
 async function shareEnergy(svg, api) {
@@ -703,21 +741,22 @@ async function shareEnergy(svg, api) {
   const counts = { air: 0, heat: 0, lamp: 0 };
   let left = 3;
   const art = svgEl("g", { class: "act-panel" }, panelBox(480, 330, 640, 420)
-    + devices.map(d => `<g transform="translate(${d.x} 520)">${d.icon}</g>${label(d.x, 640, api.t(`act.share.${d.id}`), 26)}<g class="act-cubes" data-cubes="${d.id}"></g>`).join("")
-    + `<text class="act-left" x="800" y="384" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="#ffd65c"></text>`);
+    + devices.map(d => `<g transform="translate(${d.x} 520)">${d.icon}</g>${translatedLabel(d.x, 640, api, `act.share.${d.id}`, 26)}<g class="act-cubes" data-cubes="${d.id}"></g>`).join("")
+    + `<text class="act-left" data-i18n="act.share.left" x="800" y="384" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="#ffd65c"></text>`);
   svg.querySelector(".act-sprites").append(art);
   const drawCubes = () => {
     for (const d of devices) {
       art.querySelector(`[data-cubes="${d.id}"]`).innerHTML = Array.from({ length: counts[d.id] }, (_, i) => `<rect x="${d.x - 50 + i * 36}" y="662" width="28" height="28" rx="6" fill="#ffd65c" stroke="#6b4300" stroke-width="3"/>`).join("");
     }
     art.querySelector(".act-left").textContent = api.t("act.share.left", { n: left });
+    art.querySelector(".act-left").dataset.i18nValues = JSON.stringify({ n: left });
   };
   drawCubes();
   const layer = svg.querySelector(".act-targets");
   await new Promise(resolve => {
     let checking = false;
     for (const d of devices) {
-      tapSpot(layer, { x: d.x, y: 540, r: 85, label: api.t(`act.share.${d.id}`), correct: d.id === "air" }, async () => {
+      tapSpot(layer, { x: d.x, y: 540, r: 85, label: api.t(`act.share.${d.id}`), labelKey: `act.share.${d.id}`, correct: d.id === "air" }, async () => {
         if (left <= 0 || checking) return;
         counts[d.id] += 1;
         left -= 1;
@@ -750,7 +789,7 @@ async function compareReadings(svg, api) {
         <circle cx="${r.x}" cy="640" r="34" fill="${color}" stroke="#9fe2ff" stroke-width="4"/>
         ${label(r.x, 716, `${r.name}: ${r.t === -3 ? "−3" : "−77"} °C`, 32)}`;
     }).join(""));
-  art.insertAdjacentHTML("beforeend", label(800, 756, api.t("act.cmp.source"), 21, "#9fe2ff"));
+  art.insertAdjacentHTML("beforeend", translatedLabel(800, 733, api, "act.cmp.source", 21, "#9fe2ff", 600));
   svg.querySelector(".act-sprites").append(art);
   const layer = svg.querySelector(".act-targets");
   api.say("act.cmp.q1");
@@ -766,7 +805,7 @@ async function compareReadings(svg, api) {
   art.innerHTML = panelBox(470, 300, 660, 470)
     + label(800, 380, "A: −3 °C", 34, "#ffb55a") + label(800, 430, "B: −77 °C", 34, "#58d3ff")
     + label(800, 488, "?", 40, "#ffd65c")
-    + label(800, 756, api.t("act.cmp.source"), 21, "#9fe2ff");
+    + translatedLabel(800, 733, api, "act.cmp.source", 21, "#9fe2ff", 600);
   const options = [7, 74, 30];
   art.append(svgEl("g", {}, options.map((n, i) => `<g transform="translate(${640 + i * 160} 620)"><circle r="62" fill="#ffd65c" stroke="#6b4300" stroke-width="5"/>${label(0, 13, `${n}°`, 40, "#2a1c00")}</g>`).join("")));
   await new Promise(resolve => {
@@ -790,7 +829,7 @@ async function deduceRock(svg, api) {
   svg.querySelector(".act-sprites").append(art);
   const layer = svg.querySelector(".act-targets");
   await new Promise(resolve => {
-    spots.forEach(([x, y], i) => tapSpot(layer, { x, y: y - 6, r: 64, label: api.t("act.rock", { n: i + 1 }), correct: looks[i] === "both" }, () => {
+    spots.forEach(([x, y], i) => tapSpot(layer, { x, y: y - 6, r: 64, label: api.t("act.rock", { n: i + 1 }), labelKey: "act.rock", labelValues: { n: i + 1 }, correct: looks[i] === "both" }, () => {
       const box = art.querySelector(`[data-rock="${i}"]`);
       if (looks[i] === "both") { anim(box, { scale: [1, 1.2, 1], duration: 600, ease: "outBack(3)" }); burst(svg, x, y - 20, "#7ef0ff"); resolve(); return; }
       anim(box, { translateX: [0, -8, 8, -4, 0], duration: 450 });
@@ -820,12 +859,12 @@ async function orderNotes(svg, api) {
     + notes.map((n, i) => `<g transform="translate(${660 + i * 140} 380)"><rect x="-52" y="-34" width="104" height="68" rx="16" fill="#1b2350" stroke="#9fe2ff" stroke-width="4"/>
       ${n.dots ? Array.from({ length: n.dots }, (_, k) => `<circle cx="${(k - (n.dots - 1) / 2) * 30}" cy="0" r="11" fill="#ffd65c"/>`).join("") : `<path d="M-22 0h44" stroke="#9fe2ff" stroke-width="6" stroke-linecap="round" stroke-dasharray="6 8"/>`}
       ${label(-38, -40, String(i + 1), 22, "#9fe2ff")}</g>`).join("")
-    + cards.map((n, i) => `<g transform="translate(${640 + i * 160} 610)"><rect x="-70" y="-46" width="140" height="92" rx="18" fill="#fff7ea" stroke="#e7c79b" stroke-width="5"/>${label(0, 10, api.t(n.key), 26, "#2a2140")}</g>`).join(""));
+    + cards.map((n, i) => `<g transform="translate(${640 + i * 160} 610)"><rect x="-70" y="-46" width="140" height="92" rx="18" fill="#fff7ea" stroke="#e7c79b" stroke-width="5"/>${translatedLabel(0, 10, api, n.key, 26, "#2a2140")}</g>`).join(""));
   svg.querySelector(".act-sprites").append(art);
   const layer = svg.querySelector(".act-targets");
   let next = 0;
   await new Promise(resolve => {
-    cards.forEach((n, i) => tapSpot(layer, { x: 640 + i * 160, y: 610, r: 72, label: api.t(n.key), correct: false }, target => {
+    cards.forEach((n, i) => tapSpot(layer, { x: 640 + i * 160, y: 610, r: 72, label: api.t(n.key), labelKey: n.key, correct: false }, target => {
       if (target.classList.contains("is-done")) return;
       if (n === notes[next]) {
         target.classList.add("is-done");
@@ -837,15 +876,17 @@ async function orderNotes(svg, api) {
         resolve();
         return;
       }
-      api.miss("act.order.wrong");
       next = 0;
       layer.querySelectorAll(".act-target").forEach(g => { g.classList.remove("is-done"); g.querySelector(".act-ring")?.setAttribute("stroke", "#ffd65c"); });
       api.progress(0, notes.length);
+      api.miss("act.order.wrong");
+      mark();
     }));
     // The Hint button points at the card that comes next.
     const mark = () => layer.querySelectorAll(".act-target").forEach((g, i) => g.classList.toggle("is-correct", cards[i] === notes[next]));
     mark();
-    layer.addEventListener("click", () => setTimeout(mark, 0));
+    layer.addEventListener("click", () => setTimeout(mark, 0), { capture: true });
+    layer.addEventListener("keydown", () => setTimeout(mark, 0), { capture: true });
   });
 }
 
@@ -858,22 +899,22 @@ async function sortClues(svg, api) {
   ].sort(() => Math.random() - 0.5);
   const bins = [{ id: "relay", x: 650 }, { id: "rock", x: 950 }];
   const art = svgEl("g", { class: "act-panel" }, panelBox(470, 300, 660, 470)
-    + bins.map(b => `<g transform="translate(${b.x} 640)"><rect x="-120" y="-70" width="240" height="140" rx="20" fill="#1b2350" stroke="#9fe2ff" stroke-width="5" stroke-dasharray="14 10"/>${label(0, -32, api.t(`act.bin.${b.id}`), 26, "#9fe2ff")}<g class="act-bin" data-bin="${b.id}"></g></g>`).join("")
-    + clues.map((c, i) => `<g class="act-chip" data-chip="${i}" transform="translate(${600 + i * 200} 400)"><rect x="-90" y="-36" width="180" height="72" rx="16" fill="#fff7ea" stroke="#e7c79b" stroke-width="5"/>${label(0, 9, api.t(c.key), 21, "#2a2140")}</g>`).join(""));
+    + bins.map(b => `<g transform="translate(${b.x} 640)"><rect x="-120" y="-70" width="240" height="140" rx="20" fill="#1b2350" stroke="#9fe2ff" stroke-width="5" stroke-dasharray="14 10"/>${translatedLabel(0, -32, api, `act.bin.${b.id}`, 26, "#9fe2ff")}<g class="act-bin" data-bin="${b.id}"></g></g>`).join("")
+    + clues.map((c, i) => `<g class="act-chip" data-chip="${i}" transform="translate(${600 + i * 200} 400)"><rect x="-90" y="-36" width="180" height="72" rx="16" fill="#fff7ea" stroke="#e7c79b" stroke-width="5"/>${translatedLabel(0, 9, api, c.key, 21, "#2a2140")}</g>`).join(""));
   svg.querySelector(".act-sprites").append(art);
   const layer = svg.querySelector(".act-targets");
   let picked = null;
   let placed = 0;
   const inBin = { relay: 0, rock: 0 };
   await new Promise(resolve => {
-    const chipTargets = clues.map((c, i) => tapSpot(layer, { x: 600 + i * 200, y: 400, r: 80, label: api.t(c.key), correct: i === 0 }, target => {
+    const chipTargets = clues.map((c, i) => tapSpot(layer, { x: 600 + i * 200, y: 400, r: 80, label: api.t(c.key), labelKey: c.key, correct: i === 0 }, target => {
       if (target.classList.contains("is-done")) return;
       picked = i;
       chipTargets.forEach(g => g.querySelector(".act-ring")?.setAttribute("stroke", "#ffd65c"));
       target.querySelector(".act-ring")?.setAttribute("stroke", "#7be495");
       api.say("act.sort.where");
     }));
-    bins.forEach(b => tapSpot(layer, { x: b.x, y: 640, r: 110, label: api.t(`act.bin.${b.id}`) }, () => {
+    bins.forEach(b => tapSpot(layer, { x: b.x, y: 640, r: 110, label: api.t(`act.bin.${b.id}`), labelKey: `act.bin.${b.id}` }, () => {
       if (picked === null) { api.say("act.sort.pick"); return; }
       const clue = clues[picked];
       if (clue.bin !== b.id) { api.miss(`act.sort.wrong.${clue.bin}`); return; }

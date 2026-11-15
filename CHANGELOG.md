@@ -4,6 +4,14 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.1 — Accessible task areas and complete live language refresh (2026-11-15)
+
+- Give tasks a camera area clear of the actual HUD and instruction banner. Short landscape screens place instructions beside the task. Recompute the layout after a resize, Hint, feedback, progress or language change.
+- Separate neighboring panel-cleaning, shelter and greenhouse targets, contain animated rings inside their hit areas, and keep Science stars/numbers inside the HUD. Preserve all game costs, rules, choices and ending predicates.
+- Translate existing task art and accessible target labels in place, retaining progress, selected clues, power-cube allocation and displayed totals. Localize the sample, drawer and signal-delay labels; wrap the MEDA source note inside its panel.
+- Keep the note-sequence task's wrong-answer explanation visible and its next-card Hint accurate for pointer and keyboard use. Keep the visitor fiction note visible on phone mission reports.
+- OpenAI Codex implemented and browser-tested these fixes following the team's report on the Claude-assisted v1.11.0 implementation. See [the verification report](docs/design/ui-regression-1.11.1.md) and [AI_USAGE.md](AI_USAGE.md) for scope and limits.
+
 ## 1.11.0 — The Visitors Beyond the Window and clearer reasons (2026-11-15)
 
 - The fifth special ending, [The Visitors Beyond the Window](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window), is playable. It is an explicitly fictional science-fiction ending, labelled "Fictional science-fiction ending" with the note "This encounter is fictional. No extraterrestrial life has been confirmed." before page 1, on each page, in the report and in the Journal. It uses the predicate 2C 5B 7C 8C 9A 10A plus a normal success, has priority 5, and gives no resources, Science or rescue. Totals are unchanged; visitor histories are 23 (standard), 21 (dusty season) and 19 (small oxygen supply).

@@ -2,6 +2,7 @@
  * Compass Outpost interface styles: a full-screen, no-scroll game in dark space with warm Mars tones.
  * Layers: world (location art) → top bar + HUD → layer (dialog, pop-ups) → modal.
  * AI-assisted generation: Anthropic Claude. See AI_USAGE.md and ai-usage.json.
+ * AI-assisted 1.11.1 revisions: OpenAI Codex (separate activity area, contained target rings and HUD sizing).
  */
 
 @font-face {
@@ -529,12 +530,12 @@ body[data-screen="title"] .topbar { background: none; }
 @keyframes spot-spin { to { rotate: 360deg; } }
 @keyframes spot-pulse { from { scale: 1; opacity: 0.9; } to { scale: 1.25; opacity: 0; } }
 
-.act-ring { animation: ring-pulse 1.3s ease-in-out infinite; }
+.act-ring { animation: ring-pulse 1.3s ease-in-out infinite; pointer-events: none; }
 .act-ring--2 { animation: ring-out 1.3s ease-out infinite; }
 .act-target:hover .act-ring, .act-target:focus-visible .act-ring { stroke: #fff; stroke-width: 9; }
 .act-target:focus-visible .act-ring--2 { stroke: #58d3ff; }
 @keyframes ring-pulse { 50% { scale: 1.12; } }
-@keyframes ring-out { from { scale: 1; opacity: 0.9; } to { scale: 1.6; opacity: 0; } }
+@keyframes ring-out { from { scale: 1; opacity: 0.9; } to { scale: 1.2; opacity: 0; } }
 .act-bob { animation: bob 2.4s ease-in-out infinite; }
 .act-plant { animation: sway 2.8s ease-in-out infinite; transform-origin: 50% 100%; }
 .act-hand-bob { animation: hand 1.1s ease-in-out infinite; }
@@ -895,3 +896,24 @@ body[data-scene="solar-radiation-alert"] .world::after { content: ""; position: 
 .endpage-dots i.on { background: var(--energy); }
 .actions--split { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
 .fx--activity .act-target.is-done .act-ring { stroke: #7be495; }
+
+/* Activity controls have their own camera area; HUD and instructions never cover a target. */
+body[data-screen="activity"] .task { top: auto; bottom: 12px; }
+body[data-screen="activity"] .world,
+body[data-screen="activity"] .fx-layer {
+  top: var(--activity-top, 150px); bottom: var(--activity-bottom, 120px);
+  left: 8px; right: var(--activity-right, 8px); width: auto; height: auto;
+}
+body[data-screen="activity"] .world::after { display: none; }
+.stars i { flex: 1 1 0; min-width: 0; max-width: 15px; }
+.gauge-body { grid-template-columns: minmax(0, 1fr); }
+.stars { min-width: 0; width: 100%; }
+@media (max-height: 500px) and (orientation: landscape) {
+  body[data-screen="activity"] .task {
+    left: auto; right: 12px; top: var(--activity-top, 140px); bottom: auto;
+    translate: none; width: min(320px, 38vw); border-radius: 22px;
+    grid-template-columns: 1fr auto; gap: 8px;
+  }
+  body[data-screen="activity"] .task-avatar { display: none; }
+  body[data-screen="activity"] .task-text { font-size: 1rem; }
+}

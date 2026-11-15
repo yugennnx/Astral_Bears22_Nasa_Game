@@ -3,6 +3,7 @@
  * Each sol happens in its own location; story, choices and results appear as pop-ups.
  * Game rules live in src/game/engine.js; this file only displays and collects choices.
  * AI-assisted generation: Anthropic Claude. See AI_USAGE.md and ai-usage.json.
+ * AI-assisted 1.11.1 revisions: OpenAI Codex (activity layout and in-progress language refresh).
  */
 import { MISSION, SCENES, SCENE_ORDER, ENDINGS, SPECIAL_ENDINGS, NASA_SOURCES } from "../game/scenes.js";
 import {
@@ -12,7 +13,7 @@ import {
 import { t, ts, signed, getLanguage, setLanguage } from "../i18n/index.js";
 import { icon, duti, dutiAvatar, weatherIcon } from "./art.js";
 import { titleWorld, sceneWorld, nightWorld, LOCATIONS } from "./world.js";
-import { SPOTLIGHTS, spotlightSvg, activityFor, runActivity, pulseHint } from "./activities.js";
+import { SPOTLIGHTS, spotlightSvg, activityFor, runActivity, pulseHint, refreshActivityLanguage } from "./activities.js";
 import { memoriesFor } from "./memories.js";
 import { storyBeats, feedbackBeats, VISITORS_ID } from "./beats.js";
 import { visitorsArt } from "./world.js";
@@ -182,6 +183,7 @@ function setWorld(key, html, { zoom = true } = {}) {
 let focusX = 800;
 function setFocus(x = 800) {
   focusX = x;
+  if (app.screen === "activity" && app.activityDef) return layoutActivity();
   const box = worldEl.getBoundingClientRect();
   const visible = box.height > 0 ? Math.min(1600, (box.width / box.height) * 900) : 1600;
   const center = Math.max(visible / 2, Math.min(1600 - visible / 2, x));
@@ -198,7 +200,40 @@ function setFocus(x = 800) {
 }
 window.addEventListener("resize", () => setFocus(focusX));
 
-const signLabels = () => ({ lab: t("sign.lab"), route: t("sign.route"), plants: t("sign.plants"), mars: t("sign.mars"), earth: t("sign.earth") });
+const signLabels = () => ({ lab: t("sign.lab"), route: t("sign.route"), plants: t("sign.plants"), mars: t("sign.mars"), earth: t("sign.earth"), delay: t("sign.delay"), sample: t("sign.sample"), tomorrow: t("sign.tomorrow") });
+
+/** Keep the whole job between the real HUD and instructions, including after a resize or translation. */
+function layoutActivity() {
+  if (app.screen !== "activity" || !app.activityDef) return;
+  const banner = layerEl.querySelector(".task");
+  if (!banner) return;
+  const frame = document.getElementById("app");
+  frame.style.setProperty("--activity-top", `${Math.ceil(hudEl.getBoundingClientRect().bottom) + 8}px`);
+  const box = banner.getBoundingClientRect();
+  const side = matchMedia("(max-height: 500px) and (orientation: landscape)").matches;
+  frame.style.setProperty("--activity-bottom", `${side ? 8 : Math.ceil(innerHeight - box.top) + 12}px`);
+  frame.style.setProperty("--activity-right", `${side ? Math.ceil(innerWidth - box.left) + 12 : 8}px`);
+  const def = app.activityDef;
+  let viewBox;
+  if (def.custom) {
+    viewBox = app.activityId === "2B" ? "450 620 700 200" : "450 280 700 520";
+  } else {
+    const xs = def.targets.map(p => p.x).concat(def.focusExtra ?? []);
+    const ys = def.targets.map(p => p.y);
+    const left = Math.max(0, Math.min(...xs) - 180);
+    const right = Math.min(1600, Math.max(...xs) + 180);
+    const top = Math.max(0, Math.min(...ys) - 180);
+    const bottom = app.activityId === "6C" ? 900 : Math.min(900, Math.max(...ys) + 180);
+    viewBox = `${left} ${top} ${right - left} ${bottom - top}`;
+  }
+  for (const svg of [worldEl.querySelector(".world-scene:last-child > svg"), fxEl.querySelector(".fx--activity")]) {
+    svg?.setAttribute("viewBox", viewBox);
+    svg?.setAttribute("preserveAspectRatio", "xMidYMid meet");
+  }
+  refreshActivityLanguage(fxEl, t, (n, total) => t("act.target", { n, total }));
+}
+const scheduleActivityLayout = () => requestAnimationFrame(layoutActivity);
+document.fonts.ready.then(scheduleActivityLayout);
 
 function worldForScene() {
   const game = app.game;
@@ -842,6 +877,7 @@ async function playActivity(choiceId, flagsBefore, before) {
   app.activityId = id;
   stopTyping();
   app.activityDef = def;
+  app.activityWorldState = { ...app.game, flags: flagsBefore };
   app.taskLine = null;
   setWorld(`act:${id}:${app.game.history.length}:${getLanguage()}`, sceneWorld(def.backdrop, { ...app.game, flags: flagsBefore }, {
     dusty: false, photoSrc: PHOTOS.rim.src, labels: signLabels(),
@@ -852,13 +888,14 @@ async function playActivity(choiceId, flagsBefore, before) {
   app.taskProgress = { n: 0, total };
   layerEl.innerHTML = taskBanner(def, 0, total);
   finishRender({ focus: false });
-  if (!reducedMotion()) animate(layerEl.querySelector(".task"), { translateY: [-60, 0], opacity: [0, 1], duration: 600, ease: "outBack(1.6)" });
+  layoutActivity();
+  if (!reducedMotion()) animate(layerEl.querySelector(".task"), { opacity: [0, 1], duration: 600 });
   await wait(450);
   fxEl.innerHTML = "";
   const xs = def.targets ? def.targets.map(target => target.x).concat(def.focusExtra ?? []) : [800];
   const focusOn = (Math.min(...xs) + Math.max(...xs)) / 2;
   setTimeout(() => setFocus(focusOn), 0);
-  await runActivity(fxEl, def, {
+  const activity = runActivity(fxEl, def, {
     t,
     onSay: (key, miss) => {
       app.taskLine = { key, miss: Boolean(miss) }; // remembered so a language switch keeps the current prompt
@@ -866,6 +903,7 @@ async function playActivity(choiceId, flagsBefore, before) {
       if (!line) return;
       line.textContent = t(key);
       line.classList.toggle("is-miss", Boolean(miss));
+      scheduleActivityLayout();
       if (miss) play("wrong");
       if (!reducedMotion()) animate(line, { opacity: [0.3, 1], duration: 300 });
     },
@@ -877,9 +915,12 @@ async function playActivity(choiceId, flagsBefore, before) {
       if (!banner) return;
       app.taskLine = null; // a new step starts from the task's own text
       banner.outerHTML = taskBanner(def, n, count, n >= count);
+      scheduleActivityLayout();
       if (!reducedMotion() && n >= count) animate(layerEl.querySelector(".task"), { scale: [1.15, 1], duration: 500, ease: "outBack(3)" });
     },
   });
+  layoutActivity();
+  await activity;
   if (!reducedMotion() && !SOBER_DONE[id]) confetti({ particleCount: 70, spread: 70, origin: { y: 0.45 }, colors: ["#ffc93c", "#7be495", "#4fd1ff"] });
   await wait(SOBER_DONE[id] ? 1100 : 600);
   fxEl.innerHTML = "";
@@ -1217,7 +1258,7 @@ function showEnding() {
       </div>
     </div>
     ${special ? `<section class="end-story">
-      ${special.fiction ? `<p class="fineprint">${icon("info")}${esc(ts(special.fictionLabel))}: ${esc(ts(special.fictionNote))}</p>` : ""}
+      ${special.fiction ? `<p class="fiction-note">${icon("info")}<span><b>${esc(ts(special.fictionLabel))}:</b> ${esc(ts(special.fictionNote))}</span></p>` : ""}
       <button class="btn btn--small btn--ghost" data-action="end-replay-story">${icon("book")}${esc(t("ending.readAgain"))}</button>
       <h3>${esc(t("ending.evidence"))}</h3>
       <ul class="list">${special.evidence.map(text => `<li class="is-good">${icon("check")}<span>${esc(ts(text))}</span></li>`).join("")}</ul>
@@ -1280,6 +1321,7 @@ function openModal(html, variant = "") {
   stopTyping(true);
   modal.className = `modal ${variant}`;
   modal.innerHTML = `<div class="modal-inner">${html}</div>`;
+  modal.setAttribute("aria-label", modal.querySelector(".modal-head .eyebrow, h2")?.textContent ?? ts(MISSION.title));
   if (!modal.open) modal.showModal();
   modal.querySelector("[data-focus]")?.focus();
   if (!reducedMotion()) animate(modal, { opacity: [0, 1], scale: [0.9, 1], duration: 420, ease: "outBack(1.6)" });
@@ -1421,6 +1463,12 @@ function redraw() {
       // (with the values currently shown), the task banner and its current question, hint or retry message.
       document.documentElement.lang = getLanguage();
       if (app.hudShown) renderHud(app.hudShown.resources, app.hudShown.science);
+      if (app.activityDef && app.activityWorldState) {
+        const def = app.activityDef;
+        setWorld(`act:${app.activityId}:${app.game.history.length}:${getLanguage()}`, sceneWorld(def.backdrop, app.activityWorldState, {
+          dusty: false, photoSrc: PHOTOS.rim.src, labels: signLabels(), cast: def.backdrop !== "solar-radiation-alert",
+        }), { zoom: false });
+      }
       const box = layerEl.querySelector(".task");
       if (box && current && app.taskProgress) {
         const finished = box.classList.contains("is-finished");
@@ -1433,7 +1481,9 @@ function redraw() {
       } else if (banner && current) {
         banner.textContent = t(app.taskLine?.key ?? current.task);
       }
-      return renderTopbar();
+      renderTopbar();
+      layoutActivity();
+      return;
     }
     case "choices": return showChoices({ animateIn: false });
     case "result": return app.game.phase === "feedback" ? renderFeedbackLine() : showEnding();
@@ -1678,6 +1728,7 @@ const actions = {
     const line = layerEl.querySelector(".task-text");
     app.taskLine = { key: def.hint ?? "act.hint.default", miss: false };
     if (line) { line.textContent = t(app.taskLine.key); line.classList.remove("is-miss"); }
+    scheduleActivityLayout();
     pulseHint(fxEl);
   },
   "pan-right": () => setFocus(focusX + 280),

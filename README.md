@@ -4,7 +4,7 @@ An English narrative decision game for ages 7–12, developed for the 2026 NASA 
 
 Players manage Energy, Oxygen, and Safety alongside companion robot **DUTİ**, aiming to earn at least 10 Science Points over ten sols. Decisions have resource or opportunity costs and can change later options.
 
-**Next story handoff:** [The Visitors Beyond the Window](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window) supplies an explicitly fictional fifth ending, conditional clues, an unlock contract and numerical witnesses for Tuğra. This is a **planned addition**; the current playable game still has four special endings.
+**Fifth-ending story design:** [The Visitors Beyond the Window](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window) supplies the explicitly fictional ending, clues, unlock contract and numerical witnesses implemented in v1.11.0. Version 1.11.1 fixes activity layout and live translations; see [the browser verification report](docs/design/ui-regression-1.11.1.md).
 
 ## AI/SI Attribution
 
@@ -19,7 +19,7 @@ The eventual interface must retain the source cards and show the supplied credit
 
 ## Current Implementation
 
-The repository contains a **playable browser prototype**: a decision engine, a responsive interface (phone and desktop), ten sols with DUTİ, NASA science cards, an ending report with four hidden special endings, and save/resume. English is the primary language; Turkish is an optional interface language chosen by the team. A public deployment link and the submission demo are still to be added, and no playtest with children has been run yet.
+The repository contains a **playable browser prototype**: a decision engine, a responsive interface (phone and desktop), ten sols with DUTİ, NASA science cards, an ending report with five hidden special endings, and save/resume. English is the primary language; Turkish is an optional interface language chosen by the team. A public deployment link and the submission demo are still to be added, and no playtest with children has been run yet.
 
 ## Play Locally
 

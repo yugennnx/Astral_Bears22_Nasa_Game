@@ -82,6 +82,10 @@ Version 1.11.0 separates three kinds of contribution:
 
 No completed human code review, child playtest or browser verification is claimed for this version; browser checking is left to the team reviewer. The checks run for this version are automated data and numerical checks only.
 
+## 1.11.1 corrections requested by the team
+
+On November 15, 2026, the user reported English text remaining in the Turkish interface and overlapping activity controls after the Claude-assisted v1.11.0 update (`13c49e7`). OpenAI Codex reproduced the issues, generated the live SVG/accessible-label translation bindings, localized equipment labels, activity-camera layout, target/ring spacing, HUD sizing, note-task feedback corrections and visible phone-report fiction note, and updated release/status documentation. Codex also generated temporary browser test harnesses and [the verification report](docs/design/ui-regression-1.11.1.md), ran the repository checks and recorded file-level scopes. Existing Claude implementation and the separately credited story design remain attributed to their actual tools. No engine rule, choice effect, ending predicate, NASA measurement or license decision was changed. Temporary probes and screenshots remain outside the repository; no permanent browser suite, child playtest, human review certification or organizer approval is claimed.
+
 ## Selected Prompt Record
 
 The following are English summaries or translations of project-related user requests, not a complete chat transcript:
