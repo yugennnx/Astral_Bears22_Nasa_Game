@@ -64,6 +64,10 @@ On November 15, 2026, the team requested an independent follow-up on commit `583
 
 On November 15, 2026, OpenAI Codex independently verified commit `326f941` at the team's request. It generated temporary browser probes and [the follow-up report](docs/design/regression-review-326f941.md), ran 15 playthrough scenarios and four focused probes with 28 language-switch checks, and recorded the current-prompt fix as verified. The report separates a low-priority document-language/HUD refresh observation from the three deliberately deferred product/testing items. This publication adds documentation and AI contribution records only; no game fix was applied. Temporary harnesses and screenshots remain outside the repository. These are automated checks, not a child playtest or completed human review.
 
+### Independent 1.10.3 regression review
+
+On November 15, 2026, OpenAI Codex independently verified commit `6bd524b` in the ongoing review workflow. It generated temporary browser probes and [the follow-up report](docs/design/regression-review-6bd524b.md), ran 15 playthrough scenarios and six focused scenarios with 34 language switches, and verified the page-language/HUD/task-banner fix without changing displayed totals, progress or engine state. The report closes the previous P3 within the test scope and separates deliberately deferred product/testing work from team-reported delivery tasks. Only documentation and AI contribution records were published; no game code was changed. Temporary harnesses and screenshots remain outside the repository. These checks are not a child playtest or actual screen-reader testing.
+
 ## Selected Prompt Record
 
 The following are English summaries or translations of project-related user requests, not a complete chat transcript:
