@@ -581,8 +581,8 @@ export function runActivity(host, def, { t, onProgress, ariaTarget, onSay }) {
     const api = {
       t,
       progress: (n, total) => onProgress?.(n, total),
-      say: text => onSay?.(text, false),
-      miss: text => onSay?.(text, true),
+      say: key => onSay?.(key, false),
+      miss: key => onSay?.(key, true),
     };
     return Promise.resolve(def.custom(svg, api)).then(() => sleep(800));
   }
@@ -728,7 +728,7 @@ async function shareEnergy(svg, api) {
         const wrong = counts.lamp > 0 ? "lamp" : counts.air < 2 ? "air" : counts.heat < 1 ? "heat" : null;
         if (!wrong) { api.progress(3, 3); resolve(); return; }
         checking = true;
-        api.miss(api.t(`act.share.wrong.${wrong}`));
+        api.miss(`act.share.wrong.${wrong}`);
         await sleep(1600);
         counts.air = 0; counts.heat = 0; counts.lamp = 0; left = 3;
         drawCubes();
@@ -752,14 +752,14 @@ async function compareReadings(svg, api) {
     }).join(""));
   svg.querySelector(".act-sprites").append(art);
   const layer = svg.querySelector(".act-targets");
-  api.say(api.t("act.cmp.q1"));
+  api.say("act.cmp.q1");
   await new Promise(resolve => {
-    tapSpot(layer, { x: 680, y: 520, r: 110, label: "A" }, () => api.miss(api.t("act.cmp.wrong1")));
+    tapSpot(layer, { x: 680, y: 520, r: 110, label: "A" }, () => api.miss("act.cmp.wrong1"));
     tapSpot(layer, { x: 920, y: 520, r: 110, label: "B", correct: true }, () => { burst(svg, 920, 500, "#58d3ff"); resolve(); });
   });
   layer.innerHTML = "";
   api.progress(1, 2);
-  api.say(api.t("act.cmp.q2"));
+  api.say("act.cmp.q2");
   // Second step: keep both readings as a small reminder and show the answers inside the panel,
   // well below the task banner, so every label stays visible on desktop and phones.
   art.innerHTML = panelBox(470, 300, 660, 470)
@@ -769,7 +769,7 @@ async function compareReadings(svg, api) {
   art.append(svgEl("g", {}, options.map((n, i) => `<g transform="translate(${640 + i * 160} 620)"><circle r="62" fill="#ffd65c" stroke="#6b4300" stroke-width="5"/>${label(0, 13, `${n}°`, 40, "#2a1c00")}</g>`).join("")));
   await new Promise(resolve => {
     options.forEach((n, i) => tapSpot(layer, { x: 640 + i * 160, y: 620, r: 68, label: `${n}°`, correct: n === 74 }, () => {
-      if (n === 74) { burst(svg, 640 + i * 160, 620, "#ffd65c"); resolve(); } else api.miss(api.t("act.cmp.wrong2"));
+      if (n === 74) { burst(svg, 640 + i * 160, 620, "#ffd65c"); resolve(); } else api.miss("act.cmp.wrong2");
     }));
   });
   api.progress(2, 2);
@@ -792,7 +792,7 @@ async function deduceRock(svg, api) {
       const box = art.querySelector(`[data-rock="${i}"]`);
       if (looks[i] === "both") { anim(box, { scale: [1, 1.2, 1], duration: 600, ease: "outBack(3)" }); burst(svg, x, y - 20, "#7ef0ff"); resolve(); return; }
       anim(box, { translateX: [0, -8, 8, -4, 0], duration: 450 });
-      api.miss(api.t(`act.rock.${looks[i]}`));
+      api.miss(`act.rock.${looks[i]}`);
     }));
   });
   api.progress(1, 1);

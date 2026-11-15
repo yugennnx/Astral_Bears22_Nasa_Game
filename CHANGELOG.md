@@ -4,6 +4,13 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.10.2 — Language switch keeps the current task prompt (2026-11-15)
+
+Fix for the remaining finding in [docs/design/regression-review-5834e11.md](docs/design/regression-review-5834e11.md):
+
+- P2: switching language during a thinking task (for example the second 2C question) now translates the prompt that is on screen (the current question, hint or retry message) instead of returning to the task introduction. Tasks now pass message keys, so the interface can re-translate them.
+- Still open, as recorded in the review: the long special-ending screen, overall pacing, and permanent automated browser tests. No rule or number changed. Checked with `npm run check`; browser checking is left to the team reviewer.
+
 ## 1.10.1 — Fixes from the independent review (2026-11-15)
 
 Fixes for the findings in [docs/design/repository-review-761bb66.md](docs/design/repository-review-761bb66.md):

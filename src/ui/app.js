@@ -838,6 +838,7 @@ async function playActivity(choiceId, flagsBefore, before) {
   app.activityId = id;
   stopTyping();
   app.activityDef = def;
+  app.taskLine = null;
   setWorld(`act:${id}:${app.game.history.length}:${getLanguage()}`, sceneWorld(def.backdrop, { ...app.game, flags: flagsBefore }, {
     dusty: false, photoSrc: PHOTOS.rim.src, labels: signLabels(),
     cast: def.backdrop !== "solar-radiation-alert", // Sol 5 tasks draw (and move) the crew and robot themselves
@@ -854,10 +855,11 @@ async function playActivity(choiceId, flagsBefore, before) {
   setTimeout(() => setFocus(focusOn), 0);
   await runActivity(fxEl, def, {
     t,
-    onSay: (text, miss) => {
+    onSay: (key, miss) => {
+      app.taskLine = { key, miss: Boolean(miss) }; // remembered so a language switch keeps the current prompt
       const line = layerEl.querySelector(".task-text");
       if (!line) return;
-      line.textContent = text;
+      line.textContent = t(key);
       line.classList.toggle("is-miss", Boolean(miss));
       if (miss) play("wrong");
       if (!reducedMotion()) animate(line, { opacity: [0.3, 1], duration: 300 });
@@ -867,6 +869,7 @@ async function playActivity(choiceId, flagsBefore, before) {
       play(n >= count ? (SOBER_DONE[id] ? "done" : "success") : "step");
       const banner = layerEl.querySelector(".task");
       if (!banner) return;
+      app.taskLine = null; // a new step starts from the task's own text
       banner.outerHTML = taskBanner(def, n, count, n >= count);
       if (!reducedMotion() && n >= count) animate(layerEl.querySelector(".task"), { scale: [1.15, 1], duration: 500, ease: "outBack(3)" });
     },
@@ -877,6 +880,7 @@ async function playActivity(choiceId, flagsBefore, before) {
   setFocus(800);
   app.activityId = null;
   app.activityDef = null;
+  app.taskLine = null;
 }
 
 /** Jobs that are not a reason to celebrate: no confetti, an honest closing line. */
@@ -1346,7 +1350,11 @@ function redraw() {
     case "activity": {
       const banner = layerEl.querySelector(".task-text");
       const current = app.activityId ? activityFor(app.activityId === "6C-report" ? "6C" : app.activityId, { greenhouseMode: app.activityId === "6C-report" ? "off" : "full" }).def : null;
-      if (banner && current && !layerEl.querySelector(".task.is-finished")) banner.textContent = t(current.task);
+      if (banner && current && !layerEl.querySelector(".task.is-finished")) {
+        // Re-translate what is on screen now: the current question, hint or retry message.
+        banner.textContent = t(app.taskLine?.key ?? current.task);
+        banner.classList.toggle("is-miss", Boolean(app.taskLine?.miss));
+      }
       return renderTopbar();
     }
     case "choices": return showChoices({ animateIn: false });
@@ -1563,7 +1571,8 @@ const actions = {
     const def = app.activityDef;
     if (!def) return;
     const line = layerEl.querySelector(".task-text");
-    if (line) { line.textContent = t(def.hint ?? "act.hint.default"); line.classList.remove("is-miss"); }
+    app.taskLine = { key: def.hint ?? "act.hint.default", miss: false };
+    if (line) { line.textContent = t(app.taskLine.key); line.classList.remove("is-miss"); }
     pulseHint(fxEl);
   },
   "pan-right": () => setFocus(focusX + 280),
