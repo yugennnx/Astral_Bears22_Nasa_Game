@@ -475,6 +475,14 @@
       "tools": [
         "OpenAI ChatGPT/Codex"
       ]
+    },
+    {
+      "path": "docs/design/repository-review-761bb66.md",
+      "status": "ai-generated",
+      "scope": "OpenAI Codex independently reviewed commits a01613d, 69d0d55 and 761bb66, ran read-only engine/data/source and browser checks, and prepared the English findings and reproduction report. This publication applies no game fixes; screenshots and temporary test harnesses remain outside the repository.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
     }
   ],
   "media": {
