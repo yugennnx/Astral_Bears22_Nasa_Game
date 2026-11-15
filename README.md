@@ -31,6 +31,8 @@ Then open <http://localhost:5173>. The game has no build step and no runtime net
 
 **Active ruleset:** [docs/design/story-plan.md](docs/design/story-plan.md) and [src/game/scenes.js](src/game/scenes.js), including the v1.2 mission profiles and low-power life-support rule.
 
+**Planned ten-sol continuation:** [Complete English story and four discoverable endings](docs/design/ten-sol-story-plan.md), [implementation handoff for Tuğra](docs/design/ten-sol-implementation-handoff.md), [machine-readable design](data/ten-sol-story-design.json), and [balance report with full example paths](docs/design/ten-sol-balance-report.md). This is a design package; the playable game above still ends after six sols. Validate the proposed ten-sol paths with `npm run check:expansion`.
+
 ## Repository Structure
 
 ```text
@@ -84,7 +86,7 @@ Requires Node.js 20 or newer. From the repository root:
 npm run check
 ```
 
-This runs the story, engine, translation and disclosure checks. Optional primary-source verification with Python and network access:
+This runs the current story, engine, translation and disclosure checks, plus the proposed ten-sol design enumeration. Optional primary-source verification with Python and network access:
 
 ```sh
 npm run verify:sources

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "updated": "2026-11-14",
+  "updated": "2026-11-15",
   "project": "Compass Outpost: Six Sols on Mars",
   "aiAssistanceUsed": true,
   "tools": [
@@ -61,7 +61,7 @@
     {
       "path": "docs/design/story-plan.md",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex story draft, translation and current audit edits; Claude-assisted v1.2 revisions. Claude-assisted path/link updates in the 1.2.1 repository restructure.",
+      "scope": "ChatGPT/Codex story draft, translation and current audit edits; Claude-assisted v1.2 revisions. Claude-assisted path/link updates in the 1.2.1 repository restructure. OpenAI ChatGPT/Codex linked the new ten-sol continuation while retaining the active six-sol design.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -88,7 +88,7 @@
     {
       "path": "docs/design/story-data-contract.md",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex initial guide/current disclosure edits and Claude-assisted v1.2 contract updates. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
+      "scope": "ChatGPT/Codex initial guide/current disclosure edits and Claude-assisted v1.2 contract updates. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. OpenAI ChatGPT/Codex added an explicit pointer to the future ten-sol contract and preserved current runtime rules.",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -97,7 +97,7 @@
     {
       "path": "README.md",
       "status": "ai-assisted",
-      "scope": "Documentation links and current English rewrite/status disclosure. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
+      "scope": "Documentation links and current English rewrite/status disclosure. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. OpenAI ChatGPT/Codex added ten-sol story, JSON, handoff, and balance-report links and clarified design-only status.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -151,7 +151,7 @@
     {
       "path": "AI_USAGE.md",
       "status": "ai-generated",
-      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
+      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). OpenAI ChatGPT/Codex recorded the November 15 ten-sol story request, generated narrative/ending/balance work, and design-only implementation status.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -160,7 +160,7 @@
     {
       "path": "ai-usage.json",
       "status": "ai-generated",
-      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
+      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). OpenAI ChatGPT/Codex recorded the ten-sol design package and changed-file scopes; previous provider contributions remain intact.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -169,7 +169,7 @@
     {
       "path": "AGENTS.md",
       "status": "ai-generated",
-      "scope": "Repository instructions for preserving attribution and verified requirements. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype.",
+      "scope": "Repository instructions for preserving attribution and verified requirements. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. OpenAI ChatGPT/Codex documented the proposed ten-sol edition and its separation from the active six-sol runtime.",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -229,17 +229,19 @@
     {
       "path": "package.json",
       "status": "ai-generated",
-      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
+      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). OpenAI ChatGPT/Codex added check:expansion and included independent proposed-design enumeration in npm run check.",
       "tools": [
-        "Anthropic Claude"
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
       ]
     },
     {
       "path": "CHANGELOG.md",
       "status": "ai-generated",
-      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions).",
+      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). OpenAI ChatGPT/Codex added the November 15 unreleased ten-sol design entry.",
       "tools": [
-        "Anthropic Claude"
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
       ]
     },
     {
@@ -389,6 +391,47 @@
       "scope": "Claude-generated free-exploration hotspots (36 discoveries, 6 secrets) and secret sprites drawn in code; NASA facts checked on 2026-11-14.",
       "tools": [
         "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "docs/design/ten-sol-story-plan.md",
+      "status": "ai-generated",
+      "scope": "OpenAI ChatGPT/Codex generated the English ten-sol narrative, four new scenes, twelve new choices/feedback, four special endings, predicates, and proposed balancing rules. First-six choice tables and mechanics are inherited from the separately attributed OpenAI/Claude-assisted scene module.",
+      "tools": [
+        "OpenAI ChatGPT/Codex",
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "data/ten-sol-story-design.json",
+      "status": "ai-generated",
+      "scope": "OpenAI ChatGPT/Codex generated the machine-readable proposed continuation: replacement opening prose, four new scenes, choice effects and flags, checkpoint, forecasts, ending predicates, and ending text. Not loaded by the runtime; numerical effects are fictional.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "docs/design/ten-sol-implementation-handoff.md",
+      "status": "ai-generated",
+      "scope": "OpenAI ChatGPT/Codex generated the implementation checklist, schema notes, save-version handling, outcome ordering, and runtime/translation integration requirements for Tuğra.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "tools/check_ten_sol_design.mjs",
+      "status": "ai-generated",
+      "scope": "OpenAI ChatGPT/Codex generated an independent proposed-design enumerator and prose/predicate/boundary checks; this is not the production engine.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
+      "path": "docs/design/ten-sol-balance-report.md",
+      "status": "ai-generated",
+      "scope": "OpenAI ChatGPT/Codex generated the report via tools/check_ten_sol_design.mjs, recording exhaustive proposed-design counts and complete reachable witnesses for every profile. These are game-design calculations, not NASA measurements or browser-playtest results.",
+      "tools": [
+        "OpenAI ChatGPT/Codex"
       ]
     }
   ],

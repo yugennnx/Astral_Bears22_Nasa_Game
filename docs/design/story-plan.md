@@ -4,6 +4,8 @@
 
 Story and Decision Plan for the First Playable Prototype — v1.2 (see `docs/changelog/v1.2.md`)
 
+**Continuation planned November 15, 2026:** [Ten Sols of Questions](ten-sol-story-plan.md) supplies revised framing for these six scenes, Sols 7–10, and four choice-dependent special endings. Its [implementation handoff](ten-sol-implementation-handoff.md) explains the new checkpoint and target. This document still describes the active six-sol edition; the continuation is not yet loaded by the game.
+
 **Language:** English for all story text, dialogue, interface labels, code identifiers, and code comments.
 
 **Companion robot:** DUTİ. Preserve this spelling in the interface and dialogue. Use `duti` as its code identifier, for example `{ id: "duti", displayName: "DUTİ" }`.

@@ -2,7 +2,7 @@
 
 **Project:** Compass Outpost: Six Sols on Mars
 **Team repository:** Astral_Bears22_Nasa_Game
-**Updated:** November 14, 2026
+**Updated:** November 15, 2026
 
 This project includes text, code, and documentation generated or revised with **OpenAI ChatGPT/Codex and Anthropic Claude**. This disclosure is part of the project and should remain accessible to reviewers. Machine-readable file-level provenance is recorded in [`ai-usage.json`](ai-usage.json).
 
@@ -25,6 +25,8 @@ The user specified a browser-based project, a narrative decision-tree format, a 
 The assistant proposed or expanded the six-scene story, working title, DUTİ dialogue, detailed choices, numerical costs and rewards, state-flag connections, ending descriptions, English translation, `src/game/scenes.js`, the initial `tools/check_story_data.mjs`, and `docs/design/story-data-contract.md`. The assistant ran automated checks and Git commands at the user's request.
 
 The assistant also generated the English wording, metadata, and source-audit corrections added by the current compliance review. AI-assisted source summaries are distinct from NASA's original observations. Resource scores and mission profiles are game assumptions; they are not NASA measurements.
+
+On November 15, 2026, the user asked to pause engine work, complete Sols 7–10 with curiosity-led storytelling, and add discoverable endings caused by specific earlier choices, then publish an implementation-ready handoff. OpenAI ChatGPT/Codex generated the new ten-sol story plan, first-six narrative framing, twelve new choices and feedback, four special ending texts and predicates, proposed balance values, JSON design, integration checklist, and independent design enumerator/balance report. It also added documentation links, the expansion-check script, and provenance records. Existing first-six mechanical data are inherited from the separately credited scene module. The new expansion is design-only: the current six-sol engine, scene module, artwork, and translations are unchanged. The checks establish numerical reachability, not child engagement or completed human review.
 
 ### Claude-assisted contributions confirmed by the team
 
@@ -51,6 +53,7 @@ The following are English summaries or translations of project-related user requ
 3. **Implementation handoff:** Prepare the team's next step while the frontend developer starts the interface draft. The assistant selected conversion of the story into JavaScript scene data.
 4. **Publication:** Push the story plan, then the new scene-data step, to the team's GitHub repository.
 5. **Audit:** Recheck the earlier conversation and the official challenge/rules, disclose AI contributions, inspect published work, and correct identified issues.
+6. **Ten-sol continuation:** Complete the remaining four sols with engaging, curiosity-led scenes, create several special endings unlocked by specific choice histories, and push an English implementation handoff to the shared repository. The team supplied the desired duration, continuation scope, discovery/replay goal, and earlier idea of sequence-triggered unique events; Codex supplied the detailed prose, predicates, and balancing proposals.
 
 Inputs included the team-provided requirements, challenge statement, earlier assistant-generated drafts, repository files, and publicly accessible official NASA/Space Apps sources. No private credentials are part of this disclosure. Private conversation details unrelated to the project are omitted.
 
@@ -76,7 +79,7 @@ NASA photographs/data require their own attribution and usage checks. A referenc
 
 **Draft for the team to review and place in the official form:**
 
-> Our team determined the underlying game idea and design direction before using AI. We used Anthropic Claude for the initial design, curated NASA-data summaries and simulator, and the later mission-profile and life-support revisions. We used OpenAI ChatGPT/Codex to draft and translate detailed scenes, develop choice effects and conditional state data, generate the initial JavaScript reference checker and integration guide, and help audit sources and disclosures. The tools generated substantial implementation and story details, which are disclosed in AI_USAGE.md and ai-usage.json. The team supplied the selected narrative format, platform and visual constraints, ten-point resource requirement, English-language requirement, and companion name DUTİ. NASA observations are attributed separately from AI-assisted summaries and fictional gameplay values. The team plans additional choice-sequence events and DUTİ conversations; these planned features are not claimed as implemented.
+> Our team determined the underlying game idea and design direction before using AI. We used Anthropic Claude for the initial design, curated NASA-data summaries and simulator, and the later mission-profile and life-support revisions. We used OpenAI ChatGPT/Codex to draft and translate detailed scenes, develop choice effects and conditional state data, generate the initial JavaScript reference checker and integration guide, prepare a design-only ten-sol continuation with four choice-dependent special endings and a balance checker, and help audit sources and disclosures. The tools generated substantial implementation and story details, which are disclosed in AI_USAGE.md and ai-usage.json. The team supplied the selected narrative format, platform and visual constraints, ten-point resource requirement, English-language requirement, and companion name DUTİ. NASA observations are attributed separately from AI-assisted summaries and fictional gameplay values. The team plans additional choice-sequence events and DUTİ conversations; these planned features are not claimed as implemented.
 
 Fill the website's **Use of Super Intelligence (SI)** field and the relevant references fields. A GitHub disclosure supports those fields; it does not submit the project or replace the form.
 
