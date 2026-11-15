@@ -632,6 +632,22 @@
       ]
     },
     {
+      "path": "docs/submission/compass-outpost-demo-slides.html",
+      "status": "ai-generated",
+      "scope": "Claude-generated seven-slide English project demo (cover, introduction, gameplay, NASA data, impact and validation, AI/SI use and limits, references) at the team's request; text content follows the repository sources.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
+      "path": "docs/submission/compass-outpost-demo-slides.pdf",
+      "status": "ai-generated",
+      "scope": "PDF rendering of the Claude-generated seven-slide demo, printed from the HTML source with headless Chrome.",
+      "tools": [
+        "Anthropic Claude"
+      ]
+    },
+    {
       "path": "docs/submission-checklist.md",
       "status": "ai-generated",
       "scope": "Official 2026 source-linked Universal submission checklist with no falsely completed attestations. OpenAI Codex licensing follow-up: recorded the user-authorized Apache-2.0 choice and updated current scope/checks; prior deferral remains historical.",

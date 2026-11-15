@@ -1,0 +1,180 @@
+<!doctype html>
+<!-- AI/SI disclosure: slide text and layout drafted with Anthropic Claude for the team's 2026 Space Apps demo. See AI_USAGE.md. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Compass Outpost: Ten Sols of Questions - Project Demo (Astral_Bears22)</title>
+<meta name="description" content="Seven-slide project demo for NASA Space Apps Challenge 2026. Text drafted with AI assistance (Anthropic Claude).">
+<style>
+  @page { size: 13.333in 7.5in; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #fff; }
+  body { font-family: "Times New Roman", Times, serif; color: #111; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide { width: 13.333in; height: 7.5in; position: relative; padding: 0.5in 0.8in 0.8in; page-break-after: always; overflow: hidden; border-top: 0.16in solid #0b3d91; }
+  .slide:last-child { page-break-after: auto; }
+  h1 { font-size: 34pt; margin: 0 0 0.12in; color: #0b3d91; font-weight: bold; }
+  h2 { font-size: 28pt; margin: 0 0 0.18in; color: #0b3d91; border-bottom: 1.5pt solid #0b3d91; padding-bottom: 0.06in; }
+  h3 { font-size: 18pt; margin: 0.08in 0 0.05in; color: #0b3d91; }
+  p, li { font-size: 16pt; line-height: 1.3; text-align: justify; text-justify: inter-word; margin: 0 0 0.09in; }
+  ul { margin: 0 0 0.08in; padding-left: 0.3in; }
+  li { margin-bottom: 0.06in; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45in; }
+  .num { position: absolute; bottom: 0.3in; left: 0; right: 0; text-align: center; font-size: 13pt; color: #333; }
+  .cover { display: flex; flex-direction: column; justify-content: center; text-align: center; }
+  .cover p { text-align: center; }
+  .cover .event { font-size: 18pt; letter-spacing: 0.04in; color: #333; margin-bottom: 0.35in; }
+  .cover h1 { font-size: 44pt; }
+  .cover .sub { font-size: 22pt; color: #222; margin-bottom: 0.45in; }
+  table.info { margin: 0 auto; border-collapse: collapse; font-size: 17pt; }
+  table.info td { padding: 0.06in 0.18in; border-bottom: 0.75pt solid #bbb; text-align: left; }
+  table.info td:first-child { font-weight: bold; color: #0b3d91; }
+  .note { font-size: 12pt; color: #444; }
+  .refs p { font-size: 11.2pt; line-height: 1.22; margin-bottom: 0.055in; padding-left: 0.3in; text-indent: -0.3in; text-align: left; }
+  .box { border: 1pt solid #0b3d91; padding: 0.1in 0.18in; margin-top: 0.08in; }
+</style>
+</head>
+<body>
+
+<section class="slide cover">
+  <p class="event">NASA SPACE APPS CHALLENGE 2026 &middot; PROJECT DEMO</p>
+  <h1>Compass Outpost: Ten Sols of Questions</h1>
+  <p class="sub">A Mars outpost decision game that teaches real mission trade-offs to young learners</p>
+  <table class="info">
+    <tr><td>Team</td><td>Astral_Bears22</td></tr>
+    <tr><td>Local Event</td><td>Universal Event, Anywhere in the World</td></tr>
+    <tr><td>Challenge</td><td>Build a Junior Astronaut Mission Trainer</td></tr>
+    <tr><td>Project</td><td>https://github.com/yugennnx/Astral_Bears22_Nasa_Game</td></tr>
+  </table>
+  <p class="note" style="margin-top:0.4in">Slide text prepared with AI assistance (Anthropic Claude). No NASA logo or insignia is used.</p>
+  <div class="num">1</div>
+</section>
+
+<section class="slide">
+  <h2>Introduction: The Challenge and Our Answer</h2>
+  <div class="cols">
+    <div>
+      <h3>The problem</h3>
+      <p>Space content for children is often either too abstract (posters and general facts) or too technical. Few tools let a young learner feel the trade-offs that decide whether a mission succeeds: power, life support, radiation protection, food and communication delay.</p>
+      <h3>The challenge</h3>
+      <p>Build an interactive game or app in which children aged 7 to 12 manage a lunar or Martian outpost, make real decisions and see how those choices play out, grounded in real NASA open data.</p>
+    </div>
+    <div>
+      <h3>Our answer</h3>
+      <p><b>Compass Outpost</b> is a browser game in which the player is the Commander of a small Mars research outpost for ten sols, guided by a robot companion named DUTİ. Every sol brings one decision between three plans, and every plan has a cost.</p>
+      <div class="box"><p style="margin:0">Design goal: a child should leave the game understanding a real constraint of deep-space survival, not only having played a fun game.</p></div>
+      <p style="margin-top:0.12in">The game runs in any modern browser with no download and no account, on computers and phones.</p>
+    </div>
+  </div>
+  <div class="num">2</div>
+</section>
+
+<section class="slide">
+  <h2>How the Game Works</h2>
+  <div class="cols">
+    <div>
+      <ul>
+        <li><b>Three resources:</b> Energy, Oxygen and Safety (0 to 10). If any of them reaches zero, the research mission stops safely.</li>
+        <li><b>Every choice costs something:</b> a plan that saves power today can cost oxygen tomorrow, and extra research spends scarce reserves.</li>
+        <li><b>Nights matter:</b> dust lowers solar charging, and an empty battery switches life support to a low-power mode that uses extra oxygen.</li>
+        <li><b>Success after Sol 10:</b> at least 1 Energy, 1 Oxygen, 4 Safety and 10 Science points.</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li><b>Consequences carry forward:</b> a rock sample or a greenhouse kept running opens later options, and storm-shelter preparation lowers later costs.</li>
+        <li><b>Hands-on tasks:</b> clean dusty solar panels, compare real temperatures, send a radio message with a signal delay and sort clues.</li>
+        <li><b>Learning loop:</b> predictions before selected nights, a morning ledger that explains each change, and fact cards saved in a Mars Journal.</li>
+        <li><b>Replay:</b> three mission profiles (standard, dusty season, small oxygen supply), 29 choices and five special endings.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="num">3</div>
+</section>
+
+<section class="slide">
+  <h2>NASA Data Inside the Game</h2>
+  <div class="cols">
+    <div>
+      <h3>Mars night temperatures (Sol 2)</h3>
+      <p>Perseverance MEDA calibrated air-temperature readings from Jezero Crater, Sol 290 (December 13, 2021): about &minus;3 &deg;C to &minus;77 &deg;C. They drive the night-power decision and a temperature comparison task.</p>
+      <h3>Radiation risk (Sol 5)</h3>
+      <p>The NASA DONKI record 2024-05-20T05:36:00-CME-001 and NASA's report on the May 2024 solar storm observed at Mars (about 8,100 micrograys for an astronaut beside Curiosity) support the radiation-protection decision.</p>
+    </div>
+    <div>
+      <h3>Science cards and discoveries</h3>
+      <p>MOXIE oxygen production, Perseverance sample tubes, Veggie plant growth, Mars facts and Earth&ndash;Mars signal delay, plus three NASA photographs (PIA19400, PIA24765 and PIA26373).</p>
+      <h3>Honest use of data</h3>
+      <p>All NASA data is archived and embedded, labelled &ldquo;archival data, not live,&rdquo; and every source is linked inside the game. Resource points, forecasts and fictional events are game values and are labelled as such. The visitor ending is marked as science fiction.</p>
+    </div>
+  </div>
+  <div class="num">4</div>
+</section>
+
+<section class="slide">
+  <h2>Impact, Technology and Validation</h2>
+  <div class="cols">
+    <div>
+      <h3>Learning impact</h3>
+      <p>Children experience why mission planners must balance power, life support and protection. They learn from failure without punishment: a stopped mission explains what went wrong and invites a new strategy.</p>
+      <h3>Accessibility</h3>
+      <p>Plain language with in-context explanations of terms such as &ldquo;sol&rdquo;; mouse, touch and keyboard controls; reduced-motion support; an English interface with an optional Turkish translation.</p>
+    </div>
+    <div>
+      <h3>Technology</h3>
+      <p>HTML, CSS and JavaScript modules with no build step; SVG illustrations drawn in code; synthesized Web Audio sound; Anime.js, canvas-confetti and the Fredoka typeface.</p>
+      <h3>Validation</h3>
+      <p>The rules engine is compared path by path with an independent reference model for all three mission profiles. Automated browser tests cover controls, layouts, language switching and saving. The source code is public under the Apache-2.0 license.</p>
+    </div>
+  </div>
+  <div class="num">5</div>
+</section>
+
+<section class="slide">
+  <h2>Use of AI (SI), Limitations and Future Work</h2>
+  <div class="cols">
+    <div>
+      <h3>AI/SI disclosure</h3>
+      <p>The team selected the underlying game idea. OpenAI ChatGPT/Codex and Anthropic Claude assisted with story details, code, Turkish translation, code-drawn SVG illustrations, source audits and documentation. Google Antigravity assisted with play-testing reviews. AI-generated illustrations carry a visible &ldquo;AI-generated SVG illustration&rdquo; label in the game. The full scope and metadata are in AI_USAGE.md and ai-usage.json in the repository.</p>
+    </div>
+    <div>
+      <h3>Limitations</h3>
+      <p>The game has not yet been play-tested with children of the target age, so no measured learning outcome is claimed. NASA data is archived, not live.</p>
+      <h3>Future work</h3>
+      <ul>
+        <li>Classroom play-tests with children aged 7 to 12.</li>
+        <li>Optional live DONKI space-weather updates.</li>
+        <li>A lunar outpost campaign and a teacher guide.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="num">6</div>
+</section>
+
+<section class="slide refs">
+  <h2>References</h2>
+  <div class="cols" style="gap:0.35in">
+    <div>
+      <p>Community Coordinated Modeling Center, NASA Goddard Space Flight Center. (2024). <i>DONKI CME record 2024-05-20T05:36:00-CME-001</i>. Space Weather Database Of Notifications, Knowledge, Information. https://ccmc.gsfc.nasa.gov/DONKI/view/CME/31034/-1</p>
+      <p>Community Coordinated Modeling Center, NASA Goddard Space Flight Center. (n.d.). <i>DONKI: Space Weather Database Of Notifications, Knowledge, Information</i>. https://ccmc.gsfc.nasa.gov/tools/DONKI/</p>
+      <p>Rodriguez-Manfredi, J. A., et al. (2021). <i>The Mars Environmental Dynamics Analyzer, MEDA</i> [Data set]. NASA Planetary Data System. https://doi.org/10.17189/1522849</p>
+      <p>NASA Planetary Data System Atmospheres Node. (n.d.). <i>Mars 2020 Perseverance MEDA data archive</i>. https://pds-atmospheres.nmsu.edu/data_and_services/atmospheres_data/PERSEVERANCE/meda.html</p>
+      <p>NASA. (2024). <i>NASA watches Mars light up during epic solar storm</i>. https://www.nasa.gov/missions/mars-science-laboratory/curiosity-rover/nasa-watches-mars-light-up-during-epic-solar-storm/</p>
+      <p>NASA. (2023, September 6). <i>NASA's oxygen-generating experiment MOXIE completes Mars mission</i>. https://www.nasa.gov/missions/mars-2020-perseverance/perseverance-rover/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/</p>
+      <p>NASA Science. (n.d.). <i>Mars: Facts</i>. https://science.nasa.gov/mars/facts/</p>
+    </div>
+    <div>
+      <p>NASA Science. (n.d.). <i>Mars rock samples</i>. Mars 2020 Perseverance. https://science.nasa.gov/mission/mars-2020-perseverance/mars-rock-samples/</p>
+      <p>NASA. (n.d.). <i>Growing plants in space</i>. https://www.nasa.gov/exploration-research-and-technology/growing-plants-in-space/</p>
+      <p>NASA Science. (n.d.). <i>Speaking Percy's language: How to talk so Perseverance will listen</i>. https://science.nasa.gov/blog/speaking-percys-language-how-to-talk-so-perseverance-will-listen/</p>
+      <p>NASA/JPL-Caltech/MSSS/Texas A&amp;M Univ. (2015). <i>Sunset in Mars' Gale Crater</i> (PIA19400) [Image]. https://images.nasa.gov/details/PIA19400</p>
+      <p>NASA/JPL-Caltech/ASU/MSSS. (2024). <i>Perseverance rover's view up crater</i> (PIA26373) [Image]. https://images.nasa.gov/details/PIA26373</p>
+      <p>NASA/JPL-Caltech/ASU/MSSS. (2021). <i>Perseverance's office on Mars</i> (PIA24765) [Image]. https://images.nasa.gov/details/PIA24765</p>
+      <p>NASA Space Apps Challenge. (2026). <i>Build a Junior Astronaut Mission Trainer</i>. https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/</p>
+      <p>Third-party software: Anime.js 4.5.0 (MIT); canvas-confetti 1.9.4 (ISC); Fredoka typeface (SIL OFL 1.1). AI tools: OpenAI ChatGPT/Codex, Anthropic Claude, Google Antigravity.</p>
+    </div>
+  </div>
+  <div class="num">7</div>
+</section>
+
+</body>
+</html>
