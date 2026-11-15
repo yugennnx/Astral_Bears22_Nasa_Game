@@ -60,6 +60,10 @@ On November 15, 2026, Anthropic Claude implemented in version 1.10.0 a set of tw
 
 On November 15, 2026, the team requested an independent follow-up on commit `5834e11` and publication of the results for Tuğra. OpenAI Codex prepared temporary browser probes, ran the existing checks and 19 playthrough scenarios plus four focused probes, and generated [the regression report](docs/design/regression-review-5834e11.md). The report verifies the earlier fixes, records an additional remaining language-switch issue, and separates the deliberately deferred ending/pacing/browser-test work. This publication changes documentation and contribution records only; game code and values were not revised. Temporary test harnesses and screenshots remain outside the repository. This is AI-assisted verification, not a child playtest or a completed human review.
 
+### Independent 1.10.2 regression review
+
+On November 15, 2026, OpenAI Codex independently verified commit `326f941` at the team's request. It generated temporary browser probes and [the follow-up report](docs/design/regression-review-326f941.md), ran 15 playthrough scenarios and four focused probes with 28 language-switch checks, and recorded the current-prompt fix as verified. The report separates a low-priority document-language/HUD refresh observation from the three deliberately deferred product/testing items. This publication adds documentation and AI contribution records only; no game fix was applied. Temporary harnesses and screenshots remain outside the repository. These are automated checks, not a child playtest or completed human review.
+
 ## Selected Prompt Record
 
 The following are English summaries or translations of project-related user requests, not a complete chat transcript:
