@@ -4,6 +4,11 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.5 — Readable dust forecast (2026-11-15)
+
+- Briefing: each forecast day now shows a short label ("Sol 3" / "3. gün") instead of the long "After Sol 3" / "3. Mars gününden sonra", which overlapped in the narrow columns. One line above the strip explains it ("Weather at the end of each sol"). The forecast gets two thirds of the row on wide screens and two rows of five on phones.
+- Measured at 1920 × 969, 1280 × 720 and 375 × 812 in English and Turkish: no label overflows its day box, the briefing does not scroll, and the start button stays on screen. Checked with `npm run check`.
+
 ## 1.11.4 — Turkish review and small-text contrast (2026-11-15)
 
 - Turkish: a full review of every Turkish story and interface string (51 strings revised): consistent "N. Mars günü", "kurgusal" instead of "uydurma/hayalî", natural prediction questions ("Şimdi ile yarın sabah arasında"), grammar fixes, child-friendly words ("tepe" instead of "sırt"), and a clearer replay invitation.

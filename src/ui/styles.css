@@ -935,3 +935,27 @@ body[data-screen="activity"] .world::after { display: none; }
   /* Keep the start buttons clear of the AI-illustration note at the bottom of the title screen. */
   .title .actions { margin-bottom: 18px; }
 }
+/* Dust forecast: one short, centred label per day; the explanation is written once above the strip. */
+.forecast-note { font-size: 0.78rem; color: var(--muted); margin: -2px 0 6px; }
+.forecast-strip li { min-width: 0; padding: 8px 2px 7px; }
+.forecast-strip li b { font-size: 0.8rem; line-height: 1.1; }
+.forecast-strip li span { display: block; font-size: 0.72rem; line-height: 1.15; white-space: nowrap; color: #c9cde6; }
+@media (max-width: 640px) {
+  .forecast-strip li span { display: block; font-size: 0.66rem; }
+  .forecast-strip li b { font-size: 0.66rem; }
+}
+/* Ten forecast days need room: give the forecast two thirds of the briefing row. */
+.brief-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+@media (max-width: 640px) { .brief-grid { grid-template-columns: 1fr; } }
+@media (max-width: 640px) {
+  /* Phones: two rows of five, so every day keeps a readable label. */
+  .forecast-strip { grid-auto-flow: row; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+  .forecast-strip li { padding: 5px 2px; }
+  .forecast-strip li .icon { width: 18px; height: 18px; }
+  .forecast-strip li b { font-size: 0.7rem; }
+  .forecast-strip li span { font-size: 0.66rem; }
+}
+@media (max-width: 640px) {
+  .forecast-note { display: none; }
+  .popup--briefing { gap: 7px; }
+}

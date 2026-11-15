@@ -484,6 +484,7 @@ function showBriefing() {
       </div>
       <div class="brief-box">
         <p class="label">${esc(t("briefing.forecast"))}</p>
+        <p class="forecast-note">${esc(t("briefing.forecastNote"))}</p>
         <ol class="forecast-strip">${getForecast(mission).map(day => `
           <li class="${day.dusty ? "is-dusty" : ""}">
             ${weatherIcon(day.dusty)}<b>${esc(t(day.dusty ? "weather.dusty" : "weather.clear"))}</b><span>${esc(t("briefing.afterSol", { n: day.sol }))}</span>
