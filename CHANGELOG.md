@@ -1,8 +1,14 @@
 # Changelog
 
-> AI/SI disclosure: drafted with Anthropic Claude. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json).
+> AI/SI disclosure: drafted with Anthropic Claude; ten-sol design notes added with OpenAI ChatGPT/Codex. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json).
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
+
+## Ten-sol story design by the team (2026-11-15)
+
+- Completed an English ten-sol narrative handoff: continuity/foreshadowing for Sols 1–6, four new scenes with twelve choices and feedback, and four specific-history special endings.
+- Added a machine-readable design, explicit Sol 6 checkpoint supplies, a proposed Science target of 10, extended mission forecasts, ending precedence, and a save/UI integration checklist for Tuğra. The playable six-sol campaign is unchanged.
+- Added exhaustive design enumeration, reachable ending witnesses for all three profiles, and file-level AI/SI disclosure. `npm run check` now also checks the proposed expansion.
 
 ## 1.8.0 — Easier to explore, more to wonder about (2026-11-15)
 

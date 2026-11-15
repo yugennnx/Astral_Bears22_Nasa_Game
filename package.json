@@ -10,7 +10,8 @@
     "check:engine": "node tools/check_engine.mjs",
     "check:i18n": "node tools/check_i18n.mjs",
     "check:disclosures": "node tools/check_disclosures.mjs",
-    "check": "npm run check:story && npm run check:engine && npm run check:i18n && npm run check:disclosures",
+    "check:expansion": "node tools/check_ten_sol_design.mjs",
+    "check": "npm run check:story && npm run check:engine && npm run check:i18n && npm run check:expansion && npm run check:disclosures",
     "verify:sources": "python tools/verify_nasa_sources.py"
   },
   "engines": {

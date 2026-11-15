@@ -1,5 +1,7 @@
 # Six-Sol Story Data: Integration Guide
 
+**Planned continuation:** the [ten-sol story](ten-sol-story-plan.md), [JSON design](../../data/ten-sol-story-design.json), and [implementation handoff](ten-sol-implementation-handoff.md) define a future ten-sol edition. They do not change the current runtime contract below. In particular, the present final scene and Science target remain six-sol rules until that edition is integrated.
+
 > AI/SI disclosure: generated/revised with OpenAI ChatGPT/Codex and Anthropic Claude. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json) for contribution scope and the team's idea-origin attestation.
 
 This guide describes the English scene data in `src/game/scenes.js`, based on `story-plan.md`. The companion's display name is **DUTİ** and the code identifier is `duti`.

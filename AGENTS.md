@@ -3,6 +3,7 @@
 ## Active Project
 
 - Use `docs/design/story-plan.md`, `src/game/scenes.js`, and `docs/design/story-data-contract.md` as the active six-sol prototype. Preserve the latest mission profiles and low-power life-support rules unless the team explicitly changes them.
+- The team requested a ten-sol continuation on November 15, 2026. Its proposed story, numerical rules, and four special endings are in `docs/design/ten-sol-story-plan.md`, `data/ten-sol-story-design.json`, and `docs/design/ten-sol-implementation-handoff.md`. This package is not loaded by the runtime. Keep the six-sol game intact until integrating the new edition deliberately; do not mix its target of 6 with the proposed target of 10. Run `npm run check:expansion` for the design and retain the production-engine comparison separately.
 - The companion's display name is **DUTİ**; its code ID is `duti`.
 - Use English in code, story, documentation, and materials linked for submission. English is the game's primary and default interface language. By team decision (November 14, 2026) the game also offers an optional Turkish interface in `src/i18n/`; keep English complete and keep Turkish in sync (`npm run check:i18n`). Save UTF-8 files.
 - The playable game is `index.html` + `src/game/engine.js` + `src/ui/`. Keep rules in the engine, not in the interface. Archive files are historical context, not the active game engine.
