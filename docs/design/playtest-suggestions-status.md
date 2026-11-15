@@ -2,7 +2,7 @@
 
 > AI/SI disclosure: written with Anthropic Claude for the team. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
 
-**Date:** November 15, 2026 · **For:** the teammate who wrote the twelve play-test suggestions · **Version checked:** v1.10.0 (commit `69d0d55`)
+**Date:** November 15, 2026 · **For:** the teammate who shared the twelve review suggestions (produced with OpenAI Codex assistance at the team's request) · **Version checked:** v1.10.0 (commit `69d0d55`)
 
 This note lists each suggestion, what is now in the game, what is still missing, and where to look in the code. Rules and numbers did not change: `npm run check:engine` still matches the independent ten-sol model exactly.
 

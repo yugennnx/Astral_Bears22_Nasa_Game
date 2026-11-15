@@ -4,9 +4,24 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.10.1 — Fixes from the independent review (2026-11-15)
+
+Fixes for the findings in [docs/design/repository-review-761bb66.md](docs/design/repository-review-761bb66.md):
+
+- P1: the 2C difference question now shows its three answers (7°, 74°, 30°) inside the panel, below the task banner, with both readings as a reminder.
+- P2: the Hint button receives clicks and taps (it inherited `pointer-events: none` from the banner) and is now a high-contrast yellow button.
+- P2: the prediction questions and "Why?" lines no longer suggest that solar panels work at night. They describe one stage: the rest of today charges the battery in sunlight, then the battery runs the base through the night. The numbers are unchanged (English and Turkish).
+- P2: in 2A, a wrong share of power cubes no longer shows the green "finished" banner or the success sound; only a correct share completes the task. The error text is dark red and readable on the light banner.
+- P2: a fact card that was on screen but not yet collected is offered again after a reload.
+- P2: the AI/SI account now states that the twelve 1.10.0 suggestions came from an OpenAI Codex-assisted review requested by the team; the team chose what to implement; Claude generated the implementation.
+- P3: the saved player name is prefilled again on a new mission (a mission-profile variable no longer hides the player profile).
+- P3: the ten-sol story plan and handoff are marked as the original design, implemented in v1.9.0, with a link to the integration notes.
+- Layout: the third Sol 5 robot scan spot moved into view on phones.
+- Not changed: the long special-ending screen, pacing, and automated browser checks for these cases (see the review). No rule or number changed. Checked with `npm run check`; browser checking is left to the team reviewer.
+
 ## 1.10.0 — Questions worth following (2026-11-15)
 
-- The ideas in this version came from a teammate's play-test suggestions. Anthropic Claude helped implement them; no rule or number was changed.
+- The twelve suggestions behind this version came from an OpenAI Codex-assisted review requested by the team; the team chose what to implement, and Anthropic Claude helped implement it. No rule or number was changed.
 - The game opens with a mystery: a tiny lantern shows up on Sol 1, and the spotlight invites the child to look closer before anything is explained.
 - Fewer forced screens: story lines already seen are shown at once on replays, with a "Skip ahead" button, and spotlights that were already seen are skipped.
 - Prediction questions appear only on interesting nights (dust, cleaned solar panels, low or full battery), plus once on Sol 1. The questions now say "from this evening to tomorrow morning".

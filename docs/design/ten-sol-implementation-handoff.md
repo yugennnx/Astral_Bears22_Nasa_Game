@@ -2,7 +2,7 @@
 
 > AI/SI disclosure: generated with OpenAI ChatGPT/Codex. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
 
-**Date:** November 15, 2026. **Recipient:** Tuğra. **Status:** implementation-ready design, not a runtime update.
+**Date:** November 15, 2026. **Recipient:** Tuğra. **Status:** original implementation-ready design. **Implemented** in v1.9.0 (November 15, 2026); see [the integration notes](ten-sol-integration-notes.md) for the implementation and the intentional differences.
 
 Read [the complete English story](ten-sol-story-plan.md), [the JSON design](../../data/ten-sol-story-design.json), and [the balance report with complete example playthroughs](ten-sol-balance-report.md). This continuation is based on the six-sol v1.6.0 prototype, not the archived original ten-sol simulator.
 

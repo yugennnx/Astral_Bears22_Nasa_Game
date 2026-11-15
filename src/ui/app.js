@@ -101,7 +101,7 @@ function save() {
     localStorage.setItem(SAVE_KEY, JSON.stringify({
       language: getLanguage(), game: app.game, screen: app.resumeScreen,
       lastProfileId: app.lastProfileId, seenCards: app.seenCards, facts: app.facts,
-      predict: app.predict, score: app.score,
+      predict: app.predict, score: app.score, pendingFact: app.pendingFact,
     }));
   } catch { /* storage can be unavailable; the game still works */ }
 }
@@ -429,7 +429,7 @@ function showTitle() {
 function showBriefing() {
   app.screen = "briefing";
   const game = app.game;
-  const profile = getProfile(game);
+  const mission = getProfile(game); // the mission profile; `profile` is the player's saved profile
   setWorld(`brief:${game.profileId}`, sceneWorld("welcome-to-mars", game, { dusty: false }));
   renderHud(game.resources, game.science);
   layerEl.innerHTML = `
@@ -442,12 +442,12 @@ function showBriefing() {
     <div class="brief-grid">
       <div class="brief-box">
         <p class="label">${esc(t("briefing.profile"))}</p>
-        <h3>${esc(ts(profile.title))}</h3>
-        <p class="small">${esc(ts(profile.briefing))}</p>
+        <h3>${esc(ts(mission.title))}</h3>
+        <p class="small">${esc(ts(mission.briefing))}</p>
       </div>
       <div class="brief-box">
         <p class="label">${esc(t("briefing.forecast"))}</p>
-        <ol class="forecast-strip">${getForecast(profile).map(day => `
+        <ol class="forecast-strip">${getForecast(mission).map(day => `
           <li class="${day.dusty ? "is-dusty" : ""}">
             ${weatherIcon(day.dusty)}<b>${esc(t(day.dusty ? "weather.dusty" : "weather.clear"))}</b><span>${esc(t("briefing.afterSol", { n: day.sol }))}</span>
           </li>`).join("")}</ol>
@@ -1658,6 +1658,8 @@ app.seenCards = saved?.seenCards ?? [];
 app.facts = saved?.facts ?? [];
 app.predict = saved?.predict ?? null;
 app.score = saved?.score ?? { right: 0, total: 0 };
+// A card that was shown but not yet collected before a reload is offered again.
+app.pendingFact = saved?.game?.phase === "feedback" ? saved?.pendingFact ?? null : null;
 if (saved?.game?.phase && saved.screen) {
   app.game = saved.game;
   app.resumeScreen = saved.screen;

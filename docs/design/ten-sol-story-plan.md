@@ -2,7 +2,7 @@
 
 > AI/SI disclosure: this proposed expansion was generated with OpenAI ChatGPT/Codex at the team's request. The existing six-sol scenes have separate OpenAI/Anthropic attribution. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
 
-**Date:** November 15, 2026 · **Status:** complete narrative and numerical handoff; not yet implemented in the playable game.
+**Date:** November 15, 2026 · **Status:** original design and narrative handoff. **Implemented** in the playable game in v1.9.0 (November 15, 2026); see [the integration notes](ten-sol-integration-notes.md) for what is implemented, what intentionally differs (for example, no forecast or "Later" text on choice cards) and what remains open. Statements below that the game still ends after six sols describe the situation when this plan was written.
 
 **For Tuğra:** [machine-readable design](../../data/ten-sol-story-design.json) · [integration checklist](ten-sol-implementation-handoff.md). The current six-sol game remains playable. This is a new continuation of that story, not the retired ten-sol model in the archive. The design was prepared against commit `e815009a9d16cfcf32f17bc1274bcf07b99983fd`.
 

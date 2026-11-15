@@ -873,9 +873,10 @@ body[data-scene="solar-radiation-alert"] .world::after { content: ""; position: 
 .dialog--clue .dialog-box { border-color: rgba(255, 214, 92, 0.85); }
 .dialog-skip { margin-right: auto; min-height: 32px; padding: 4px 12px; font-size: 0.8rem; }
 .task { position: absolute; }
-.task-hint { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--sand); background: rgba(255, 255, 255, 0.08); color: var(--text); font-weight: 800; font-size: 1.1rem; align-self: center; }
+.task-hint { pointer-events: auto; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; border: 3px solid #6b4300; background: #ffd65c; color: #2a1c00; font-weight: 800; font-size: 1.25rem; align-self: center; box-shadow: 0 3px 0 #b9770c; }
+.task-hint:focus-visible { outline: 3px solid #27335f; outline-offset: 2px; }
 .task:has(.task-hint) { grid-template-columns: auto 1fr auto; }
-.task-text.is-miss { color: #ffd7a1; }
+.task-text.is-miss { color: #9b2c1c; }
 .fx--activity .act-target.is-hinted .act-ring { stroke: #7be495; stroke-width: 9; animation: hot-ring 0.6s ease-in-out infinite; }
 .note--card { display: inline-flex; gap: 6px; align-items: center; justify-self: start; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line-strong); background: rgba(255, 214, 92, 0.12); color: var(--energy); font-weight: 650; cursor: pointer; }
 .journal--notebook .journal-item.is-clue.is-found { border-color: rgba(255, 214, 92, 0.6); }

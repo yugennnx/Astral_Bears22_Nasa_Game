@@ -431,8 +431,8 @@ export const ACTIVITIES = {
     backdrop: "solar-radiation-alert",
     task: "act.5B",
     sprites: () => shelterDoor() + astronautSprite(900, 730, 10) + astronautSprite(1000, 745, 11) + roverSprite(1250, 750, 0, false)
-      + [[1120, 745], [960, 755], [1360, 720]].map(([x, y], i) => `<g transform="translate(${x} ${y})"><g class="act-sprite" data-sprite="${i}"><circle class="act-scan" r="34" fill="none" stroke="#58d3ff" stroke-width="5" stroke-dasharray="10 8"/></g></g>`).join(""),
-    targets: [{ x: 1120, y: 745, r: 58 }, { x: 960, y: 755, r: 58 }, { x: 1360, y: 720, r: 58 }],
+      + [[1120, 745], [960, 755], [1180, 640]].map(([x, y], i) => `<g transform="translate(${x} ${y})"><g class="act-sprite" data-sprite="${i}"><circle class="act-scan" r="34" fill="none" stroke="#58d3ff" stroke-width="5" stroke-dasharray="10 8"/></g></g>`).join(""),
+    targets: [{ x: 1120, y: 745, r: 58 }, { x: 960, y: 755, r: 58 }, { x: 1180, y: 640, r: 58 }],
     order: "sequence",
     focusExtra: [620],
     async prelude(svg) {
@@ -723,10 +723,10 @@ async function shareEnergy(svg, api) {
         left -= 1;
         burst(svg, d.x, 520, "#ffd65c");
         drawCubes();
-        api.progress(3 - left, 3);
-        if (left > 0) return;
+        // Progress counts placed cubes, but "finished" is reported only after a correct share.
+        if (left > 0) { api.progress(3 - left, 3); return; }
         const wrong = counts.lamp > 0 ? "lamp" : counts.air < 2 ? "air" : counts.heat < 1 ? "heat" : null;
-        if (!wrong) { resolve(); return; }
+        if (!wrong) { api.progress(3, 3); resolve(); return; }
         checking = true;
         api.miss(api.t(`act.share.wrong.${wrong}`));
         await sleep(1600);
@@ -760,11 +760,16 @@ async function compareReadings(svg, api) {
   layer.innerHTML = "";
   api.progress(1, 2);
   api.say(api.t("act.cmp.q2"));
+  // Second step: keep both readings as a small reminder and show the answers inside the panel,
+  // well below the task banner, so every label stays visible on desktop and phones.
+  art.innerHTML = panelBox(470, 300, 660, 470)
+    + label(800, 380, "A: −3 °C", 34, "#ffb55a") + label(800, 430, "B: −77 °C", 34, "#58d3ff")
+    + label(800, 488, "?", 40, "#ffd65c");
   const options = [7, 74, 30];
-  art.append(svgEl("g", {}, options.map((n, i) => `<g transform="translate(${640 + i * 160} 236)"><circle r="56" fill="#ffd65c" stroke="#6b4300" stroke-width="5"/>${label(0, 12, `${n}°`, 36, "#2a1c00")}</g>`).join("")));
+  art.append(svgEl("g", {}, options.map((n, i) => `<g transform="translate(${640 + i * 160} 620)"><circle r="62" fill="#ffd65c" stroke="#6b4300" stroke-width="5"/>${label(0, 13, `${n}°`, 40, "#2a1c00")}</g>`).join("")));
   await new Promise(resolve => {
-    options.forEach((n, i) => tapSpot(layer, { x: 640 + i * 160, y: 236, r: 62, label: `${n}°`, correct: n === 74 }, () => {
-      if (n === 74) { burst(svg, 800, 236, "#ffd65c"); resolve(); } else api.miss(api.t("act.cmp.wrong2"));
+    options.forEach((n, i) => tapSpot(layer, { x: 640 + i * 160, y: 620, r: 68, label: `${n}°`, correct: n === 74 }, () => {
+      if (n === 74) { burst(svg, 640 + i * 160, 620, "#ffd65c"); resolve(); } else api.miss(api.t("act.cmp.wrong2"));
     }));
   });
   api.progress(2, 2);
