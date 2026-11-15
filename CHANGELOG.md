@@ -1,8 +1,25 @@
 # Changelog
 
-> AI/SI disclosure: drafted with Anthropic Claude; ten-sol design notes added with OpenAI ChatGPT/Codex. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json).
+> AI/SI disclosure: drafted with Anthropic Claude; ten-sol design notes added with OpenAI ChatGPT/Codex; ten-sol implementation (1.9.0) with Anthropic Claude. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json).
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
+
+## 1.9.0 — Ten sols of questions (2026-11-15)
+
+- The game now plays ten sols. Sols 1–6 use the team's ten-sol framing and prose; Sols 7–10 are new, and a successful Sol 10 ends the mission.
+- Sol 6 research review checkpoint: a one-time reserve (+2 Energy, +4 Oxygen) is released after the study and shown in the morning summary.
+- Sols 7–10 add DUTİ spotlights, 12 discoveries and 12 hands-on tasks, reusing four existing locations.
+- Sol 8 living-tray option is locked with a reason if the greenhouse was shut down.
+- Science target is 10, and the dust forecasts are longer.
+- Four hidden special endings are chosen from the run's own history. Each is shown with the story, "How your choices led here" and a replay hint.
+- Endings are remembered in the Mars Journal without revealing undiscovered ones.
+- The next-crew report shows the living tray when it was protected.
+- New save version (`compass-outpost-save-v3`), so old six-sol saves are not reused.
+- Checks: the engine now plays every ten-sol path and matches the team's independent model exactly. Profile totals (success / partial / stopped): standard 8064 / 14580 / 192; dusty-season 6598 / 13289 / 640; small-oxygen-supply 6395 / 13309 / 97.
+- Turkish story and interface updated.
+- Phones: with ten sols, the top bar shows small dots instead of numbered circles, and its buttons are a little smaller, so everything fits at 375 px.
+- The "New ending discovered!" badge stays when the language is switched on the ending screen.
+- Checked with `npm run check`; browser checks are recorded in the team's test notes.
 
 ## Ten-sol story design by the team (2026-11-15)
 

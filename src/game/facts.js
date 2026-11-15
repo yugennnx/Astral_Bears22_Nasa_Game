@@ -47,6 +47,18 @@ export const FACT_BY_CHOICE = {
   "6A": ["sample-return", "sample-tubes"],
   "6B": ["sol-length", "dusty-world"],
   "6C": ["veggie-meals", "veggie-garden", "thin-air"],
+  "7A": ["signal-delay", "daily-plan"],
+  "7B": ["rad-detector", "daily-plan"],
+  "7C": ["moxie-rate", "moxie"],
+  "8A": ["veggie-garden", "veggie-meals"],
+  "8B": ["sol-length", "dusty-world"],
+  "8C": ["sample-return", "sample-tubes"],
+  "9A": ["sample-return", "cold-nights"],
+  "9B": ["sol-length", "thin-air"],
+  "9C": ["moxie", "moxie-rate"],
+  "10A": ["signal-delay", "daily-plan"],
+  "10B": ["veggie-meals", "sample-tubes"],
+  "10C": ["dusty-world", "sol-length"],
 };
 
 /** The card for a choice: not yet shown in this mission, never collected if possible. */

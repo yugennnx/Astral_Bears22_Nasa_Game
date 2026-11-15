@@ -1,8 +1,8 @@
 {
   "name": "compass-outpost",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "private": true,
-  "description": "Compass Outpost: Six Sols on Mars - a narrative decision game for ages 7-12 (NASA Space Apps 2026, Junior Astronaut Mission Trainer).",
+  "description": "Compass Outpost: Ten Sols of Questions - a narrative decision game for ages 7-12 (NASA Space Apps 2026, Junior Astronaut Mission Trainer).",
   "type": "module",
   "scripts": {
     "start": "python -m http.server 5173",

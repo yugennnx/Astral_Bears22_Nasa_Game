@@ -1,11 +1,11 @@
 /**
- * Decision engine for the six-sol Compass Outpost prototype.
+ * Decision engine for the ten-sol Compass Outpost game (Sol 6 is a checkpoint, Sol 10 the end).
  * Pure functions: every call returns a new state and never mutates scene data.
  * Rules come from src/game/scenes.js and docs/design/story-data-contract.md.
  * All numeric effects are game-design assumptions, not NASA measurements.
  * AI-assisted generation: Anthropic Claude. See AI_USAGE.md and ai-usage.json.
  */
-import { MISSION, SCENES, SCENE_ORDER } from "./scenes.js";
+import { MISSION, SCENES, SCENE_ORDER, SPECIAL_ENDINGS } from "./scenes.js";
 
 const RESOURCE_KEYS = MISSION.resourceKeys;
 const { min: MIN, max: MAX } = MISSION.resourceBounds;
@@ -81,6 +81,10 @@ function applyEffects(resources, effects) {
   return next;
 }
 
+/** Sol 6: the reserve compartment opens once, after a surviving decision and its feedback. */
+const checkpointDue = (state, scene) => Boolean(MISSION.checkpoint)
+  && scene.sol === MISSION.checkpoint.afterSol && !state.flags[MISSION.checkpoint.onceFlag];
+
 const exhaustedKey = resources => RESOURCE_KEYS.find(key => resources[key] <= MIN) ?? null;
 
 function describeChoice(state, scene, rawChoice) {
@@ -90,6 +94,8 @@ function describeChoice(state, scene, rawChoice) {
   const minSafety = choice.requirements?.minSafety ?? 0;
   if (resources.safety < minSafety) {
     disabledReason = { type: "minSafety", required: minSafety, current: resources.safety };
+  } else if (choice.requiresAnyChoice && !choice.requiresAnyChoice.some(id => state.history.includes(id))) {
+    disabledReason = { type: "requires", text: choice.unavailableReason };
   } else if (resources.energy + choice.effects.energy < 0) {
     disabledReason = { type: "energy", required: -choice.effects.energy, current: resources.energy };
   } else if (resources.oxygen + choice.effects.oxygen < 0) {
@@ -102,7 +108,8 @@ function describeChoice(state, scene, rawChoice) {
   const transition = disabledReason || usesUpReserve.length
     ? null
     : computeTransition(state, scene, after.energy, flagsAfter);
-  const afterTransition = transition ? applyEffects(after, transition.effects) : null;
+  const checkpoint = transition && checkpointDue(state, scene) ? { ...MISSION.checkpoint.effects } : null;
+  const afterTransition = transition ? applyEffects(checkpoint ? applyEffects(after, checkpoint) : after, transition.effects) : null;
 
   return {
     id: choice.id,
@@ -116,6 +123,7 @@ function describeChoice(state, scene, rawChoice) {
     after,
     scienceAfter: state.science + choice.effects.science,
     transition,
+    checkpoint,
     afterTransition,
     oxygenRunsOut: Boolean(afterTransition && afterTransition.oxygen <= MIN),
     energyRunsOut: Boolean(afterTransition && afterTransition.energy <= MIN),
@@ -163,7 +171,7 @@ export function choose(previous, choiceId) {
     choiceId: choice.id,
     label: choice.label,
     effects: { ...choice.effects },
-    feedback: choice.feedback,
+    feedback: checkpointDue(previous, scene) ? [...choice.feedback, ...MISSION.checkpoint.feedback] : choice.feedback,
     setFlagsAfterFeedback: choice.setFlagsAfterFeedback ?? null,
     before,
     after: { resources: { ...state.resources }, science: state.science },
@@ -186,9 +194,16 @@ export function finishFeedback(previous) {
   if (!scene.transition) return endGame(state, evaluateFinalStatus(state));
 
   const before = { ...state.resources };
-  const transition = computeTransition(state, scene, state.resources.energy);
+  const energyAfterDecision = state.resources.energy; // low-power mode is decided before any supplies arrive
+  let checkpoint = null;
+  if (checkpointDue(state, scene)) {
+    checkpoint = { ...MISSION.checkpoint.effects };
+    state.resources = applyEffects(state.resources, checkpoint);
+    state.flags[MISSION.checkpoint.onceFlag] = true;
+  }
+  const transition = computeTransition(state, scene, energyAfterDecision);
   state.resources = applyEffects(state.resources, transition.effects);
-  state.lastTransition = { ...transition, sol: scene.sol, before, after: { ...state.resources } };
+  state.lastTransition = { ...transition, checkpoint, sol: scene.sol, before, after: { ...state.resources } };
   state.log[state.log.length - 1].transition = { ...transition };
 
   const emptied = exhaustedKey(state.resources);
@@ -216,6 +231,20 @@ function evaluateFinalStatus(state) {
   return resourcesOk && state.science >= need.science ? "success" : "partial";
 }
 
+/** A complete, ordered history: exactly one choice from every sol, no duplicates. */
+function validHistory(history) {
+  return history.length === SCENE_ORDER.length
+    && history.every((id, index) => SCENES[SCENE_ORDER[index]].choices.some(choice => choice.id === id));
+}
+
+/** The special ending earned by this run's own history (lowest priority number wins). */
+export function specialEndingFor(history) {
+  if (!validHistory(history)) return null;
+  return [...SPECIAL_ENDINGS].sort((a, b) => a.priority - b.priority).find(ending =>
+    ending.allChoices.every(id => history.includes(id))
+    && ending.anyChoiceGroups.every(group => group.some(id => history.includes(id)))) ?? null;
+}
+
 function buildEnding(state, status, reasonKey, during) {
   const { nextCrewReport, successRequirements } = MISSION;
   const greenhouse = state.flags.greenhouseMode ?? "off";
@@ -224,6 +253,7 @@ function buildEnding(state, status, reasonKey, during) {
   const lowPowerCount = state.log.filter(entry => entry.transition?.lowPower).length;
   return {
     status,
+    special: status === "success" ? specialEndingFor(state.history)?.id ?? null : null,
     reasonKey, // "energy" | "oxygen" | "safety" | "noChoices" | null
     during, // "decision" | "transition" | "scene" | null
     sol: state.sol,
@@ -247,6 +277,7 @@ function buildEnding(state, status, reasonKey, during) {
       sampleHelped: state.flags.sampleCollected && state.flags.finalTask === "lab",
       greenhouseStudied: state.flags.finalTask === "greenhouse",
       riskyOutdoorWork: state.flags.stormResponse === "outside",
+      livingTray: state.flags.capsuleMode === "garden",
     },
   };
 }

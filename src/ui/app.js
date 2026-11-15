@@ -4,7 +4,7 @@
  * Game rules live in src/game/engine.js; this file only displays and collects choices.
  * AI-assisted generation: Anthropic Claude. See AI_USAGE.md and ai-usage.json.
  */
-import { MISSION, SCENES, SCENE_ORDER, ENDINGS, NASA_SOURCES } from "../game/scenes.js";
+import { MISSION, SCENES, SCENE_ORDER, ENDINGS, SPECIAL_ENDINGS, NASA_SOURCES } from "../game/scenes.js";
 import {
   createGame, pickProfileId, getProfile, getScene, getChoices, getForecast,
   choose, finishFeedback, finishTransition, isDustyAfter, computeTransition,
@@ -19,7 +19,7 @@ import { animate, stagger } from "../../assets/vendor/animejs/anime.esm.min.js";
 import { play, unlockSound, soundEnabled, setSoundEnabled, setAmbience } from "./sound.js";
 import confetti from "../../assets/vendor/canvas-confetti/confetti.module.mjs";
 
-const SAVE_KEY = "compass-outpost-save-v2";
+const SAVE_KEY = "compass-outpost-save-v3"; // v3 = ten-sol edition; older six-sol saves are not reused
 const RESOURCE_KEYS = MISSION.resourceKeys;
 const TOTAL_SOLS = SCENE_ORDER.length;
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -64,9 +64,10 @@ const profile = (() => {
       name: String(stored?.name ?? "").slice(0, 16),
       discoveries: Array.isArray(stored?.discoveries) ? stored.discoveries : [],
       facts: Array.isArray(stored?.facts) ? stored.facts.filter(id => id in FACTS) : [],
+      endings: Array.isArray(stored?.endings) ? stored.endings.filter(id => SPECIAL_ENDINGS.some(e => e.id === id)) : [],
     };
   } catch {
-    return { name: "", discoveries: [], facts: [] };
+    return { name: "", discoveries: [], facts: [], endings: [] };
   }
 })();
 function saveProfile() {
@@ -647,6 +648,7 @@ function openChoicesAfterStory() {
 
 function disabledText(reason) {
   if (reason.type === "minSafety") return t("choices.needSafety", reason);
+  if (reason.type === "requires") return ts(reason.text);
   const label = ts(reason.type === "energy" ? MISSION.messages.insufficientEnergy : MISSION.messages.insufficientOxygen);
   return `${label}. ${t("choices.needAmount", reason)}`;
 }
@@ -949,6 +951,8 @@ function showLedger() {
         ${tr.panelBonus ? `<p class="note">${icon("check")}${esc(ts(MISSION.messages.panelBonus))}</p>` : ""}</div></li>
       <li><span class="ledger-icon ledger-icon--oxygen">${icon("oxygen")}</span><div><b>${esc(t("transition.crewAir"))} ${signed(tr.effects.oxygen)}</b>
         ${tr.lowPower ? `<p class="alert">${icon("warning")}${esc(ts(MISSION.messages.lowPower))}</p>` : ""}</div></li>
+      ${tr.checkpoint ? `<li class="ledger-reserve"><span class="ledger-icon ledger-icon--reserve">${icon("star")}</span><div><b>${esc(t("transition.reserve", { energy: signed(tr.checkpoint.energy), oxygen: signed(tr.checkpoint.oxygen) }))}</b>
+        <p>${esc(t("transition.reserveText"))}</p></div></li>` : ""}
     </ul>
     ${tr.note ? `<p class="fineprint">${icon("info")}${esc(ts(tr.note))}</p>` : ""}
     </div><div class="ledger-side">
@@ -968,7 +972,9 @@ function showLedger() {
     if (result.classList.contains("is-right")) setTimeout(() => confetti({ particleCount: 50, spread: 55, origin: { y: 0.4 }, colors: ["#ffd65c", "#7be495"] }), 700);
   }
   if (app.hudShown && JSON.stringify(app.hudShown.resources) !== JSON.stringify(tr.after)) {
-    setTimeout(() => flyEffects(layerEl.querySelector(".ledger"), tr.effects, { resources: tr.after, science: game.science }), reducedMotion() ? 0 : 500);
+    const total = { ...tr.effects };
+    if (tr.checkpoint) for (const key of RESOURCE_KEYS) total[key] = (total[key] ?? 0) + (tr.checkpoint[key] ?? 0);
+    setTimeout(() => flyEffects(layerEl.querySelector(".ledger"), total, { resources: tr.after, science: game.science }), reducedMotion() ? 0 : 500);
   } else {
     renderHud(tr.after, game.science);
   }
@@ -1007,7 +1013,18 @@ function showEnding() {
     reasons.push(t("ending.scienceShort", { n: ending.scienceTarget - ending.science }));
   }
   const crew = ending.nextCrew;
-  const sceneId = ending.status === "success" ? "final-mission" : game.sceneId;
+  const special = ending.special ? SPECIAL_ENDINGS.find(item => item.id === ending.special) : null;
+  // Remember on the ending itself whether it was new, so a language switch keeps the badge.
+  if (special && ending.newlyFound === undefined) ending.newlyFound = !profile.endings.includes(special.id);
+  const newEnding = Boolean(special && ending.newlyFound);
+  if (special && !profile.endings.includes(special.id)) {
+    profile.endings.push(special.id);
+    saveProfile();
+  }
+  if (ending.status === "partial" && !ending.safetyMet) reasons.push(t("ending.safetyShort", { n: MISSION.successRequirements.safety }));
+  if (crew && ending.highlights.livingTray && !failed) crew.tray = MISSION.nextCrewReport.livingTray.text;
+  const replayHint = special?.replayHint ?? copy.replayHint;
+  const sceneId = ending.status === "success" ? SCENE_ORDER[SCENE_ORDER.length - 1] : game.sceneId;
   setWorld(`end:${ending.status}:${game.history.join()}:${getLanguage()}`, sceneWorld(sceneId, game, { photoSrc: PHOTOS.rim.src, labels: signLabels() }));
   renderHud(ending.resources, ending.science);
   layerEl.innerHTML = `
@@ -1017,11 +1034,18 @@ function showEnding() {
       <div>
         <p class="eyebrow">${esc(ts(getProfile(game).title))}</p>
         ${playerName() && ending.status === "success" ? `<p class="end-name">${esc(t("ending.byName", { name: playerName() }))}</p>` : ""}
-        <h2 id="end-title" data-focus tabindex="-1">${esc(ts(copy.title))}</h2>
-        <p class="lead">${esc(failed ? t("ending.cheer") : ts(copy.text))}</p>
+        ${special ? `<p class="end-badge">${icon("star")}${esc(t(newEnding ? "ending.specialNew" : "ending.specialAgain"))}</p>` : ""}
+        <h2 id="end-title" data-focus tabindex="-1">${esc(ts(special?.title ?? copy.title))}</h2>
+        <p class="lead">${esc(failed ? t("ending.cheer") : special ? ts(copy.text) : ts(copy.text))}</p>
         ${reasons.map(text => `<p class="alert alert--strong">${icon("info")}${esc(text)}</p>`).join("")}
       </div>
     </div>
+    ${special ? `<section class="end-story">
+      ${special.story.map(block => `<p class="end-line end-line--${block.speakerId}">${block.speakerId === "duti" ? `<b>${esc(MISSION.robot.displayName)}:</b> ` : ""}${esc(ts(block.text))}</p>`).join("")}
+      <h3>${esc(t("ending.evidence"))}</h3>
+      <ul class="list">${special.evidence.map(text => `<li class="is-good">${icon("check")}<span>${esc(ts(text))}</span></li>`).join("")}</ul>
+      <p class="fineprint">${icon("info")}${esc(ts(special.scienceBoundary))}</p>
+    </section>` : ""}
     <div class="end-grid">
       <section class="end-box">
         <h3>${esc(t(failed ? "ending.whatHappened" : "ending.why"))}</h3>
@@ -1035,6 +1059,7 @@ function showEnding() {
         <ul class="list">
           <li class="is-${crew.food.status === "ready" ? "good" : "warn"}">${icon(crew.food.status === "ready" ? "check" : "warning")}<span>${esc(ts(crew.food.text))}</span></li>
           <li class="is-${crew.safety.status === "ready" ? "good" : "warn"}">${icon(crew.safety.status === "ready" ? "check" : "warning")}<span>${esc(ts(crew.safety.text))}</span></li>
+          ${crew.tray ? `<li class="is-good">${icon("check")}<span>${esc(ts(crew.tray))}</span></li>` : ""}
         </ul>
       </section>`}
     </div>
@@ -1044,6 +1069,7 @@ function showEnding() {
       <button class="btn btn--ghost" data-action="journal" aria-label="${esc(t("journal.open"))}" title="${esc(t("journal.open"))}">${icon("book")}${esc(t("journal.open"))}</button>
     </div>
     <p class="end-stats">${icon("star")}${esc(t("predict.score", { n: app.score.right, total: app.score.total }))} · ${esc(t("ending.facts", { n: app.facts.length }))} · ${esc(t("journal.total", { n: profile.discoveries.length, total: Object.values(DISCOVERIES).flat().length }))}</p>
+    ${replayHint ? `<p class="end-replay">${icon("star")}${esc(ts(replayHint))}${ending.status === "success" ? ` ${esc(t("ending.anotherStory"))}` : ""}</p>` : ""}
     <p class="fineprint center">${esc(t("ending.newForecast"))}</p>
   </div>`;
   finishRender();
@@ -1144,6 +1170,11 @@ function journalModal() {
       </li>` : `
       <li class="journal-item is-missing is-fact"><span class="journal-q" aria-hidden="true">?</span><p>${esc(t("journal.factUnknown"))}</p></li>`;
     }).join("")}</ul>
+    <h3 class="journal-section">${icon("book")}${esc(t("journal.endingsTitle"))}</h3>
+    <ul class="journal journal--endings">${profile.endings.map(id => SPECIAL_ENDINGS.find(e => e.id === id)).filter(Boolean).map(e => `
+      <li class="journal-item is-found is-secret"><span class="journal-kind">${icon("star")}${esc(t("journal.endingKind"))}</span><p><b>${esc(ts(e.title))}</b></p><p>${esc(ts(e.replayHint))}</p></li>`).join("")}
+      <li class="journal-item is-missing"><span class="journal-q" aria-hidden="true">?</span><p>${esc(t(profile.endings.length ? "journal.endingMore" : "journal.endingNone"))}</p></li>
+    </ul>
     <h3 id="journal-places" class="journal-section">${icon("star")}${esc(t("journal.placesTitle"))}</h3>
     ${SCENE_ORDER.map(sceneId => `
       <h3>${esc(t(`loc.place.${sceneId}`))}</h3>
@@ -1289,7 +1320,7 @@ function predictionFor(game) {
 
 function needsPrediction() {
   const game = app.game;
-  return Boolean(game?.pending && getScene(game).transition && app.predict?.sol !== game.sol);
+  return Boolean(game?.pending && getScene(game).transition && getScene(game).sol !== MISSION.checkpoint?.afterSol && app.predict?.sol !== game.sol);
 }
 
 const arrowIcon = dir => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${dir === 0

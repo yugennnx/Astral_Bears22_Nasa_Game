@@ -419,6 +419,11 @@ export const LOCATIONS = {
   "message-from-earth": "comms",
   "solar-radiation-alert": "storm",
   "final-mission": "final",
+  // Sols 7–10 return to familiar places with new questions.
+  "the-three-note-mystery": "comms",
+  "the-drawer-marked-tomorrow": "power",
+  "two-stories-one-signal": "landing",
+  "a-light-for-who-comes-next": "final",
 };
 
 /** Artwork for the scene being played. */

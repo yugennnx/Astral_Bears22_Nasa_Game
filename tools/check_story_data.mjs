@@ -1,4 +1,7 @@
 // Reference model for validating story data. This is not the production engine.
+// Since 1.9.0 the game has ten sols. This file checks all scene data, and enumerates
+// Chapter One (Sols 1–6, ending at the first research review) with its own six-sol target.
+// The full ten-sol rules are checked independently by tools/check_ten_sol_design.mjs.
 // AI-assisted generation/revision: OpenAI ChatGPT/Codex and Anthropic Claude. See AI_USAGE.md and ai-usage.json.
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -7,7 +10,10 @@ import { MISSION, SCENE_ORDER, SCENES, ENDINGS, NASA_SOURCES } from "../src/game
 const effectKeys = [...MISSION.resourceKeys, "science"];
 const flagNames = new Set(Object.keys(MISSION.initialState.flags));
 const choiceIds = new Set();
-const plan = await readFile(new URL("../docs/design/story-plan.md", import.meta.url), "utf8");
+const plan = await readFile(new URL("../docs/design/story-plan.md", import.meta.url), "utf8")
+  + await readFile(new URL("../docs/design/ten-sol-story-plan.md", import.meta.url), "utf8");
+const CHAPTER_END = "final-mission";
+const CHAPTER_TARGET = 6;
 const sourceText = await readFile(new URL("../src/game/scenes.js", import.meta.url), "utf8");
 const medaSummary = JSON.parse(await readFile(new URL("../data/meda-jezero.json", import.meta.url), "utf8"));
 const nasaEvents = JSON.parse(await readFile(new URL("../data/nasa-events.json", import.meta.url), "utf8"));
@@ -58,8 +64,8 @@ assert.equal(MISSION.robot.displayName, "DUTİ");
 assert.equal(MISSION.robot.id, "duti");
 assert.equal(MISSION.language, "en");
 assert(!sourceText.includes("PİKO"));
-assert.equal(SCENE_ORDER.length, 6);
-assert.equal(new Set(SCENE_ORDER).size, 6);
+assert.equal(SCENE_ORDER.length, 10);
+assert.equal(new Set(SCENE_ORDER).size, 10);
 assert.deepEqual(Object.keys(SCENES).sort(), [...SCENE_ORDER].sort());
 assert.deepEqual(MISSION.initialState.resources, { energy: 8, oxygen: 8, safety: 8 });
 assert.equal(MISSION.initialState.science, 0);
@@ -97,7 +103,9 @@ for (const [index, id] of SCENE_ORDER.entries()) {
     for (const key of Object.keys(scene.transition)) assert.equal(key, "note", `Unexpected transition field: ${key}`);
   }
 }
-assert.equal(choiceIds.size, 17);
+assert.equal(choiceIds.size, 29);
+const chapterIds = new Set([...choiceIds].filter(id => Number(id.slice(0, -1)) <= 6));
+assert.equal(chapterIds.size, 17);
 
 // Mission profiles, shared transition rules and the next-crew report.
 assert.deepEqual(MISSION.recharge, { clear: 1, dusty: 0, panelBonusWhenDusty: 1 });
@@ -112,7 +120,7 @@ for (const profile of MISSION.profiles) {
   assert(profile.title && profile.briefing);
   // Scene 2's story describes a power shortage, so every profile must have dust after Scene 2.
   assert(profile.dustyAfterScenes.includes(2), `${profile.id} must include dust after Scene 2`);
-  for (const sceneNumber of profile.dustyAfterScenes) assert(sceneNumber >= 1 && sceneNumber <= 5);
+  for (const sceneNumber of profile.dustyAfterScenes) assert(sceneNumber >= 1 && sceneNumber <= 9);
   for (const key of MISSION.resourceKeys) {
     const value = profile.startResources[key];
     assert(Number.isInteger(value) && value >= 1 && value <= 10);
@@ -176,16 +184,16 @@ function step(state, rawChoice) {
 
   // Each feedback card is considered acknowledged before continuing this model.
   Object.assign(next.flags, choice.setFlagsAfterFeedback);
-  if (scene.transition) {
+  if (scene.transition && scene.id !== CHAPTER_END) {
     applyEffects(next, transitionEffects(next, scene));
     if (exhausted(next)) return { ...next, status: "failed" };
   }
-  if (scene.nextSceneId) {
+  if (scene.nextSceneId && scene.id !== CHAPTER_END) {
     next.sceneId = scene.nextSceneId;
     next.sol = SCENES[scene.nextSceneId].sol;
   } else {
     const passed = MISSION.resourceKeys.every(key => next.resources[key] >= MISSION.successRequirements[key])
-      && next.science >= MISSION.scienceTarget;
+      && next.science >= CHAPTER_TARGET;
     next.status = passed ? "success" : "partial";
   }
   return next;
@@ -227,7 +235,7 @@ for (const profile of MISSION.profiles) {
   assert.deepEqual(result.counts, expectedCounts[profile.id], `Unexpected ending counts for ${profile.id}`);
   assert.equal(Math.max(...result.endings.map(state => state.science)), 8);
   // No single fixed strategy: every choice must stay on at least one successful path in every profile.
-  for (const id of choiceIds) {
+  for (const id of chapterIds) {
     assert(result.endings.some(state => state.status === "success" && state.history.includes(id)), `No success path uses ${id} in ${profile.id}`);
   }
 }
@@ -270,7 +278,7 @@ assert.equal(earthChoice.setFlags?.earthGuide, undefined);
 assert.equal(earthChoice.setFlagsAfterFeedback.earthGuide, true);
 assert.equal(earthChoice.feedback.length, 2);
 
-console.log("Story data verified: 6 scenes, 17 choices, DUTİ, conditional feedback and source links.");
+console.log("Story data verified: 10 scenes, 29 choices, DUTİ, conditional feedback and source links; Chapter One (Sols 1–6) enumerated.");
 for (const [id, result] of Object.entries(profileResults)) {
   const c = result.counts;
   console.log(`Profile ${id}: ${c.success} success, ${c.partial} partial, ${c.failed} stopped; ${result.blocked} unavailable choices blocked.`);

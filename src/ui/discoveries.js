@@ -57,6 +57,27 @@ export const DISCOVERIES = {
     { id: "future-farms", x: 1100, y: 560, r: 80, kind: "science", mood: "happy" },
     { id: "deimos", x: 1440, y: 250, r: 45, kind: "nasa", sourceId: "mars-facts", secret: true, mood: "proud" },
   ],
+  // Sols 7–10: story-world props from the team's ten-sol design, plus one general-science note each.
+  "the-three-note-mystery": [
+    { id: "beep-wave", x: 660, y: 630, r: 75, kind: "base", mood: "thinking" },
+    { id: "dish-listens", x: 1345, y: 300, r: 100, kind: "base", mood: "happy" },
+    { id: "pattern-clue", x: 800, y: 320, r: 70, kind: "science", mood: "proud" },
+  ],
+  "the-drawer-marked-tomorrow": [
+    { id: "tomorrow-label", x: 800, y: 625, r: 90, kind: "base", mood: "happy" },
+    { id: "saved-energy", x: 500, y: 440, r: 120, kind: "science", mood: "thinking" },
+    { id: "crew-notes", x: 1115, y: 470, r: 110, kind: "base", mood: "proud" },
+  ],
+  "two-stories-one-signal": [
+    { id: "log-camera", x: 300, y: 600, r: 80, kind: "base", mood: "happy" },
+    { id: "rover-memory", x: 560, y: 765, r: 70, kind: "base", mood: "thinking" },
+    { id: "two-explanations", x: 1180, y: 255, r: 90, kind: "science", mood: "proud" },
+  ],
+  "a-light-for-who-comes-next": [
+    { id: "last-evening", x: 800, y: 300, r: 110, kind: "base", mood: "happy" },
+    { id: "packed-records", x: 540, y: 560, r: 80, kind: "base", mood: "thinking" },
+    { id: "welcome-note", x: 1100, y: 560, r: 80, kind: "base", mood: "proud" },
+  ],
 };
 
 /** Extra sources used only by discoveries (photographs). */

@@ -37,6 +37,22 @@ export const SPOTLIGHTS = {
     { x: 1260, y: 190, r: 200, key: "spot.storm.sun" },
     { x: 620, y: 650, r: 170, key: "spot.storm.shelter" },
   ],
+  "the-three-note-mystery": [
+    { x: 800, y: 320, r: 290, key: "spot.mystery.screen" },
+    { x: 1345, y: 300, r: 150, key: "spot.mystery.rover" },
+  ],
+  "the-drawer-marked-tomorrow": [
+    { x: 800, y: 625, r: 150, key: "spot.drawer.label" },
+    { x: 500, y: 440, r: 190, key: "spot.drawer.battery" },
+  ],
+  "two-stories-one-signal": [
+    { x: 975, y: 750, r: 140, key: "spot.stories.crew" },
+    { x: 560, y: 765, r: 110, key: "spot.stories.rover" },
+  ],
+  "a-light-for-who-comes-next": [
+    { x: 540, y: 560, r: 130, key: "spot.light.send" },
+    { x: 1100, y: 560, r: 130, key: "spot.light.shelf" },
+  ],
   "final-mission": [
     { x: 540, y: 560, r: 130, key: "spot.final.lab" },
     { x: 810, y: 480, r: 130, key: "spot.final.route" },
@@ -514,6 +530,22 @@ export const ACTIVITIES = {
   },
   "6C-report": checklist("act.6Creport", ["act.check.photos", "act.check.notes", "act.check.water"]),
 };
+
+// Sols 7–10 reuse the hands-on mechanics with new jobs.
+Object.assign(ACTIVITIES, {
+  "7A": checklist("act.7A", ["act.note.one", "act.note.two", "act.note.three"]),
+  "7B": { ...ACTIVITIES["6B"], task: "act.7B" },
+  "7C": { ...valveActivity, task: "act.7C" },
+  "8A": { ...ACTIVITIES["3A"], task: "act.8A" },
+  "8B": checklist("act.8B", ["act.pic.panels", "act.pic.shelter", "act.pic.plants"]),
+  "8C": checklist("act.8C", ["act.tape.insert", "act.tape.play", "act.tape.save"]),
+  "9A": checklist("act.9A", ["act.ev.pattern", "act.ev.relay", "act.ev.questions"]),
+  "9B": checklist("act.9B", ["act.rec.one", "act.rec.two", "act.rec.duti"]),
+  "9C": { ...valveActivity, task: "act.9C" },
+  "10A": { ...ACTIVITIES["4A"], task: "act.10A" },
+  "10B": { ...ACTIVITIES["1B"], task: "act.10B" },
+  "10C": checklist("act.10C", ["act.msg.hello", "act.msg.tip", "act.msg.luck"]),
+});
 
 function switchRow(svg, row, turnOn) {
   const mask = sprite(svg, row);

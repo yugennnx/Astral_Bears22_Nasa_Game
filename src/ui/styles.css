@@ -837,3 +837,28 @@ body[data-scene="solar-radiation-alert"] .world::after { content: ""; position: 
   .explore-hint { font-size: 0.78rem; line-height: 1.2; }
   .explore-count { font-size: 0.78rem; }
 }
+
+/* ---------- 1.9.0: ten sols, checkpoint and special endings ---------- */
+.forecast-strip { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+.ledger-icon--reserve { color: var(--energy); }
+.ledger-reserve { border-color: rgba(255, 214, 92, 0.6) !important; }
+.end-badge { display: inline-flex; gap: 6px; align-items: center; padding: 4px 12px; border-radius: 999px; background: var(--energy); color: #2a1c00; font-weight: 800; font-size: 0.85rem; }
+.end-story { display: grid; gap: 8px; padding: 14px 16px; border-radius: 18px; background: rgba(255, 214, 92, 0.08); border: 1px solid rgba(255, 214, 92, 0.45); }
+.end-line { line-height: 1.45; }
+.end-line--narrator { color: #e8e6f6; font-style: italic; }
+.end-replay { display: flex; gap: 8px; align-items: center; justify-content: center; text-align: center; font-weight: 600; color: var(--energy); }
+@media (max-width: 640px) {
+  /* Ten sols: small dots instead of numbered circles, so the buttons still fit. */
+  .sols { gap: 4px; }
+  .sols li { width: 11px; height: 11px; font-size: 0; border-width: 1.5px; }
+  .sols li.is-now { width: 15px; height: 15px; box-shadow: 0 0 0 3px rgba(255, 201, 60, 0.3); }
+  .sols li + li::before { display: none; }
+  .forecast-strip li b { font-size: 0.7rem; }
+  .forecast-strip li .icon { width: 20px; height: 20px; }
+}
+@media (max-width: 640px) {
+  .topbar-actions { gap: 4px; }
+  .topbar-actions .pill--icon { width: 36px; height: 36px; }
+  .topbar-actions .pill--lang { height: 36px; padding: 0 8px; }
+  .sols { gap: 3px; }
+}

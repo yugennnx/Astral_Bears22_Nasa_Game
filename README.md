@@ -1,8 +1,8 @@
-# Compass Outpost: Six Sols on Mars
+# Compass Outpost: Ten Sols of Questions
 
 An English narrative decision game for ages 7–12, developed for the 2026 NASA Space Apps challenge [Build a Junior Astronaut Mission Trainer](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details).
 
-Players manage Energy, Oxygen, and Safety alongside companion robot **DUTİ**, aiming to earn at least 6 Science Points over six sols. Decisions have resource or opportunity costs and can change later options.
+Players manage Energy, Oxygen, and Safety alongside companion robot **DUTİ**, aiming to earn at least 10 Science Points over ten sols. Decisions have resource or opportunity costs and can change later options.
 
 ## AI/SI Attribution
 
@@ -17,7 +17,7 @@ The eventual interface must retain the source cards and show the supplied credit
 
 ## Current Implementation
 
-The repository contains a **playable browser prototype**: a decision engine, a responsive interface (phone and desktop), six scenes with DUTİ, NASA science cards, an ending report, and save/resume. English is the primary language; Turkish is an optional interface language chosen by the team. A public deployment link and the submission demo are still to be added, and no playtest with children has been run yet.
+The repository contains a **playable browser prototype**: a decision engine, a responsive interface (phone and desktop), ten sols with DUTİ, NASA science cards, an ending report with four hidden special endings, and save/resume. English is the primary language; Turkish is an optional interface language chosen by the team. A public deployment link and the submission demo are still to be added, and no playtest with children has been run yet.
 
 ## Play Locally
 
@@ -29,9 +29,9 @@ npm start
 
 Then open <http://localhost:5173>. The game has no build step and no runtime network requests: libraries, fonts, and photographs are stored in `assets/`.
 
-**Active ruleset:** [docs/design/story-plan.md](docs/design/story-plan.md) and [src/game/scenes.js](src/game/scenes.js), including the v1.2 mission profiles and low-power life-support rule.
+**Active ruleset (ten sols, v1.9.0):** [src/game/scenes.js](src/game/scenes.js) and [src/game/engine.js](src/game/engine.js), with the ten-sol design in [data/ten-sol-story-design.json](data/ten-sol-story-design.json) and [docs/design/ten-sol-story-plan.md](docs/design/ten-sol-story-plan.md). Integration details are in [docs/design/ten-sol-integration-notes.md](docs/design/ten-sol-integration-notes.md). Chapter One (Sols 1–6) is described in [docs/design/story-plan.md](docs/design/story-plan.md), including the v1.2 mission profiles and low-power life-support rule.
 
-**Planned ten-sol continuation:** [Complete English story and four discoverable endings](docs/design/ten-sol-story-plan.md), [implementation handoff for Tuğra](docs/design/ten-sol-implementation-handoff.md), [machine-readable design](data/ten-sol-story-design.json), and [balance report with full example paths](docs/design/ten-sol-balance-report.md). This is a design package; the playable game above still ends after six sols. Validate the proposed ten-sol paths with `npm run check:expansion`.
+**Ten-sol edition:** the [English story and four discoverable endings](docs/design/ten-sol-story-plan.md), the [implementation handoff](docs/design/ten-sol-implementation-handoff.md), the [machine-readable design](data/ten-sol-story-design.json) and the [balance report with full example paths](docs/design/ten-sol-balance-report.md) are implemented in the playable game (version 1.9.0). Run `npm run check:expansion` for the independent design model and `npm run check:engine` for the production-engine comparison.
 
 ## Repository Structure
 
@@ -49,7 +49,7 @@ Then open <http://localhost:5173>. The game has no build step and no runtime net
 │   ├── source-audit.json         # Source verification receipts
 │   └── raw/                      # Unmodified NASA API responses (byte-exact, hashed)
 ├── docs/
-│   ├── design/                   # story-plan.md, story-data-contract.md
+│   ├── design/                   # story-plan.md, story-data-contract.md, ten-sol-*.md
 │   ├── compliance/               # compliance-audit.md, references.md
 │   └── changelog/                # Detailed release notes
 ├── tools/                        # Reference checks and source verification
@@ -61,7 +61,7 @@ Then open <http://localhost:5173>. The game has no build step and no runtime net
 
 | File | Purpose |
 | --- | --- |
-| [docs/design/story-plan.md](docs/design/story-plan.md) | Six-scene story, dialogue, choices, costs, and delayed consequences |
+| [docs/design/story-plan.md](docs/design/story-plan.md) | Chapter One story (Sols 1–6): dialogue, choices, costs, and delayed consequences |
 | [src/game/scenes.js](src/game/scenes.js) | English scene data, conditional choices, credits metadata, and NASA source cards |
 | [docs/design/story-data-contract.md](docs/design/story-data-contract.md) | Shared data contract and frontend/engine handoff |
 | [data/nasa-events.json](data/nasa-events.json) | Curated DONKI record and a separately attributed NASA Mars observation |
@@ -86,7 +86,7 @@ Requires Node.js 20 or newer. From the repository root:
 npm run check
 ```
 
-This runs the current story, engine, translation and disclosure checks, plus the proposed ten-sol design enumeration. Optional primary-source verification with Python and network access:
+This runs the current story, engine, translation and disclosure checks, plus the independent ten-sol design enumeration and the production-engine comparison for all ten sols. Optional primary-source verification with Python and network access:
 
 ```sh
 npm run verify:sources

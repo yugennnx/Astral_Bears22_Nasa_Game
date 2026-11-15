@@ -6,16 +6,16 @@
  * AI-assisted translation: Anthropic Claude. See AI_USAGE.md and ai-usage.json.
  */
 export const STORY_TR = {
-  ["Compass Outpost: Six Sols on Mars"]:
-    "Pusula Üssü: Mars'ta Altı Gün",
+  ["Compass Outpost: Ten Sols of Questions"]:
+    "Pusula Üssü: Mars'ta On Gün, Bir Sürü Soru",
   ["Project credits and tools"]:
     "Emeği geçenler ve kullanılan araçlar",
   ["Story and code include AI-assisted contributions from OpenAI ChatGPT/Codex and Anthropic Claude. NASA observations have separate source credits. This project is not endorsed by NASA."]:
     "Hikâyenin ve kodun bir kısmı yapay zekâ yardımıyla hazırlandı: OpenAI ChatGPT/Codex ve Anthropic Claude. NASA gözlemlerinin kaynakları ayrıca gösteriliyor. Bu proje NASA tarafından desteklenmiyor.",
   ["Commander, Compass Outpost is counting on you!"]:
     "Komutan, Pusula Üssü sana güveniyor!",
-  ["Keep the base running through six stages and earn at least 6 Science Points. Watch your oxygen and energy, and protect your crew. You may not have enough time or supplies to do everything. You decide what comes first!"]:
-    "Üssü altı gün boyunca çalışır durumda tut ve en az 6 Bilim Puanı topla. Oksijene ve enerjiye göz kulak ol, ekibini koru. Her şeye yetecek kadar zamanın ya da malzemen olmayabilir. Hangi işin önce yapılacağına sen karar ver!",
+  ["Keep the base running for ten sols and earn at least 10 Science Points. Watch your oxygen and energy, and protect your crew. You may not have enough time or supplies to do everything. You decide what comes first!"]:
+    "Üssü on Mars günü boyunca çalışır durumda tut ve en az 10 Bilim Puanı topla. Oksijene ve enerjiye göz kulak ol, ekibini koru. Her şeye yetecek kadar zamanın ya da malzemen olmayabilir. Hangi işin önce yapılacağına sen karar ver!",
   ["A sol is a day on Mars."]:
     "Mars'ta bir güne \"sol\" denir. Bir Mars günü, Dünya'daki bir günden biraz daha uzundur.",
   ["Start Mission"]:
@@ -50,16 +50,16 @@ export const STORY_TR = {
     "Oyundaki bütün sayılar öğrenmek için uydurulmuş değerlerdir, NASA ölçümü değildir. Güvenlik puanı bir oyun göstergesidir, gerçek bir radyasyon ölçümü değildir.",
   ["Standard Mission"]:
     "Normal Görev",
-  ["Dust is expected after Sol 2 and Sol 4. Supplies are full."]:
-    "2. ve 4. günden sonra toz bekleniyor. Malzemeler tam.",
+  ["Dust is expected after Sol 2, Sol 4 and Sol 8. Supplies are full."]:
+    "2., 4. ve 8. günlerden sonra toz bekleniyor. Malzemeler tam.",
   ["Dusty Season"]:
     "Tozlu Mevsim",
-  ["Dust is expected after Sol 2, Sol 3, and Sol 4. Clean panels will matter more!"]:
-    "2., 3. ve 4. günden sonra toz bekleniyor. Temiz paneller çok işe yarayacak!",
+  ["Dust is expected after Sols 2, 3, 4, 7 and 8. Clean panels will matter more!"]:
+    "2., 3., 4., 7. ve 8. günlerden sonra toz bekleniyor. Temiz paneller çok işe yarayacak!",
   ["Small Oxygen Supply"]:
     "Az Oksijen",
-  ["Clear skies are expected except after Sol 2, but the oxygen tanks are not full."]:
-    "Sadece 2. günden sonra toz var, gerisi açık. Ama oksijen tankları tam dolu değil.",
+  ["Clear skies are expected except after Sol 2 and Sol 8, but the oxygen tanks are not full."]:
+    "Sadece 2. ve 8. günlerden sonra toz var, gerisi açık. Ama oksijen tankları tam dolu değil.",
   ["Mission profiles and dust forecasts are fictional game settings, not measured Mars weather."]:
     "Görev türleri ve toz tahminleri oyun için uydurulmuştur, gerçek Mars hava durumu değildir.",
   ["Is the base ready for the next crew?"]:
@@ -76,10 +76,10 @@ export const STORY_TR = {
     "Ekibin güvenliği: düşük. Yeniden dışarı çıkmadan önce korunma planını gözden geçirmeliyiz.",
   ["Welcome to Mars"]:
     "Mars'a Hoş Geldin",
-  ["Red hills stretch beyond the window of Compass Outpost. Your companion robot, DUTİ, rolls over and offers you a mission badge."]:
-    "Pusula Üssü'nün penceresinden kızıl tepeler görünüyor. Robot arkadaşın DUTİ tekerlekleriyle yanına geliyor ve sana bir görev rozeti uzatıyor.",
-  ["Welcome, Commander! Before we begin our research, we have time for one preparation task. The solar panels outside are dusty. Our shelter supplies also need organizing. Which job should we do first?"]:
-    "Hoş geldin Komutan! Araştırmaya başlamadan önce tek bir hazırlık işine vaktimiz var. Dışarıdaki güneş panelleri tozla kaplanmış. Sığınaktaki malzemeler de dağınık. Önce hangisini yapalım?",
+  ["Red hills fill the window of Compass Outpost. Two astronauts wave from the airlock. Beside them, a small robot holds a badge almost as wide as its face."]:
+    "Pusula Üssü'nün penceresi kızıl tepelerle dolu. İki astronot hava kilidinden el sallıyor. Yanlarında küçük bir robot, neredeyse yüzü kadar geniş bir rozet tutuyor.",
+  ["Welcome, Commander! I am DUTİ. Ten sols, one outpost, and a whole notebook of questions. Our first research review is on Sol 6. After that, we prepare our discoveries for the next crew."]:
+    "Hoş geldin Komutan! Ben DUTİ'yim. On Mars günü, bir üs ve koca bir defter dolusu soru. İlk araştırma değerlendirmemiz 6. Mars gününde. Ondan sonra keşiflerimizi bir sonraki ekip için hazırlayacağız.",
   ["Preparing for the future uses resources now but can reduce later costs."]:
     "Geleceğe hazırlanmak bugün kaynak harcatır ama sonra işimizi kolaylaştırabilir.",
   ["Service the solar panels"]:
@@ -96,12 +96,6 @@ export const STORY_TR = {
     "Su paketleri ve koruyucu malzemeler yerli yerinde. Bir uyarı gelirse çok daha hızlı hazırlanırız. Paneller biraz bekleyecek.",
   ["Power Shortage"]:
     "Güç Sıkıntısı",
-  ["A warning lights up DUTİ's screen."]:
-    "DUTİ'nin ekranında bir uyarı yanıp sönüyor.",
-  ["Less solar energy will be left to charge our batteries today. We cannot run every device at once."]:
-    "Bugün bataryalarımızı dolduracak güneş enerjisi az. Bütün makineleri aynı anda çalıştıramayız.",
-  ["The astronauts want to study some unusual rocks nearby. We could also fill our oxygen tank. There is a smaller research task we can do inside the base, too. Where should we use our energy?"]:
-    "Astronotlar yakındaki ilginç kayaları incelemek istiyor. Oksijen tankımızı da doldurabiliriz. Üssün içinde yapabileceğimiz küçük bir araştırma da var. Enerjimizi nereye harcayalım?",
   ["Research, life support, and outside work share a limited resource budget."]:
     "Araştırma, yaşam desteği ve dış görevler aynı sınırlı kaynakları paylaşır.",
   ["Real NASA data: Mars nights are very cold"]:
@@ -118,10 +112,10 @@ export const STORY_TR = {
     "Oksijen makinesi yedeğimizi doldurdu. Nefes alacak daha çok havamız var, ama araştırmamız beklemek zorunda.",
   ["Collect a rock sample outside"]:
     "Dışarı çıkıp kaya örneği topla",
-  ["The final laboratory study will award 4 Science instead of 2."]:
-    "Son gündeki laboratuvar çalışması 2 yerine 4 Bilim Puanı kazandırır.",
-  ["The sample is here! We recorded observations outside. On the final day, we can study the rock more closely in the lab. We used some of our suit oxygen."]:
-    "Örnek elimizde! Dışarıda gözlemlerimizi kaydettik. Son gün kayayı laboratuvarda yakından inceleyebiliriz. Giysilerimizin oksijeninden biraz harcadık.",
+  ["The Sol 6 laboratory study will award 4 Science instead of 2."]:
+    "6. Mars günündeki laboratuvar çalışması 2 yerine 4 Bilim Puanı kazandırır.",
+  ["The sample is here! We recorded observations outside. At the Sol 6 research review, we can study the rock more closely in the lab. We used some of our suit oxygen."]:
+    "Örnek elimizde! Dışarıda gözlemlerimizi kaydettik. 6. Mars günündeki araştırma değerlendirmesinde kayayı laboratuvarda daha yakından inceleyebiliriz. Giysi tanklarımızın oksijeninden biraz harcadık.",
   ["Study the base's indoor measurements"]:
     "Üssün içindeki ölçümleri incele",
   ["Complete a smaller study without using extra oxygen, but collect no physical sample."]:
@@ -130,10 +124,6 @@ export const STORY_TR = {
     "İçerideki ölçümlerde ilginç bir şey bulduk. Dışarı çıksaydık daha çok şey öğrenirdik, ama oksijenimizi koruduk.",
   ["Greenhouse Problem"]:
     "Sera Sorunu",
-  ["Green leaves fill the greenhouse shelves. These plants were started before your team arrived, and some are almost ready to harvest."]:
-    "Seranın rafları yemyeşil yapraklarla dolu. Bu bitkiler ekibiniz gelmeden önce ekildi ve bazıları neredeyse toplanmaya hazır.",
-  ["Growing food uses energy. We can keep a full experiment shelf running, light a smaller group of plants, or shut the greenhouse down. Our packaged food will last through this short mission. But the greenhouse's future depends on today's choice."]:
-    "Yiyecek yetiştirmek enerji ister. Bütün deney rafını çalıştırabiliriz, sadece küçük bir bitki grubunu aydınlatabiliriz ya da serayı kapatabiliriz. Paket yemeklerimiz bu kısa görevde yeter. Ama seranın geleceği bugünkü seçime bağlı.",
   ["Growing food takes time and energy. Stored food and future food production serve different needs."]:
     "Yiyecek yetiştirmek zaman ve enerji ister. Depodaki yemek bugünü kurtarır, sera ise geleceği.",
   ["Growing food takes time and energy"]:
@@ -142,30 +132,26 @@ export const STORY_TR = {
     "NASA, bitkilerin uzayda nasıl büyüdüğünü araştırıyor. Bizim Mars seramız hayalî bir sera ve bitkileri bu görevden önce ekildi. Ekibin paket yemekleri bu kısa görev boyunca yetiyor.",
   ["Keep the full experiment shelf running"]:
     "Bütün deney rafını çalıştır",
-  ["Prepare a harvest and detailed growth records. The final greenhouse study will award 3 Science."]:
-    "Bol hasat ve ayrıntılı büyüme kayıtları hazırlanır. Son gündeki sera çalışması 3 Bilim Puanı kazandırır.",
-  ["The plants have the light and care they need. We can study the harvest on our final day. We used more energy today to prepare for that."]:
-    "Bitkiler ihtiyaç duydukları ışığı ve bakımı alıyor. Son gün hasadı inceleyebiliriz. Bunun için bugün daha çok enerji harcadık.",
+  ["Prepare a harvest and detailed growth records. The Sol 6 greenhouse study will award 3 Science."]:
+    "Bol hasat ve ayrıntılı büyüme kayıtları hazırlanır. 6. Mars günündeki sera çalışması 3 Bilim Puanı kazandırır.",
+  ["The plants have the light and care they need. We can study the harvest at the Sol 6 research review. We used more energy today to prepare for that."]:
+    "Bitkiler ihtiyaç duydukları ışığı ve bakımı alıyor. Hasadı 6. Mars günündeki araştırma değerlendirmesinde inceleyebiliriz. Bunun için bugün daha çok enerji harcadık.",
   ["Keep a smaller group of plants growing"]:
     "Küçük bir bitki grubunu büyütmeye devam et",
-  ["Prepare a smaller harvest and fewer records. The final greenhouse study will award 2 Science."]:
-    "Daha küçük bir hasat ve daha az kayıt olur. Son gündeki sera çalışması 2 Bilim Puanı kazandırır.",
+  ["Prepare a smaller harvest and fewer records. The Sol 6 greenhouse study will award 2 Science."]:
+    "Daha küçük bir hasat ve daha az kayıt olur. 6. Mars günündeki sera çalışması 2 Bilim Puanı kazandırır.",
   ["We kept a smaller growing area working. We saved some energy, but we will have a smaller harvest and fewer measurements."]:
     "Küçük bir yetiştirme alanını çalışır tuttuk. Biraz enerji biriktirdik, ama hasadımız küçük, ölçümlerimiz az olacak.",
   ["Shut down the greenhouse and save energy"]:
     "Serayı kapat, enerji biriktir",
-  ["Lose the harvest study. The final report from existing records will award only 1 Science."]:
-    "Hasat çalışmasını kaybedersin. Eski kayıtlardan yapılan son rapor sadece 1 Bilim Puanı kazandırır.",
+  ["Lose the harvest study. The Sol 6 report from existing records will award only 1 Science."]:
+    "Hasat çalışmasını kaybedersin. Mevcut kayıtlardan yapılan 6. Mars günü raporu sadece 1 Bilim Puanı kazandırır.",
   ["We saved our energy. We will use packaged food during this mission. We cannot expect a new greenhouse harvest, and a future team will need to restart food production."]:
     "Enerjimizi koruduk. Bu görevde paket yemek yiyeceğiz. Seradan yeni hasat çıkmayacak ve sonraki ekip yiyecek üretimine en baştan başlamak zorunda kalacak.",
   ["Greenhouse research points are earned only if studied on Sol 6."]:
     "Sera araştırmasının puanları ancak 6. günde incelenirse kazanılır.",
   ["Message From Earth"]:
     "Dünya'dan Mesaj",
-  ["DUTİ notices two possible settings for the research robot outside. The team on Earth could help us choose the more efficient one."]:
-    "DUTİ, dışarıdaki araştırma robotu için iki farklı ayar buluyor. Dünya'daki ekip, hangisinin daha az enerji harcadığını seçmemize yardım edebilir.",
-  ["During this mission, a message takes about 20 minutes to reach Earth. The reply needs time to travel back, too. We can wait for help, use our own checklist, or spend this time making more oxygen."]:
-    "Bu görevde bir mesajın Dünya'ya ulaşması yaklaşık 20 dakika sürüyor. Cevabın geri gelmesi de bir o kadar sürüyor. Yardımı bekleyebiliriz, kendi kontrol listemizi kullanabiliriz ya da bu zamanı oksijen üretmeye ayırabiliriz.",
   ["Earth's support takes time to arrive. Spending more energy cannot make the signal travel faster."]:
     "Dünya'dan gelen yardım zaman alır. Daha çok enerji harcamak mesajı hızlandıramaz.",
   ["Messages need time to travel"]:
@@ -194,12 +180,6 @@ export const STORY_TR = {
     "Oksijen yedeğimiz güçlendi. Bu arada robotun ayarlarına bakamadık. Bir sonraki karar için daha çok oksijenimiz var.",
   ["Solar Radiation Alert"]:
     "Güneş Fırtınası Uyarısı",
-  ["DUTİ's antenna flashes."]:
-    "DUTİ'nin anteni hızlı hızlı yanıp sönüyor.",
-  ["Fast particles from the Sun could make it more dangerous to work outside!"]:
-    "Güneş'ten gelen hızlı parçacıklar dışarıda çalışmayı tehlikeli hale getirebilir!",
-  ["Radiation is energy or tiny particles that can harm our bodies. The crew can move into the storm shelter. We could also take measurements using the robot outside. One astronaut wants to finish the last outdoor measurement, but staying outside means taking a bigger risk."]:
-    "Radyasyon, vücudumuza zarar verebilen görünmez enerji ya da minicik parçacıklardır. Ekip fırtına sığınağına geçebilir. Dışarıdaki robotla da ölçüm yapabiliriz. Bir astronot son dış ölçümü bitirmek istiyor, ama dışarıda kalmak büyük bir risk.",
   ["Protecting people, continuing research, and saving energy involve different costs."]:
     "İnsanları korumak, araştırmaya devam etmek ve enerji biriktirmek farklı bedeller ister.",
   ["Real NASA event: the May 2024 solar storm (archival data, not live)"]:
@@ -222,24 +202,14 @@ export const STORY_TR = {
     "Ekibimiz içerideyken robot ölçüm yaptı. Araştırma devam etti, ama enerji yedeğimizden biraz harcadık.",
   ["Try to finish the outdoor measurement"]:
     "Dışarıdaki ölçümü bitirmeye çalış",
-  ["High risk: Safety −4. The final outdoor task will become unavailable."]:
-    "Büyük risk: Güvenlik −4. Son gündeki dış gezi kapanır.",
-  ["Gain extra observations, but lose enough safety margin to close the final crewed outdoor task."]:
-    "Fazladan gözlem kazanırsın, ama o kadar çok Güvenlik kaybedersin ki son gündeki dış gezi kapanır.",
-  ["We recorded extra measurements, but exposed our crew to more risk. We no longer have enough safety margin for another crewed outdoor task on the final day."]:
-    "Ekstra ölçümler kaydettik, ama ekibimizi tehlikeye attık. Son gün bir dış gezi daha yapacak kadar güvenlik payımız kalmadı.",
-  ["Local sensors confirm that the solar event has subsided before the final task. Safety is not automatically restored."]:
-    "Üssün sensörleri, son görevden önce güneş fırtınasının dindiğini gösteriyor. Ama Güvenlik kendiliğinden geri gelmez.",
-  ["Final Mission"]:
-    "Son Görev",
-  ["DUTİ opens the final mission card."]:
-    "DUTİ son görev kartını açıyor.",
-  ["Local measurements show that the solar event has subsided. We can choose our last research task."]:
-    "Ölçümlerimize göre güneş fırtınası dindi. Son araştırma görevimizi seçebiliriz.",
-  ["The laboratory, exploration route, and greenhouse are waiting. But there is not enough time for all three. The samples you collected and the plants you cared for have changed what we can do today. How will we finish our mission?"]:
-    "Laboratuvar, yeni keşif rotası ve sera bizi bekliyor. Ama üçüne birden vaktimiz yok. Topladığın örnekler ve baktığın bitkiler bugün neler yapabileceğimizi değiştirdi. Görevimizi nasıl bitirelim?",
-  ["Earlier decisions change the final mission's options, costs, and research value."]:
-    "Önceki kararlar son görevin seçeneklerini, bedellerini ve kazandırdığı bilimi değiştirir.",
+  ["High risk: Safety −4. The Sol 6 outdoor task will become unavailable."]:
+    "Büyük risk: Güvenlik −4. 6. Mars günündeki dış görev kullanılamaz hale gelir.",
+  ["Gain extra observations, but lose enough safety margin to close the Sol 6 crewed outdoor task."]:
+    "Fazladan gözlem kazanırsın, ama o kadar çok güvenlik kaybedersin ki 6. Mars günündeki insanlı dış görev kapanır.",
+  ["We recorded extra measurements, but exposed our crew to more risk. We no longer have enough safety margin for another crewed outdoor task on Sol 6."]:
+    "Ekstra ölçümler kaydettik, ama ekibimizi daha çok riske attık. Artık 6. Mars gününde bir insanlı dış görev daha yapacak kadar güvenlik payımız kalmadı.",
+  ["Local sensors confirm that the solar event has subsided before the research review. Safety is not automatically restored."]:
+    "Üssün sensörleri, araştırma değerlendirmesinden önce güneş olayının dindiğini doğruluyor. Ama Güvenlik kendiliğinden geri gelmez.",
   ["Complete the laboratory study"]:
     "Laboratuvar çalışmasını bitir",
   ["Study recorded images and instrument data to finish a smaller laboratory study."]:
@@ -272,18 +242,6 @@ export const STORY_TR = {
     "Küçük hasadı ve az sayıdaki kaydı incelersin.",
   ["We harvested our smaller growing area. We used less energy, but had fewer plants and measurements to study."]:
     "Küçük yetiştirme alanımızı hasat ettik. Daha az enerji harcadık, ama inceleyecek bitkimiz ve ölçümümüz azdı.",
-  ["Mission complete, Commander!"]:
-    "Görev tamamlandı Komutan!",
-  ["You kept the base running and reached our research goal. Your earlier choices helped make today's success possible!"]:
-    "Üssü çalışır durumda tuttun ve araştırma hedefimize ulaştın. Daha önce verdiğin kararlar bugünkü başarıyı mümkün kıldı!",
-  ["We kept the base running, but part of our mission goal is unfinished."]:
-    "Üs çalışıyor, ama görev hedefimizin bir kısmı eksik kaldı.",
-  ["Review your Science total and safety margin. Which research task could you prepare for earlier next time?"]:
-    "Bilim Puanına ve ekibin güvenliğine bir bak. Bir dahaki sefere hangi araştırmaya daha erken hazırlanabilirsin?",
-  ["We had to stop the mission."]:
-    "Görevi durdurmak zorunda kaldık.",
-  ["Review your choices and try a new plan."]:
-    "Kararlarına bir göz at ve yeni bir plan dene.",
   ["Our energy reserve ran out."]:
     "Enerji yedeğimiz bitti.",
   ["Our oxygen reserve ran out."]:
@@ -320,4 +278,271 @@ export const STORY_TR = {
     "Sunset in Mars' Gale Crater (İngilizce)",
   ["Sol 956 (April 15, 2015)"]:
     "956. Mars günü (15 Nisan 2015)",
+  // Ten-sol continuation (Sols 7–10, endings)
+  ["Living plant tray: protected, with its care notes, for the next crew."]:
+    "Canlı bitki tepsisi: bakım notlarıyla birlikte korunuyor, bir sonraki ekip için.",
+  ["The scheduled compartment opens. The crew connects the stored oxygen supply and charged battery pack. DUTİ checks each new reserve reading."]:
+    "Planlanan bölme açılıyor. Ekip depodaki oksijen tüpünü ve şarjlı batarya paketini bağlıyor. DUTİ yeni yedek ölçümlerinin her birini kontrol ediyor.",
+  ["That completes our first chapter. And that little chime? It has returned. Three notes, a pause, then three notes again. Tomorrow, let us find out what is making it."]:
+    "İlk bölümümüz burada bitiyor. Peki o küçük tın? Geri döndü. Üç nota, bir duraklama, sonra yine üç nota. Yarın, bu sesi neyin çıkardığını bulalım.",
+  ["DUTİ draws an empty dot in its notebook. Outside, dusty panels need attention. Inside, the storm shelter still needs supplies."]:
+    "DUTİ notlarına boş bir nokta çiziyor. Dışarıda tozlu paneller ilgi bekliyor. İçeride ise fırtına sığınağına hâlâ malzeme lazım.",
+  ["What should we prepare first? Small choices can leave very long trails."]:
+    "Önce neyi hazırlayalım? Küçük seçimler çok uzun izler bırakabilir.",
+  ["A battery light blinks. Beyond the window, a striped rock catches the morning light. DUTİ turns off one screen to keep the important systems running."]:
+    "Bir batarya ışığı yanıp sönüyor. Pencerenin ötesinde çizgili bir kaya sabah ışığını yakalıyor. DUTİ, önemli sistemler çalışmaya devam etsin diye bir ekranı kapatıyor.",
+  ["We cannot power every job at once. We can make oxygen, collect that rock, or study the measurements we already have indoors."]:
+    "Her işi aynı anda çalıştıramayız. Oksijen üretebiliriz, şu kayayı toplayabiliriz ya da içeride zaten elimizde olan ölçümleri inceleyebiliriz.",
+  ["The rock is interesting, but the oxygen tank matters too. DUTİ leaves a blank space in the notebook: What could we learn if we saved something for later?"]:
+    "Kaya ilginç, ama oksijen tankı da önemli. DUTİ deftere boş bir yer bırakıyor: Bir şeyi sonra kullanmak üzere saklarsak neler öğrenebiliriz?",
+  ["A leaf taps the greenhouse window. These plants were growing before your team arrived. One tray is almost ready to harvest; another still has much to do."]:
+    "Bir yaprak sera penceresine vuruyor. Bu bitkiler ekibiniz gelmeden önce büyüyordu. Bir tepsi neredeyse hasada hazır; diğeri ise daha çok bakım istiyor.",
+  ["The lights use energy. We can care for all the experiment plants, keep a smaller group, or switch the greenhouse off and use our packaged food."]:
+    "Lambalar enerji harcıyor. Bütün deney bitkilerine bakabilir, daha küçük bir grubu tutabilir ya da serayı kapatıp paket yemeklerimizi kullanabiliriz.",
+  ["On a shelf sits an empty seed box labeled NEXT CREW. Nothing goes inside it yet."]:
+    "Bir rafta üzerinde SONRAKİ EKİP yazan boş bir tohum kutusu duruyor. Henüz içinde hiçbir şey yok.",
+  ["A future is a little like a garden. Somebody has to begin looking after it before it arrives."]:
+    "Gelecek biraz bir bahçeye benzer. Gelmeden önce birisinin ona bakmaya başlaması gerekir.",
+  ["An Earth message window opens beside the rover controls. DUTİ has found two possible settings, but does not know which uses less energy."]:
+    "Gezgin kumandasının yanında bir Dünya mesajı penceresi açılıyor. DUTİ iki olası ayar buldu, ama hangisinin daha az enerji harcadığını bilmiyor.",
+  ["For our fictional mission today, a signal takes about twenty minutes each way. We can ask Earth and wait, use our checklist, or refill oxygen while we have the chance."]:
+    "Bugünkü hayalî görevimizde bir sinyalin gidip gelmesi yaklaşık yirmi dakika sürüyor. Dünya'ya sorup bekleyebilir, kontrol listemizi kullanabilir ya da fırsatı değerlendirip oksijen yedeğimizi doldurabiliriz.",
+  ["Beside the message window, an old equipment list shows a tiny lantern symbol. DUTİ saves the page without knowing why it feels familiar."]:
+    "Mesaj penceresinin yanında eski bir ekipman listesi var ve küçük bir fener simgesi görünüyor. DUTİ, neden tanıdık geldiğini bilmeden sayfayı kaydediyor.",
+  ["A reply can help us think. It cannot skip the journey between the planets."]:
+    "Bir cevap düşünmemize yardım edebilir. Ama gezegenler arasındaki yolculuğu atlayamaz.",
+  ["The outdoor-work light changes to a warning symbol. DUTİ opens the shelter map. The crew can stay inside while the robot takes measurements, or pause research and move into the shelter."]:
+    "Dış görev ışığı bir uyarı simgesine dönüşüyor. DUTİ sığınak haritasını açıyor. Robot ölçüm yaparken ekip içeride kalabilir ya da araştırmaya ara verip sığınağa geçebilir.",
+  ["Our sensors warn of increased solar-particle risk. Protecting people comes first. An astronaut could try to finish outside, but that would use oxygen and greatly reduce our safety margin."]:
+    "Sensörlerimiz güneş parçacıklarının tehlikesinin arttığını bildiriyor. Önce insanları korumak gerekir. Bir astronot dışarıda işi bitirmeye çalışabilir, ama bu oksijen harcar ve güvenlik payımızı büyük ölçüde azaltır.",
+  ["A faint three-note chime appears in a saved equipment log. There is no urgent message attached. DUTİ marks it: investigate later, when the crew is safe."]:
+    "Kaydedilmiş bir ekipman günlüğünde silik bir üç notalık tın beliriyor. Ekli acil bir mesaj yok. DUTİ bunu işaretliyor: Ekip güvende olunca sonra inceleyelim.",
+  ["The First Research Review"]:
+    "İlk Araştırma Değerlendirmesi",
+  ["Local sensors show that the fictional solar event has subsided. DUTİ places three research cards on the desk: laboratory, exploration route, and greenhouse."]:
+    "Üssün sensörleri, hayalî güneş olayının dindiğini gösteriyor. DUTİ masaya üç araştırma kartı koyuyor: laboratuvar, keşif rotası ve sera.",
+  ["First research review! The rock you saved, the plants you cared for, and the supplies you kept have changed what we can do. We have time for one study today."]:
+    "İlk araştırma değerlendirmesi! Sakladığın kaya, baktığın bitkiler ve tuttuğun malzemeler neler yapabileceğimizi değiştirdi. Bugün bir çalışmaya vaktimiz var.",
+  ["A sealed reserve compartment is scheduled to open after the review. Its oxygen supplies and charged battery pack were stored here before your arrival."]:
+    "Mühürlü bir yedek bölmenin değerlendirmeden sonra açılması planlanıyor. İçindeki oksijen malzemeleri ve şarjlı batarya paketi, sen gelmeden önce buraya konmuş.",
+  ["Which study shall we complete? Then we can prepare our discoveries for the next crew. There are still four sols of questions ahead."]:
+    "Hangi çalışmayı tamamlayalım? Sonra keşiflerimizi bir sonraki ekip için hazırlayabiliriz. Önümüzde hâlâ dört Mars günü dolusu soru var.",
+  ["Earlier decisions change the research review's options, costs, and research value."]:
+    "Önceki kararlar, araştırma değerlendirmesinin seçeneklerini, bedellerini ve bilimsel değerini değiştirir.",
+  ["The Three-Note Mystery"]:
+    "Üç Notanın Gizemi",
+  ["Beep. Beep-beep. The desk speaker goes quiet. Then the same three notes return. DUTİ rolls closer, holding a spoon as if it were a listening horn."]:
+    "Bip. Bip-bip. Masadaki hoparlör sessizleşiyor. Sonra aynı üç nota geri geliyor. DUTİ, bir dinleme borusuymuş gibi bir kaşığı tutarak yaklaşıyor.",
+  ["I tried asking it a question. It kept beeping. That is not a very useful answer."]:
+    "Ona bir soru sormayı denedim. Bip sesleri çıkarmaya devam etti. Bu pek işe yarar bir cevap değil.",
+  ["On the screen, the pattern sits beside your old notes. It might come from nearby equipment. It might become clearer if you compare it with your measurements. A rover could look for its source without sending anyone outside."]:
+    "Ekranda bu örüntü eski notlarınla yan yana duruyor. Yakındaki bir ekipmandan gelmiş olabilir. Ölçümlerinle karşılaştırırsan daha net hale gelebilir. Bir gezgin, kimseyi dışarı göndermeden kaynağını arayabilir.",
+  ["We have a question, not an answer. Shall we study the pattern, follow the signal, or check the old equipment logs while we refill oxygen?"]:
+    "Elimizde bir cevap değil, bir soru var. Bu örüntüyü mi inceleyelim, sinyali mi takip edelim, yoksa oksijen yedeğimizi doldururken eski ekipman günlüklerine mi bakalım?",
+  ["Compare possible explanations before calling a repeating pattern a discovery."]:
+    "Tekrar eden bir örüntüye keşif demeden önce olası açıklamaları karşılaştır.",
+  ["Compare the three-note pattern"]:
+    "Üç notalık örüntüyü karşılaştır",
+  ["Keep a careful pattern record for the evidence comparison on Sol 9; an earlier rock study may make that comparison special."]:
+    "9. Mars günündeki kanıt karşılaştırması için örüntü kaydını dikkatle tut; daha önceki kaya çalışması bu karşılaştırmayı özel kılabilir.",
+  ["I saved the pattern beside our measurements. Matching shapes can be a clue, but they do not explain themselves."]:
+    "Örüntüyü ölçümlerimizin yanına kaydettim. Benzer şekiller bir ipucu olabilir, ama kendi kendilerini açıklamazlar.",
+  ["Follow the signal with the rover"]:
+    "Sinyali gezginle takip et",
+  ["Locate an old survey relay without sending an astronaut outside. Earlier Earth guidance reduces this task to 1 Energy."]:
+    "Bir astronotu dışarı göndermeden eski bir ölçüm rölesini bul. Daha önceki Dünya tavsiyesi bu görevi 1 Enerjiye indirir.",
+  ["The rover found an old survey relay behind a ridge. A lantern symbol is painted on its case. This is equipment, not a visitor!"]:
+    "Gezgin, bir sırtın arkasında eski bir ölçüm rölesi buldu. Kutusunun üstünde bir fener simgesi boyalı. Bu bir ekipman, ziyaretçi değil!",
+  ["Read the equipment logs and refill oxygen"]:
+    "Ekipman günlüklerini oku ve oksijen yedeğini doldur",
+  ["Build the oxygen reserve and find the relay inventory entry, but miss today's new signal measurements."]:
+    "Oksijen yedeğini artırır ve röle envanter kaydını bulursun, ama bugünkü yeni sinyal ölçümlerini kaçırırsın.",
+  ["The logs list a survey relay with a three-note test signal. We have a possible explanation and more oxygen. We have not measured where it is."]:
+    "Günlükler, üç notalık test sinyali veren bir ölçüm rölesini listeliyor. Olası bir açıklamamız ve daha fazla oksijenimiz var. Ama röleyin nerede olduğunu ölçmedik.",
+  ["The Drawer Marked Tomorrow"]:
+    "Yarın Yazan Çekmece",
+  ["A routine store-room check reveals a drawer labeled TOMORROW. DUTİ cannot resist reading the smaller print: For whoever asks the next good question."]:
+    "Rutin depo kontrolünde YARIN yazan bir çekmece ortaya çıkıyor. DUTİ, küçük yazıyı okumadan duramıyor: Bir sonraki güzel soruyu soracak kişi için.",
+  ["Inside: an insulated plant tray, a spare recorder part, and a survey cassette. We can finish one careful job with our work time today."]:
+    "İçinde yalıtımlı bir bitki tepsisi, yedek bir kayıt cihazı parçası ve bir ölçüm kaseti var. Bugün çalışma zamanımızla bir dikkatli işi bitirebiliriz.",
+  ["If you kept plants growing, a living tray can be protected for the next crew. The recorder part could restore DUTİ's missing notebook pictures. The cassette could explain who left the relay outside."]:
+    "Bitkileri büyütmeye devam ettiysen, canlı bir tepsi bir sonraki ekip için korunabilir. Kayıt cihazı parçası DUTİ'nin kayıp defter resimlerini geri getirebilir. Kaset ise röleyi dışarıda kimin bıraktığını açıklayabilir.",
+  ["Three ways to save something. Which kind of tomorrow should we prepare?"]:
+    "Bir şeyi saklamanın üç yolu var. Nasıl bir yarına hazırlanalım?",
+  ["Stored materials and records can carry earlier work forward, but preparation has opportunity costs."]:
+    "Saklanan malzemeler ve kayıtlar önceki çalışmayı ileriye taşıyabilir, ama hazırlığın bir fırsat bedeli vardır.",
+  ["Protect a living plant tray"]:
+    "Canlı bir bitki tepsisini koru",
+  ["Preserve plants already growing before arrival and their care notes. This can support a living-garden ending after the Sol 6 greenhouse study."]:
+    "Gelmeden önce büyüyen bitkileri ve bakım notlarını koru. Bu, 6. Mars günündeki sera çalışmasından sonra canlı bir bahçe sonunu destekleyebilir.",
+  ["The greenhouse was shut down on Sol 3. No living experiment tray remains to protect."]:
+    "Sera 3. günde kapatıldı. Korunacak canlı bir deney tepsisi kalmadı.",
+  ["The living tray is protected, and its care instructions are ready. These are plants we kept growing, not seeds that grew overnight."]:
+    "Canlı tepsi korunuyor ve bakım talimatları hazır. Bunlar gece içinde filizlenen tohumlar değil, bizim büyütmeye devam ettiğimiz bitkiler.",
+  ["Restore DUTİ's notebook pictures"]:
+    "DUTİ'nin defter resimlerini geri getir",
+  ["Recover DUTİ's saved pictures of earlier preparations. Spare supplies organized in 1B reduce this cost to 0 Energy."]:
+    "DUTİ'nin önceki hazırlıklara ait kayıtlı resimlerini geri getir. 1B'de düzenlenen yedek malzemeler bu bedeli 0 Enerjiye indirir.",
+  ["My pictures are back! A packed shelter. A crew working together. I had saved the ordinary moments, too."]:
+    "Resimlerim geri geldi! Dolu bir sığınak. Birlikte çalışan bir ekip. Sıradan anları da saklamıştım.",
+  ["Open the survey cassette"]:
+    "Ölçüm kasetini aç",
+  ["Recover a fictional older crew's relay-test log. Combine it with a located relay to investigate a network of instruments."]:
+    "Hayalî eski bir ekibin röle test günlüğünü geri getir. Bulduğun röleyle birleştirip bir cihaz ağını incelersin.",
+  ["The cassette says the three notes are a test call from an old survey network. There may be more stations than the one in our equipment list."]:
+    "Kaset, üç notanın eski bir ölçüm ağından gelen bir test çağrısı olduğunu söylüyor. Ekipman listemizdeki istasyondan daha fazla istasyon olabilir.",
+  ["Two Stories, One Signal"]:
+    "İki Hikâye, Tek Sinyal",
+  ["A routine receiver check identifies the three-note call as an equipment test, even if you did not locate its source. Your notes cover the table. DUTİ lays two cards beside them: WHAT WE OBSERVED and WHAT WE STILL WONDER."]:
+    "Rutin alıcı kontrolü, kaynağını bulmamış olsan bile üç notalık çağrının bir ekipman testi olduğunu belirler. Notların masayı kaplıyor. DUTİ yanlarına iki kart koyuyor: NE GÖZLEMLEDİK ve HÂLÂ NE MERAK EDİYORUZ.",
+  ["The three notes are from survey equipment. That part is no longer a mystery. But what should our next message help somebody discover?"]:
+    "Üç nota ölçüm ekipmanından geliyor. Bu kısım artık bir gizem değil. Ama bir sonraki mesajımız birinin neyi keşfetmesine yardım etmeli?",
+  ["You could compare the records to build an evidence report. You could record the crew's story alongside your measurements. Or you could use the work slot to maintain life support while a simple computer check finishes."]:
+    "Kayıtları karşılaştırıp bir kanıt raporu hazırlayabilirsin. Ekibin hikâyesini de ölçümlerinle birlikte kaydedebilirsin. Ya da basit bir bilgisayar kontrolü bitene kadar çalışma zamanını yaşam desteğini sürdürmek için kullanabilirsin.",
+  ["A good ending does not need every answer. It needs us to be honest about the answers we have."]:
+    "İyi bir son her soruya cevap vermek zorunda değildir. Elimizdeki cevaplar konusunda dürüst olmamız yeter.",
+  ["Separate observations from explanations, and label what remains uncertain."]:
+    "Gözlemleri açıklamalardan ayır ve hâlâ belirsiz olanları işaretle.",
+  ["Compare the evidence and mark open questions"]:
+    "Kanıtları karşılaştır ve açık soruları işaretle",
+  ["Connect the rock/pattern investigation or the relay/cassette investigation. Do not add a discovery that the actual history does not support."]:
+    "Kaya/örüntü araştırmasını ya da röle/kaset araştırmasını birbirine bağla. Gerçek geçmişin desteklemediği bir keşif ekleme.",
+  ["Our report separates measurements from guesses. If two things look alike, we say they look alike; we do not claim that proves what caused them."]:
+    "Raporumuz ölçümleri tahminlerden ayırıyor. İki şey birbirine benziyorsa, benziyor deriz; bunun neyin sebep olduğunu kanıtladığını iddia etmeyiz.",
+  ["Record the crew's story"]:
+    "Ekibin hikâyesini kaydet",
+  ["Save voices and captions about the choices actually made. Restored DUTİ pictures can turn this into a special farewell."]:
+    "Gerçekte yapılan seçimlerle ilgili sesleri ve açıklamaları kaydet. Geri getirilen DUTİ resimleri bunu özel bir veda haline getirebilir.",
+  ["We recorded what happened here, including the jobs that earned no Science Points. I put my smallest beep at the end."]:
+    "Burada olanları kaydettik, Bilim Puanı kazandırmayan işler de dahil. Sonuna en küçük bip sesimi koydum.",
+  ["Maintain life support during the record check"]:
+    "Kayıt kontrolü sırasında yaşam desteğini sürdür",
+  ["Build oxygen reserves before the last sol. Keep existing records, but skip today's detailed comparison and crew recording."]:
+    "Son Mars gününden önce oksijen yedeği oluştur. Mevcut kayıtları sakla, ama bugünkü ayrıntılı karşılaştırmayı ve ekip kaydını atla.",
+  ["Our oxygen reserve is stronger. The computer checked the files for readable data, but it did not do the deeper comparison or record our crew story."]:
+    "Oksijen yedeğimiz daha güçlü. Bilgisayar dosyaları okunabilir veriler için kontrol etti, ama daha derin karşılaştırmayı yapmadı ve ekibimizin hikâyesini kaydetmedi.",
+  ["A Light for Who Comes Next"]:
+    "Sıradaki İçin Bir Işık",
+  ["The last planned sol arrives. Compass Outpost is quiet, but not empty: your notes are on the table, your work is in the rooms, and DUTİ has saved a place for the mission's final page."]:
+    "Planlanan son Mars günü geliyor. Pusula Üssü sessiz, ama boş değil: notların masada, emeğin odalarda duruyor ve DUTİ görevin son sayfası için bir yer ayırdı.",
+  ["Ten sols ago, we had a blank notebook. Look at it now."]:
+    "On Mars günü önce defterimiz boştu. Şimdi bir bak.",
+  ["One work slot remains. You can send a focused evidence packet to Earth, prepare a handover capsule for the next crew, or leave a welcome message in the outpost. What appears on the final page will depend on the trail you followed."]:
+    "Bir çalışma zamanı kaldı. Dünya'ya odaklı bir kanıt paketi gönderebilir, bir sonraki ekip için bir devir kapsülü hazırlayabilir ya da üsse bir karşılama mesajı bırakabilirsin. Son sayfada ne görüneceği, izlediğin yola bağlı olacak.",
+  ["We do not have to leave every kind of treasure. We can leave the one we took the time to make."]:
+    "Her türlü hazineyi bırakmak zorunda değiliz. Emek verip yaptığımız tek bir şeyi bırakabiliriz.",
+  ["Communicate discoveries and uncertainty, and recognize that a mission can leave different kinds of useful legacy."]:
+    "Keşifleri ve belirsizlikleri paylaş. Bir görevin farklı türden yararlı miraslar bırakabileceğini unutma.",
+  ["Send our evidence packet to Earth"]:
+    "Kanıt paketini Dünya'ya gönder",
+  ["Can reveal the rock-pattern or relay-network ending when the matching earlier investigation is complete. Acknowledge transmission locally; no instant Earth reply."]:
+    "İlgili önceki araştırma tamamlandığında kaya-örüntü ya da röle-ağı sonunu ortaya çıkarabilir. Gönderim üste onaylandı; Dünya'dan anında cevap gelmez.",
+  ["Packet sent. Earth will receive it after the signal travel time. Let us look at the story our choices made."]:
+    "Paket gönderildi. Dünya, sinyalin yolculuk süresinden sonra onu alacak. Gel, seçimlerimizin ortaya çıkardığı hikâyeye bakalım.",
+  ["Prepare the next crew's handover capsule"]:
+    "Sonraki ekibin devir kapsülünü hazırla",
+  ["With the greenhouse study and a protected living tray, leave a garden handover. Otherwise leave only the actual records and materials collected."]:
+    "Sera çalışması ve korunan canlı tepsiyle birlikte bir bahçe devri bırakırsın. Aksi halde yalnızca gerçekten toplanan kayıtları ve malzemeleri bırakırsın.",
+  ["The handover capsule is labeled with exactly what we saved. No imaginary harvests. No missing instructions. A real beginning for the next crew."]:
+    "Devir kapsülünün üzerine tam olarak neyi sakladığımız yazılı. Hayalî hasat yok. Eksik talimat yok. Sonraki ekip için gerçek bir başlangıç.",
+  ["Leave a welcome message in the outpost"]:
+    "Üsse bir karşılama mesajı bırak",
+  ["A no-extra-cost final action. Restored pictures and a crew recording can reveal DUTİ's special memory-map farewell."]:
+    "Ek bir maliyeti olmayan son bir eylem. Geri getirilen resimler ve ekip kaydı, DUTİ'nin özel hafıza haritası vedasını ortaya çıkarabilir.",
+  ["Welcome, next Commander. We left our questions where you can find them. DUTİ adds one final dot to the notebook."]:
+    "Hoş geldin, sıradaki Komutan. Sorularımızı bulabileceğin yerlere bıraktık. DUTİ deftere bir son nokta ekliyor.",
+  ["A Notebook Full of Questions"]:
+    "Sorularla Dolu Bir Defter",
+  ["Ten sols complete. You protected the crew and reached the research target. Your notebook holds the discoveries you actually made, and open questions for the next crew. DUTİ closes the cover, then leaves a pencil tucked inside."]:
+    "On Mars günü tamamlandı. Ekibi korudun ve araştırma hedefine ulaştın. Defterinde gerçekten yaptığın keşifler ve bir sonraki ekip için açık sorular var. DUTİ kapağı kapatıyor, sonra içine bir kurşun kalem sıkıştırıyor.",
+  ["Would a different trail of choices leave a different last page?"]:
+    "Farklı bir seçimler yolu, farklı bir son sayfa bırakır mıydı?",
+  ["One More Question"]:
+    "Bir Soru Daha",
+  ["You reached the last page, but part of the research or safety goal remains unfinished. Your completed work still matters. DUTİ marks one place to prepare differently next time."]:
+    "Son sayfaya ulaştın, ama araştırma ya da güvenlik hedefinin bir kısmı tamamlanmadı. Bitirdiğin işler yine de önemli. DUTİ bir dahaki sefere farklı hazırlanabilecek bir yeri işaretliyor.",
+  ["Which earlier preparation might give your next mission more room to explore?"]:
+    "Hangi önceki hazırlık, bir sonraki görevine keşfetmek için daha çok alan açabilir?",
+  ["A Safe Pause"]:
+    "Güvenli Mola",
+  ["DUTİ helps the team stop work and begin the base's emergency procedures. Our research mission is paused."]:
+    "DUTİ, ekibin işi durdurmasına ve üssün acil durum prosedürlerini başlatmasına yardım ediyor. Araştırma görevimiz duraklatıldı.",
+  ["We can try another plan. Which reserve needed help earlier?"]:
+    "Başka bir plan deneyebiliriz. Hangi yedek daha önce yardıma ihtiyaç duydu?",
+  ["The Stone That Kept Time"]:
+    "Zamanı Saklayan Taş",
+  ["Your close-up rock images fill the screen. Beside them sit the measurements you carefully compared. The repeating signal did not come from the stone: it came from equipment. But following the pattern made you look at the stone in a new way."]:
+    "Yakın çekim kaya görüntülerin ekranı dolduruyor. Yanlarında dikkatle karşılaştırdığın ölçümler duruyor. Tekrar eden sinyal taştan gelmedi: ekipmandan geldi. Ama örüntüyü takip etmek taşa yeni bir gözle bakmanı sağladı.",
+  ["These stripes may record different chapters in how the rock formed. We have a question worth testing, and a sample ready for another scientist to study."]:
+    "Bu çizgiler, kayanın nasıl oluştuğuna dair farklı bölümleri kaydetmiş olabilir. Sınanmaya değer bir sorumuz var ve başka bir bilim insanının inceleyebilmesi için hazır bir örneğimiz var.",
+  ["You label the packet: A question kept safe inside a stone. DUTİ adds a little clock beside the sample box. The screen shows SENT, not ANSWER RECEIVED."]:
+    "Paketi etiketliyorsun: Bir taşın içinde güvenle saklanan bir soru. DUTİ, örnek kutusunun yanına küçük bir saat ekliyor. Ekranda CEVAP ALINDI değil, GÖNDERİLDİ yazıyor.",
+  ["You saved a physical sample on Sol 2."]:
+    "2. Mars gününde fiziksel bir örnek sakladın.",
+  ["You studied it in the laboratory on Sol 6."]:
+    "Onu 6. Mars gününde laboratuvarda inceledin.",
+  ["You compared patterns and evidence before sending your report."]:
+    "Raporunu göndermeden önce örüntüleri ve kanıtları karşılaştırdın.",
+  ["A small thing saved early can become a much bigger question later."]:
+    "Erken saklanan küçük bir şey, sonra çok daha büyük bir soruya dönüşebilir.",
+  ["Fictional research lead only. No confirmed rock age, water history, living organism, or NASA discovery is asserted."]:
+    "Yalnızca hayalî bir araştırma ipucu. Kanıtlanmış bir kaya yaşı, su geçmişi, canlı organizma ya da NASA keşfi iddia edilmiyor.",
+  ["The Smallest Garden on Mars"]:
+    "Mars'taki En Küçük Bahçe",
+  ["Inside the handover case, a protected tray holds plants your team kept alive. Beside it are the greenhouse measurements, care instructions, and a blank page labeled NEXT OBSERVATION."]:
+    "Devir kutusunun içinde, ekibinizin canlı tuttuğu bitkileri barındıran korunmuş bir tepsi var. Yanında sera ölçümleri, bakım talimatları ve SONRAKİ GÖZLEM yazan boş bir sayfa duruyor.",
+  ["We did not grow a whole farm. We kept one careful experiment going. Somebody else can ask the next question."]:
+    "Koca bir çiftlik yetiştirmedik. Dikkatli bir deneyi sürdürdük. Bir sonraki soruyu başkası sorabilir.",
+  ["DUTİ slips the once-empty seed box onto the shelf beside the tray. Its label now reads: A garden is also a promise to look after something. The next page belongs to another crew."]:
+    "DUTİ, önceden boş olan tohum kutusunu tepsinin yanındaki rafa yerleştiriyor. Etiketinde artık şu yazıyor: Bir bahçe aynı zamanda bir şeye göz kulak olma sözüdür. Sonraki sayfa başka bir ekibin.",
+  ["You kept a full or smaller greenhouse operating."]:
+    "Tam ya da küçük bir seranın çalışmasını sürdürdün.",
+  ["You completed its study on Sol 6."]:
+    "Çalışmasını 6. Mars gününde tamamladın.",
+  ["You protected a living tray and prepared its handover."]:
+    "Canlı bir tepsiyi koruyup devrini hazırladın.",
+  ["Some discoveries need care long before the final day."]:
+    "Bazı keşifler son günden çok önce ilgi ister.",
+  ["The tray was already growing before arrival. It is not a new ten-sol seed-to-harvest claim, a food-independent colony, or an oxygen supply."]:
+    "Tepsi, biz gelmeden önce zaten büyüyordu. Bu, on Mars günlük tohumdan hasada yeni bir iddia, yiyecekten bağımsız bir koloni ya da bir oksijen kaynağı değildir.",
+  ["DUTİ's Secret Constellation"]:
+    "DUTİ'nin Gizli Takımyıldızı",
+  ["DUTİ dims its screen. Small dots appear: the shelter you prepared, the room where the crew waited safely, and the desk where you restored its pictures. Thin lines join them into the outline of a little bear."]:
+    "DUTİ ekranını karartıyor. Küçük noktalar beliriyor: hazırladığın sığınak, ekibin güvenle beklediği oda ve resimlerini geri getirdiğin masa. İnce çizgiler bunları küçük bir ayının çizgilerine bağlıyor.",
+  ["It is not a real constellation. It is my map of when we looked after one another. I was saving it for the last page."]:
+    "Bu gerçek bir takımyıldızı değil. Birbirimize ne zaman göz kulak olduğumuzun haritası. Onu son sayfa için saklıyordum.",
+  ["Your crew recording begins. Behind the voices is DUTİ's smallest beep. You leave the map beside the welcome message, where the next Commander will find it."]:
+    "Ekip kaydın başlıyor. Seslerin arkasında DUTİ'nin en küçük bip sesi var. Haritayı, sıradaki Komutanın bulacağı karşılama mesajının yanına bırakıyorsun.",
+  ["We measured a lot of things. Thank you for remembering the people doing the measuring."]:
+    "Pek çok şeyi ölçtük. Ölçüm yapan insanları unutmadığın için teşekkür ederiz.",
+  ["You prepared the shelter and used it during the alert."]:
+    "Sığınağı hazırladın ve uyarı sırasında kullandın.",
+  ["You restored DUTİ's pictures."]:
+    "DUTİ'nin resimlerini geri getirdin.",
+  ["You recorded the crew and left a welcome message."]:
+    "Ekibi kaydettin ve bir karşılama mesajı bıraktın.",
+  ["Not every important moment earns a Science Point."]:
+    "Her önemli an bir Bilim Puanı kazandırmaz.",
+  ["A fictional memory-map image, not a real astronomical constellation or a claim that DUTİ is a living being."]:
+    "Hayalî bir hafıza haritası görüntüsü; gerçek bir astronomik takımyıldızı değil ve DUTİ'nin canlı bir varlık olduğu iddiası değil.",
+  ["The Lantern Network"]:
+    "Fener Ağı",
+  ["The rover location and survey cassette finally fit together. One lantern symbol becomes several on the old map. Your careful comparison identifies the three-note call as a test message used by a fictional survey network."]:
+    "Gezginin konumu ve ölçüm kaseti sonunda birbirine uydu. Eski haritada bir fener simgesi birkaç taneye çoğalıyor. Dikkatli karşılaştırmanla üç notalık çağrının, hayalî bir ölçüm ağının kullandığı bir test mesajı olduğunu buldun.",
+  ["Our panel work helped the power budget. Earth helped us use the robot efficiently. Then we kept the crew inside and let our machines investigate. Those choices brought these pieces together."]:
+    "Panel çalışmamız enerji bütçemize yardım etti. Dünya, robotu verimli kullanmamızı sağladı. Sonra ekibi içeride tuttuk ve makinelerimizin araştırma yapmasına izin verdik. Bu seçimler parçaları bir araya getirdi.",
+  ["Your packet contains the relay location, the cassette log, and the questions still untested. Farther along the old map are other marked stations. No one claims they are working yet."]:
+    "Paketinde röle konumu, kaset günlüğü ve henüz sınanmamış sorular var. Eski haritada daha ileride işaretli başka istasyonlar da var. Henüz hiçbiri çalışıyor diye iddia edilmiyor.",
+  ["One signal answered. A whole map of questions left to ask."]:
+    "Bir sinyal cevap verdi. Sorulacak bütün bir soru haritası kaldı.",
+  ["You serviced the panels and received Earth's guidance."]:
+    "Panelleri temizledin ve Dünya'nın tavsiyesini aldın.",
+  ["You used the robot during the alert and later located the relay."]:
+    "Uyarı sırasında robotu kullandın ve sonra röleyi buldun.",
+  ["You opened the cassette, compared the evidence, and sent the packet."]:
+    "Kaseti açtın, kanıtları karşılaştırdın ve paketi gönderdin.",
+  ["A useful reply, a careful preparation, and a machine doing the risky work can belong to the same story."]:
+    "Yararlı bir cevap, dikkatli bir hazırlık ve riskli işi yapan bir makine aynı hikâyenin parçası olabilir.",
+  ["The older crew, survey network, cassette, and relay are fictional story props, not real NASA assets or an operational Mars network."]:
+    "Eski ekip, ölçüm ağı, kaset ve röle hayalî hikâye malzemeleridir; gerçek NASA varlıkları ya da çalışan bir Mars ağı değildir.",
 };

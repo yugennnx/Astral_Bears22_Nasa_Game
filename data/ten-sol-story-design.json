@@ -10,7 +10,7 @@
   },
   "schemaVersion": 1,
   "id": "compass-outpost-ten-sol-design",
-  "status": "design-only-not-loaded-by-runtime",
+  "status": "implemented-in-runtime",
   "title": "Compass Outpost: Ten Sols of Questions",
   "language": "en",
   "baseCommit": "e815009a9d16cfcf32f17bc1274bcf07b99983fd",

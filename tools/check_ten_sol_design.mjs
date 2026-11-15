@@ -1,5 +1,6 @@
 // AI-assisted generation: OpenAI ChatGPT/Codex. See AI_USAGE.md and ai-usage.json.
-// Design-only enumeration; this does not extend or import the production engine.
+// Independent reference for the ten-sol rules; it does not import the production engine.
+// tools/check_engine.mjs compares the engine's totals with the counts this model prints.
 import assert from "node:assert/strict";
 import { readFile, writeFile } from "node:fs/promises";
 import { MISSION, SCENES, SCENE_ORDER } from "../src/game/scenes.js";
@@ -7,7 +8,7 @@ import { MISSION, SCENES, SCENE_ORDER } from "../src/game/scenes.js";
 const design = JSON.parse(await readFile(new URL("../data/ten-sol-story-design.json", import.meta.url), "utf8"));
 const plan = await readFile(new URL("../docs/design/ten-sol-story-plan.md", import.meta.url), "utf8");
 const scenes = [
-  ...SCENE_ORDER.map(id => ({
+  ...SCENE_ORDER.slice(0, 6).map(id => ({
     ...SCENES[id], ...design.sceneOverrides.find(item => item.id === id),
     choices: SCENES[id].choices.map(choice => ({ ...choice, ...design.choiceTextOverrides.find(item => item.id === choice.id) })),
   })),
@@ -23,7 +24,9 @@ const successful = state => state.science >= design.scienceTarget && keys.every(
 const matches = (ending, history) => ending.allChoices.every(id => history.includes(id))
   && ending.anyChoiceGroups.every(group => group.some(id => history.includes(id)));
 
-assert.equal(design.status, "design-only-not-loaded-by-runtime");
+assert.equal(design.status, "implemented-in-runtime");
+assert.equal(SCENE_ORDER.length, design.totalSols);
+assert.deepEqual(SCENE_ORDER.slice(6), design.scenes.map(scene => scene.id));
 assert.equal(design.totalSols, 10);
 assert.equal(design.scienceTarget, 10);
 assert.equal(design.successRequirements.science, design.scienceTarget);
@@ -133,7 +136,7 @@ assert.equal(available({ ...boundary, resources: { energy: 8, oxygen: 8, safety:
 const reports = [];
 for (const profile of MISSION.profiles) {
   const dust = design.profileDustyAfterScenes[profile.id];
-  assert.deepEqual(dust.filter(sol => sol <= 5), profile.dustyAfterScenes);
+  assert.deepEqual(dust, profile.dustyAfterScenes);
   assert(dust.every(sol => Number.isInteger(sol) && sol >= 1 && sol <= 9));
   const counts = { success: 0, partial: 0, stopped: 0 };
   const endingCounts = Object.fromEntries([...design.specialEndings.map(e => e.id), "ordinary-success"].map(id => [id, 0]));
@@ -172,7 +175,7 @@ for (const profile of MISSION.profiles) {
   console.log(`${profile.id}: ${counts.success} success, ${counts.partial} partial, ${counts.stopped} stopped; max Science ${maxScience}.`);
   for (const [id, witness] of Object.entries(witnesses)) console.log(`  ${id}: ${witness.history.join(" ")} => E${witness.resources.energy}/O${witness.resources.oxygen}/S${witness.resources.safety}, Science ${witness.science}`);
 }
-console.log("Ten-sol design verified: 10 scenes, 29 choices, four mutually exclusive special endings and ordinary success reachable in every profile; every choice appears on a successful path. Runtime remains six sols.");
+console.log("Ten-sol design verified: 10 scenes, 29 choices, four mutually exclusive special endings and ordinary success reachable in every profile; every choice appears on a successful path.");
 
 if (process.argv.includes("--write-report")) {
   let report = "# Ten-Sol Design Balance Report\n\n> AI/SI disclosure: generated with OpenAI ChatGPT/Codex by the design checker. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).\n\n**Date:** November 15, 2026. These are exhaustive results for the proposed design, not the playable runtime or a child playtest. All scores are fictional. Reproduce with `npm run check:expansion`; regenerate with `node tools/check_ten_sol_design.mjs --write-report`.\n\nA stopped branch is counted when it stops; its unplayed future choices are not expanded. Success/partial counts are full ten-decision histories.\n";
