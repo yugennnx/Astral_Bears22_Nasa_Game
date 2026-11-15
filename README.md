@@ -1,105 +1,78 @@
 # Compass Outpost: Ten Sols of Questions
 
-An English narrative decision game for ages 7–12, developed for the 2026 NASA Space Apps challenge [Build a Junior Astronaut Mission Trainer](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/?tab=details).
+A browser-based Mars outpost game for young learners, developed for the 2026 NASA Space Apps challenge [Build a Junior Astronaut Mission Trainer](https://www.spaceappschallenge.org/2026/challenges/junior-astronaut-mission-trainer/).
 
-Players manage Energy, Oxygen, and Safety alongside companion robot **DUTİ**, aiming to earn at least 10 Science Points over ten sols. Decisions have resource or opportunity costs and can change later options.
+Players work with companion robot **DUTİ** to manage Energy, Oxygen and Safety over ten sols. Each choice has a cost or an opportunity cost. Earlier preparations affect later options, research and the final mission report. The game has 29 choices, three mission profiles and five discoverable special endings.
 
-**Fifth-ending story design:** [The Visitors Beyond the Window](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window) supplies the explicitly fictional ending, clues, unlock contract and numerical witnesses implemented in v1.11.0. Version 1.11.1 fixes activity layout and live translations; see [the browser verification report](docs/design/ui-regression-1.11.1.md).
+**Current version: 1.12.0.** English is the primary language; Turkish is optional. NASA observations are attributed archival examples. Resource points, forecasts, equipment stories and visitor encounters are fictional; they are not mission predictions or NASA discoveries.
 
-## AI/SI Attribution
+[Current project status](docs/project-status.md) · [NASA data and learning map](docs/nasa-data-map.md) · [Submission checklist](docs/submission-checklist.md) · [AI/SI disclosure](AI_USAGE.md) · [References and rights](docs/compliance/references.md)
 
-This repository contains AI-assisted text, code, translations, and documentation produced with **OpenAI ChatGPT/Codex and Anthropic Claude**. The team attests that it determined the underlying game idea before using AI. Substantial generated implementation/story details remain explicitly attributed.
+## Run locally
 
-- [AI_USAGE.md](AI_USAGE.md): tools, contribution history, selected prompt summaries, team attestation, and a submission-form draft.
-- [ai-usage.json](ai-usage.json): machine-readable file-level provenance.
-- [docs/compliance/compliance-audit.md](docs/compliance/compliance-audit.md): verified requirements, corrections, and outstanding submission tasks.
-- [docs/compliance/references.md](docs/compliance/references.md): data, tools, sources, and licensing status.
-
-The eventual interface must retain the source cards and show the supplied credits/about information. A repository disclosure does not complete the official submission form.
-
-## Current Implementation
-
-The repository contains a **playable browser prototype**: a decision engine, a responsive interface (phone and desktop), ten sols with DUTİ, NASA science cards, an ending report with five hidden special endings, and save/resume. English is the primary language; Turkish is an optional interface language chosen by the team. A public deployment link and the submission demo are still to be added, and no playtest with children has been run yet.
-
-## Play Locally
-
-Requires Python 3 (any static file server works). From the repository root:
+Requires Node.js 20 or newer and npm. No Python installation or build step is needed to play.
 
 ```sh
+npm ci
 npm start
 ```
 
-Then open <http://localhost:5173>. The game has no build step and no runtime network requests: libraries, fonts, and photographs are stored in `assets/`.
+Open **http://127.0.0.1:5173**. Any static web host can serve the game. Runtime libraries, fonts and NASA photographs are stored locally; the game makes no external data/API requests during play. Clicking a source link opens its external source.
 
-**Active ruleset (ten sols, v1.9.0):** [src/game/scenes.js](src/game/scenes.js) and [src/game/engine.js](src/game/engine.js), with the ten-sol design in [data/ten-sol-story-design.json](data/ten-sol-story-design.json) and [docs/design/ten-sol-story-plan.md](docs/design/ten-sol-story-plan.md). Integration details are in [docs/design/ten-sol-integration-notes.md](docs/design/ten-sol-integration-notes.md). Chapter One (Sols 1–6) is described in [docs/design/story-plan.md](docs/design/story-plan.md), including the v1.2 mission profiles and low-power life-support rule.
+A deployed game URL and submission demo have not been supplied in this repository. The official submission guide accepts a public repository as a final-project link; GitHub Pages is an optional hosting choice, not a separate eligibility requirement.
 
-**Ten-sol edition:** the [English story and four discoverable endings](docs/design/ten-sol-story-plan.md), the [implementation handoff](docs/design/ten-sol-implementation-handoff.md), the [machine-readable design](data/ten-sol-story-design.json) and the [balance report with full example paths](docs/design/ten-sol-balance-report.md) are implemented in the playable game (version 1.9.0). Run `npm run check:expansion` for the independent design model and `npm run check:engine` for the production-engine comparison.
+## Play
 
-## Repository Structure
+- Start a new mission, inspect its assigned profile and forecast in the briefing, then make one decision per sol.
+- Read each cost before confirming. A reserve reaching zero stops the research mission; a refill later in the story cannot undo that stop.
+- Complete the selected hands-on task. Use the Hint button when needed. Pointer, touch and keyboard controls are supported.
+- Open the Mars Journal to revisit discoveries, fact cards and endings. Current-mission discoveries start fresh; the Journal preserves discoveries across missions.
+- On reload, continue an unfinished mission or review a completed mission and its saved ending page.
 
-```text
-.
-├── index.html                    # Game entry point (no build step)
-├── src/game/scenes.js            # Scene data, rules, NASA source cards, credits metadata
-├── src/game/engine.js            # Decision engine (pure functions)
-├── src/ui/                       # Interface, SVG artwork drawn in code, styles
-├── src/i18n/                     # English interface strings and optional Turkish translation
-├── assets/                       # NASA photographs, vendored libraries, typeface
-├── data/
-│   ├── nasa-events.json          # Curated DONKI CME record + attributed NASA Mars finding
-│   ├── meda-jezero.json          # Perseverance MEDA temperature summaries (with source hashes)
-│   ├── source-audit.json         # Source verification receipts
-│   └── raw/                      # Unmodified NASA API responses (byte-exact, hashed)
-├── docs/
-│   ├── design/                   # story-plan.md, story-data-contract.md, ten-sol-*.md
-│   ├── compliance/               # compliance-audit.md, references.md
-│   └── changelog/                # Detailed release notes
-├── tools/                        # Reference checks and source verification
-├── archive/ten-sol-design-v0/    # Retired design history (not active rules)
-├── AI_USAGE.md · ai-usage.json   # AI/SI disclosure and file-level provenance
-├── AGENTS.md                     # Contributor and AI-assistant instructions
-└── CHANGELOG.md
-```
+Full success after Sol 10 requires at least **1 Energy, 1 Oxygen, 4 Safety and 10 Science**. Sol 6 is a research checkpoint, not the ending. An ordinary success is as valid as a special ending; there is no required ending-collection total. The visitor ending is explicitly labelled science fiction.
 
-| File | Purpose |
-| --- | --- |
-| [docs/design/story-plan.md](docs/design/story-plan.md) | Chapter One story (Sols 1–6): dialogue, choices, costs, and delayed consequences |
-| [src/game/scenes.js](src/game/scenes.js) | English scene data, conditional choices, credits metadata, and NASA source cards |
-| [docs/design/story-data-contract.md](docs/design/story-data-contract.md) | Shared data contract and frontend/engine handoff |
-| [data/nasa-events.json](data/nasa-events.json) | Curated DONKI record and a separately attributed NASA Mars observation |
-| [data/meda-jezero.json](data/meda-jezero.json) | Recomputed MEDA sensor-temperature summaries with source-file hashes |
-| [data/source-audit.json](data/source-audit.json) | Source audit receipts and precise verification method |
-| [src/game/engine.js](src/game/engine.js) | Decision engine used by the game; pure functions over a JSON state |
-| [src/ui/app.js](src/ui/app.js) · [src/ui/art.js](src/ui/art.js) | Interface screens and AI-assisted SVG illustrations drawn in code |
-| [src/i18n/](src/i18n/) | Interface strings (English) and the optional Turkish translation |
-| [tools/check_story_data.mjs](tools/check_story_data.mjs) | Scene and mission-profile reference checks |
-| [tools/check_engine.mjs](tools/check_engine.mjs) | Plays every path through the engine and compares it with the reference model |
-| [tools/check_i18n.mjs](tools/check_i18n.mjs) | Turkish translation coverage and placeholder checks |
-| [tools/check_disclosures.mjs](tools/check_disclosures.mjs) | AI/SI metadata and attribution checks |
-| [tools/verify_nasa_sources.py](tools/verify_nasa_sources.py) | Optional online recheck of the cited original data |
-| [CHANGELOG.md](CHANGELOG.md) · [docs/changelog/v1.2.md](docs/changelog/v1.2.md) | Version history and the detailed v1.2 report |
-| [archive/ten-sol-design-v0/](archive/ten-sol-design-v0/) | Retired design history; excluded from the active gameplay rules |
+The intended audience is ages 7–12. Reading level, learning gains and typical session length have not been established by a target-age child playtest. No effectiveness claim is made from automated tests alone.
 
-## Local Checks
-
-Requires Node.js 20 or newer. From the repository root:
+## Validate
 
 ```sh
 npm run check
+npx playwright install chromium
+npm run check:browser
 ```
 
-This runs the current story, engine, translation and disclosure checks, plus the independent ten-sol design enumeration and the production-engine comparison for all ten sols. Optional primary-source verification with Python and network access:
+`npm run check` covers story data, the production engine, translations, an independent design enumeration, disclosure inventory and documentation links. `check:browser` covers real browser input, responsive activity controls, language switching, save/resume and ending persistence at four viewport sizes. See [test and maintenance instructions](docs/maintenance.md).
+
+[GitHub Actions](.github/workflows/quality.yml) runs the checks and browser suite on pushes and pull requests. Passing local tests does not certify a hosted deployment, physical devices, child engagement, rights or competition eligibility.
+
+Optional online scientific-source verification requires Python 3 and network access:
 
 ```sh
 npm run verify:sources
 ```
 
-These are data, rule and metadata checks. The interface was exercised manually in a desktop and a phone-sized browser viewport; this is not a child playtest or NASA eligibility approval.
+## Source of truth
 
-## Data and Rights
+| Area | Current source |
+| --- | --- |
+| Decision rules, profiles and source cards | [src/game/scenes.js](src/game/scenes.js) |
+| Pure decision engine | [src/game/engine.js](src/game/engine.js) |
+| Ten-sol independent narrative design | [data/ten-sol-story-design.json](data/ten-sol-story-design.json) and [story plan](docs/design/ten-sol-story-plan.md) |
+| State, transition and save contract | [story-data-contract.md](docs/design/story-data-contract.md) |
+| Runtime integration and handoff | [ten-sol-implementation-handoff.md](docs/design/ten-sol-implementation-handoff.md) |
+| Interface, tasks, sound and illustrations | [src/ui/](src/ui/) |
+| English UI and optional Turkish translations | [src/i18n/](src/i18n/) |
+| NASA summaries and source receipts | [data/](data/) and [NASA map](docs/nasa-data-map.md) |
+| Chapter One / retired design history | [Sols 1–6 plan](docs/design/story-plan.md) and [archive/](archive/) |
 
-DONKI is listed in the challenge's NASA resources. MEDA data are provided through NASA's Planetary Data System. The scene module links these references to science cards; the frontend must still demonstrate their actual use. Curated summaries are archival, not live, and all gameplay coefficients are fictional educational values. The DONKI record is not a Mars surface-dose measurement or a confirmed match to the separately reported Mars event.
+Historical reports record their tested commit. They are not a current task list. Current open work is consolidated in [project status](docs/project-status.md).
 
-**License decision deferred by the team on November 14, 2026.** No project-wide license has been selected or added. Do not describe this repository as Apache-2.0-licensed. The competition's licensing requirements and NASA's default distribution provision are documented in [docs/compliance/references.md](docs/compliance/references.md); final rights/license review remains outstanding.
+## Attribution, storage and licensing
 
-This is an independent participant project. NASA data citations do not imply NASA endorsement or permission to use NASA branding.
+OpenAI ChatGPT/Codex and Anthropic Claude assisted with substantial story, code, translations, illustrations and verification. The team attests that it selected the underlying game idea. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json) for scope; generated details are not presented as human-only work.
+
+The optional player name, mission save, language/sound preferences and Journal are stored in this browser's local storage. They are not sent to a project server. Clearing this site's browser data removes them. Shared devices share this local profile; use a fictional commander name for demonstrations.
+
+**The team has deferred its project-license decision.** No project-wide license has been selected or added; do not describe this repository as Apache-2.0-licensed. Vendored components retain their own license texts. NASA/third-party materials retain their source-specific terms. See [references and rights](docs/compliance/references.md) before making the submission's rights declaration.
+
+This is an independent participant project. NASA references do not imply NASA endorsement.

@@ -1,5 +1,7 @@
 # Play-Test Suggestions: Status After v1.10.0
 
+**Historical review of v1.10.0.** Several listed gaps were implemented later, including 7A/9A thinking tasks, decision-chain explanations and paginated endings. This is retained as development evidence; use [current project status](../project-status.md) for open work and [the current release report](release-review-1.12.0.md) for verification.
+
 > AI/SI disclosure: written with Anthropic Claude for the team. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
 
 **Date:** November 15, 2026 · **For:** the teammate who shared the twelve review suggestions (produced with OpenAI Codex assistance at the team's request) · **Version checked:** v1.10.0 (commit `69d0d55`)

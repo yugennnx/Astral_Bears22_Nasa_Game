@@ -1,20 +1,25 @@
 {
   "name": "compass-outpost",
-  "version": "1.11.9",
+  "version": "1.12.0",
   "private": true,
   "description": "Compass Outpost: Ten Sols of Questions - a narrative decision game for ages 7-12 (NASA Space Apps 2026, Junior Astronaut Mission Trainer).",
   "type": "module",
   "scripts": {
-    "start": "python -m http.server 5173",
+    "start": "node tools/serve.mjs",
     "check:story": "node tools/check_story_data.mjs",
     "check:engine": "node tools/check_engine.mjs",
     "check:i18n": "node tools/check_i18n.mjs",
     "check:disclosures": "node tools/check_disclosures.mjs",
     "check:expansion": "node tools/check_ten_sol_design.mjs",
-    "check": "npm run check:story && npm run check:engine && npm run check:i18n && npm run check:expansion && npm run check:disclosures",
-    "verify:sources": "python tools/verify_nasa_sources.py"
+    "check": "npm run check:story && npm run check:engine && npm run check:i18n && npm run check:expansion && npm run check:disclosures && npm run check:docs",
+    "verify:sources": "python tools/verify_nasa_sources.py",
+    "check:docs": "node tools/check_docs.mjs",
+    "check:browser": "playwright test"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
   }
 }

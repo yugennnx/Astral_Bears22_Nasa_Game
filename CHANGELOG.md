@@ -4,6 +4,17 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.12.0 — Repository readiness and persistent browser checks (2026-11-15)
+
+- Fixed special endings being registered only after all pages; discovery now persists immediately and completed pages/reports can be reviewed after reload.
+- Fixed narrow task cameras cropping required controls. Retained the latest 1.11.9 per-mission discovery behavior and all game numbers, gates and ending predicates.
+- Fixed cross-screen keyboard debounce swallowing the first Enter on an explicitly focused control; reading-area protection remains.
+- Corrected MEDA extrema wording in English/Turkish and made generated-art labels explicit.
+- Added a Node-only local server, locked Playwright development dependency, permanent responsive browser regressions, Markdown/version checks and a pinned GitHub Actions workflow.
+- Reconciled current README, runtime contract, five-ending story status, handoff, NASA data mapping and AI contribution records; older reports remain marked history.
+- Added an official-2026-only submission checklist. Demo, registrations, final rights/license decision and Submit for Judging remain team actions. No project license was selected.
+- Verification and limits: [release review](docs/design/release-review-1.12.0.md). A configured CI workflow is not itself evidence of a successful remote run.
+
 ## 1.11.9 — Fresh discoveries in every new game (2026-11-15)
 
 - Bug fix: in a new game every explore object already showed a green tick, because the ticks were read from the lasting Mars Journal. Each game now keeps its own list of finds (saved with the game, so a reload keeps them). Ticks, the "N of 6 found" counter, the "New discovery!" badge, the clue-trail line and DUTİ's memories use this game's finds. The Mars Journal still keeps every discovery from every game.

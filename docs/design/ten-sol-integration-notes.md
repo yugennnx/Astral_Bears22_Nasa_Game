@@ -1,5 +1,7 @@
 # Ten-Sol Integration Notes (v1.9.0)
 
+**Historical integration record.** Sections below describe versions 1.9.0–1.11.0, not current implementation gaps. Current status is [here](../project-status.md), the active [contract is here](story-data-contract.md), and [release verification is here](release-review-1.12.0.md). Aydan supplied the story direction and team requirements; detailed narrative/numerical design was OpenAI ChatGPT/Codex-assisted, and runtime integration was Claude-assisted, as recorded in AI_USAGE.md.
+
 > AI/SI disclosure: written with Anthropic Claude for the team. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
 
 **Date:** November 15, 2026 · **For:** Aydan (author of the ten-sol design) · **From:** Tuğra's side of the repository

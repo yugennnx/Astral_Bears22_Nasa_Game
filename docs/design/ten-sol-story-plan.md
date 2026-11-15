@@ -1,16 +1,14 @@
 # Compass Outpost: Ten Sols of Questions
 
-> AI/SI disclosure: this proposed expansion was generated with OpenAI ChatGPT/Codex at the team's request. The existing six-sol scenes have separate OpenAI/Anthropic attribution. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
+> AI/SI disclosure: narrative design generated with OpenAI ChatGPT/Codex and implemented with Anthropic Claude; current metadata revised with OpenAI Codex. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
 
-**Date:** November 15, 2026 · **Status:** original design and narrative handoff. **Implemented** in the playable game in v1.9.0 (November 15, 2026); see [the integration notes](ten-sol-integration-notes.md) for what is implemented, what intentionally differs (for example, no forecast or "Later" text on choice cards) and what remains open. Statements below that the game still ends after six sols describe the situation when this plan was written.
+**Current story edition: 1.12.0.** Ten sols and five special endings are implemented. The original ten-sol continuation entered the runtime in 1.9.0; the visitors ending entered in 1.11.0. This plan preserves the English narrative while the [current contract](story-data-contract.md) defines active state/save behavior and [project status](../project-status.md) records real open work.
 
-**New story handoff, November 15:** [The Visitors Beyond the Window](#planned-fifth-ending-the-visitors-beyond-the-window) adds a fifth, explicitly fictional ending and conditional clues. That appendix was **not implemented** in v1.10.3 and is **implemented in v1.11.0** (November 15, 2026): the ending is playable, the mystery-light beats are appended after the existing lines, and the five ending pages begin with the fiction note as a page before page 1. The original four endings, JSON design, runtime, translations and balance values remain unchanged in this publication. The original grounded equipment explanation below still applies; the appendix adds a separate science-fiction epilogue on one qualifying trail.
-
-**For Tuğra:** [machine-readable design](../../data/ten-sol-story-design.json) · [integration checklist](ten-sol-implementation-handoff.md). The current six-sol game remains playable. This is a new continuation of that story, not the retired ten-sol model in the archive. The design was prepared against commit `e815009a9d16cfcf32f17bc1274bcf07b99983fd`.
+For maintenance use [the JSON design](../../data/ten-sol-story-design.json), [current handoff](ten-sol-implementation-handoff.md) and [integration history](ten-sol-integration-notes.md). The first six scenes form Chapter One, not a separate active six-sol game. The original design baseline was `e815009a9d16cfcf32f17bc1274bcf07b99983fd`; historical forecasts and suggested presentation are subject to the implemented differences stated below.
 
 ## The ten-sol arc
 
-The Commander, two astronauts, and **DUTİ** spend ten game sols at the fictional Compass Outpost. Sols 1–6 establish the costs of preparation and the first research review. Sols 7–10 turn a three-note equipment signal into an invitation to investigate, preserve, and share. The mystery has a grounded explanation; earlier choices determine which deeper story the child can complete.
+The Commander, two astronauts, and **DUTİ** spend ten game sols at the fictional Compass Outpost. Sols 1–6 establish the costs of preparation and the first research review. Sols 7–10 turn a three-note equipment signal into an invitation to investigate, preserve, and share. The three-note equipment mystery has a grounded explanation. A separate visual trail can lead to the explicitly fictional visitors epilogue; earlier choices determine the ending.
 
 All story, dialogue, identifiers, and handoff materials here are English. The companion is always displayed as **DUTİ**, with code ID `duti`. Each scene is one game sol; activities and signal waits are compressed game time. These are not ten Earth days or a simulation of exact mission scheduling.
 
@@ -27,22 +25,22 @@ All story, dialogue, identifiers, and handoff materials here are English. The co
 | 9 | Two Stories, One Signal | Compare evidence, record the crew, or strengthen life support? |
 | 10 | A Light for Who Comes Next | Send evidence, prepare a handover, or leave a welcome? |
 
-## Numerical rules for this proposed edition
+## Current numerical design
 
-- Keep the first six scenes' existing choice IDs, effects, requirements, conditional variants, and immediate/delayed flags. Only their narrative framing and Sol 6's terminal behavior change. The tables below show base values; the conditional notes are mandatory replacements, not extra rewards.
+- Keep the first six scenes' existing choice IDs, effects, requirements, conditional variants, and immediate/delayed flags. Their integrated narrative framing makes Sol 6 a checkpoint. The tables below show base values; the conditional notes are mandatory replacements, not extra rewards.
 - Start with the current mission profiles and their existing supplies. Energy, Oxygen, and Safety remain whole numbers from 0 to 10; clamp each resource after every effect group. Science is cumulative and is not capped.
-- The new final Science target is **10**. Full success after Sol 10 requires Energy ≥1, Oxygen ≥1, Safety ≥4, and Science ≥10. There is no pass/fail evaluation at the Sol 6 checkpoint; fewer than 6 Science there does not stop the continuation.
+- The final Science target is **10**. Full success after Sol 10 requires Energy ≥1, Oxygen ≥1, Safety ≥4, and Science ≥10. There is no pass/fail evaluation at the Sol 6 checkpoint; fewer than 6 Science there does not stop the continuation.
 - Upfront Energy/Oxygen costs greater than reserves disable an option. Exact depletion is warned about and stops the mission immediately. A later refill cannot revive it. Preserve the existing Safety requirement on 6B and the 5C risk warning.
 - Apply the existing shared transition after Sols **1–9**, never after Sol 10: clear recharge +1 Energy; dusty recharge 0, or +1 with serviced panels; Oxygen −1, with one extra −1 when Energy immediately after the decision is at most 2. Sol 6's scheduled supply release does not change that low-power snapshot.
-- Dusty transitions: standard **2, 4, 8**; dusty-season **2, 3, 4, 7, 8**; small-oxygen-supply **2, 8**. These are fictional forecasts. Display the whole ten-sol forecast at the start and the resolved next-transition forecast before every choice.
-- After a surviving Sol 6 decision and its feedback, release the scheduled stored reserve **once: Energy +2, Oxygen +4, Safety 0, Science 0**. Clamp, then apply the shared transition using the saved post-decision Energy to determine low-power Oxygen loss. Show both the reserve release and transition in the forecast. The supplies were already in the base; nothing arrives instantly from Earth.
-- No special ending grants resources, alters Science, or overrides a stop/partial outcome. All four require completing Sol 10 successfully, plus their specific history conditions. History is an ordered array of selected IDs, exactly as in the existing engine; it is not a cross-run journal.
+- Dusty transitions: standard **2, 4, 8**; dusty-season **2, 3, 4, 7, 8**; small-oxygen-supply **2, 8**. These are fictional forecasts. The briefing displays the whole ten-sol forecast. The engine supplies transition previews; the implemented choice cards show costs without a separate forecast or Later text.
+- After a surviving Sol 6 decision and its feedback, release the scheduled stored reserve **once: Energy +2, Oxygen +4, Safety 0, Science 0**. Clamp, then apply the shared transition using the saved post-decision Energy to determine low-power Oxygen loss. Show the reserve release and transition in the transition report. The supplies were already in the base; nothing arrives instantly from Earth.
+- No special ending grants resources, alters Science, or overrides a stop/partial outcome. All five require completing Sol 10 successfully, plus their specific history conditions. History is an ordered array of selected IDs, exactly as in the existing engine; it is not a cross-run journal.
 
 **All numerical values are fictional balancing coefficients, not NASA measurements.** Safety is an abstract operational margin, not radiation dose or health recovery. The new mysteries, equipment, older crew, and notebook are story-world inventions. Existing NASA source cards keep their source labels and qualifications; this expansion adds no new NASA scientific claim or competition rule.
 
-## Sols 1–6: continuity and foreshadowing
+## Sols 1–6: integrated continuity and foreshadowing
 
-Use the replacement story blocks below in the future ten-sol edition. They introduce the full planned duration from the opening, so the child is not surprised by an unannounced extension. Preserve the current decision feedback, replacing references to Sol 6 as the final day with first research review. The active six-sol text and feedback remain in [the original plan](story-plan.md).
+The runtime uses the story blocks below in the ten-sol edition. They introduce the full planned duration from the opening, so the child is not surprised by an unannounced extension. Preserve the current decision feedback, replacing references to Sol 6 as the final day with first research review. The earlier six-sol prototype text remains in [the historical Chapter One plan](story-plan.md); the current runtime follows this ten-sol edition.
 
 ### Sol 1 — Welcome to Mars
 
@@ -179,7 +177,7 @@ Use the replacement story blocks below in the future ten-sol edition. They intro
 >
 > **DUTİ:** That completes our first chapter. And that little chime? It has returned. Three notes, a pause, then three notes again. Tomorrow, let us find out what is making it.
 
-## Sols 7–10: new scenes
+## Sols 7–10: continuation
 
 ### Sol 7 — The Three-Note Mystery
 
@@ -363,7 +361,7 @@ Use the replacement story blocks below in the future ten-sol edition. They intro
 
 **Next:** Finish feedback, then resolve the final outcome. No overnight consumption or recharge.
 
-## Developer spoilers: four discoverable endings
+## Developer spoilers: five discoverable endings
 
 The children should discover these in play. Do not show their names, recipes, or a fixed total before discovery. Each special ending is an alternate last page of a successful ten-sol mission, not an extra point prize. The same total Science can produce different last pages.
 
@@ -375,8 +373,9 @@ First check stop/success requirements, then history conditions below. Evaluate o
 | 2 | `the-smallest-garden` | (3A OR 3B) → 6C → 8A → 10B |
 | 3 | `dutis-secret-constellation` | 1B → 5A → 8B → 9B → 10C |
 | 4 | `the-lantern-network` | 1A → 4A → 5B → 7B → 8C → 9A → 10A |
+| 5 | `the-visitors-beyond-the-window` | 2C → 5B → 7C → 8C → 9A → 10A |
 
-The arrows describe required decisions in their numbered sols, not consecutive clicks. Other sols may contain any legal choices that let the mission succeed. The current four conditions are mutually exclusive; the checker verifies that as well as reachability.
+The arrows describe required decisions in their numbered sols, not consecutive clicks. Other sols may contain any legal choices that let the mission succeed. The five current conditions are mutually exclusive; the checker verifies that as well as reachability.
 
 ### The Stone That Kept Time
 
@@ -486,9 +485,11 @@ On every final screen, display actual resources, Science / 10, the correct next-
 
 Save discovered ending IDs separately from the current mission, using a new ten-sol edition key. An Ending Journal may show discovered pages and one “Another story?” tab, without revealing the total or locked recipes. Do not require every ending for success. Use text and icons, not color alone; every optional exploration and activity must be skippable and keyboard/touch accessible. Do not announce that a child “missed the real ending.” All completed investigations count.
 
-The narrative and predicates are ready for implementation. Runtime integration, English/Turkish text integration, new activities/art, save-version handling, and child playtesting remain future work listed in [the handoff](ten-sol-implementation-handoff.md). The accompanying checker establishes design reachability; it does not make the browser game ten sols long.
+The narrative and predicates are implemented. Numerical checks and permanent browser tests cover different layers; neither establishes child learning. Current open product/submission work is in [project status](../project-status.md).
 
-## Planned fifth ending: The Visitors Beyond the Window
+<a id="planned-fifth-ending-the-visitors-beyond-the-window"></a>
+
+## Fifth ending: The Visitors Beyond the Window
 
 > AI/SI disclosure: this appendix was generated with OpenAI ChatGPT/Codex on November 15, 2026. The user selected the previously AI-proposed visitor-ending direction and requested an engaging English story and an implementation handoff. The detailed clues, prose and predicate below are AI-generated. No human review or NASA approval is claimed.
 
@@ -585,7 +586,7 @@ The encounter is not an instant answer from Earth and is not said to have been s
 
 ### Developer-only unlock contract
 
-**Ending ID:** `the-visitors-beyond-the-window` · **Title:** `The Visitors Beyond the Window` · **Proposed priority:** `5`.
+**Ending ID:** `the-visitors-beyond-the-window` · **Title:** `The Visitors Beyond the Window` · **Priority:** `5`.
 
 Resolve normal mission status first. Require a valid complete history with one legal choice per sol and all of:
 
@@ -603,9 +604,9 @@ Choices on Sols 1, 3, 4 and 6 are free within the existing rules, provided the m
 }
 ```
 
-This is a predicate excerpt for implementation, not a complete runtime ending object. Tuğra must add the story, earned connections and replay hint in the runtime's existing format, plus the visible fiction label and note. Keep the normal success gate: Energy ≥1, Oxygen ≥1, Safety ≥4, Science ≥10. No extra bonuses or ending-specific resource thresholds apply.
+This is a minimal predicate excerpt; the full implemented ending object also contains the story, earned connections, replay hint and visible fiction label/note. Keep the normal success gate: Energy ≥1, Oxygen ≥1, Safety ≥4, Science ≥10. No extra bonuses or ending-specific resource thresholds apply.
 
-The proposed predicate cannot overlap the four existing ones: Stone requires 7A instead of 7C; Garden requires 10B instead of 10A; Constellation requires 9B/10C instead of 9A/10A; Lantern requires 7B instead of 7C. Priority is a fallback for future edits, not a means of hiding an overlap today.
+The implemented predicate cannot overlap the four existing ones: Stone requires 7A instead of 7C; Garden requires 10B instead of 10A; Constellation requires 9B/10C instead of 9A/10A; Lantern requires 7B instead of 7C. Priority is a fallback for future edits, not a means of hiding an overlap today.
 
 ### Ending text: five short pages
 
@@ -661,17 +662,12 @@ On November 15, a temporary probe evaluated the candidate predicate using the ex
 | dusty-season | 21 | 1A 2C 3A 4C 5B 6C 7C 8C 9A 10A | 5 / 7 / 8 | 10 |
 | small-oxygen-supply | 19 | 1A 2C 3A 4C 5B 6C 7C 8C 9A 10A | 5 / 6 / 8 | 10 |
 
-All candidates currently finish with ordinary success and no existing special ending. Activating the proposed predicate would reclassify these successes, not add successful missions or change their final values. The original four endings keep their histories. Other legally completed six-choice candidate trails may still be partial because Science/Safety requirements continue to apply.
+Before 1.11.0 these candidate histories were ordinary successes. The runtime now classifies them as the visitors ending without adding successful missions or changing their final values. The original four endings keep their histories. Other legally completed six-choice candidate trails may still be partial because Science/Safety requirements continue to apply.
 
-### Implementation and acceptance handoff
+### Current implementation and verification
 
-1. Implement the conditional insertions in scene/feedback presentation, preserving original mechanical feedback and the separate grounded relay explanation. If the UI replaces scene prose with spotlights or memories, add the same beat to the actually visible flow rather than leaving it only in scene data. Reuse existing screens where possible.
-2. Add the ending to both `data/ten-sol-story-design.json` and `src/game/scenes.js` when implementing. Add a real source of English/Turkish fiction-label strings and render the label/note before the reveal, on each ending page and in the Journal. This publication deliberately does not activate the predicate in either data file.
-3. Extend `src/game/engine.js` only if its generic history resolver needs it; never put success or unlock rules solely in the UI. Use the existing complete-history validation and success gate. No extra persistent clue flags are needed; derive progress from current-run history.
-4. Keep `tools/check_ten_sol_design.mjs` independent from the engine. Update the four-ending cardinality assertions to five, add the proposed design, and regenerate the balance report with `node tools/check_ten_sol_design.mjs --write-report`. Add the three witness assertions and negative cases to the appropriate checks. Overall success/partial/stop totals must remain unchanged; ending distributions change.
-5. Translate all new visible prose and labels into the optional Turkish interface while keeping English primary. Handle language changes on the current ending page without resetting progress or changing resources. Keep the new Journal ID derived from a completed qualifying mission; saved discoveries cannot unlock a different current run.
-6. Preserve old saves and old Journal discoveries. A completed v1.10.3 save must not be silently relabeled with a new ending. If edition/save semantics change, explain compatibility and offer a fresh mission rather than inventing missing clue presentation.
-7. Verify missing/replaced required choices, a matching but partial run, a stopped run, malformed histories and cross-run Journal contamination never reveal visitors. Verify all four original special-ending witnesses still select their original ending.
-8. Run `npm run check` and `git diff --check`, then browser-check the witness in English desktop and Turkish touch-phone layouts. Check keyboard use, static/reduced-motion presentation, fiction-note visibility, no required scrolling within a short page, back/next, resume/reload and language changes. Recheck all profiles numerically; do not describe an ending as playable until its presentation has actually been tested.
+The conditional lines are implemented in `src/ui/beats.js` and interface translations; the full ending lives in both the independent JSON design and `src/game/scenes.js`. Generic engine resolution selects it only after success. Presentation uses a fiction-note page followed by five short story pages, with Back/Next, report skip and Journal entry. No new decision or resource group was added.
 
-No artwork, audio, translation, live engine change, NASA discovery claim, competition-rule change or project license is included in this story-only handoff. If new media is later made, attribute its actual tool/source and preserve the project's visible AI-art labeling. The latest existing runtime verification remains [the v1.10.3 report](regression-review-6bd524b.md); it does not certify this unimplemented addition.
+The preceding narrative lines are appended inside the existing feedback flow. The original equipment explanation, safe robot action, source labels, age-appropriate uncertainty and all four other endings remain intact. A special ending is now recorded before its pages can be interrupted, and its exact page/report can be reviewed after reload.
+
+Use [the current contract](story-data-contract.md), [maintenance tests](../maintenance.md), [the independent balance report](ten-sol-balance-report.md) and [current release verification](release-review-1.12.0.md). Old numerical probe dates above document the original design work; permanent tests now cover actual UI persistence and language behavior. Child playtesting, final media/rights review and official submission remain team actions, not inferred passes.

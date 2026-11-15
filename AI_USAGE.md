@@ -6,11 +6,23 @@
 
 This project includes text, code, and documentation generated or revised with **OpenAI ChatGPT/Codex and Anthropic Claude**. This disclosure is part of the project and should remain accessible to reviewers. Machine-readable file-level provenance is recorded in [`ai-usage.json`](ai-usage.json).
 
+## Current contribution summary (1.12.0)
+
+| Contributor or tool | Evidenced scope |
+| --- | --- |
+| Team | Attested underlying idea, narrative/platform direction, ten-sol/discoverable-ending goals, companion name, selection of suggestions and development requests. These statements are not an organizer ruling. |
+| OpenAI ChatGPT/Codex | Detailed English story/ending design and numerical proposals, initial scene data/checks, source audits, independent reviews, 1.11.1 UI fixes and 1.12.0 repository alignment, persistence/science wording corrections, permanent browser tests, CI and documentation. |
+| Anthropic Claude | Initial/continued implementation, translation, SVG/audio code, curated-data assistance, ten-sol and five-ending integration, and changes through 1.11.9 as evidenced by commit history. NASA's original observations are external. |
+
+The active release has five implemented choice-history endings. Player-initiated optional DUTİ conversations remain planned. Current state and verification are in [project status](docs/project-status.md) and [release review](docs/design/release-review-1.12.0.md). Historic version descriptions below retain their dates; they do not override current status.
+
+The changelog reports Antigravity-assisted reviews for earlier versions; their prompts, exact tool/model and separate artifact scope were not supplied here. That reported review is not certified as a human review. The team must include any additional tools actually used in its final form.
+
 ## Tool and Scope
 
 - **Providers:** OpenAI and Anthropic.
 - **Tools:** ChatGPT conversational assistance, the Codex coding assistant, and Claude. The user confirmed Claude use for both the initial repository files and the later v1.2 update on November 14, 2026.
-- **Exact model identifiers:** Not reliably recorded; no model/version is claimed for either provider.
+- **Exact model identifiers:** Not consistently verified across contributions. Some commit trailers name a model; this record does not treat those trailers as a complete verified model inventory.
 - **Purpose:** Help develop the team's selected narrative format into a scene draft; translate and organize content; encode choices, state flags, and conditional rewards; write a reference checker and integration guide; research primary sources; and prepare this disclosure audit.
 - **Not an AI team member:** The assistant is a tool. It is not registered as a participant and is not a NASA representative or an endorsement.
 
@@ -86,6 +98,10 @@ No completed human code review, child playtest or browser verification is claime
 
 On November 15, 2026, the user reported English text remaining in the Turkish interface and overlapping activity controls after the Claude-assisted v1.11.0 update (`13c49e7`). OpenAI Codex reproduced the issues, generated the live SVG/accessible-label translation bindings, localized equipment labels, activity-camera layout, target/ring spacing, HUD sizing, note-task feedback corrections and visible phone-report fiction note, and updated release/status documentation. Codex also generated temporary browser test harnesses and [the verification report](docs/design/ui-regression-1.11.1.md), ran the repository checks and recorded file-level scopes. Existing Claude implementation and the separately credited story design remain attributed to their actual tools. No engine rule, choice effect, ending predicate, NASA measurement or license decision was changed. Temporary probes and screenshots remain outside the repository; no permanent browser suite, child playtest, human review certification or organizer approval is claimed.
 
+## 1.12.0 repository alignment and verification
+
+The user requested a professional correction of the latest shared repository and critical findings before final submission preparation, with no emoji and accurate official-rule compliance. OpenAI Codex worked from `d5776a7` (1.11.9), preserved the subsequent Claude UI/discovery changes and current game balance, fixed interrupted special-ending registration/review, removed unsupported day/night labels from the MEDA comparison, corrected task-camera clipping and focused-control keyboard debounce, added an exact Playwright development dependency/lockfile, permanent browser tests, a Node static server, documentation checks and pinned CI configuration, and rewrote current README/contract/handoff/status/submission/source documents. Historical reports and original provider contributions remain intact. The team's deferred license decision, real registrations, human review, child testing, demo and official submission were not silently marked complete.
+
 ## Selected Prompt Record
 
 The following are English summaries or translations of project-related user requests, not a complete chat transcript:
@@ -103,17 +119,17 @@ Inputs included the team-provided requirements, challenge statement, earlier ass
 
 The 2026 [Project Submission Guide](https://www.spaceappschallenge.org/resources/project-submission-guide/) permits AI/SI assistance but says it should not generate the team's underlying solution idea. On November 14, 2026, the user stated that **the team had determined the underlying game idea before using AI** and that the design directions in the conversation reflect its ideas. This is a team attestation, not an independent organizer ruling.
 
-The user also identified planned original features: unique events triggered by particular sequences of choices and special DUTİ conversations. These features are **planned**, not implemented in the current data module. The team-supplied idea is distinct from the substantial scene wording, numerical details, and code generated by the tools listed above.
+The user identified sequence-triggered unique events and special DUTİ conversations as feature directions. Choice-history-triggered endings are implemented; optional player-initiated DUTİ conversations remain planned. Detailed generated prose and predicates retain the attribution above. The team-supplied idea is distinct from the substantial scene wording, numerical details, and code generated by the tools listed above.
 
 Before submission, the team should review the generated story/code and accurately describe its own design decisions. Do not retrospectively present AI-generated details as entirely human-authored. No completed human code/content review or organizer eligibility certification is claimed here.
 
 ## Event Timing Report
 
-The user reported that its 2026 NASA Space Apps event began **November 14, 2026 at 09:00**. Visible project commits begin that day at 13:35 +03:00. The registered Local/Universal Event identifier and its applicable time zone were not independently checked. Commit timestamps show when commits were recorded, not proof of when every underlying idea or file was created; Git history has not been rewritten.
+The user reported that its 2026 NASA Space Apps event began **November 14, 2026 at 09:00**. Visible project commits begin that day at 13:35 +03:00. On November 15 the user reported Universal Event participation and a Team Owner residing in Türkiye. The official Universal deadline follows the owner's residence: November 15, 2026 at 23:59 Türkiye time for that reported residence. The actual event registration, owner identity and form have not been independently inspected. Commit timestamps show when commits were recorded, not proof of when every underlying idea or file was created; Git history has not been rewritten.
 
 ## Media and Branding
 
-As of version 1.3.0 the game contains **AI-assisted illustrations**: DUTİ, the outpost scene, the icons, the compass mark and the favicon are SVG drawings written in code with Anthropic Claude. They are not NASA images and contain no NASA insignia. The interface labels scene art "AI-assisted illustration" and repeats the note on the title, briefing, ending and credits views. No generated video or audio file is present; the game's sound is synthesised in code (see Audio below). If such assets are added later, disclose the generating tool and scope. The 2026 guide requires visible generation labels/watermarks for generated images/videos and descriptive text plus metadata for generated audio. Do not generate, contain, alter, or imitate NASA branding/design elements in generated content. The team should confirm that the label used here satisfies the guide's wording before submission.
+As of version 1.3.0 the game contains **AI-assisted illustrations**: DUTİ, the outpost scene, the icons, the compass mark and the favicon are SVG drawings written in code with Anthropic Claude. They are not NASA images and contain no NASA insignia. The current interface labels code-drawn art "AI-generated SVG illustration" and repeats the note on the title, briefing, ending and credits views. No generated video or audio file is present; the game's sound is synthesised in code (see Audio below). If such assets are added later, disclose the generating tool and scope. The 2026 guide requires visible generation labels/watermarks for generated images/videos and descriptive text plus metadata for generated audio. Do not generate, contain, alter, or imitate NASA branding/design elements in generated content. The team should confirm that the label used here satisfies the guide's wording before submission.
 
 NASA photographs/data require their own attribution and usage checks. A reference link is not a license for NASA logos or third-party copyrighted content. Participation in Space Apps does not mean NASA endorses this game.
 
@@ -123,11 +139,11 @@ Every sound in the game is generated in code at run time by the Web Audio API (`
 
 ## Submission Form Draft
 
-**Draft for the team to review and place in the official form:**
+**Current English draft for the team to verify before copying into the official SI field:**
 
-> Our team determined the underlying game idea and design direction before using AI. We used Anthropic Claude for the initial design, curated NASA-data summaries and simulator, and the later mission-profile and life-support revisions. We used OpenAI ChatGPT/Codex to draft and translate detailed scenes, develop choice effects and conditional state data, generate the initial JavaScript reference checker and integration guide, prepare a ten-sol continuation with four choice-dependent special endings and a balance checker, which Anthropic Claude later implemented in the playable game (1.9.0), and help audit sources and disclosures. The tools generated substantial implementation and story details, which are disclosed in AI_USAGE.md and ai-usage.json. The team supplied the selected narrative format, platform and visual constraints, ten-point resource requirement, English-language requirement, and companion name DUTİ. NASA observations are attributed separately from AI-assisted summaries and fictional gameplay values. The team plans additional choice-sequence events and DUTİ conversations; these planned features are not claimed as implemented.
+> Our team attests that it selected the underlying Mars outpost decision-game idea before using AI. We used OpenAI ChatGPT/Codex and Anthropic Claude for substantial detailed story and ending prose, numerical game-design proposals, code, Turkish translation, SVG illustrations, synthesized-audio code, documentation and automated verification. The team supplied design directions and selected which suggestions to implement. NASA observations and photographs are external attributed resources, not AI-generated measurements. Resource scores and fictional events are game assumptions. Code-generated illustrations carry a visible generation label; contribution scope and metadata are recorded in AI_USAGE.md and ai-usage.json. We do not claim that all generated details were human-authored or that automated tests establish child-learning outcomes. The team must add any other tools actually used and verify its final rights/originality declarations.
 
-Fill the website's **Use of Super Intelligence (SI)** field and the relevant references fields. A GitHub disclosure supports those fields; it does not submit the project or replace the form.
+The official form's NASA-data and references sections must also be completed; this disclosure does not replace them. No private conversation transcript, credentials or personal reasoning record is required by this project's disclosure process. Project-specific prompt summaries and factual contribution descriptions are retained instead.
 
 ## Official Basis
 

@@ -56,7 +56,7 @@ The files are the resized versions served by NASA (`~orig`, `~large`, `~medium`)
 
 ### Illustrations
 
-DUTİ, the Mars locations (`src/ui/world.js`), the icons, the compass mark and the favicon are original SVG drawings written in code with Anthropic Claude's assistance (`src/ui/art.js`, `src/ui/world.js`, `src/ui/app.js`, `assets/favicon.svg`). They contain no NASA insignia or branding. Because they are AI-assisted, the interface shows a persistent "AI-assisted illustration" label in the corner of the screen and a note on the title screen and in the credits window.
+DUTİ, the Mars locations (`src/ui/world.js`), the icons, the compass mark and the favicon are original SVG drawings written in code with Anthropic Claude's assistance (`src/ui/art.js`, `src/ui/world.js`, `src/ui/app.js`, `assets/favicon.svg`). They contain no NASA insignia or branding. The interface shows a persistent "AI-generated SVG illustration" label and explanatory notes. The favicon carries an AI watermark and descriptive SVG metadata. Original generation used Claude; later Codex revisions are recorded per file. NASA photographs are credited separately.
 
 ### Third-party libraries and typeface (vendored, unmodified)
 
@@ -77,3 +77,12 @@ The team explicitly asked on November 14, 2026 to defer the license decision. **
 The official [2026 Terms and Conditions](https://www.spaceappschallenge.org/legal/) describe unrestricted/OSI-compatible availability for original work and state NASA's default Apache 2.0 distribution provision when no specific compliant license is identified. That provision is not represented here as a license selected by the team for this GitHub repository. Final licensing and rights attestations remain the team's responsibility.
 
 NASA data and any future third-party assets retain their own source-specific rights and usage conditions. This audit is not a blanket grant of rights or legal approval.
+
+## Development and Verification Tools (1.12.0)
+
+- **Node.js and npm:** local static serving, package management and checks. They are not runtime services or NASA data.
+- **@playwright/test 1.65.1:** exact development dependency for Chromium browser tests, Apache-2.0; [official project](https://github.com/microsoft/playwright). Its dependency tree is recorded in `package-lock.json`; installed package license files remain in the development installation. No Playwright runtime is shipped to players.
+- **GitHub Actions:** repository checks use official checkout v7.0.1, setup-node v7.1.0 and upload-artifact v7.0.2, pinned to release commit SHAs in `.github/workflows/quality.yml`. This does not publish a site or submit the NASA form.
+- **OpenAI Codex:** 1.12.0 code/documentation/test revisions; earlier Claude-generated artwork and implementation remain separately attributed in AI_USAGE.md and ai-usage.json. Current code-drawn art carries the visible label “AI-generated SVG illustration”; NASA photographs keep separate credits.
+
+The team must include any other tools actually used in its final references. A dependency's license is not a project-wide license decision, and test configuration is not proof that its remote CI run has passed.

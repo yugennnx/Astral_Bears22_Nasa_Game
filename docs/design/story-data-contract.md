@@ -1,182 +1,68 @@
-# Six-Sol Story Data: Integration Guide
+# Ten-Sol Runtime and Save Contract
 
-**Planned continuation:** the [ten-sol story](ten-sol-story-plan.md), [JSON design](../../data/ten-sol-story-design.json), and [implementation handoff](ten-sol-implementation-handoff.md) define a future ten-sol edition. They do not change the current runtime contract below. In particular, the present final scene and Science target remain six-sol rules until that edition is integrated.
+> AI/SI disclosure: rewritten for the current runtime with OpenAI Codex. Earlier contract and implementation contributions remain credited in [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).
 
-> AI/SI disclosure: generated/revised with OpenAI ChatGPT/Codex and Anthropic Claude. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json) for contribution scope and the team's idea-origin attestation.
+**Current contract: 1.12.0.** This replaces the former six-sol runtime description. [Chapter One](story-plan.md) is narrative history; its former Science target of 6 is not the current win condition.
 
-This guide describes the English scene data in `src/game/scenes.js`, based on `story-plan.md`. The companion's display name is **DUTİ** and the code identifier is `duti`.
+## Modules and state
 
-The retired ten-sol design and its Python simulator are kept only for history in `archive/ten-sol-design-v0/`. The active rules are `story-plan.md` (v1.2) and this scene data. See `docs/changelog/v1.2.md` for what changed.
+`src/game/scenes.js` exports `MISSION`, `SCENES` (an object keyed by scene ID), `SCENE_ORDER`, `ENDINGS`, `SPECIAL_ENDINGS`, `NASA_SOURCES` and `AI_DISCLOSURE`. `src/game/engine.js` implements pure functions over JSON-compatible state. UI activities never award resources independently.
 
-## Exports
+The engine's state contains:
 
-```js
-import {
-  MISSION,
-  SCENE_ORDER,
-  SCENES,
-  ENDINGS,
-  NASA_SOURCES,
-} from "./game/scenes.js";
+- `sol`, `sceneId`, `profileId`: the current location and one of the three mission profiles.
+- `resources`: integer `energy`, `oxygen`, `safety`, each clamped to 0–10 after an effect group.
+- `science`: cumulative, uncapped integer research progress; success target 10, current reachable maximum 15.
+- `flags`: preparation, greenhouse, Earth guidance, research, signal, capsule, broadcast and final-action state; `checkpointSuppliesReleased` prevents duplicate supply release.
+- `history`: ordered choice IDs, one per completed decision; current-run history alone selects a special ending.
+- `phase`: `scene`, `feedback`, `transition` or `ended`.
+- `status`: `playing`, `success`, `partial` or `failed`.
+- `pending`, `lastTransition`, `log`, `ending`: engine-owned applied effects, feedback, transition and outcome details.
 
-const initialState = structuredClone(MISSION.initialState);
-const firstScene = SCENES[initialState.sceneId];
+Create state with `createGame(profileId)`, not by editing the shared initial state. `getChoices(state)` exposes resolved effects, availability, warnings, projected transition and checkpoint. `choose(state, choiceId)` validates the phase and option, records it once and returns a new state. Old states and scene data must remain unchanged.
 
-console.log(MISSION.robot.displayName); // DUTİ
-console.log(firstScene.title); // Welcome to Mars
-console.log(firstScene.story); // Ordered English dialogue blocks
-console.log(firstScene.choices); // The first scene's two choices
-```
+## Choice and transition order
 
-The relative import above assumes the caller is `src/main.js`. Adjust the path for another caller.
+1. Resolve the first matching conditional variant; its effect object replaces the base effect object.
+2. Check minimum Safety, history gates and upfront Energy/Oxygen costs. Costs greater than reserves disable an option; exact depletion is warned about.
+3. Apply immediate effects and flags, clamp the three resources, accumulate Science and append the decision once. Any resource at zero stops the mission immediately.
+4. Show feedback in order. `finishFeedback` applies delayed flags. Earth guidance cannot benefit the decision that is still awaiting its reply feedback.
+5. After a surviving Sol 6 decision and its feedback, release the already-stored reserve once: Energy +2, Oxygen +4. It is not an instant delivery from Earth.
+6. Apply the shared transition after Sols 1–9 only. Clear recharge is +1 Energy; dusty recharge is 0, plus +1 for serviced panels. Oxygen use is −1, plus another −1 if Energy immediately after the decision was at most 2. The Sol 6 supply release does not change that low-power snapshot.
+7. Check depletion again. `finishTransition` opens the next scene and detects a state with no available choice. There is no transition after Sol 10.
+8. At Sol 10, full success requires Energy ≥1, Oxygen ≥1, Safety ≥4 and Science ≥10. Surviving but missing research/Safety requirements is partial. Exhaustion/no available choice is failed.
 
-- `MISSION`: identity, starting state, bounds, success thresholds, opening text, common English labels, shared transition rules (`recharge`, `lifeSupport`), mission `profiles`, and the `nextCrewReport` texts.
-- `SCENE_ORDER`: the six scene IDs in order.
-- `SCENES`: complete English story blocks, choices, conditional variants, feedback, transitions, and source-card references.
-- `ENDINGS`: English outcome messages. Add actual totals and specific causes from game state.
-- `NASA_SOURCES`: attribution links. These are reference records, not live API responses or raw measurement datasets.
-- `AI_DISCLOSURE`: exported AI/SI provenance metadata. It is also exposed as `MISSION.aiDisclosure`; show `MISSION.creditsCard` in the eventual credits/about/source view.
+## Profiles and gates
 
-Treat all exports as read-only templates. Clone the starting state for every new game. Keep the game state in the engine or the application's state store, rather than mutating scene definitions.
+| Profile | Initial Energy / Oxygen / Safety | Dust after sols |
+| --- | --- | --- |
+| standard | 8 / 8 / 8 | 2, 4, 8 |
+| dusty-season | 8 / 8 / 8 | 2, 3, 4, 7, 8 |
+| small-oxygen-supply | 8 / 7 / 8 | 2, 8 |
 
-## Scene Shape
+The Sol 6 exploration task needs Safety ≥6. The Sol 8 living-tray option needs 3A or 3B in current history. A collected sample improves 6A; greenhouse mode changes 6C and its correct activity/report. Preserve these resolved variants and the explicit 5C risk warning.
 
-```js
-{
-  id: "power-shortage",
-  sol: 2,
-  title: "Power Shortage",
-  visualKey: "power-budget",
-  story: [{ speakerId: "duti", text: "..." }],
-  learningGoal: "...",
-  choices: [/* two or three choices */],
-  transition: { note: "optional extra explanation" }, // values come from MISSION rules + profile
-  nextSceneId: "greenhouse-problem"
-}
-```
+## Five special endings
 
-`speakerId` is either `narrator` or `duti`. Preserve the order of `story` blocks. `visualKey` is an asset lookup key; the corresponding images are still to be created or selected.
+Success is evaluated before special-ending selection. The engine validates a complete ordered ten-choice history and matches `allChoices` plus every `anyChoiceGroups` group. The five implemented predicates are mutually exclusive. They grant no resources and cannot replace a partial/failed outcome. See [the story plan](ten-sol-story-plan.md#developer-spoilers-five-discoverable-endings) for the complete chains, including the explicitly fictional visitors ending.
 
-The final scene has `transition: null` and `nextSceneId: null`.
+The ending report contains actual resources/Science, current-run highlights and the next-crew food/Safety report. A shut-down greenhouse changes that report even when a research mission succeeds. Safety is an abstract operational margin, not radiation dose or medical recovery.
 
-## Choice Shape
+## Browser persistence
 
-```js
-{
-  id: "2B",
-  label: "Collect a rock sample outside",
-  effects: { energy: -1, oxygen: -2, safety: 0, science: 2 },
-  setFlags: { sampleCollected: true },
-  futureConsequence: "The final laboratory study will award 4 Science instead of 2.",
-  feedback: [{ speakerId: "duti", text: "..." }]
-}
-```
+The UI uses `compass-outpost-save-v3` for the ten-sol mission and its current screen/language/page, pending fact, predictions, score and current-mission `found` IDs. `compass-outpost-profile-v1` contains the optional name, persistent discoveries/facts/endings and replay-reading history. Sound preferences have a separate local key.
 
-Negative Energy or Oxygen effects are upfront costs. Positive values are gains. A negative Safety effect is a risk consequence. Science is mission progress, kept outside `state.resources`; do not clamp it to the target of 6.
+- Do not reinterpret old six-sol saves as this campaign or fabricate missing history.
+- A new mission clears current `found` IDs; it does not clear the persistent Journal.
+- Activities use the committed decision with pre-decision displayed totals; changing language must not apply effects twice or reset a task.
+- A valid special ending is recorded when its pages first open. Reload can resume the exact ending page; a completed report remains reviewable. The Journal must not unlock an ending from another run's discoveries or a malformed saved ending.
+- Do not retroactively assign a new special ending to an old completed ordinary-success save.
+- Storage can be unavailable. The game remains playable, but browser persistence cannot then be guaranteed.
 
-Optional fields:
+English remains primary; optional Turkish must cover all visible story/interface strings. Preserve NASA archival labels, data qualifications, AI art labels and visitor fiction notes in both languages. Exact storage behavior is presentation state, not part of the resource simulation.
 
-- `requirements.minSafety`: a minimum Safety value before selection. Choice 6B requires 6.
-- `warning`: a player-visible risk warning, especially for 5C.
-- `setFlags`: apply with the decision's immediate effects.
-- `setFlagsAfterFeedback`: apply only after the final feedback card has been acknowledged. Choice 4A unlocks `earthGuide` after the reply arrives.
-- `variants`: conditional overrides resolved from earlier state.
+## Verification and history
 
-Do not invent an extra resource charge from `futureConsequence`; that field explains effects already represented elsewhere in the data.
+Run `npm run check` and `npm run check:browser`. The production-engine comparison and the independent design enumeration remain separate calculations. Browser tests exercise actual controls and save/reload; none is a child learning study or organizer approval. See [project status](../project-status.md) and [maintenance](../maintenance.md).
 
-## Resolving Conditional Variants
-
-A variant has this shape:
-
-```js
-{
-  when: { flag: "sampleCollected", equals: true },
-  overrides: {
-    effects: { energy: -2, oxygen: 0, safety: 0, science: 4 },
-    feedback: [{ speakerId: "duti", text: "..." }],
-    futureConsequence: "..."
-  }
-}
-```
-
-Resolution contract for the future engine:
-
-1. Start with the base choice or transition.
-2. Find the first variant for which `state.flags[when.flag] === when.equals`.
-3. Replace the named top-level fields with `overrides`.
-4. `effects`, `setFlags`, and `feedback` are complete replacements when provided. Do not add base and variant effects together.
-5. If no variant matches, keep the base fields.
-6. Resolve before displaying costs, forecasts, feedback previews, or selectable options.
-
-In particular:
-
-| Earlier State | Resolved Effect |
-| --- | --- |
-| `panelsServiced === true` | Every dusty transition of the current profile gives +1 Energy instead of 0. |
-| `shelterPrepared === true` | 5A costs 0 Energy. |
-| `earthGuide === true` | 5B costs 1 Energy. |
-| `sampleCollected === true` | 6A awards 4 Science and uses rock-analysis feedback. |
-| `greenhouseMode === "full"` | 6C becomes the greenhouse study, awards 3 Science, and sets `finalTask: "greenhouse"`. |
-| `greenhouseMode === "minimum"` | 6C becomes the smaller greenhouse study and awards 2 Science. |
-| `greenhouseMode === "off"` | 6C keeps its base report label, 1 Science, and `finalTask: "report"`. |
-
-## Starting a Game: Mission Profiles
-
-1. Pick one entry of `MISSION.profiles` at random (or let a teacher choose).
-2. Clone `MISSION.initialState`, set `profileId`, and copy the profile's `startResources` into `resources`.
-3. Show the profile `title` and `briefing` (plus `MISSION.profileNote`) before Scene 1, so the player can plan.
-
-## Ending Report: Next-Crew Readiness
-
-Every ending (success, partial, stopped) shows `MISSION.nextCrewReport.title`, the food line for `flags.greenhouseMode` (`full`, `minimum`, `off`; use `off` if Scene 3 was never reached), and the safety line (`ready` if Safety ≥ 6, otherwise `low`). This report does not change the win/lose result.
-
-The safety line describes the current crew's abstract operational margin. It does not diagnose health or assign the current crew's exposure to a future crew.
-
-## Applying a Decision
-
-The engine is implemented in `src/game/engine.js` (`createGame`, `getChoices`, `choose`, `finishFeedback`, `finishTransition`). The scene module itself stays data-only. The steps below are the contract that the engine follows and that `tools/check_engine.mjs` verifies against the independent reference model.
-
-The engine should:
-
-1. Verify the game is playing, the current scene and sol match, and the choice belongs to that scene. Reject duplicate submissions while feedback or a transition is pending.
-2. Resolve variants using the current state.
-3. Check minimum Safety and upfront Energy/Oxygen costs. If a cost exceeds a reserve, disable the choice. If a cost exactly uses a reserve, show the exhaustion warning before the player selects it.
-4. Apply immediate resource effects, clamp the three resources to 0–10, add Science, set immediate flags, and record the decision once.
-5. Stop immediately if a resource is 0. Later recharge must not revive the mission.
-6. Show the feedback cards in order. A `caption` marks a time skip; it is not a real-time countdown.
-7. Apply `setFlagsAfterFeedback` only when feedback finishes.
-8. Calculate and apply the scene's shared transition exactly once, then check for 0 again. Include the forecast before selection:
-   - Energy: `recharge.clear` (+1) if the stage is clear; `recharge.dusty` (0) plus `recharge.panelBonusWhenDusty` (+1, only if `panelsServiced`) if the current profile lists this scene's sol in `dustyAfterScenes`.
-   - Oxygen: `lifeSupport.oxygenPerStage` (−1), plus `lifeSupport.lowPowerExtraOxygen` (−1) if Energy after the decision is at most `lifeSupport.lowPowerEnergyAtMost` (2). Show `messages.lowPower` when this happens.
-   - Show `scene.transition.note` when present.
-9. Advance to `nextSceneId` and the next sol, or evaluate the final ending if there is no next scene. Scene 6 has no shared transition.
-10. If no choice can be used, show a specific stopped-mission reason instead of an empty choice list.
-
-Full success requires Energy ≥1, Oxygen ≥1, Safety ≥4, and Science ≥6. Reaching the final ending with resources remaining but insufficient Science/Safety is partial success.
-
-## Frontend Handoff
-
-Tuğra can use the first scene immediately to build the shared layout:
-
-1. Show `MISSION.openingCard` and a `Start Mission` button.
-2. Show the scene title, sol, and ordered story blocks.
-3. Show Energy, Oxygen, and Safety as ten-part indicators, plus Science progress toward 6.
-4. Show each resolved choice's label, resource changes, Science gain, future consequence, and warning.
-5. Show disabled reasons with text, such as `Requires Safety 6. Current Safety: 4.`
-6. Add decision feedback, transition forecasts, source cards, and the ending screen.
-7. Show `MISSION.creditsCard` and the AI/SI disclosure link in a credits/about/source view. Preserve archival labels and the complete `scienceCard.dataNote` when present. A short card must not hide the qualification that the DONKI record has not been matched to the Mars radiation observation.
-
-For mockups of later scenes, explicitly select the desired flag values and resolve variants. Rendering raw later-scene choices would show only their default version. Keep live rules in the engine so the frontend displays the same values it applies.
-
-## Validation
-
-From the repository root, run:
-
-```sh
-node tools/check_story_data.mjs
-node tools/check_disclosures.mjs
-```
-
-The checker verifies scene links, source references, flag names, variant effects, all 17 choices, mission profiles, the documented example paths, and the reachable ending counts for every profile (every choice must stay winnable in every profile). It is a reference model for checking the data, not a production engine or a browser playtest.
-
-No external JavaScript dependencies are needed. The current audit ran on local Node.js 26.8.1; installations on other team machines are not certified here. A frontend project with `"type": "module"` can import the scene file normally.
+The former contract is retained in Git history; historical integration decisions are in [ten-sol-integration-notes.md](ten-sol-integration-notes.md). The current contract above takes precedence over their past-tense implementation notes.

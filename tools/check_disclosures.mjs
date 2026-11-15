@@ -13,7 +13,12 @@ const manifest = await readJson("ai-usage.json");
 assert.equal(manifest.aiAssistanceUsed, true);
 assert.deepEqual([...manifest.tools].sort(), ["ChatGPT", "Claude", "Codex"]);
 assert.equal(manifest.originalityAttestation.independentOrganizerApproval, false);
-assert.equal(manifest.originalityAttestation.plannedFeaturesImplemented, false);
+assert.equal(manifest.originalityAttestation.featureStatuses.length, 2);
+for (const feature of manifest.originalityAttestation.featureStatuses) {
+  assert(["implemented", "planned"].includes(feature.status));
+  assert(feature.feature && feature.evidence.length);
+  for (const path of feature.evidence) await access(new URL(`../${path}`, import.meta.url));
+}
 assert.equal(manifest.modelIdentifier, null);
 assert.equal(manifest.licenseDecision.status, "deferred-by-user");
 assert.equal(manifest.licenseDecision.projectLicenseAdded, false);
@@ -36,7 +41,7 @@ const files = execFileSync("git", ["ls-files", "--cached", "--others", "--exclud
   .trim().split(/\r?\n/).filter(Boolean);
 for (const path of new Set(files)) {
   // Content files plus repository configuration dotfiles (e.g. .gitignore, .gitattributes, .editorconfig).
-  if (/\.(md|js|mjs|py|json)$/i.test(path) || /(^|\/)\.[^/]+$/.test(path)) {
+  if (/\.(md|js|mjs|py|json|html|svg|ya?ml)$/i.test(path) || /(^|\/)\.[^/]+$/.test(path)) {
     assert(inventory.has(path), `Missing file-level provenance: ${path}`);
   }
   assert(!/^LICENSE(?:\..+)?$/i.test(path), "User deferred project licensing; no LICENSE file should be added.");

@@ -3,12 +3,13 @@
  * Each sol happens in its own location; story, choices and results appear as pop-ups.
  * Game rules live in src/game/engine.js; this file only displays and collects choices.
  * AI-assisted generation: Anthropic Claude. See AI_USAGE.md and ai-usage.json.
+ * AI-assisted 1.12.0 revisions: OpenAI Codex (task camera, ending persistence/review and focused-control keyboard activation).
  * AI-assisted 1.11.1 revisions: OpenAI Codex (activity layout and in-progress language refresh).
  */
 import { MISSION, SCENES, SCENE_ORDER, ENDINGS, SPECIAL_ENDINGS, NASA_SOURCES } from "../game/scenes.js";
 import {
   createGame, pickProfileId, getProfile, getScene, getChoices, getForecast,
-  choose, finishFeedback, finishTransition, isDustyAfter, computeTransition,
+  choose, finishFeedback, finishTransition, isDustyAfter, computeTransition, specialEndingFor,
 } from "../game/engine.js";
 import { t, ts, signed, getLanguage, setLanguage } from "../i18n/index.js";
 import { icon, duti, dutiAvatar, weatherIcon } from "./art.js";
@@ -116,7 +117,26 @@ function load() {
   try { return JSON.parse(localStorage.getItem(SAVE_KEY) ?? "null"); } catch { return null; }
 }
 
-const canResume = () => Boolean(app.game && app.resumeScreen && app.game.status === "playing");
+const canResume = () => {
+  const game = app.game;
+  if (!game || !app.resumeScreen || !SCENES[game.sceneId]) return false;
+  if (game.status === "playing") return game.phase !== "ended";
+  return game.phase === "ended" && Boolean(ENDINGS[game.status]) && game.ending?.status === game.status
+    && (!game.ending.special || (game.status === "success" && specialEndingFor(game.history)?.id === game.ending.special));
+};
+
+/** Discoveries belong to the completed run, even if its ending pages are interrupted. */
+function rememberSpecialEnding() {
+  const game = app.game;
+  if (game?.status !== "success" || !game.ending?.special
+    || specialEndingFor(game.history)?.id !== game.ending.special) return;
+  const ending = game.ending;
+  if (ending.newlyFound === undefined) ending.newlyFound = !profile.endings.includes(ending.special);
+  if (!profile.endings.includes(ending.special)) {
+    profile.endings.push(ending.special);
+    saveProfile();
+  }
+}
 
 /* ---------- small helpers ---------- */
 
@@ -229,19 +249,22 @@ function layoutActivity() {
     const bottom = app.activityId === "6C" ? 900 : Math.min(900, Math.max(...ys) + 180);
     viewBox = `${left} ${top} ${right - left} ${bottom - top}`;
   }
-  // Widen the region to the camera area's own aspect ratio so the artwork fills it (no black bars),
-  // staying inside the 1600 x 900 drawing. If the drawing is too small for that, cover and crop instead.
+  // Expand scenery to fill the area where possible. If that expansion would exceed the drawing,
+  // keep the active bounds and contain them: covering/cropping can hide required touch targets.
+  const activeViewBox = viewBox;
   const area = worldEl.getBoundingClientRect();
   let [x, y, w, h] = viewBox.split(" ").map(Number);
   const aspect = area.width > 0 && area.height > 0 ? area.width / area.height : 16 / 9;
   if (w / h < aspect) { const nw = h * aspect; x -= (nw - w) / 2; w = nw; } else { const nh = w / aspect; y -= (nh - h) / 2; h = nh; }
-  if (w > 1600) { w = 1600; x = 0; } else x = Math.max(0, Math.min(1600 - w, x));
-  if (h > 900) { h = 900; y = 0; } else y = Math.max(0, Math.min(900 - h, y));
-  const fits = Math.abs(w / h - aspect) < 0.02;
-  viewBox = `${x.toFixed(0)} ${y.toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}`;
+  if (w > 1600 || h > 900) viewBox = activeViewBox;
+  else {
+    x = Math.max(0, Math.min(1600 - w, x));
+    y = Math.max(0, Math.min(900 - h, y));
+    viewBox = `${x.toFixed(0)} ${y.toFixed(0)} ${w.toFixed(0)} ${h.toFixed(0)}`;
+  }
   for (const svg of [worldEl.querySelector(".world-scene:last-child > svg"), fxEl.querySelector(".fx--activity")]) {
     svg?.setAttribute("viewBox", viewBox);
-    svg?.setAttribute("preserveAspectRatio", fits ? "xMidYMid meet" : "xMidYMid slice");
+    svg?.setAttribute("preserveAspectRatio", "xMidYMid meet");
   }
   refreshActivityLanguage(fxEl, t, (n, total) => t("act.target", { n, total }));
 }
@@ -461,7 +484,7 @@ function showTitle() {
       </ul>
       <div class="actions">
         ${canResume()
-          ? `<button class="btn btn--primary btn--big" data-action="resume">${esc(t("title.resume"))}${icon("arrow")}</button>
+          ? `<button class="btn btn--primary btn--big" data-action="resume">${esc(t(app.game.phase === "ended" ? "title.review" : "title.resume"))}${icon("arrow")}</button>
              <button class="btn btn--ghost" data-action="new-game">${esc(t("title.newMission"))}</button>`
           : `<button class="btn btn--primary btn--big" data-action="new-game">${esc(ts(MISSION.messages.start))}${icon("arrow")}</button>`}
       </div>
@@ -1264,6 +1287,7 @@ function showEndingPage() {
 }
 
 function showEnding() {
+  rememberSpecialEnding();
   const pendingPages = app.game?.ending?.special && (app.game.ending.page ?? 0) < endingPages(SPECIAL_ENDINGS.find(item => item.id === app.game.ending.special)).length;
   if (pendingPages) return showEndingPage();
   app.screen = "ending";
@@ -1304,13 +1328,7 @@ function showEnding() {
   }
   const crew = ending.nextCrew;
   const special = ending.special ? SPECIAL_ENDINGS.find(item => item.id === ending.special) : null;
-  // Remember on the ending itself whether it was new, so a language switch keeps the badge.
-  if (special && ending.newlyFound === undefined) ending.newlyFound = !profile.endings.includes(special.id);
   const newEnding = Boolean(special && ending.newlyFound);
-  if (special && !profile.endings.includes(special.id)) {
-    profile.endings.push(special.id);
-    saveProfile();
-  }
   if (ending.status === "partial" && !ending.safetyMet) reasons.push(t("ending.safetyShort", { n: MISSION.successRequirements.safety }));
   if (crew && ending.highlights.livingTray && !failed) crew.tray = MISSION.nextCrewReport.livingTray.text;
   const replayHint = special?.replayHint ?? copy.replayHint;
@@ -1908,10 +1926,6 @@ function nextByKeyOrClick(event) {
 
 document.addEventListener("keydown", event => {
   if (modal.open || event.repeat || ![" ", "Enter", "ArrowRight"].includes(event.key)) return;
-  const now = performance.now();
-  const lastKey = app.lastKey;
-  app.lastKey = { screen: app.screen, time: now };
-  if (lastKey && lastKey.screen !== app.screen && now - lastKey.time < 450) { event.preventDefault(); return; }
   const focused = document.activeElement;
   if (focused && ["INPUT", "TEXTAREA", "SELECT"].includes(focused.tagName)) return;
   // A focused button or link (top bar, Skip ahead, Back, the device button, a source link) keeps its own
@@ -1919,6 +1933,12 @@ document.addEventListener("keydown", event => {
   const control = focused && focused !== document.body && !focused.matches(".dialog, .intro, .cinema")
     && (focused.tagName === "BUTTON" || focused.tagName === "A" || focused.getAttribute("role") === "button");
   if (control) return;
+  // Debounce reading-area navigation only. A deliberately focused control must keep
+  // its native activation even immediately after another screen has opened.
+  const now = performance.now();
+  const lastKey = app.lastKey;
+  app.lastKey = { screen: app.screen, time: now };
+  if (lastKey && lastKey.screen !== app.screen && now - lastKey.time < 450) { event.preventDefault(); return; }
   // On reading screens these keys always mean "next", even if a button still has focus.
   const reading = ["story", "spot", "explore-line", "intro", "transition", "fact", "ledger", "endpage"].includes(app.screen) || (app.screen === "result" && app.game?.phase === "feedback");
   if (!reading && focused && (focused.tagName === "BUTTON" || focused.tagName === "A" || focused.getAttribute("role") === "button")) return;

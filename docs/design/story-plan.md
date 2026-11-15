@@ -1,10 +1,12 @@
 # Compass Outpost: Six Sols on Mars
 
+**Historical Chapter One design (v1.2).** This document preserves the first prototype, including its former six-sol ending. The active game has ten sols, a Sol 6 checkpoint, Science target 10 and five special endings. Use [the current story plan](ten-sol-story-plan.md), [runtime contract](story-data-contract.md) and [project status](../project-status.md). Old pending-work statements below are historical, not the current backlog.
+
 > AI/SI disclosure: story text, code, and documentation include OpenAI ChatGPT/Codex and Anthropic Claude contributions. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json) for contribution scope and the team's idea-origin attestation.
 
 Story and Decision Plan for the First Playable Prototype — v1.2 (see `docs/changelog/v1.2.md`)
 
-**Continuation planned November 15, 2026:** [Ten Sols of Questions](ten-sol-story-plan.md) supplies revised framing for these six scenes, Sols 7–10, and four choice-dependent special endings. Its [implementation handoff](ten-sol-implementation-handoff.md) explains the new checkpoint and target. This document still describes the active six-sol edition; the continuation is not yet loaded by the game.
+**Historical continuation proposal, now implemented:** [Ten Sols of Questions](ten-sol-story-plan.md) supplies revised framing for these six scenes, Sols 7–10, and four choice-dependent special endings. Its [implementation handoff](ten-sol-implementation-handoff.md) explains the new checkpoint and target. This document still describes the active six-sol edition; the continuation is not yet loaded by the game.
 
 **Language:** English for all story text, dialogue, interface labels, code identifiers, and code comments.
 
