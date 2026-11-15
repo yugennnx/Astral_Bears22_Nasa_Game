@@ -4,6 +4,12 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.2 — Two layout fixes found in a visual audit (2026-11-15)
+
+- Wide screens: in the slim exploration panel, the "I'm ready to decide" button covered the hint text and the discovery counter. The button now sits on its own full-width row; the panel keeps its narrow width, so the Sol 1 rover discovery stays free.
+- Choice cards: a little space between the cost chips and the "Choose this" button of the selected card.
+- Audit method: an automated overlap, clipping and language-mixing scan over a full English desktop game (1280 × 720) and a Turkish phone game (375 × 812, Sols 1–5). No other overlap, clipped text, English text in Turkish mode or raw text key was found. Checked with `npm run check`.
+
 ## 1.11.1 — Accessible task areas and complete live language refresh (2026-11-15)
 
 - Give tasks a camera area clear of the actual HUD and instruction banner. Short landscape screens place instructions beside the task. Recompute the layout after a resize, Hint, feedback, progress or language change.

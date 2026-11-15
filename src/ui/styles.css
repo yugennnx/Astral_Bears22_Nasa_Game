@@ -831,8 +831,8 @@ body[data-scene="solar-radiation-alert"] .world::after { content: ""; position: 
 .journal-section { display: flex; gap: 8px; align-items: center; scroll-margin-top: 12px; }
 @media (min-width: 821px), (orientation: landscape) {
   /* A slim corner panel, so the bottom of the scene stays free to tap. */
-  .explore-bar { left: 12px; translate: 0 0; bottom: 12px; width: min(380px, calc(100vw - 24px)); grid-template-columns: auto 1fr auto; gap: 8px; padding: 6px 8px; }
-  .explore-bar .btn { min-height: 44px; padding: 8px 14px; font-size: 0.92rem; }
+  .explore-bar { left: 12px; translate: 0 0; bottom: 12px; width: min(380px, calc(100vw - 24px)); grid-template-columns: auto 1fr; gap: 6px 10px; padding: 8px 10px; }
+  .explore-bar .btn { grid-column: 1 / -1; width: 100%; min-height: 42px; padding: 6px 14px; font-size: 0.92rem; }
   .explore-avatar { width: 42px; height: 42px; }
   .explore-title { display: none; }
   .explore-hint { font-size: 0.78rem; line-height: 1.2; }
@@ -917,3 +917,5 @@ body[data-screen="activity"] .world::after { display: none; }
   body[data-screen="activity"] .task-avatar { display: none; }
   body[data-screen="activity"] .task-text { font-size: 1rem; }
 }
+/* A little air between the cost chips and the "Choose this" button. */
+.card-choice.is-selected .card-more { padding-top: 10px; }
