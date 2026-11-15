@@ -4,6 +4,30 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.8.0 — Easier to explore, more to wonder about (2026-11-15)
+
+- Next by keyboard or click: Space, Enter, the right arrow or a click anywhere on the screen moves the story on (story lines, DUTİ's tips, discoveries, DUTİ's feedback, sol intro, night scene). Space and Enter also collect a fact card and start the next sol.
+- Clear discoveries: every normal discovery has a pulsing dashed ring around the object and a bobbing star badge next to it. Secrets have no ring, only a rare tiny sparkle. Five discoveries were moved onto their drawings (spacesuit, rover, alarm light (the power-room warning lamp was moved lower so it is not hidden behind the gauges), light-speed signal, radiation rover). Tap areas are larger.
+- Explore panel: shows one dot per discovery plus a secret slot. When every normal discovery is found, DUTİ says a secret is still hiding. On wide screens the panel is a slim corner panel, so the bottom of the scene is free. On phones the look-left and look-right buttons glow when something undiscovered is on that side.
+- More curiosity: choice cards no longer show "Later" consequences or the overnight forecast. They show only the cost now and a red warning when a choice would stop the mission.
+- Fact cards: kept in the Mars Journal across missions. The journal button shows a counter badge, and the journal opens with a Fact cards section of 16 cards; unknown cards show "?". Each choice now has a small pool of cards, so the same card never appears twice in one mission, and replays prefer new cards.
+- Fewer repeats: six discovery texts that repeated a fact card were rewritten as outpost or general-science notes (spacesuit, Earth seen from Mars, robot driving, shelter soil, rover radiation sensor, lab glove box) and relabelled accordingly.
+- Easier to reach: activity targets near the bottom edge (shelter boxes, rocks, Sol 5 crew and robot, scan spots, measuring poles, route flags) were moved up.
+- Checked with `npm run check`; browser checks are recorded in the team's test notes.
+
+## 1.7.0 — Sound and kinder endings (2026-11-15)
+
+- Sound: soft game sounds and a gentle wind in the background. The game makes every sound itself while it runs, so there are no recordings or music files. Sound starts after the first tap. A sound on/off switch is in the top bar, and the choice is remembered on the device.
+- Careful warnings: a choice that could stop the mission shows a red "Careful, Commander!" warning and a "Choose anyway" button. That choice no longer plays the task or confetti.
+- Kinder endings: a failed mission shows "What happened" (only the problems) and "Ideas for next time" tips, with an encouraging line. No confetti after the risky outdoor task or after shutting down the greenhouse, and the closing lines say so honestly.
+- Predictions fit the situation: clear sky, dust, cleaned panels, normal breathing and low battery each get their own question, and the morning summary explains why the guess was right or wrong.
+- Exploration: each hotspot has its own numbered accessible label.
+- Storm: on Sol 5 a red pulsing vignette shows the solar storm.
+- Take cover: on Sol 5 who runs into the storm shelter depends on the choice. Shelter (5A): the player sends both astronauts and the robot inside, then the door closes. Robot (5B): the crew hurries inside by itself and the player drives the robot to each scan spot. Outdoor measurement (5C): the robot and one astronaut take cover, the other astronaut stays out until the measurements are done and then runs in.
+- Interface: 27 new strings in English and Turkish. The signal-delay fact card now says the game uses 20 minutes.
+- Story text: "Scene 5A/5B/6" references now say "Sol 5", "Sol 6" or "today". No rule or number changed.
+- Checked with `npm run check`; browser checks are recorded in the team's test notes.
+
 ## 1.6.0 — Explore freely (2026-11-14)
 
 - Free exploration: after DUTİ's spotlights, the child can tap anything in the location before deciding. Each location has five discoveries and one hidden secret (36 in total), with a short DUTİ line for each. Real facts are checked against NASA pages (Mars facts, MOXIE, Veggie, Perseverance samples, the May 2024 storm, the Curiosity sunset); story-world items are labelled as part of our outpost.

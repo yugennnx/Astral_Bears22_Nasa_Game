@@ -2,7 +2,7 @@
 
 **Project:** Compass Outpost: Six Sols on Mars
 **Team repository:** Astral_Bears22_Nasa_Game
-**Updated:** November 14, 2026
+**Updated:** November 15, 2026
 
 This project includes text, code, and documentation generated or revised with **OpenAI ChatGPT/Codex and Anthropic Claude**. This disclosure is part of the project and should remain accessible to reviewers. Machine-readable file-level provenance is recorded in [`ai-usage.json`](ai-usage.json).
 
@@ -40,6 +40,10 @@ Anthropic Claude was also used for the **1.5.0 update**: after playing 1.4.0 the
 
 Anthropic Claude was also used for the **1.6.0 update**: the team asked for more freedom and curiosity ("the child should discover things on their own, not only through fact cards and tasks"), the child's name, crew-style address and a predict-then-observe step. Claude generated `src/ui/discoveries.js`, the exploration and journal interface, the prediction step and their English/Turkish texts. Facts were checked against NASA pages with a web-fetch helper; claims that could not be verified (a gravity percentage, dust devils, the apparent size of the Sun) were left out.
 
+Anthropic Claude was also used for the **1.7.0 update** (November 15, 2026): sound, kinder endings and situation-based predictions. Claude generated `src/ui/sound.js` (sound effects and a soft wind ambience synthesised in the browser), the sound switch, the careful warnings before choices that could stop the mission, the failed-mission "What happened" and "Ideas for next time" screens, the storm vignette on Sol 5, and their English/Turkish interface strings. The 1.7.0 changes were checked with `npm run check`; browser checks are recorded in the team's test notes. No team member has reviewed this code line by line.
+
+Anthropic Claude was also used for the **1.8.0 update** (November 15, 2026): easier exploration, clearer discoveries and fact cards that do not repeat within a mission. Claude generated the keyboard and click controls for moving the story on, the pulsing rings and star badges on discoveries, the secret sparkle, the reworked explore panel and look buttons, the Mars Journal fact-card section with its counter badge, the per-choice fact-card pools, the choice cards without "Later" consequences, six rewritten discovery notes and the moved activity targets, together with their English/Turkish interface strings. The 1.8.0 changes were checked with `npm run check`; browser checks are recorded in the team's test notes. No team member has reviewed this code line by line.
+
 This audit adds OpenAI ChatGPT/Codex-assisted English translations, metadata, primary-source checks, and wording corrections to those contributions. It does not claim that Claude generated NASA's underlying observations. Claude's exact prompts and model version were not provided in this session.
 
 ## Selected Prompt Record
@@ -68,9 +72,13 @@ The user reported that its 2026 NASA Space Apps event began **November 14, 2026 
 
 ## Media and Branding
 
-As of version 1.3.0 the game contains **AI-assisted illustrations**: DUTİ, the outpost scene, the icons, the compass mark and the favicon are SVG drawings written in code with Anthropic Claude. They are not NASA images and contain no NASA insignia. The interface labels scene art "AI-assisted illustration" and repeats the note on the title, briefing, ending and credits views. No generated video or audio asset is present. If such assets are added later, disclose the generating tool and scope. The 2026 guide requires visible generation labels/watermarks for generated images/videos and descriptive text plus metadata for generated audio. Do not generate, contain, alter, or imitate NASA branding/design elements in generated content. The team should confirm that the label used here satisfies the guide's wording before submission.
+As of version 1.3.0 the game contains **AI-assisted illustrations**: DUTİ, the outpost scene, the icons, the compass mark and the favicon are SVG drawings written in code with Anthropic Claude. They are not NASA images and contain no NASA insignia. The interface labels scene art "AI-assisted illustration" and repeats the note on the title, briefing, ending and credits views. No generated video or audio file is present; the game's sound is synthesised in code (see Audio below). If such assets are added later, disclose the generating tool and scope. The 2026 guide requires visible generation labels/watermarks for generated images/videos and descriptive text plus metadata for generated audio. Do not generate, contain, alter, or imitate NASA branding/design elements in generated content. The team should confirm that the label used here satisfies the guide's wording before submission.
 
 NASA photographs/data require their own attribution and usage checks. A reference link is not a license for NASA logos or third-party copyrighted content. Participation in Space Apps does not mean NASA endorses this game.
+
+## Audio
+
+Every sound in the game is generated in code at run time by the Web Audio API (`src/ui/sound.js`: short effects from oscillators and a soft wind ambience from filtered noise), written with AI assistance from Anthropic Claude. No recorded, sampled, downloaded or AI-generated audio files are included. Sound starts only after the first tap, and players can mute it with the sound switch in the top bar; the choice is saved on the device.
 
 ## Submission Form Draft
 

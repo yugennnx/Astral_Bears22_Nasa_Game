@@ -67,7 +67,7 @@ The first checker covers the data model and all profiles. The second checks prov
 - Review all generated story/code, complete the official SI/tool and references fields, and accurately describe the team's original work.
 - Resolve project licensing and any third-party asset rights before making a final rights attestation. The license decision is currently deferred by the user.
 - Verify both participants' registration, shared Local/Universal Event, team membership, applicable time zone and deadline. The reported global event name alone does not identify the registered local event.
-- For future generated images/video, include visible generation labels; generated audio requires descriptive text and metadata. Follow the guide's NASA-branding restriction and individually check NASA/third-party media rights. No media asset is currently included here.
+- For future generated images/video, include visible generation labels; generated audio requires descriptive text and metadata. Follow the guide's NASA-branding restriction and individually check NASA/third-party media rights. No media asset is currently included here; from version 1.7.0 the game's sound is synthesised in code at run time (`src/ui/sound.js`) and no audio file is included.
 - Submit through the official project page before the applicable deadline. A GitHub push is not the project submission.
 
 The audit does not mark these unfinished items as passed and cannot promise that disqualification is impossible.

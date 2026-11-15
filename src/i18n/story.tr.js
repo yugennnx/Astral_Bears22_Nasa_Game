@@ -90,7 +90,7 @@ export const STORY_TR = {
     "Paneller pırıl pırıl! Aletler için enerji, giysi tanklarımızdan da biraz oksijen harcadık. Bundan sonra bataryamız daha iyi dolacak, ama sığınağı bugün düzenleyemedik.",
   ["Prepare the storm shelter"]:
     "Fırtına sığınağını hazırla",
-  ["Moving into the shelter in Scene 5A will cost 0 Energy instead of 1. The panels remain unserviced."]:
+  ["Moving into the shelter on Sol 5 will cost 0 Energy instead of 1. The panels remain unserviced."]:
     "5. günde sığınağa geçmek (5A) 1 yerine 0 Enerji harcar. Paneller ise tozlu kalır.",
   ["The water packs and protective supplies are in place. If a warning arrives, we can get ready faster. The panels will have to wait."]:
     "Su paketleri ve koruyucu malzemeler yerli yerinde. Bir uyarı gelirse çok daha hızlı hazırlanırız. Paneller biraz bekleyecek.",
@@ -112,7 +112,7 @@ export const STORY_TR = {
     "Seçilen gün için MEDA hava sıcaklığı sensörü 1'in kaydettiği en düşük ve en yüksek değerler, yuvarlanmış halde. Basit bir hata ayıklama filtresi kullanıldı; cihazın diğer kalite işaretleri uygulanmadı. Bu, Mars'ın genel iklimi ya da bir toz ölçümü değildir. Oyundaki toz tahmini uydurmadır.",
   ["Produce more oxygen"]:
     "Daha fazla oksijen üret",
-  ["Build the oxygen reserve, but skip this scene's research opportunity."]:
+  ["Build the oxygen reserve, but skip today's research."]:
     "Oksijen yedeğin artar, ama bu günün araştırma fırsatını kaçırırsın.",
   ["The oxygen system has filled more of our reserve. We have more breathing supplies, but our research will have to wait."]:
     "Oksijen makinesi yedeğimizi doldurdu. Nefes alacak daha çok havamız var, ama araştırmamız beklemek zorunda.",
@@ -158,7 +158,7 @@ export const STORY_TR = {
     "Hasat çalışmasını kaybedersin. Eski kayıtlardan yapılan son rapor sadece 1 Bilim Puanı kazandırır.",
   ["We saved our energy. We will use packaged food during this mission. We cannot expect a new greenhouse harvest, and a future team will need to restart food production."]:
     "Enerjimizi koruduk. Bu görevde paket yemek yiyeceğiz. Seradan yeni hasat çıkmayacak ve sonraki ekip yiyecek üretimine en baştan başlamak zorunda kalacak.",
-  ["Greenhouse research points are earned only if studied in Scene 6."]:
+  ["Greenhouse research points are earned only if studied on Sol 6."]:
     "Sera araştırmasının puanları ancak 6. günde incelenirse kazanılır.",
   ["Message From Earth"]:
     "Dünya'dan Mesaj",
@@ -174,7 +174,7 @@ export const STORY_TR = {
     "20 dakikalık gecikmeyi bu hayalî görev için biz seçtik. Gerçekte Dünya ile Mars arasındaki gecikme, iki gezegenin birbirine ne kadar uzak olduğuna göre değişir.",
   ["Ask Earth and wait for a reply"]:
     "Dünya'ya sor ve cevabı bekle",
-  ["Once the reply arrives, the robot task in Scene 5B will cost 1 Energy instead of 2."]:
+  ["Once the reply arrives, the robot task on Sol 5 will cost 1 Energy instead of 2."]:
     "Cevap gelince 5. gündeki robot görevi (5B) 2 yerine 1 Enerji harcar.",
   ["Message sent. The reply is still on its way."]:
     "Mesaj gönderildi. Cevap hâlâ yolda.",
@@ -188,7 +188,7 @@ export const STORY_TR = {
     "Dünya'yı beklemeden ölçümlerimizi tamamladık. Ama robotun daha tasarruflu ayarını hâlâ bilmiyoruz.",
   ["Refill our oxygen reserve first"]:
     "Önce oksijen yedeğini doldur",
-  ["Improve the oxygen reserve, but skip Earth's guidance and this scene's research."]:
+  ["Improve the oxygen reserve, but skip Earth's guidance and today's research."]:
     "Oksijen yedeğin güçlenir, ama Dünya'nın yardımını da bu günün araştırmasını da kaçırırsın.",
   ["Our oxygen reserve is stronger. We did not investigate the robot's settings during this time slot. We have more oxygen for the next decision."]:
     "Oksijen yedeğimiz güçlendi. Bu arada robotun ayarlarına bakamadık. Bir sonraki karar için daha çok oksijenimiz var.",
@@ -210,7 +210,7 @@ export const STORY_TR = {
     "DONKI kaydı 2024-05-20T05:36:00-CME-001, Güneş'in yakınındaki bir koronal kütle atımını (CME) anlatır; kayıttaki etki tahminlerinde Mars geçmez. Bu kayıt ile Mars haberindeki olayın aynı olay olduğu kanıtlanmadı. Haber, Curiosity gezgininin yanında duran hayalî bir astronotun 8.100 mikrogray radyasyon alacağını bildiriyor; bu bilgi DONKI kaydından bağımsızdır. Radyasyon dozu Güvenlik puanına çevrilmedi.",
   ["Move the crew into the storm shelter"]:
     "Ekibi fırtına sığınağına götür",
-  ["Protect the crew, but stop the outdoor experiment and earn no Science this scene."]:
+  ["Protect the crew, but stop the outdoor experiment and earn no Science today."]:
     "Ekip güvende olur, ama dış deney yarım kalır ve bu gün Bilim Puanı kazanamazsın.",
   ["Our crew is in the shelter. We could not finish the outdoor experiment this time. Protecting people came first."]:
     "Ekibimiz sığınakta. Dış deneyi bu kez bitiremedik. Önce insanları korumak gerekiyordu.",

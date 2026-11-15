@@ -25,23 +25,34 @@ export const FACTS = {
   "sol-length": { sourceId: "mars-facts" },
 };
 
-/** Which fact card each choice unlocks. */
+/**
+ * Fact cards each choice can unlock, best match first. pickFact() never repeats a card
+ * within one mission and prefers cards the player has never collected before.
+ */
 export const FACT_BY_CHOICE = {
-  "1A": "dusty-world",
-  "1B": "terrain-shield",
-  "2A": "moxie",
-  "2B": "sample-tubes",
-  "2C": "cold-nights",
-  "3A": "veggie-garden",
-  "3B": "veggie-meals",
-  "3C": "thin-air",
-  "4A": "signal-delay",
-  "4B": "daily-plan",
-  "4C": "moxie-rate",
-  "5A": "storm-surge",
-  "5B": "rad-detector",
-  "5C": "space-dose",
-  "6A": "sample-return",
-  "6B": "sol-length",
-  "6C": "veggie-meals",
+  "1A": ["dusty-world", "sol-length"],
+  "1B": ["terrain-shield", "space-dose"],
+  "2A": ["moxie", "moxie-rate"],
+  "2B": ["sample-tubes", "sample-return"],
+  "2C": ["cold-nights", "thin-air"],
+  "3A": ["veggie-garden", "veggie-meals"],
+  "3B": ["veggie-meals", "veggie-garden"],
+  "3C": ["thin-air", "cold-nights"],
+  "4A": ["signal-delay", "daily-plan"],
+  "4B": ["daily-plan", "signal-delay"],
+  "4C": ["moxie-rate", "moxie"],
+  "5A": ["storm-surge", "terrain-shield", "space-dose"],
+  "5B": ["rad-detector", "storm-surge"],
+  "5C": ["space-dose", "storm-surge"],
+  "6A": ["sample-return", "sample-tubes"],
+  "6B": ["sol-length", "dusty-world"],
+  "6C": ["veggie-meals", "veggie-garden", "thin-air"],
 };
+
+/** The card for a choice: not yet shown in this mission, never collected if possible. */
+export function pickFact(choiceId, missionFacts = [], collected = []) {
+  const pool = FACT_BY_CHOICE[choiceId] ?? [];
+  return pool.find(id => !missionFacts.includes(id) && !collected.includes(id))
+    ?? pool.find(id => !missionFacts.includes(id))
+    ?? null;
+}

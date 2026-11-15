@@ -83,6 +83,42 @@ const astronautSprite = (x, y, i) => `
     </g>
   </g></g>`;
 
+const roverSprite = (x, y, i, sprite = true) => `
+  <g transform="translate(${x} ${y})"><g ${sprite ? `class="act-sprite" data-sprite="${i}"` : `class="act-rover" data-rover="${i}"`}>
+    <g transform="scale(0.8)">
+      <rect x="-60" y="-18" width="120" height="30" rx="10" fill="#efe9dd"/>
+      <rect x="-8" y="-58" width="14" height="42" fill="#b8b2a8"/><rect x="-28" y="-80" width="52" height="26" rx="8" fill="#27335f"/>
+      <circle cx="-14" cy="-67" r="6" fill="#7ef0ff"/><circle cx="10" cy="-67" r="6" fill="#7ef0ff"/>
+      <rect x="-56" y="-30" width="52" height="12" rx="3" fill="#3f6fd8"/>
+      ${[-44, 0, 44].map(cx => `<circle cx="${cx}" cy="20" r="17" fill="#2a1d18"/>`).join("")}
+    </g>
+  </g></g>`;
+
+/** The storm shelter's door (see stormWorld in world.js). */
+const SHELTER = [620, 690];
+
+/** Someone hurries into the storm shelter and disappears inside. */
+async function intoShelter(svg, el, from, { duration = 1100, delay = 0 } = {}) {
+  if (!el) return;
+  if (reduced()) { el.setAttribute("opacity", "0"); return; }
+  anim(el, {
+    translateX: [0, SHELTER[0] - from[0]], translateY: [0, SHELTER[1] - from[1]],
+    scale: [1, 0.55], opacity: [1, 1, 0], delay, duration, ease: "inOutQuad",
+  });
+  await sleep(delay + duration + 80);
+  el.setAttribute("opacity", "0");
+  burst(svg, SHELTER[0], SHELTER[1] - 10, "#7be495");
+}
+
+/** The shelter door closes behind the last one in. */
+function closeDoor(svg) {
+  const door = svg.querySelector(".act-door");
+  if (!door) return;
+  door.setAttribute("opacity", "1");
+  anim(door, { scaleY: [0, 1], duration: 500, ease: "outBounce" });
+}
+const shelterDoor = () => `<rect class="act-door" x="${SHELTER[0] - 28}" y="654" width="56" height="66" rx="6" fill="#8b93a8" stroke="#5d6478" stroke-width="4" opacity="0"/>`;
+
 const plantSprite = (x, y, i) => `
   <g transform="translate(${x} ${y})"><g class="act-sprite" data-sprite="${i}">
     <g class="act-plant"><path d="M0 0v-46" stroke="#3fae6a" stroke-width="7" stroke-linecap="round"/>
@@ -263,8 +299,8 @@ export const ACTIVITIES = {
   "1B": {
     backdrop: "welcome-to-mars",
     task: "act.1B",
-    sprites: () => crate(300, 790, 0) + crate(640, 815, 1) + crate(800, 770, 2),
-    targets: [{ x: 300, y: 790, r: 60 }, { x: 640, y: 815, r: 60 }, { x: 800, y: 770, r: 60 }],
+    sprites: () => crate(300, 730, 0) + crate(640, 745, 1) + crate(800, 715, 2),
+    targets: [{ x: 300, y: 730, r: 62 }, { x: 640, y: 745, r: 62 }, { x: 800, y: 715, r: 62 }],
     focusExtra: [470],
     onTap(svg, i, _step, target) {
       const box = sprite(svg, i);
@@ -277,8 +313,8 @@ export const ACTIVITIES = {
   "2B": {
     backdrop: "welcome-to-mars",
     task: "act.2B",
-    sprites: () => rock(560, 770, 0, 0.95) + rock(720, 800, 1, 0.85) + rock(890, 775, 2, 1) + rock(1050, 795, 3, 0.9),
-    targets: [{ x: 560, y: 770, r: 66 }, { x: 720, y: 800, r: 62 }, { x: 890, y: 775, r: 66 }, { x: 1050, y: 795, r: 62 }],
+    sprites: () => rock(560, 715, 0, 0.95) + rock(720, 740, 1, 0.85) + rock(890, 718, 2, 1) + rock(1050, 738, 3, 0.9),
+    targets: [{ x: 560, y: 715, r: 66 }, { x: 720, y: 740, r: 62 }, { x: 890, y: 718, r: 66 }, { x: 1050, y: 738, r: 62 }],
     order: "find",
     onTap(svg, i, _step, _target, ctx) {
       const rockEl = sprite(svg, i);
@@ -286,7 +322,7 @@ export const ACTIVITIES = {
         const crystal = rockEl.querySelector(".act-crystal");
         crystal.setAttribute("opacity", "1");
         anim(crystal, { scale: [0, 1], duration: 600, ease: "outBack(3)" });
-        burst(svg, Number(rockEl.dataset.x), 790, "#7ef0ff");
+        burst(svg, Number(rockEl.dataset.x), 725, "#7ef0ff");
         return "found";
       }
       anim(rockEl.querySelector(".act-rock"), { translateX: [0, -8, 8, -4, 0], duration: 450 });
@@ -360,26 +396,41 @@ export const ACTIVITIES = {
   },
   "4B": checklist("act.4B", ["act.check.wheels", "act.check.camera", "act.check.dust"]),
   "4C": valveActivity,
+  // Sol 5: who runs into the storm shelter depends on the choice.
+  // 5A: everyone (both astronauts and the robot) goes in; the player sends each one.
   "5A": {
     backdrop: "solar-radiation-alert",
     task: "act.5A",
-    sprites: () => astronautSprite(920, 770, 0) + astronautSprite(1060, 790, 1),
-    targets: [{ x: 920, y: 760, r: 70 }, { x: 1060, y: 780, r: 70 }],
+    sprites: () => shelterDoor() + astronautSprite(900, 730, 0) + astronautSprite(1030, 745, 1) + roverSprite(1220, 750, 2),
+    targets: [{ x: 900, y: 720, r: 72 }, { x: 1030, y: 735, r: 72 }, { x: 1220, y: 725, r: 75 }],
     focusExtra: [620],
-    onTap(svg, i, _step, target) {
-      const person = sprite(svg, i);
-      anim(person, { translateX: [0, 620 - target.x], translateY: [0, 690 - target.y], scale: [1, 0.6], opacity: [1, 1, 0], duration: 1000, ease: "inOutQuad" });
-      if (reduced()) person.setAttribute("opacity", "0");
-      setTimeout(() => burst(svg, 620, 680, "#7be495"), reduced() ? 0 : 950);
+    async onTap(svg, i, step, target) {
+      await intoShelter(svg, sprite(svg, i), [target.x, target.y], { duration: i === 2 ? 1300 : 1000 });
+      if (step === 2) closeDoor(svg);
     },
   },
+  // 5B: the crew runs inside by itself; the robot stays out and the player guides its scans.
   "5B": {
     backdrop: "solar-radiation-alert",
     task: "act.5B",
-    sprites: () => [[1120, 830], [960, 850], [1360, 770]].map(([x, y], i) => `<g transform="translate(${x} ${y})"><g class="act-sprite" data-sprite="${i}"><circle class="act-scan" r="34" fill="none" stroke="#58d3ff" stroke-width="5" stroke-dasharray="10 8"/></g></g>`).join(""),
-    targets: [{ x: 1120, y: 830, r: 55 }, { x: 960, y: 850, r: 55 }, { x: 1360, y: 770, r: 55 }],
+    sprites: () => shelterDoor() + astronautSprite(900, 730, 10) + astronautSprite(1000, 745, 11) + roverSprite(1250, 750, 0, false)
+      + [[1120, 745], [960, 755], [1360, 720]].map(([x, y], i) => `<g transform="translate(${x} ${y})"><g class="act-sprite" data-sprite="${i}"><circle class="act-scan" r="34" fill="none" stroke="#58d3ff" stroke-width="5" stroke-dasharray="10 8"/></g></g>`).join(""),
+    targets: [{ x: 1120, y: 745, r: 58 }, { x: 960, y: 755, r: 58 }, { x: 1360, y: 720, r: 58 }],
     order: "sequence",
-    onTap(svg, i, _step, target) {
+    focusExtra: [620],
+    async prelude(svg) {
+      await Promise.all([
+        intoShelter(svg, sprite(svg, 10), [900, 730], { duration: 1100 }),
+        intoShelter(svg, sprite(svg, 11), [1000, 745], { duration: 1100, delay: 250 }),
+      ]);
+      closeDoor(svg);
+    },
+    async onTap(svg, i, _step, target) {
+      const robot = svg.querySelector(".act-rover");
+      if (robot && !reduced()) {
+        anim(robot, { translateX: target.x - 1250, translateY: target.y - 760, duration: 700, ease: "inOutQuad" });
+        await sleep(720);
+      }
       const ring = sprite(svg, i).querySelector(".act-scan");
       ring.setAttribute("stroke", "#7be495");
       ring.setAttribute("stroke-dasharray", "0");
@@ -387,17 +438,40 @@ export const ACTIVITIES = {
       burst(svg, target.x, target.y, "#58d3ff");
     },
   },
+  // 5C: the robot and one astronaut take cover; the other astronaut stays out in the storm,
+  // and only runs inside once the measurements are finished.
   "5C": {
     backdrop: "solar-radiation-alert",
     task: "act.5C",
-    sprites: () => [[860, 800], [1050, 830], [1250, 790]].map(([x, y], i) => `<g transform="translate(${x} ${y})"><g class="act-sprite" data-sprite="${i}"><path d="M0 30v-60" stroke="#efe9dd" stroke-width="6"/><circle cy="-36" r="14" fill="#ffb55a"/></g></g>`).join("")
+    sprites: () => shelterDoor() + roverSprite(1250, 750, 10) + astronautSprite(780, 735, 11) + astronautSprite(1150, 725, 12)
+      + [[860, 750], [1030, 765], [1250, 690]].map(([x, y], i) => `<g transform="translate(${x} ${y})"><g class="act-sprite" data-sprite="${i}"><path d="M0 30v-60" stroke="#efe9dd" stroke-width="6"/><circle cy="-36" r="14" fill="#ffb55a"/></g></g>`).join("")
       + `<rect class="act-flash" width="1600" height="900" fill="#ff4d4d" opacity="0"/>`,
-    targets: [{ x: 860, y: 790, r: 60 }, { x: 1050, y: 820, r: 60 }, { x: 1250, y: 780, r: 60 }],
+    targets: [{ x: 860, y: 740, r: 60 }, { x: 1030, y: 755, r: 60 }, { x: 1250, y: 680, r: 60 }],
     order: "sequence",
+    focusExtra: [620],
+    async prelude(svg) {
+      await Promise.all([
+        intoShelter(svg, sprite(svg, 10), [1250, 750], { duration: 1300 }),
+        intoShelter(svg, sprite(svg, 11), [780, 735], { duration: 900, delay: 200 }),
+      ]);
+    },
     onTap(svg, i, _step, target) {
+      const worker = sprite(svg, 12);
+      if (worker && !reduced()) anim(worker, { translateX: target.x - 1150 - 50, translateY: target.y - 725, duration: 500, ease: "inOutQuad" });
       anim(svg.querySelector(".act-flash"), { opacity: [0.35, 0], duration: 600, ease: "outQuad" });
       sprite(svg, i).querySelector("circle").setAttribute("fill", "#7be495");
       burst(svg, target.x, target.y - 36, "#ffb55a");
+    },
+    async outro(svg) {
+      const worker = sprite(svg, 12);
+      if (!worker) return;
+      if (!reduced()) {
+        anim(worker, { opacity: [1, 0], scale: [1, 0.55], duration: 900, ease: "inQuad" });
+        await sleep(950);
+      }
+      worker.setAttribute("opacity", "0");
+      closeDoor(svg);
+      burst(svg, SHELTER[0], SHELTER[1] - 10, "#ffb55a");
     },
   },
   "6A": {
@@ -415,8 +489,8 @@ export const ACTIVITIES = {
   "6B": {
     backdrop: "final-mission",
     task: "act.6B",
-    sprites: () => flagAt(806, 830, 0) + flagAt(812, 730, 1) + flagAt(810, 640, 2),
-    targets: [{ x: 806, y: 810, r: 55 }, { x: 812, y: 710, r: 55 }, { x: 810, y: 620, r: 55 }],
+    sprites: () => flagAt(806, 770, 0) + flagAt(812, 690, 1) + flagAt(810, 610, 2),
+    targets: [{ x: 806, y: 750, r: 58 }, { x: 812, y: 670, r: 58 }, { x: 810, y: 590, r: 58 }],
     order: "sequence",
     onTap(svg, i, _step, target) {
       const flag = sprite(svg, i);
@@ -511,6 +585,7 @@ export function runActivity(host, def, { t, onProgress, ariaTarget }) {
         if (order === "sequence" && !finished) showTarget(index + 1);
         busy = false;
         if (finished) {
+          if (def.outro) await def.outro(svg);
           await sleep(900);
           resolve();
         }
@@ -526,6 +601,7 @@ export function runActivity(host, def, { t, onProgress, ariaTarget }) {
     const showTarget = index => {
       if (index < def.targets.length) makeTarget(def.targets[index], index);
     };
+    const start = () => {
     if (order === "sequence") showTarget(0);
     else def.targets.forEach(makeTarget);
 
@@ -537,5 +613,9 @@ export function runActivity(host, def, { t, onProgress, ariaTarget }) {
     hand.innerHTML = `<g class="act-hand-bob"><path d="M0 0l-6-48a10 10 0 0 1 20-2l4 30 6-2a10 10 0 0 1 12 6l2 6a10 10 0 0 1 12 6l2 8c8 0 14 6 14 14l-4 34H14Z" fill="#fff7ea" stroke="#2a2140" stroke-width="5" stroke-linejoin="round"/></g>`;
     svg.append(hand);
     svg.querySelector(".act-target")?.focus({ preventScroll: true });
+    };
+    // Some jobs open with a short scene (for example the crew running into the shelter).
+    if (def.prelude) Promise.resolve(def.prelude(svg)).catch(() => {}).then(start);
+    else start();
   });
 }

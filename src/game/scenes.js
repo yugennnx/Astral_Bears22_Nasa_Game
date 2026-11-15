@@ -167,7 +167,7 @@ export const SCENES = {
         label: "Prepare the storm shelter",
         effects: { energy: -1, oxygen: 0, safety: 1, science: 0 },
         setFlags: { shelterPrepared: true },
-        futureConsequence: "Moving into the shelter in Scene 5A will cost 0 Energy instead of 1. The panels remain unserviced.",
+        futureConsequence: "Moving into the shelter on Sol 5 will cost 0 Energy instead of 1. The panels remain unserviced.",
         feedback: [
           { speakerId: "duti", text: "The water packs and protective supplies are in place. If a warning arrives, we can get ready faster. The panels will have to wait." },
         ],
@@ -199,7 +199,7 @@ export const SCENES = {
         id: "2A",
         label: "Produce more oxygen",
         effects: { energy: -2, oxygen: 3, safety: 0, science: 0 },
-        futureConsequence: "Build the oxygen reserve, but skip this scene's research opportunity.",
+        futureConsequence: "Build the oxygen reserve, but skip today's research.",
         feedback: [
           { speakerId: "duti", text: "The oxygen system has filled more of our reserve. We have more breathing supplies, but our research will have to wait." },
         ],
@@ -276,7 +276,7 @@ export const SCENES = {
       sourceIds: ["space-plants"],
     },
     transition: {
-      note: "Greenhouse research points are earned only if studied in Scene 6.",
+      note: "Greenhouse research points are earned only if studied on Sol 6.",
     },
     nextSceneId: "message-from-earth",
   },
@@ -297,7 +297,7 @@ export const SCENES = {
         label: "Ask Earth and wait for a reply",
         effects: { energy: -1, oxygen: -1, safety: 0, science: 0 },
         setFlagsAfterFeedback: { earthGuide: true },
-        futureConsequence: "Once the reply arrives, the robot task in Scene 5B will cost 1 Energy instead of 2.",
+        futureConsequence: "Once the reply arrives, the robot task on Sol 5 will cost 1 Energy instead of 2.",
         feedback: [
           { speakerId: "duti", text: "Message sent. The reply is still on its way." },
           { speakerId: "duti", caption: "Game time fast-forwarded", text: "The reply is here! The signals needed about 40 minutes for the round trip, and the Earth team needed time to prepare their answer. We can run the robot with less energy now. We used some of our life-support reserves while waiting." },
@@ -316,7 +316,7 @@ export const SCENES = {
         id: "4C",
         label: "Refill our oxygen reserve first",
         effects: { energy: -2, oxygen: 3, safety: 0, science: 0 },
-        futureConsequence: "Improve the oxygen reserve, but skip Earth's guidance and this scene's research.",
+        futureConsequence: "Improve the oxygen reserve, but skip Earth's guidance and today's research.",
         feedback: [
           { speakerId: "duti", text: "Our oxygen reserve is stronger. We did not investigate the robot's settings during this time slot. We have more oxygen for the next decision." },
         ],
@@ -348,7 +348,7 @@ export const SCENES = {
         label: "Move the crew into the storm shelter",
         effects: { energy: -1, oxygen: 0, safety: 0, science: 0 },
         setFlags: { stormResponse: "shelter" },
-        futureConsequence: "Protect the crew, but stop the outdoor experiment and earn no Science this scene.",
+        futureConsequence: "Protect the crew, but stop the outdoor experiment and earn no Science today.",
         feedback: [
           { speakerId: "duti", text: "Our crew is in the shelter. We could not finish the outdoor experiment this time. Protecting people came first." },
         ],

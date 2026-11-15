@@ -13,9 +13,10 @@ import { t, ts, signed, getLanguage, setLanguage } from "../i18n/index.js";
 import { icon, duti, dutiAvatar, weatherIcon } from "./art.js";
 import { titleWorld, sceneWorld, nightWorld, LOCATIONS } from "./world.js";
 import { SPOTLIGHTS, spotlightSvg, activityFor, runActivity } from "./activities.js";
-import { FACTS, FACT_BY_CHOICE } from "../game/facts.js";
+import { FACTS, FACT_BY_CHOICE, pickFact } from "../game/facts.js";
 import { DISCOVERIES, DISCOVERY_SOURCES, secretSprite } from "./discoveries.js";
 import { animate, stagger } from "../../assets/vendor/animejs/anime.esm.min.js";
+import { play, unlockSound, soundEnabled, setSoundEnabled, setAmbience } from "./sound.js";
 import confetti from "../../assets/vendor/canvas-confetti/confetti.module.mjs";
 
 const SAVE_KEY = "compass-outpost-save-v2";
@@ -59,9 +60,13 @@ const PROFILE_KEY = "compass-outpost-profile-v1";
 const profile = (() => {
   try {
     const stored = JSON.parse(localStorage.getItem(PROFILE_KEY) ?? "null");
-    return { name: String(stored?.name ?? "").slice(0, 16), discoveries: Array.isArray(stored?.discoveries) ? stored.discoveries : [] };
+    return {
+      name: String(stored?.name ?? "").slice(0, 16),
+      discoveries: Array.isArray(stored?.discoveries) ? stored.discoveries : [],
+      facts: Array.isArray(stored?.facts) ? stored.facts.filter(id => id in FACTS) : [],
+    };
   } catch {
-    return { name: "", discoveries: [] };
+    return { name: "", discoveries: [], facts: [] };
   }
 })();
 function saveProfile() {
@@ -172,6 +177,13 @@ function setFocus(x = 800) {
   const viewBox = `${(center - 800).toFixed(0)} 0 1600 900`;
   const svgs = [worldEl.querySelector(".world-scene:last-child > svg"), ...fxEl.querySelectorAll("svg")];
   svgs.forEach(svg => svg?.setAttribute("viewBox", viewBox));
+  if (app.screen === "explore" && app.game) {
+    const waiting = (DISCOVERIES[app.game.sceneId] ?? []).filter(d => !d.secret && !profile.discoveries.includes(d.id));
+    const left = waiting.some(d => d.x < center - visible / 2 + 40);
+    const right = waiting.some(d => d.x > center + visible / 2 - 40);
+    layerEl.querySelector(".pan--left")?.classList.toggle("has-more", left);
+    layerEl.querySelector(".pan--right")?.classList.toggle("has-more", right);
+  }
 }
 window.addEventListener("resize", () => setFocus(focusX));
 
@@ -188,6 +200,10 @@ function worldForScene() {
 }
 
 /* ---------- top bar and HUD ---------- */
+
+const soundIcon = on => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4Z" fill="currentColor"/>${on
+  ? '<path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+  : '<path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>'}</svg>`;
 
 function renderTopbar() {
   const inGame = Boolean(app.game) && app.screen !== "title";
@@ -209,7 +225,8 @@ function renderTopbar() {
     </ol>
     <div class="topbar-actions">
       ${hasFact ? `<button class="pill pill--fact" data-action="science-card">${icon("satellite")}<span>${esc(t("nav.fact"))}</span></button>` : ""}
-      ${app.screen !== "title" || profile.discoveries.length ? `<button class="pill pill--icon pill--journal" data-action="journal" aria-label="${esc(t("journal.open"))}" title="${esc(t("journal.open"))}">${icon("book")}</button>` : ""}
+      ${app.screen !== "title" || profile.discoveries.length || profile.facts.length ? `<button class="pill pill--icon pill--journal" data-action="journal" aria-label="${esc(t("journal.openFull", { n: profile.discoveries.length + profile.facts.length }))}" title="${esc(t("journal.open"))}">${icon("book")}<span class="pill-badge" aria-hidden="true">${profile.discoveries.length + profile.facts.length}</span></button>` : ""}
+      <button class="pill pill--icon pill--sound ${soundEnabled() ? "" : "is-off"}" data-action="sound" aria-pressed="${soundEnabled()}" aria-label="${esc(t(soundEnabled() ? "sound.on" : "sound.off"))}" title="${esc(t(soundEnabled() ? "sound.on" : "sound.off"))}">${soundIcon(soundEnabled())}</button>
       <button class="pill pill--icon" data-action="sources" aria-label="${esc(t("nav.sources"))}" title="${esc(t("nav.sources"))}">${icon("info")}</button>
       <button class="pill pill--lang" data-action="language" aria-label="${esc(t("lang.label"))}">${icon("globe")}<span class="lang-long">${esc(t("lang.switchTo"))}</span><span class="lang-short">${getLanguage() === "en" ? "TR" : "EN"}</span></button>
     </div>`;
@@ -306,6 +323,7 @@ async function flyEffects(fromEl, effects, after) {
     });
   })));
   renderHud(after.resources, after.science);
+  play(keys.some(key => effects[key] < 0) && !keys.some(key => effects[key] > 0) ? "loss" : "gain");
   keys.forEach(key => bumpGauge(key, effects[key]));
 }
 
@@ -359,6 +377,7 @@ function showLine(block, counter, translated = null) {
     if (portrait) animate(portrait, { opacity: [0, 1], translateX: [-60, 0], rotate: [-8, 0], duration: 600, ease: "outBack(1.4)" });
   }
   typeInto(dialog.querySelector("[data-text]"), translated ?? ts(block.text));
+  if (block.speakerId === "duti") play("duti");
   dialog.focus({ preventScroll: true });
 }
 
@@ -462,6 +481,7 @@ async function showIntro() {
     animate(layerEl.querySelector(".intro-title"), { opacity: [0, 1], translateY: [40, 0], scale: [0.9, 1], delay: 200, duration: 800, ease: "outBack(1.5)" });
     animate(layerEl.querySelector(".intro-loc"), { opacity: [0, 1], delay: 600, duration: 600 });
   }
+  if (scene.id === "solar-radiation-alert") play("alarm");
   const token = `${app.game.history.length}:${scene.id}`;
   app.introToken = token;
   await wait(2600);
@@ -521,9 +541,11 @@ function exploreSvg(sceneId) {
     ${list.map((d, i) => {
       const found = profile.discoveries.includes(d.id);
       return `
-      <g class="hotspot ${found ? "is-found" : ""} ${d.secret ? "is-secret" : ""}" data-disc="${d.id}" transform="translate(${d.x} ${d.y})" tabindex="0" role="button" aria-label="${esc(t("explore.spot"))}">
-        <circle class="hot-hit" r="${d.r}" fill="transparent"/>
-        ${!d.secret && !found ? `<g class="hot-spark" style="animation-delay:${(i * 0.7).toFixed(1)}s"><path d="M0-22l5 15 15 5-15 5-5 15-5-15-15-5 15-5Z" fill="#fff6c9"/></g>` : ""}
+      <g class="hotspot ${found ? "is-found" : ""} ${d.secret ? "is-secret" : ""}" data-disc="${d.id}" transform="translate(${d.x} ${d.y})" tabindex="0" role="button" aria-label="${esc(t("explore.spotN", { n: i + 1, total: list.length }))}">
+        <circle class="hot-hit" r="${Math.max(d.r, 60)}" fill="transparent"/>
+        ${!d.secret && !found ? `<circle class="hot-ring" r="${d.r}" style="animation-delay:${(i * 0.45).toFixed(2)}s"/>
+        <g class="hot-tag" transform="translate(${Math.round(d.r * 0.72)} ${-Math.round(d.r * 0.72)})"><g class="hot-spark" style="animation-delay:${(i * 0.45).toFixed(2)}s"><circle r="17" fill="#ffd65c" stroke="#0b1026" stroke-width="3"/><path d="M0-10l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#0b1026"/></g></g>` : ""}
+        ${d.secret && !found ? `<g class="hot-glint" style="animation-delay:${(3 + i).toFixed(1)}s"><path d="M0-14l3 10 10 4-10 4-3 10-3-10-10-4 10-4Z" fill="#fff6c9"/></g>` : ""}
         ${found ? `<g class="hot-badge" transform="translate(${Math.round(d.r * 0.55)} ${-Math.round(d.r * 0.55)})"><circle r="15" fill="${d.secret ? "#ffd65c" : "#7be495"}" stroke="#0b1026" stroke-width="3"/><path d="${d.secret ? "M0-8l2.5 5 5.5.8-4 3.9 1 5.5L0 4.6l-5 2.6 1-5.5-4-3.9 5.5-.8Z" : "M-6 0l4 4 8-8"}" fill="${d.secret ? "#0b1026" : "none"}" stroke="#0b1026" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>` : ""}
       </g>`;
     }).join("")}
@@ -532,15 +554,20 @@ function exploreSvg(sceneId) {
 
 function exploreBar(sceneId) {
   const list = DISCOVERIES[sceneId] ?? [];
-  const found = list.filter(d => profile.discoveries.includes(d.id)).length;
+  const normal = list.filter(d => !d.secret);
+  const found = normal.filter(d => profile.discoveries.includes(d.id)).length;
+  const secrets = list.filter(d => d.secret);
+  const secretFound = secrets.filter(d => profile.discoveries.includes(d.id)).length;
   const name = playerName();
+  const hint = found < normal.length ? t("explore.hint")
+    : secretFound < secrets.length ? t("explore.hintSecret") : t("explore.hintAll");
   return `
-  <div class="explore-bar" role="region" aria-label="${esc(t("explore.hint"))}">
+  <div class="explore-bar" role="region" aria-label="${esc(hint)}">
     <div class="explore-avatar">${dutiAvatar("happy")}</div>
     <div class="explore-text">
       <p class="explore-title">${esc(name ? t("explore.title", { name }) : t("explore.titleNoName"))}</p>
-      <p class="explore-hint">${esc(t("explore.hint"))}</p>
-      <p class="explore-count">${icon("star")}${esc(t("explore.count", { n: found, total: list.length }))}</p>
+      <p class="explore-hint">${esc(hint)}</p>
+      <p class="explore-count"><span class="explore-dots">${normal.map(d => `<i class="${profile.discoveries.includes(d.id) ? "on" : ""}"></i>`).join("")}${secrets.map(d => `<i class="is-secret ${profile.discoveries.includes(d.id) ? "on" : ""}">${icon("star")}</i>`).join("")}</span>${esc(t("explore.countSplit", { n: found, total: normal.length }))}</p>
     </div>
     <button class="btn btn--primary" data-action="ready">${esc(t("explore.ready"))}${icon("arrow")}</button>
   </div>
@@ -559,6 +586,7 @@ function showExplore({ animateIn = false } = {}) {
   fxEl.innerHTML = exploreSvg(sceneId);
   setFocus(keepFocus);
   layerEl.innerHTML = exploreBar(sceneId);
+  setFocus(keepFocus);
   fxEl.querySelectorAll(".hotspot").forEach(spot => {
     const open = event => { event.stopPropagation(); discover(spot.dataset.disc, spot); };
     spot.addEventListener("click", open);
@@ -592,6 +620,7 @@ function discover(id, element) {
   if (item.secret && isNew && !reducedMotion()) {
     confetti({ particleCount: 60, spread: 60, origin: { y: 0.3 }, colors: ["#ffd65c", "#fff3c4", "#c79bff"] });
   }
+  play(item.secret && isNew ? "secret" : "discover");
   app.screen = "explore-line";
   const label = isNew ? (item.secret ? t("explore.secret") : t("explore.new")) : t("explore.again");
   showLine({ speakerId: "duti", text: "" }, label, t(`disc.${id}`));
@@ -622,28 +651,21 @@ function disabledText(reason) {
   return `${label}. ${t("choices.needAmount", reason)}`;
 }
 
-function forecastHtml(option, scene) {
-  const parts = [];
-  if (option.usesUpReserve.length) parts.push(`<p class="alert">${icon("warning")}${esc(ts(MISSION.messages.reserveWarning))}</p>`);
-  if (!scene.transition) return `<div class="forecast"><p class="forecast-head">${icon("star")}${esc(t("forecast.final"))}</p>${parts.join("")}</div>`;
-  const tr = option.transition;
-  if (!tr) return parts.length ? `<div class="forecast">${parts.join("")}</div>` : "";
-  if (tr.panelBonus) parts.push(`<p class="note">${icon("energy")}${esc(ts(MISSION.messages.panelBonus))}</p>`);
-  if (tr.lowPower) parts.push(`<p class="alert">${icon("warning")}${esc(ts(MISSION.messages.lowPower))}</p>`);
-  if (option.oxygenRunsOut) parts.push(`<p class="alert alert--strong">${icon("warning")}${esc(ts(MISSION.messages.oxygenTransitionWarning))}</p>`);
-  return `
-  <div class="forecast">
-    <p class="forecast-head">${weatherIcon(tr.dusty)}${esc(t(tr.dusty ? "forecast.dusty" : "forecast.clear"))}</p>
-    <p class="forecast-line">${esc(ts(MISSION.messages.forecast, { energy: signed(tr.effects.energy), oxygen: signed(tr.effects.oxygen) }))}</p>
-    ${parts.join("")}
-  </div>`;
+/** A choice that would stop the mission (now, or during the coming night). */
+function dangerOf(option) {
+  if (!option.available) return null;
+  const join = keys => keys.map(key => t(`res.${key}`)).join(", ");
+  if (option.usesUpReserve.length) return { key: "choices.dangerNow", names: join(option.usesUpReserve) };
+  const tonight = [option.energyRunsOut && "energy", option.oxygenRunsOut && "oxygen"].filter(Boolean);
+  return tonight.length ? { key: "choices.dangerNight", names: join(tonight) } : null;
 }
 
 function cardHtml(option, scene) {
   const selected = app.selected === option.id;
   const letter = option.id.slice(-1);
+  const danger = dangerOf(option);
   return `
-  <article class="card-choice ${selected ? "is-selected" : ""} ${option.available ? "" : "is-locked"}">
+  <article class="card-choice ${selected ? "is-selected" : ""} ${option.available ? "" : "is-locked"} ${danger ? "is-danger" : ""}">
     <button class="card-hit" data-action="select" data-choice="${option.id}" aria-pressed="${selected}" ${option.available ? "" : 'aria-disabled="true"'}>
       <span class="card-letter">${option.available ? letter : icon("lock")}</span>
       <span class="card-label">${esc(ts(option.label))}</span>
@@ -653,9 +675,8 @@ function cardHtml(option, scene) {
     </button>
     ${selected ? `
     <div class="card-more">
-      <p class="later"><b>${esc(t("choices.later"))}:</b> ${esc(ts(option.futureConsequence))}</p>
-      ${forecastHtml(option, scene)}
-      <button class="btn btn--primary" data-action="confirm" data-choice="${option.id}">${esc(t("choices.confirm"))}${icon("arrow")}</button>
+      ${danger ? `<p class="alert alert--strong danger-note">${icon("warning")}<span>${esc(t(danger.key, { name: danger.names }))}</span></p>` : ""}
+      <button class="btn ${danger ? "btn--danger" : "btn--primary"}" data-action="confirm" data-choice="${option.id}">${esc(t(danger ? "choices.confirmRisk" : "choices.confirm"))}${icon("arrow")}</button>
     </div>` : ""}
   </article>`;
 }
@@ -696,7 +717,17 @@ async function confirmChoice(choiceId) {
     app.game = choose(app.game, choiceId);
     app.selected = null;
     const pending = app.game.pending;
-    app.pendingFact = FACT_BY_CHOICE[pending.choiceId] ?? null;
+    app.pendingFact = FACT_BY_CHOICE[pending.choiceId] ? pickFact(pending.choiceId, app.facts, profile.facts) : null;
+    if (app.game.status === "failed") {
+      app.screen = "result";
+      play("warning");
+      layerEl.innerHTML = "";
+      renderHud(pending.after.resources, pending.after.science);
+      RESOURCE_KEYS.filter(key => pending.effects[key] < 0).forEach(key => bumpGauge(key, -1));
+      await wait(900);
+      showEnding();
+      return;
+    }
     await playActivity(pending.choiceId, flagsBefore, before);
     app.screen = "result";
     if (app.game.phase === "ended") {
@@ -732,6 +763,7 @@ async function playActivity(choiceId, flagsBefore, before) {
   stopTyping();
   setWorld(`act:${id}:${app.game.history.length}:${getLanguage()}`, sceneWorld(def.backdrop, app.game, {
     dusty: false, photoSrc: PHOTOS.rim.src, labels: signLabels(),
+    cast: def.backdrop !== "solar-radiation-alert", // Sol 5 tasks draw (and move) the crew and robot themselves
   }));
   renderHud(before.resources, before.science);
   const total = def.order === "find" ? 1 : (def.targets[0].repeat ?? def.targets.length);
@@ -747,26 +779,31 @@ async function playActivity(choiceId, flagsBefore, before) {
     t,
     ariaTarget: (n, count) => t("act.target", { n, total: count }),
     onProgress: (n, count) => {
+      play(n >= count ? (SOBER_DONE[id] ? "done" : "success") : "step");
       const banner = layerEl.querySelector(".task");
       if (!banner) return;
       banner.outerHTML = taskBanner(def, n, count, n >= count);
       if (!reducedMotion() && n >= count) animate(layerEl.querySelector(".task"), { scale: [1.15, 1], duration: 500, ease: "outBack(3)" });
     },
   });
-  if (!reducedMotion()) confetti({ particleCount: 70, spread: 70, origin: { y: 0.45 }, colors: ["#ffc93c", "#7be495", "#4fd1ff"] });
-  await wait(600);
+  if (!reducedMotion() && !SOBER_DONE[id]) confetti({ particleCount: 70, spread: 70, origin: { y: 0.45 }, colors: ["#ffc93c", "#7be495", "#4fd1ff"] });
+  await wait(SOBER_DONE[id] ? 1100 : 600);
   fxEl.innerHTML = "";
   setFocus(800);
   app.activityId = null;
 }
 
+/** Jobs that are not a reason to celebrate: no confetti, an honest closing line. */
+const SOBER_DONE = { "5C": { key: "act.done.5C", mood: "worried" }, "3C": { key: "act.done.3C", mood: "thinking" } };
+
 function taskBanner(def, done, total, finished = false) {
+  const sober = SOBER_DONE[app.activityId];
   const dots = Array.from({ length: total }, (_, i) => `<i class="${i < done ? "on" : ""}"></i>`).join("");
   return `
   <div class="task ${finished ? "is-finished" : ""}" role="status" aria-live="polite">
-    <div class="task-avatar">${dutiAvatar(finished ? "proud" : "happy")}</div>
+    <div class="task-avatar">${dutiAvatar(finished ? (sober?.mood ?? "proud") : "happy")}</div>
     <div class="task-body">
-      <p class="task-text">${esc(finished ? t("act.done") : t(def.task))}</p>
+      <p class="task-text">${esc(finished ? t(sober?.key ?? "act.done") : t(def.task))}</p>
       <p class="task-progress"><span class="task-dots">${dots}</span><span>${esc(t("act.progress", { n: done, total }))}</span></p>
     </div>
   </div>`;
@@ -779,8 +816,8 @@ function showFact() {
   app.screen = "fact";
   stopTyping();
   const source = NASA_SOURCES[FACTS[id].sourceId];
-  const isNew = !app.facts.includes(id);
-  const count = app.facts.length + (isNew ? 1 : 0);
+  const isNew = !profile.facts.includes(id);
+  const count = profile.facts.length + (isNew ? 1 : 0);
   layerEl.innerHTML = `
   <div class="factcard-wrap" role="dialog" aria-labelledby="fact-title">
     <article class="factcard">
@@ -793,12 +830,14 @@ function showFact() {
       <p class="factcard-text">${esc(t(`fact.${id}`))}</p>
       <footer class="factcard-foot">
         <span>${esc(t("fact.source"))}: <a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(ts(source.title))}</a></span>
-        <span class="factcard-count">${icon("star")}${esc(t("fact.count", { n: count }))}</span>
+        <span class="factcard-count">${icon("book")}${esc(t("fact.countAll", { n: count, total: Object.keys(FACTS).length }))}</span>
       </footer>
     </article>
     <button class="btn btn--primary btn--big" data-action="collect-fact">${icon("star")}${esc(t("fact.collect"))}</button>
+    <p class="factcard-where">${icon("book")}${esc(t("fact.where"))}</p>
   </div>`;
   finishRender();
+  play("card");
   if (!reducedMotion()) {
     animate(layerEl.querySelector(".factcard"), { rotateY: [-100, 0], scale: [0.6, 1], opacity: [0, 1], duration: 900, ease: "outBack(1.4)" });
     animate(layerEl.querySelector(".factcard-wrap .btn"), { opacity: [0, 1], translateY: [20, 0], delay: 600, duration: 400 });
@@ -809,10 +848,14 @@ function showFact() {
 async function collectFact() {
   const id = app.pendingFact;
   if (id && !app.facts.includes(id)) app.facts.push(id);
+  if (id && !profile.facts.includes(id)) {
+    profile.facts.push(id);
+    saveProfile();
+  }
   app.pendingFact = null;
   const card = layerEl.querySelector(".factcard");
   if (card && !reducedMotion()) {
-    const target = topbarEl.querySelector(".brand")?.getBoundingClientRect();
+    const target = (topbarEl.querySelector(".pill--journal") ?? topbarEl.querySelector(".brand"))?.getBoundingClientRect();
     const box = card.getBoundingClientRect();
     await new Promise(resolve => {
       setTimeout(resolve, 1000);
@@ -825,6 +868,8 @@ async function collectFact() {
   }
   app.game = finishFeedback(app.game);
   screenForPhase();
+  const journal = topbarEl.querySelector(".pill--journal");
+  if (journal && !reducedMotion()) animate(journal, { scale: [1.5, 1], duration: 600, ease: "outBack(3)" });
 }
 
 function renderFeedbackLine() {
@@ -852,6 +897,7 @@ async function showTransition() {
     <span class="cinema-skip">${esc(t("transition.skip"))}${icon("arrow")}</span>
   </div>`;
   finishRender();
+  play("night");
   const token = `${scene.id}:${game.history.length}`;
   app.cinemaToken = token;
   if (!reducedMotion()) {
@@ -915,6 +961,8 @@ function showLedger() {
   pop(".popup", { duration: 450 });
   if (!reducedMotion()) animate(layerEl.querySelectorAll(".ledger li"), { opacity: [0, 1], translateX: [-30, 0], delay: stagger(160, { start: 250 }), duration: 500, ease: "outCubic" });
   const result = layerEl.querySelector(".predict-result");
+  play("morning");
+  if (result) setTimeout(() => play(result.classList.contains("is-right") ? "right" : "wrong"), reducedMotion() ? 0 : 900);
   if (result && !reducedMotion()) {
     animate(result, { scale: [0.7, 1], opacity: [0, 1], delay: 600, duration: 600, ease: "outBack(2)" });
     if (result.classList.contains("is-right")) setTimeout(() => confetti({ particleCount: 50, spread: 55, origin: { y: 0.4 }, colors: ["#ffd65c", "#7be495"] }), 700);
@@ -942,6 +990,15 @@ function showEnding() {
   if (h.lowPowerCount) items.push(["warn", t("ending.hl.lowPower", { n: h.lowPowerCount })]);
   if (h.riskyOutdoorWork) items.push(["warn", t("ending.hl.risky")]);
   if (!items.length) items.push(["info", t("ending.hl.none")]);
+  const failed = ending.status === "failed";
+  if (failed) {
+    const kept = items.filter(([kind]) => kind === "warn");
+    items.length = 0;
+    items.push(...kept);
+    if (!items.length) items.push(["info", t("ending.hl.none")]);
+  }
+  const tips = failed ? [t(`ending.tip.${ending.reasonKey ?? "noChoices"}`), t("ending.tip.cards")] : [];
+  play(ending.status === "success" ? "win" : failed ? "fail" : "partial");
   const reasons = [];
   if (ending.status === "failed") {
     reasons.push(ts(ENDINGS.failed.reasons[ending.reasonKey]));
@@ -961,22 +1018,25 @@ function showEnding() {
         <p class="eyebrow">${esc(ts(getProfile(game).title))}</p>
         ${playerName() && ending.status === "success" ? `<p class="end-name">${esc(t("ending.byName", { name: playerName() }))}</p>` : ""}
         <h2 id="end-title" data-focus tabindex="-1">${esc(ts(copy.title))}</h2>
-        <p class="lead">${esc(ts(copy.text))}</p>
+        <p class="lead">${esc(failed ? t("ending.cheer") : ts(copy.text))}</p>
         ${reasons.map(text => `<p class="alert alert--strong">${icon("info")}${esc(text)}</p>`).join("")}
       </div>
     </div>
     <div class="end-grid">
       <section class="end-box">
-        <h3>${esc(t("ending.why"))}</h3>
+        <h3>${esc(t(failed ? "ending.whatHappened" : "ending.why"))}</h3>
         <ul class="list">${items.map(([kind, text]) => `<li class="is-${kind}">${icon(kind === "good" ? "check" : kind === "warn" ? "warning" : "info")}<span>${esc(text)}</span></li>`).join("")}</ul>
       </section>
-      <section class="end-box">
+      ${failed ? `<section class="end-box">
+        <h3>${esc(t("ending.nextTime"))}</h3>
+        <ul class="list">${tips.map(text => `<li class="is-info">${icon("star")}<span>${esc(text)}</span></li>`).join("")}</ul>
+      </section>` : `<section class="end-box">
         <h3>${esc(ts(MISSION.nextCrewReport.title))}</h3>
         <ul class="list">
           <li class="is-${crew.food.status === "ready" ? "good" : "warn"}">${icon(crew.food.status === "ready" ? "check" : "warning")}<span>${esc(ts(crew.food.text))}</span></li>
           <li class="is-${crew.safety.status === "ready" ? "good" : "warn"}">${icon(crew.safety.status === "ready" ? "check" : "warning")}<span>${esc(ts(crew.safety.text))}</span></li>
         </ul>
-      </section>
+      </section>`}
     </div>
     <div class="actions actions--center">
       <button class="btn btn--primary btn--big" data-action="new-game">${icon("restart")}${esc(ts(MISSION.messages.tryAgain))}</button>
@@ -1069,7 +1129,22 @@ function journalModal() {
     ${modalHead(t("journal.open"))}
     <h2 data-focus tabindex="-1">${esc(name ? t("journal.title", { name }) : t("journal.titleNoName"))}</h2>
     <p>${esc(t("journal.intro"))}</p>
-    <p class="journal-total">${icon("star")}${esc(t("journal.total", { n: profile.discoveries.filter(id => all.some(d => d.id === id)).length, total: all.length }))}</p>
+    <nav class="journal-jump">
+      <a class="pill" href="#journal-facts">${icon("satellite")}${esc(t("journal.factsTotal", { n: profile.facts.length, total: Object.keys(FACTS).length }))}</a>
+      <a class="pill" href="#journal-places">${icon("star")}${esc(t("journal.total", { n: profile.discoveries.filter(id => all.some(d => d.id === id)).length, total: all.length }))}</a>
+    </nav>
+    <h3 id="journal-facts" class="journal-section">${icon("satellite")}${esc(t("journal.factsTitle"))}</h3>
+    <ul class="journal journal--facts">${Object.keys(FACTS).map(id => {
+      const source = NASA_SOURCES[FACTS[id].sourceId];
+      return profile.facts.includes(id) ? `
+      <li class="journal-item is-found is-fact">
+        <span class="journal-kind kind--nasa">${icon("satellite")}${esc(t("fact.title"))}</span>
+        <p>${esc(t(`fact.${id}`))}</p>
+        ${source ? `<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(ts(source.title))}</a>` : ""}
+      </li>` : `
+      <li class="journal-item is-missing is-fact"><span class="journal-q" aria-hidden="true">?</span><p>${esc(t("journal.factUnknown"))}</p></li>`;
+    }).join("")}</ul>
+    <h3 id="journal-places" class="journal-section">${icon("star")}${esc(t("journal.placesTitle"))}</h3>
     ${SCENE_ORDER.map(sceneId => `
       <h3>${esc(t(`loc.place.${sceneId}`))}</h3>
       <ul class="journal">${(DISCOVERIES[sceneId] ?? []).map(d => {
@@ -1104,6 +1179,11 @@ function finishRender({ focus = true } = {}) {
   document.documentElement.lang = getLanguage();
   document.title = ts(MISSION.title);
   document.body.dataset.screen = app.screen;
+  const inScene = Boolean(app.game) && !["title", "briefing", "transition", "ledger", "ending"].includes(app.screen);
+  const sceneId = inScene ? app.game.sceneId : "";
+  document.body.dataset.scene = sceneId;
+  setAmbience(sceneId === "solar-radiation-alert" ? "storm"
+    : ["welcome-to-mars", "final-mission"].includes(sceneId) || ["transition", "ledger"].includes(app.screen) ? "outside" : "inside");
   renderTopbar();
   if (focus) layerEl.querySelector("[data-focus]")?.focus({ preventScroll: true });
   save();
@@ -1147,6 +1227,7 @@ function screenForPhase() {
 /* ---------- actions ---------- */
 
 function advance() {
+  if (app.busy) return;
   if (stopTyping(true)) return; // the first tap finishes the sentence
   if (app.screen === "spot") {
     const spots = SPOTLIGHTS[app.game.sceneId];
@@ -1198,7 +1279,12 @@ function predictionFor(game) {
   else resource = scene.sol % 2 ? "energy" : "oxygen";
   const before = game.resources[resource];
   const after = Math.max(0, Math.min(10, before + tr.effects[resource]));
-  return { sol: scene.sol, resource, actual: Math.sign(after - before), tr };
+  let kind;
+  if (after === before && tr.effects[resource] > 0) kind = "full";
+  else if (resource === "oxygen") kind = tr.lowPower ? "oxygenLow" : "oxygen";
+  else kind = tr.panelBonus ? "energyPanels" : tr.dusty ? "energyDusty" : "energyClear";
+  const question = kind === "full" ? "energyClear" : kind;
+  return { sol: scene.sol, resource, kind, question, change: after - before, actual: Math.sign(after - before), tr };
 }
 
 function needsPrediction() {
@@ -1221,7 +1307,7 @@ function showPredict() {
     <div class="predict-head">
       <div class="popup-avatar">${dutiAvatar("thinking")}</div>
       <div><h2 id="predict-title" data-focus tabindex="-1">${esc(t("predict.title"))}</h2>
-      <p class="lead">${esc(t(`predict.question.${info.resource}`))}</p></div>
+      <p class="lead">${esc(t(`predict.q.${info.question}`))}</p></div>
     </div>
     <div class="predict-res">${icon(info.resource)}<b>${esc(t(`res.${info.resource}`))}</b><span>${app.game.resources[info.resource]}/10</span></div>
     <div class="predict-options">
@@ -1236,7 +1322,7 @@ function showPredict() {
 async function makeGuess(dir) {
   const info = predictionFor(app.game);
   if (!info) return;
-  app.predict = { sol: info.sol, resource: info.resource, guess: dir, actual: info.actual };
+  app.predict = { sol: info.sol, resource: info.resource, kind: info.kind, change: info.change, guess: dir, actual: info.actual };
   app.score.total += 1;
   if (dir === info.actual) app.score.right += 1;
   layerEl.querySelectorAll(".predict-btn").forEach(btn => {
@@ -1260,6 +1346,7 @@ function predictionResult(tr) {
   <div class="predict-result ${right ? "is-right" : "is-wrong"}">
     <p class="predict-result-head">${right ? icon("star") : icon("info")}<b>${esc(right ? t("predict.right") : t("predict.wrong"))}</b>
       <span class="predict-guess">${esc(t("predict.yours"))}: ${arrowIcon(p.guess)}${icon(p.resource)}</span></p>
+    ${p.kind ? `<p class="predict-why">${esc(t(`predict.why.${p.kind}`, { n: signed(p.change ?? 0) }))}</p>` : ""}
   </div>`;
 }
 
@@ -1287,6 +1374,11 @@ const actions = {
     redraw();
   },
   sources: sourcesModal,
+  sound() {
+    setSoundEnabled(!soundEnabled());
+    play("select");
+    renderTopbar();
+  },
   "science-card": scienceCardModal,
   "mission-log": missionLogModal,
   "close-modal": () => modal.close(),
@@ -1323,6 +1415,7 @@ const actions = {
     const option = getChoices(app.game).find(item => item.id === id);
     if (!option?.available) return;
     app.selected = app.selected === id ? null : id;
+    play(app.selected && dangerOf(option) ? "warning" : "select");
     showChoices({ animateIn: false });
     const more = layerEl.querySelector(".card-more");
     if (more) {
@@ -1344,26 +1437,45 @@ const actions = {
 };
 
 document.addEventListener("click", event => {
+  unlockSound();
   const target = event.target.closest("[data-action]");
-  if (!target || target.getAttribute("aria-disabled") === "true") return;
-  actions[target.dataset.action]?.(target);
+  if (!target) {
+    // A click anywhere on the screen moves the story on, like the Next button.
+    if (event.button === 0 && !modal.open && !event.target.closest("a, button, input, label, #topbar, #hud, .hotspot, .act-target")) nextByKeyOrClick(event);
+    return;
+  }
+  if (target.getAttribute("aria-disabled") === "true") return;
+  const name = target.dataset.action;
+  if (!["select", "sound", "confirm"].includes(name)) play(["advance", "intro-done", "skip-cinema"].includes(name) ? "next" : "tap");
+  actions[name]?.(target);
 });
 
+/** Next step for Space, Enter, the right arrow or a click on an empty part of the screen. Returns true if used. */
+function nextByKeyOrClick(event) {
+  if (app.busy) return false;
+  const story = ["story", "spot", "explore-line"].includes(app.screen) || (app.screen === "result" && app.game?.phase === "feedback" && layerEl.querySelector(".dialog"));
+  let run = null;
+  if (story) run = advance;
+  else if (app.screen === "intro") run = () => { if (app.screen === "intro") startStory(); };
+  else if (app.screen === "transition") run = () => { if (app.screen === "transition") showLedger(); };
+  else if (event.type === "keydown" && app.screen === "fact") run = () => layerEl.querySelector('[data-action="collect-fact"]:not(:disabled)')?.click();
+  else if (event.type === "keydown" && app.screen === "ledger") run = () => layerEl.querySelector('[data-action="next-sol"]')?.click();
+  if (!run) return false;
+  event.preventDefault();
+  if (event.type !== "keydown" || !["fact", "ledger"].includes(app.screen)) play("next");
+  run();
+  return true;
+}
+
 document.addEventListener("keydown", event => {
-  if (modal.open || (event.key !== " " && event.key !== "Enter")) return;
+  if (modal.open || event.repeat || ![" ", "Enter", "ArrowRight"].includes(event.key)) return;
   const focused = document.activeElement;
-  if (focused && (focused.tagName === "BUTTON" || focused.tagName === "A")) return;
-  if (focused && focused.tagName === "INPUT") return;
-  if (app.screen === "story" || app.screen === "spot" || app.screen === "explore-line" || (app.screen === "result" && app.game?.phase === "feedback")) {
-    event.preventDefault();
-    advance();
-  } else if (app.screen === "intro") {
-    event.preventDefault();
-    startStory();
-  } else if (app.screen === "transition") {
-    event.preventDefault();
-    showLedger();
-  }
+  if (focused && ["INPUT", "TEXTAREA", "SELECT"].includes(focused.tagName)) return;
+  // On reading screens these keys always mean "next", even if a button still has focus.
+  const reading = ["story", "spot", "explore-line", "intro", "transition", "fact", "ledger"].includes(app.screen) || (app.screen === "result" && app.game?.phase === "feedback");
+  if (!reading && focused && (focused.tagName === "BUTTON" || focused.tagName === "A" || focused.getAttribute("role") === "button")) return;
+  if (!reading && event.key === "ArrowRight") return;
+  nextByKeyOrClick(event);
 });
 
 modal.addEventListener("click", event => {

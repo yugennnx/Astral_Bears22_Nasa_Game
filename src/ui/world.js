@@ -252,7 +252,7 @@ function powerWorld(state, dusty) {
       ${Array.from({ length: 12 }, (_, i) => `<circle class="w-led" cx="${50 + i * 34}" cy="26" r="8" fill="${["#ffd65c", "#7be495", "#58d3ff", "#ff7b7b"][i % 4]}" style="animation-delay:${(i * 0.17).toFixed(2)}s"/>`).join("")}
     </g>
     <!-- warning beacon -->
-    <g class="w-beacon" transform="translate(800 40)">
+    <g class="w-beacon" transform="translate(1090 170)">
       <rect x="-30" y="0" width="60" height="22" rx="6" fill="#8b93a8"/>
       <path d="M-26 22h52l-8 40h-36Z" fill="#ffb55a"/>
       <path class="w-beam" d="M0 50L-260 340h520Z" fill="#ffb55a" opacity=".12"/>
@@ -341,7 +341,7 @@ function commsWorld(state, labels = {}) {
 }
 
 /* ---------- Sol 5: solar storm outside ---------- */
-function stormWorld(state) {
+function stormWorld(state, cast = true) {
   const next = rng(55);
   const streaks = Array.from({ length: 26 }, () => {
     const x = 700 + next() * 900;
@@ -362,8 +362,8 @@ function stormWorld(state) {
       <g class="w-beacon w-beacon--alarm" transform="translate(0 -70)"><rect x="-22" y="0" width="44" height="18" rx="5" fill="#8b93a8"/><path d="M-18 18h36l-6 28h-24Z" fill="#ff6b6b"/></g>
     </g>
     ${habitat(1020, 620, 0.85)}
-    ${rover(1260, 800, 0.95, "w-drive")}
-    ${outside ? astronaut(860, 770, 1.1, "w-walk") : astronaut(700, 760, 1, "w-hurry") + astronaut(760, 770, 1, "w-hurry w-walk--2")}
+    ${cast ? rover(1260, 800, 0.95, "w-drive") : ""}
+    ${!cast ? "" : outside ? astronaut(860, 770, 1.1, "w-walk") : astronaut(700, 760, 1, "w-hurry") + astronaut(760, 770, 1, "w-hurry w-walk--2")}
     ${dustMotes(26, 61, "#ffd2a8")}
   `);
 }
@@ -422,12 +422,12 @@ export const LOCATIONS = {
 };
 
 /** Artwork for the scene being played. */
-export function sceneWorld(sceneId, state, { dusty = false, photoSrc = "", labels = {} } = {}) {
+export function sceneWorld(sceneId, state, { dusty = false, photoSrc = "", labels = {}, cast = true } = {}) {
   switch (LOCATIONS[sceneId]) {
     case "power": return powerWorld(state, dusty);
     case "greenhouse": return greenhouseWorld(state);
     case "comms": return commsWorld(state, labels);
-    case "storm": return stormWorld(state);
+    case "storm": return stormWorld(state, cast);
     case "final": return finalWorld(state, photoSrc, labels);
     default: return landingWorld(state);
   }
