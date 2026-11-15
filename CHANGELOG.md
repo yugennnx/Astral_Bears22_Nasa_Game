@@ -4,6 +4,12 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## Unreleased — Visitor-ending story handoff (2026-11-15)
+
+- OpenAI ChatGPT/Codex drafted [The Visitors Beyond the Window](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window) at the team's request: conditional visual clues, a six-choice unlock, five short explicitly fictional encounter pages, scientific-uncertainty wording and an implementation checklist.
+- The proposed predicate has successful witnesses in all three existing profiles and no overlap with the four current endings. The story plan records the numerical checks and their limits.
+- Documentation and AI contribution records only. No runtime, JSON design, translation, resource value, save format, media or license changed. Version 1.10.3 remains the playable version; the fifth ending awaits Tuğra's implementation and browser verification.
+
 ## 1.10.3 — Full language refresh during tasks (2026-11-15)
 
 Fix for the P3 observation in [docs/design/regression-review-326f941.md](docs/design/regression-review-326f941.md):

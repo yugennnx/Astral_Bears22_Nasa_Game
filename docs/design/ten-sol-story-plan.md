@@ -4,6 +4,8 @@
 
 **Date:** November 15, 2026 · **Status:** original design and narrative handoff. **Implemented** in the playable game in v1.9.0 (November 15, 2026); see [the integration notes](ten-sol-integration-notes.md) for what is implemented, what intentionally differs (for example, no forecast or "Later" text on choice cards) and what remains open. Statements below that the game still ends after six sols describe the situation when this plan was written.
 
+**New story handoff, November 15:** [The Visitors Beyond the Window](#planned-fifth-ending-the-visitors-beyond-the-window) adds a fifth, explicitly fictional ending and conditional clues. That appendix is **not implemented** in v1.10.3. The original four endings, JSON design, runtime, translations and balance values remain unchanged in this publication. The original grounded equipment explanation below still applies; the appendix adds a separate science-fiction epilogue on one qualifying trail.
+
 **For Tuğra:** [machine-readable design](../../data/ten-sol-story-design.json) · [integration checklist](ten-sol-implementation-handoff.md). The current six-sol game remains playable. This is a new continuation of that story, not the retired ten-sol model in the archive. The design was prepared against commit `e815009a9d16cfcf32f17bc1274bcf07b99983fd`.
 
 ## The ten-sol arc
@@ -485,3 +487,191 @@ On every final screen, display actual resources, Science / 10, the correct next-
 Save discovered ending IDs separately from the current mission, using a new ten-sol edition key. An Ending Journal may show discovered pages and one “Another story?” tab, without revealing the total or locked recipes. Do not require every ending for success. Use text and icons, not color alone; every optional exploration and activity must be skippable and keyboard/touch accessible. Do not announce that a child “missed the real ending.” All completed investigations count.
 
 The narrative and predicates are ready for implementation. Runtime integration, English/Turkish text integration, new activities/art, save-version handling, and child playtesting remain future work listed in [the handoff](ten-sol-implementation-handoff.md). The accompanying checker establishes design reachability; it does not make the browser game ten sols long.
+
+## Planned fifth ending: The Visitors Beyond the Window
+
+> AI/SI disclosure: this appendix was generated with OpenAI ChatGPT/Codex on November 15, 2026. The user selected the previously AI-proposed visitor-ending direction and requested an engaging English story and an implementation handoff. The detailed clues, prose and predicate below are AI-generated. No human review or NASA approval is claimed.
+
+**Status:** story design ready for Tuğra to implement; not present in the playable v1.10.3 game. **Baseline:** `648bf30` (runtime `6bd524b`). This appendix supplements the original ten-sol plan; it does not silently change the four implemented endings or their machine-readable design.
+
+### Story promise and boundaries
+
+A tiny light appears where DUTİ expects only a dark ridge. The player can build a trail of observations, checks and comparisons. On one successful trail, the final window reveals friendly visitors in an explicitly science-fiction epilogue. The payoff is wonder, not a claim that NASA has discovered life.
+
+- Keep the three-note sound's existing explanation: it comes from survey equipment. The new visual mystery is separate. A pattern is not evidence of intelligence by itself.
+- Preserve every choice, resource effect, conditional cost, gate, checkpoint, transition and success requirement. This addition has **Energy 0, Oxygen 0, Safety 0, Science 0** beyond existing actions. Existing actions retain their costs; the observations reuse the instruments, camera recordings and work time already in those actions.
+- Never reward the player for going outside during the radiation alert. The required Sol 5 action is the remote robot task, **5B**. The crew stays inside; the visitors arrive only after the completed mission, not during the alert.
+- Visitors do not provide supplies, rescue a failed run, increase Science or become the source of any real NASA data. An ordinary success and each other special ending remain equally valid mission completions.
+- Display **“Fictional science-fiction ending”** before the first encounter page and retain it on each encounter page. Show this plain-language note before the reveal: **“This encounter is fictional. No extraterrestrial life has been confirmed.”** Repeat it on the discovered Journal entry. These labels are team design safeguards, not a quotation of a competition requirement.
+- All new lights, pictures, visitors and equipment-history details here are invented story elements. Existing NASA cards and their archival/scientific qualifications stay separate. For the factual distinction, see [NASA: Do Aliens Exist?](https://www.nasa.gov/solar-system/planets/mars/do-aliens-exist-we-asked-a-nasa-scientist-episode-5/). This scientific reference is not a competition-rule source.
+
+### Conditional story insertions
+
+Insert these beats inside the corresponding existing story or feedback flow, after the original text and before its normal Continue/transition. They are observations and dialogue, not new decisions or additional resource-effect groups. Prefer replacing a closing dialogue beat with the new lines rather than adding another forced screen. Keep the original numerical feedback visible.
+
+The conditions below use choices actually committed **in this mission**, including the current choice. Never use the cross-run Journal, a hidden click, elapsed real time, audio settings or a random number as a condition. In feedback, use committed `state.history`; do not depend on after-feedback flags having been applied yet.
+
+#### Sol 1: the window, for every run
+
+**Placement:** after the welcome introduction, before choosing 1A or 1B. A brief optional-looking detail in the same illustration/dialogue flow; not an ending requirement.
+
+> **Narrator:** Something tiny glints beyond the far ridge. When you look again, there is only red dust.
+>
+> **DUTİ:** A reflection? Maybe. I will leave a little space in our notebook. We can wonder without knowing yet.
+
+Do not show a visitor silhouette, ending title or a collectible the player must find. One glint alone establishes nothing.
+
+#### Sol 2: the blank part of the picture
+
+**Condition:** selected **2C**. Append to its existing indoor-measurements feedback; other choices keep their existing feedback.
+
+> **Narrator:** Beside the indoor readings, a routine window-camera picture shows three pale dots above the ridge. They are so small you almost scroll past them.
+>
+> **DUTİ:** I saved the time and the picture. Three dots, unknown cause. A good notebook leaves room for “I do not know.”
+
+**What the action earns:** a time-stamped fictional image kept with the existing indoor records. It does not establish an object, a visitor or an extra Science reward. No new outdoor exposure or active scan is added.
+
+#### Sol 5: let the robot look
+
+**Condition:** selected **5B**, and **2C** is already in history. Append after the original remote-robot result.
+
+> **Narrator:** In the robot's camera recording, the little lights appear again. DUTİ checks the camera, then checks the picture twice.
+>
+> **DUTİ:** The camera check passed. That makes this picture worth keeping, not worth guessing about. Everyone stays inside. The mystery can wait until it is safe.
+
+**What the action earns:** a second saved view from the existing robot task. The camera check does not prove an extraterrestrial origin. Keep the original radiation warning and shielding explanation intact; lights are not a radiation measurement.
+
+#### Sol 7: a name for what we do not know
+
+**Condition:** selected **7C**, and both **2C** and **5B** are in history. Append after the existing relay-log explanation and oxygen-refill feedback.
+
+> **DUTİ:** The three-note sound belongs to the survey relay. That question has an answer. These little lights are a different question.
+>
+> **Narrator:** The equipment list does not explain the pictures. DUTİ labels their page UNKNOWN LIGHTS, then draws a very small question mark wearing a very large hat.
+
+**What the action earns:** a comparison with known equipment records during the existing log-reading task. Missing an explanation in the list does not prove there are no other ordinary explanations. Do not rename the relay as an alien transmitter.
+
+#### Sol 8: someone else noticed
+
+**Condition:** selected **8C**, and **2C**, **5B**, **7C** are in history. Append after the cassette's existing survey-network explanation.
+
+> **Narrator:** At the end of the cassette is one more picture. Three faint dots. The older crew wrote beneath it: “Not enough information. Save this for the next observer.”
+>
+> **DUTİ:** Somebody wondered before us. They did not turn a question into an answer. They left us a place to begin.
+
+**What the action earns:** an additional fictional archive image inside the cassette already being opened. It is not a NASA photograph or proof of life. The cassette still explains the human-made survey network as before.
+
+#### Sol 9: the space between the answers
+
+**Condition:** selected **9A**, and **2C**, **5B**, **7C**, **8C** are in history. Append after the existing evidence-comparison feedback.
+
+> **Narrator:** You place the pictures beside their times. The lights change position between observations. The relay record explains the beeps, but not these pictures.
+>
+> **DUTİ:** Observed: lights in several pictures. Still unknown: what made them. Let us send both parts. Honest questions belong in a science report, too.
+
+**What the action earns:** a comparison saved with the existing evidence report. No claim about speed, distance, flight path, living beings or intent follows from these images. Do not invent a record from an unselected choice.
+
+#### Sol 10: one last look
+
+**Condition:** selected **10A**, the full six-choice predicate below is met, and the resolved final outcome is **success**. Show this bridge after the existing transmission feedback, before the new ending. On partial/failed outcomes, retain the usual supportive outcome without the bridge or visitors.
+
+> **DUTİ:** Our packet includes the pictures and what we could not explain. Earth will receive it after the signal travel time.
+>
+> **Narrator:** DUTİ closes the notebook. A soft light slides across its cover. This time, it comes from the window.
+>
+> **DUTİ:** Commander... one last look?
+
+The encounter is not an instant answer from Earth and is not said to have been summoned by the transmission. This mission's observation trail makes the crew notice it; sending a packet does not prove it caused a visit.
+
+### Developer-only unlock contract
+
+**Ending ID:** `the-visitors-beyond-the-window` · **Title:** `The Visitors Beyond the Window` · **Proposed priority:** `5`.
+
+Resolve normal mission status first. Require a valid complete history with one legal choice per sol and all of:
+
+**2C → 5B → 7C → 8C → 9A → 10A**
+
+Choices on Sols 1, 3, 4 and 6 are free within the existing rules, provided the mission succeeds. Do not turn the example full route below into extra requirements.
+
+```json
+{
+  "id": "the-visitors-beyond-the-window",
+  "title": "The Visitors Beyond the Window",
+  "priority": 5,
+  "allChoices": ["2C", "5B", "7C", "8C", "9A", "10A"],
+  "anyChoiceGroups": []
+}
+```
+
+This is a predicate excerpt for implementation, not a complete runtime ending object. Tuğra must add the story, earned connections and replay hint in the runtime's existing format, plus the visible fiction label and note. Keep the normal success gate: Energy ≥1, Oxygen ≥1, Safety ≥4, Science ≥10. No extra bonuses or ending-specific resource thresholds apply.
+
+The proposed predicate cannot overlap the four existing ones: Stone requires 7A instead of 7C; Garden requires 10B instead of 10A; Constellation requires 9B/10C instead of 9A/10A; Lantern requires 7B instead of 7C. Priority is a fallback for future edits, not a means of hiding an overlap today.
+
+### Ending text: five short pages
+
+Show exactly one page at a time, with normal untimed Next/Back controls. Keep the fiction label visible. Present the explanatory note before page 1. No loud surprise, compulsory animation, flashing light, timed input or required audio. Reduced-motion presentation uses static images and the same words. Keep crew members inside the closed outpost and the airlock sealed throughout.
+
+#### Page 1 — The light returns
+
+> **Narrator:** Beyond the glass, something silver unfolds like a tiny flower. Two small figures stand beside it on the ridge.
+>
+> **DUTİ:** Those are not our survey robots.
+
+#### Page 2 — A very small hello
+
+> **Narrator:** One visitor raises a hand with four long fingers. DUTİ raises its little metal paw. For a moment, nobody moves.
+>
+> **DUTİ:** I have practised many greetings. Somehow, I forgot all of them.
+
+#### Page 3 — The page we left open
+
+> **Narrator:** DUTİ holds the notebook to the window, open at UNKNOWN LIGHTS. The visitor points toward the sky, then gently toward the notebook.
+>
+> **DUTİ:** I do not know what that means. But I think we have another question.
+
+#### Page 4 — Beyond the ridge
+
+> **Narrator:** The figures return to their silver craft. It lifts beyond the ridge, quiet behind the thick window. One pale light remains, then fades.
+>
+> **DUTİ:** We kept looking carefully. And this story became bigger than our notebook.
+
+#### Page 5 — A new beginning
+
+> **Narrator:** Beneath the final entry, DUTİ draws a small waving paw. Then it turns to a fresh page.
+>
+> **DUTİ:** If someone out there keeps a notebook too... what do you think they wrote about us?
+
+**Discovered Journal summary:** “You kept the pictures, checked the equipment, compared the records and shared what remained unknown. In this fictional ending, the last look through the window revealed friendly visitors.” Retain the fiction label and explanatory note here, including when viewed outside the completed mission.
+
+**Earned connections, shown after discovery:**
+
+- You saved the indoor camera record on Sol 2 and the robot view on Sol 5.
+- You checked equipment logs on Sol 7 and preserved the cassette picture on Sol 8.
+- You compared observations without claiming proof, then shared the report on Sol 10.
+
+**Replay invitation:** “What other questions might a different trail leave in DUTİ's notebook?” Do not reveal a total ending count or advertise a more valuable “true” ending. A return to the Journal/new mission must remain possible without replaying all five pages.
+
+### Reachability checked against the unchanged engine
+
+On November 15, a temporary probe evaluated the candidate predicate using the existing production engine at `6bd524b` (the runtime in baseline `648bf30`). It enumerated legal branches constrained to the six required choices, completed normal feedback/transitions, and counted successful candidates. It also checked for conflicts with every current ending and rejected six single-required-choice substitutions per profile. This is numerical design verification, not a browser implementation or child playtest. The probe was not installed as a permanent repository test.
+
+| Mission profile | Successful candidate histories | One complete witness | Final Energy / Oxygen / Safety | Science |
+| --- | ---: | --- | --- | ---: |
+| standard | 23 | 1A 2C 3A 4C 5B 6C 7C 8C 9A 10A | 5 / 7 / 8 | 10 |
+| dusty-season | 21 | 1A 2C 3A 4C 5B 6C 7C 8C 9A 10A | 5 / 7 / 8 | 10 |
+| small-oxygen-supply | 19 | 1A 2C 3A 4C 5B 6C 7C 8C 9A 10A | 5 / 6 / 8 | 10 |
+
+All candidates currently finish with ordinary success and no existing special ending. Activating the proposed predicate would reclassify these successes, not add successful missions or change their final values. The original four endings keep their histories. Other legally completed six-choice candidate trails may still be partial because Science/Safety requirements continue to apply.
+
+### Implementation and acceptance handoff
+
+1. Implement the conditional insertions in scene/feedback presentation, preserving original mechanical feedback and the separate grounded relay explanation. If the UI replaces scene prose with spotlights or memories, add the same beat to the actually visible flow rather than leaving it only in scene data. Reuse existing screens where possible.
+2. Add the ending to both `data/ten-sol-story-design.json` and `src/game/scenes.js` when implementing. Add a real source of English/Turkish fiction-label strings and render the label/note before the reveal, on each ending page and in the Journal. This publication deliberately does not activate the predicate in either data file.
+3. Extend `src/game/engine.js` only if its generic history resolver needs it; never put success or unlock rules solely in the UI. Use the existing complete-history validation and success gate. No extra persistent clue flags are needed; derive progress from current-run history.
+4. Keep `tools/check_ten_sol_design.mjs` independent from the engine. Update the four-ending cardinality assertions to five, add the proposed design, and regenerate the balance report with `node tools/check_ten_sol_design.mjs --write-report`. Add the three witness assertions and negative cases to the appropriate checks. Overall success/partial/stop totals must remain unchanged; ending distributions change.
+5. Translate all new visible prose and labels into the optional Turkish interface while keeping English primary. Handle language changes on the current ending page without resetting progress or changing resources. Keep the new Journal ID derived from a completed qualifying mission; saved discoveries cannot unlock a different current run.
+6. Preserve old saves and old Journal discoveries. A completed v1.10.3 save must not be silently relabeled with a new ending. If edition/save semantics change, explain compatibility and offer a fresh mission rather than inventing missing clue presentation.
+7. Verify missing/replaced required choices, a matching but partial run, a stopped run, malformed histories and cross-run Journal contamination never reveal visitors. Verify all four original special-ending witnesses still select their original ending.
+8. Run `npm run check` and `git diff --check`, then browser-check the witness in English desktop and Turkish touch-phone layouts. Check keyboard use, static/reduced-motion presentation, fiction-note visibility, no required scrolling within a short page, back/next, resume/reload and language changes. Recheck all profiles numerically; do not describe an ending as playable until its presentation has actually been tested.
+
+No artwork, audio, translation, live engine change, NASA discovery claim, competition-rule change or project license is included in this story-only handoff. If new media is later made, attribute its actual tool/source and preserve the project's visible AI-art labeling. The latest existing runtime verification remains [the v1.10.3 report](regression-review-6bd524b.md); it does not certify this unimplemented addition.

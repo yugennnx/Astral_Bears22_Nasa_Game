@@ -4,6 +4,8 @@ An English narrative decision game for ages 7–12, developed for the 2026 NASA 
 
 Players manage Energy, Oxygen, and Safety alongside companion robot **DUTİ**, aiming to earn at least 10 Science Points over ten sols. Decisions have resource or opportunity costs and can change later options.
 
+**Next story handoff:** [The Visitors Beyond the Window](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window) supplies an explicitly fictional fifth ending, conditional clues, an unlock contract and numerical witnesses for Tuğra. This is a **planned addition**; the current playable game still has four special endings.
+
 ## AI/SI Attribution
 
 This repository contains AI-assisted text, code, translations, and documentation produced with **OpenAI ChatGPT/Codex and Anthropic Claude**. The team attests that it determined the underlying game idea before using AI. Substantial generated implementation/story details remain explicitly attributed.

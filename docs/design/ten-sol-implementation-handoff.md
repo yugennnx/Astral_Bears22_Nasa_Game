@@ -4,6 +4,8 @@
 
 **Date:** November 15, 2026. **Recipient:** Tuğra. **Status:** original implementation-ready design. **Implemented** in v1.9.0 (November 15, 2026); see [the integration notes](ten-sol-integration-notes.md) for the implementation and the intentional differences.
 
+**Next story task (November 15):** implement [The Visitors Beyond the Window](ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window), the proposed fifth ending. Its appendix contains the complete English story insertions, six-choice predicate, five short ending pages, visible fiction labels, all-profile numerical witnesses and acceptance checklist. It is **design-only**, not included in v1.10.3, the current JSON or the four-ending runtime. The original handoff below is historical implementation context; use the integration notes for current runtime status and the new appendix for this next change. No costs or success requirements change.
+
 Read [the complete English story](ten-sol-story-plan.md), [the JSON design](../../data/ten-sol-story-design.json), and [the balance report with complete example playthroughs](ten-sol-balance-report.md). This continuation is based on the six-sol v1.6.0 prototype, not the archived original ten-sol simulator.
 
 ## Package and source of truth
