@@ -845,6 +845,7 @@ async function playActivity(choiceId, flagsBefore, before) {
   }));
   renderHud(before.resources, before.science);
   const total = def.total ?? (def.order === "find" ? 1 : (def.targets[0].repeat ?? def.targets.length));
+  app.taskProgress = { n: 0, total };
   layerEl.innerHTML = taskBanner(def, 0, total);
   finishRender({ focus: false });
   if (!reducedMotion()) animate(layerEl.querySelector(".task"), { translateY: [-60, 0], opacity: [0, 1], duration: 600, ease: "outBack(1.6)" });
@@ -866,6 +867,7 @@ async function playActivity(choiceId, flagsBefore, before) {
     },
     ariaTarget: (n, count) => t("act.target", { n, total: count }),
     onProgress: (n, count) => {
+      app.taskProgress = { n, total: count };
       play(n >= count ? (SOBER_DONE[id] ? "done" : "success") : "step");
       const banner = layerEl.querySelector(".task");
       if (!banner) return;
@@ -1350,10 +1352,21 @@ function redraw() {
     case "activity": {
       const banner = layerEl.querySelector(".task-text");
       const current = app.activityId ? activityFor(app.activityId === "6C-report" ? "6C" : app.activityId, { greenhouseMode: app.activityId === "6C-report" ? "off" : "full" }).def : null;
-      if (banner && current && !layerEl.querySelector(".task.is-finished")) {
-        // Re-translate what is on screen now: the current question, hint or retry message.
+      // Re-translate everything on screen without restarting the task: page language, HUD labels
+      // (with the values currently shown), the task banner and its current question, hint or retry message.
+      document.documentElement.lang = getLanguage();
+      if (app.hudShown) renderHud(app.hudShown.resources, app.hudShown.science);
+      const box = layerEl.querySelector(".task");
+      if (box && current && app.taskProgress) {
+        const finished = box.classList.contains("is-finished");
+        box.outerHTML = taskBanner(current, app.taskProgress.n, app.taskProgress.total, finished);
+        const line = layerEl.querySelector(".task-text");
+        if (line && !finished && app.taskLine) {
+          line.textContent = t(app.taskLine.key);
+          line.classList.toggle("is-miss", Boolean(app.taskLine.miss));
+        }
+      } else if (banner && current) {
         banner.textContent = t(app.taskLine?.key ?? current.task);
-        banner.classList.toggle("is-miss", Boolean(app.taskLine?.miss));
       }
       return renderTopbar();
     }

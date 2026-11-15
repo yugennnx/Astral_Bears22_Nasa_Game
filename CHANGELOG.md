@@ -4,6 +4,13 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.10.3 — Full language refresh during tasks (2026-11-15)
+
+Fix for the P3 observation in [docs/design/regression-review-326f941.md](docs/design/regression-review-326f941.md):
+
+- Switching language during a task now also updates the page language (`<html lang>`, used by screen readers), the HUD resource labels (keeping the values on screen) and the whole task banner (progress text and Hint label), while keeping the current question, hint or retry message.
+- Still open: the long special-ending screen, overall pacing and permanent automated browser tests. No rule or number changed. Checked with `npm run check`; browser checking is left to the team reviewer.
+
 ## 1.10.2 — Language switch keeps the current task prompt (2026-11-15)
 
 Fix for the remaining finding in [docs/design/regression-review-5834e11.md](docs/design/regression-review-5834e11.md):
