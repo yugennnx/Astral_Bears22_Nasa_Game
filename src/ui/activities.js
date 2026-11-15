@@ -750,6 +750,7 @@ async function compareReadings(svg, api) {
         <circle cx="${r.x}" cy="640" r="34" fill="${color}" stroke="#9fe2ff" stroke-width="4"/>
         ${label(r.x, 716, `${r.name}: ${r.t === -3 ? "−3" : "−77"} °C`, 32)}`;
     }).join(""));
+  art.insertAdjacentHTML("beforeend", label(800, 756, api.t("act.cmp.source"), 21, "#9fe2ff"));
   svg.querySelector(".act-sprites").append(art);
   const layer = svg.querySelector(".act-targets");
   api.say("act.cmp.q1");
@@ -764,7 +765,8 @@ async function compareReadings(svg, api) {
   // well below the task banner, so every label stays visible on desktop and phones.
   art.innerHTML = panelBox(470, 300, 660, 470)
     + label(800, 380, "A: −3 °C", 34, "#ffb55a") + label(800, 430, "B: −77 °C", 34, "#58d3ff")
-    + label(800, 488, "?", 40, "#ffd65c");
+    + label(800, 488, "?", 40, "#ffd65c")
+    + label(800, 756, api.t("act.cmp.source"), 21, "#9fe2ff");
   const options = [7, 74, 30];
   art.append(svgEl("g", {}, options.map((n, i) => `<g transform="translate(${640 + i * 160} 620)"><circle r="62" fill="#ffd65c" stroke="#6b4300" stroke-width="5"/>${label(0, 13, `${n}°`, 40, "#2a1c00")}</g>`).join("")));
   await new Promise(resolve => {
@@ -802,6 +804,101 @@ Object.assign(ACTIVITIES, {
   "2A": { backdrop: "power-shortage", task: "act.2A", hint: "act.2A.hint", total: 3, custom: shareEnergy },
   "2B": { backdrop: "welcome-to-mars", task: "act.2B", hint: "act.2B.hint", total: 1, custom: deduceRock },
   "2C": { backdrop: "power-shortage", task: "act.2C", hint: "act.2C.hint", total: 2, custom: compareReadings },
+});
+
+/* ---------- more thinking tasks (1.11.0): order a pattern, sort the clues ---------- */
+
+/** 7A: the saved pattern is shown as dots; tap the note cards in the same order. */
+async function orderNotes(svg, api) {
+  const notes = [
+    { key: "act.note.one", dots: 1 },
+    { key: "act.note.two", dots: 2 },
+    { key: "act.note.three", dots: 0 },
+  ];
+  const cards = [...notes].sort(() => Math.random() - 0.5);
+  const art = svgEl("g", { class: "act-panel" }, panelBox(470, 300, 660, 470)
+    + notes.map((n, i) => `<g transform="translate(${660 + i * 140} 380)"><rect x="-52" y="-34" width="104" height="68" rx="16" fill="#1b2350" stroke="#9fe2ff" stroke-width="4"/>
+      ${n.dots ? Array.from({ length: n.dots }, (_, k) => `<circle cx="${(k - (n.dots - 1) / 2) * 30}" cy="0" r="11" fill="#ffd65c"/>`).join("") : `<path d="M-22 0h44" stroke="#9fe2ff" stroke-width="6" stroke-linecap="round" stroke-dasharray="6 8"/>`}
+      ${label(-38, -40, String(i + 1), 22, "#9fe2ff")}</g>`).join("")
+    + cards.map((n, i) => `<g transform="translate(${640 + i * 160} 610)"><rect x="-70" y="-46" width="140" height="92" rx="18" fill="#fff7ea" stroke="#e7c79b" stroke-width="5"/>${label(0, 10, api.t(n.key), 26, "#2a2140")}</g>`).join(""));
+  svg.querySelector(".act-sprites").append(art);
+  const layer = svg.querySelector(".act-targets");
+  let next = 0;
+  await new Promise(resolve => {
+    cards.forEach((n, i) => tapSpot(layer, { x: 640 + i * 160, y: 610, r: 72, label: api.t(n.key), correct: false }, target => {
+      if (target.classList.contains("is-done")) return;
+      if (n === notes[next]) {
+        target.classList.add("is-done");
+        target.querySelector(".act-ring")?.setAttribute("stroke", "#7be495");
+        burst(svg, 640 + i * 160, 610, "#7be495");
+        next += 1;
+        if (next < notes.length) { api.progress(next, notes.length); return; }
+        api.progress(notes.length, notes.length);
+        resolve();
+        return;
+      }
+      api.miss("act.order.wrong");
+      next = 0;
+      layer.querySelectorAll(".act-target").forEach(g => { g.classList.remove("is-done"); g.querySelector(".act-ring")?.setAttribute("stroke", "#ffd65c"); });
+      api.progress(0, notes.length);
+    }));
+    // The Hint button points at the card that comes next.
+    const mark = () => layer.querySelectorAll(".act-target").forEach((g, i) => g.classList.toggle("is-correct", cards[i] === notes[next]));
+    mark();
+    layer.addEventListener("click", () => setTimeout(mark, 0));
+  });
+}
+
+/** 9A: sort each clue: is it explained by the old relay, or is it about the striped rock? */
+async function sortClues(svg, api) {
+  const clues = [
+    { key: "act.clue.notes", bin: "relay" },
+    { key: "act.clue.lantern", bin: "relay" },
+    { key: "act.clue.stripes", bin: "rock" },
+  ].sort(() => Math.random() - 0.5);
+  const bins = [{ id: "relay", x: 650 }, { id: "rock", x: 950 }];
+  const art = svgEl("g", { class: "act-panel" }, panelBox(470, 300, 660, 470)
+    + bins.map(b => `<g transform="translate(${b.x} 640)"><rect x="-120" y="-70" width="240" height="140" rx="20" fill="#1b2350" stroke="#9fe2ff" stroke-width="5" stroke-dasharray="14 10"/>${label(0, -32, api.t(`act.bin.${b.id}`), 26, "#9fe2ff")}<g class="act-bin" data-bin="${b.id}"></g></g>`).join("")
+    + clues.map((c, i) => `<g class="act-chip" data-chip="${i}" transform="translate(${600 + i * 200} 400)"><rect x="-90" y="-36" width="180" height="72" rx="16" fill="#fff7ea" stroke="#e7c79b" stroke-width="5"/>${label(0, 9, api.t(c.key), 21, "#2a2140")}</g>`).join(""));
+  svg.querySelector(".act-sprites").append(art);
+  const layer = svg.querySelector(".act-targets");
+  let picked = null;
+  let placed = 0;
+  const inBin = { relay: 0, rock: 0 };
+  await new Promise(resolve => {
+    const chipTargets = clues.map((c, i) => tapSpot(layer, { x: 600 + i * 200, y: 400, r: 80, label: api.t(c.key), correct: i === 0 }, target => {
+      if (target.classList.contains("is-done")) return;
+      picked = i;
+      chipTargets.forEach(g => g.querySelector(".act-ring")?.setAttribute("stroke", "#ffd65c"));
+      target.querySelector(".act-ring")?.setAttribute("stroke", "#7be495");
+      api.say("act.sort.where");
+    }));
+    bins.forEach(b => tapSpot(layer, { x: b.x, y: 640, r: 110, label: api.t(`act.bin.${b.id}`) }, () => {
+      if (picked === null) { api.say("act.sort.pick"); return; }
+      const clue = clues[picked];
+      if (clue.bin !== b.id) { api.miss(`act.sort.wrong.${clue.bin}`); return; }
+      const chip = art.querySelector(`[data-chip="${picked}"]`);
+      chip?.setAttribute("transform", `translate(${b.x - 55 + inBin[b.id] * 110} 668) scale(0.55)`);
+      inBin[b.id] += 1;
+      chip?.setAttribute("opacity", "0.9");
+      chipTargets[picked].classList.add("is-done");
+      chipTargets[picked].remove();
+      burst(svg, b.x, 640, "#7be495");
+      placed += 1;
+      picked = null;
+      // Point the Hint button at the next unsorted clue.
+      chipTargets.forEach(g => g.classList.remove("is-correct"));
+      chipTargets.find(g => g.isConnected)?.classList.add("is-correct");
+      if (placed < clues.length) { api.progress(placed, clues.length); api.say("act.sort.next"); return; }
+      api.progress(clues.length, clues.length);
+      resolve();
+    }));
+  });
+}
+
+Object.assign(ACTIVITIES, {
+  "7A": { backdrop: "message-from-earth", task: "act.7A", hint: "act.7A.hint", total: 3, custom: orderNotes },
+  "9A": { backdrop: "message-from-earth", task: "act.9A", hint: "act.9A.hint", total: 3, custom: sortClues },
 });
 
 /** Hint button: point at the right target (or the next one) for a moment. */

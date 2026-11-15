@@ -98,3 +98,15 @@ Not yet run in the browser: a complete Turkish game from Sol 1 to Sol 10, and ev
 - New artwork for Sols 7–10 (they reuse four locations).
 - A human play test with children of the target age, in English and Turkish. Our automated browser checks are not a substitute.
 - The team's license decision, the 30-second English demo, and the official submission form.
+
+## 9. Fifth ending and clearer reasons (1.11.0)
+
+Version 1.11.0 makes the fifth ending playable and adds clearer reasons. The four original endings, the Sol 6 checkpoint, the Sol 8 greenhouse gate and the ten-sol target of 10 are unchanged.
+
+- **Fifth ending.** The Visitors Beyond the Window (predicate 2C 5B 7C 8C 9A 10A plus normal success; priority 5) is in `data/ten-sol-story-design.json` and `src/game/scenes.js` (`SPECIAL_ENDINGS`). It uses no resources, Science or rescue. It is labelled as fictional science fiction, with the note "This encounter is fictional. No extraterrestrial life has been confirmed." before page 1, on each page, in the report and in the Journal.
+- **Presentation.** Special endings show short pages (one idea per page, Back and Next, "Skip to the report", "Read the ending again"), then the mission report with the evidence. The visitor art is simple and drawn in code in `src/ui/world.js`.
+- **Mystery-light beats.** `src/ui/beats.js` is presentation only. Sol 1 always shows the glint; Sols 2, 5, 7, 8 and 9 add lines only on the qualifying trail; the Sol 10 bridge appears only when the run will end with the visitors. The beats are appended after the existing lines.
+- **Totals and witnesses.** Totals are unchanged. Visitor histories are 23 (standard), 21 (dusty season) and 19 (small oxygen supply), as in the teammate's handoff. `tools/check_ten_sol_design.mjs` expects five endings. `tools/check_engine.mjs` compares the visitor witness 1A 2C 3A 4C 5B 6C 7C 8C 9A 10A with 5/7/8 and Science 10.
+- **Clearer reasons.** Each of the 29 choices has a one-sentence "Why:" line on its resource change. 2C shows the data source, date and unit (Perseverance MEDA, Sol 290, December 13, 2021, °C; past data, not a forecast). Two more thinking tasks: 7A (put the notes in the pattern's order) and 9A (sort clues into "Old relay" and "Our rock"). The ending report explains more decision chains.
+- **Not implemented.** A pre-choice "which resource will decrease" question, because the choice cards already show costs; and a side-by-side "try the other choice" replay.
+- **Checks.** Automated checks only (`npm run check:story`, `check:engine`, `check:expansion`, `check:disclosures`). No browser or child playtest is recorded here; browser checking is left to the team reviewer.

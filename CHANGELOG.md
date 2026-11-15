@@ -4,6 +4,15 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.0 — The Visitors Beyond the Window and clearer reasons (2026-11-15)
+
+- The fifth special ending, [The Visitors Beyond the Window](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window), is playable. It is an explicitly fictional science-fiction ending, labelled "Fictional science-fiction ending" with the note "This encounter is fictional. No extraterrestrial life has been confirmed." before page 1, on each page, in the report and in the Journal. It uses the predicate 2C 5B 7C 8C 9A 10A plus a normal success, has priority 5, and gives no resources, Science or rescue. Totals are unchanged; visitor histories are 23 (standard), 21 (dusty season) and 19 (small oxygen supply).
+- Special endings now open as short pages (one idea per page, Back and Next, "Skip to the report", "Read the ending again"), then the mission report with its evidence. The visitor art is simple and drawn in code.
+- New `src/ui/beats.js`: presentation-only mystery-light beats derived from the run's history. Sol 1 always shows the glint; Sols 2, 5, 7, 8 and 9 add lines only on the qualifying trail; the Sol 10 bridge appears only when the run will end with the visitors.
+- Clearer reasons: each of the 29 choices has a one-sentence "Why:" line about its resource change; 2C shows the data source, date and unit (Perseverance MEDA, Sol 290, December 13, 2021, °C; past data, not a forecast). Two more thinking tasks: 7A puts the notes in the pattern's order, and 9A sorts clues into "Old relay" and "Our rock". The ending report explains more decision chains.
+- Not added: a pre-choice "which resource will decrease" question (the choice cards already show costs) and a side-by-side "try the other choice" replay.
+- Checked with `npm run check`; browser checking is left to the team reviewer.
+
 ## Unreleased — Visitor-ending story handoff (2026-11-15)
 
 - OpenAI ChatGPT/Codex drafted [The Visitors Beyond the Window](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window) at the team's request: conditional visual clues, a six-choice unlock, five short explicitly fictional encounter pages, scientific-uncertainty wording and an implementation checklist.

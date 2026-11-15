@@ -14,6 +14,8 @@ import { icon, duti, dutiAvatar, weatherIcon } from "./art.js";
 import { titleWorld, sceneWorld, nightWorld, LOCATIONS } from "./world.js";
 import { SPOTLIGHTS, spotlightSvg, activityFor, runActivity, pulseHint } from "./activities.js";
 import { memoriesFor } from "./memories.js";
+import { storyBeats, feedbackBeats, VISITORS_ID } from "./beats.js";
+import { visitorsArt } from "./world.js";
 import { FACTS, FACT_BY_CHOICE, pickFact } from "../game/facts.js";
 import { DISCOVERIES, DISCOVERY_SOURCES, secretSprite } from "./discoveries.js";
 import { animate, stagger } from "../../assets/vendor/animejs/anime.esm.min.js";
@@ -502,7 +504,7 @@ function storyLines() {
   const scene = getScene(app.game);
   const found = id => profile.discoveries.includes(id);
   const memories = memoriesFor(scene.id, app.game, found).map(item => ({ speakerId: "duti", memory: item.id }));
-  return [...scene.story, ...memories];
+  return [...scene.story, ...storyBeats(scene.id), ...memories];
 }
 
 function startStory() {
@@ -527,6 +529,8 @@ function renderStoryLine() {
     showLine({ speakerId: "duti", text: "" }, fresh ? t("mem.new") : t("mem.label"), t(`mem.${block.memory}`));
     layerEl.querySelector(".dialog")?.classList.add("dialog--memory");
     markSeen(`mem:${block.memory}`);
+  } else if (block.beat) {
+    showLine(block, `${app.line + 1} / ${lines.length}`, t(block.beat));
   } else {
     showLine(block, `${app.line + 1} / ${scene.story.length}`);
     if (replay) {
@@ -984,12 +988,28 @@ async function collectFact() {
   if (journal && !reducedMotion()) animate(journal, { scale: [1.5, 1], duration: 600, ease: "outBack(3)" });
 }
 
+/** DUTİ's feedback followed by the mystery-light beats this run has earned (presentation only). */
+function feedbackLines() {
+  const pending = app.game.pending;
+  if (!pending) return [];
+  // The Sol 10 bridge appears only when this run will really end with the visitors (peek, no state change).
+  const peek = () => { try { return finishFeedback(app.game).ending?.special === VISITORS_ID; } catch { return false; } };
+  return [...pending.feedback, ...feedbackBeats(pending.choiceId, app.game.history, peek)];
+}
+
 function renderFeedbackLine() {
   const pending = app.game.pending;
   app.screen = "result";
   worldForScene();
   renderHud(app.game.resources, app.game.science);
-  showLine(pending.feedback[app.line], `${app.line + 1} / ${pending.feedback.length}`);
+  const lines = feedbackLines();
+  const block = lines[Math.min(app.line, lines.length - 1)];
+  showLine(block, `${app.line + 1} / ${lines.length}`, block.beat ? t(block.beat) : null);
+  // First line: say in one sentence why the numbers changed.
+  const why = `why.${pending.choiceId}`;
+  if (app.line === 0 && t(why) !== why) {
+    layerEl.querySelector(".dialog-name")?.insertAdjacentHTML("afterend", `<p class="dialog-why">${icon("info")}<span>${esc(t(why))}</span></p>`);
+  }
   finishRender({ focus: false });
 }
 
@@ -1092,7 +1112,48 @@ function showLedger() {
   }
 }
 
+/** Pages of a special ending: the fiction note first (if fictional), then one short page at a time. */
+function endingPages(special) {
+  const pages = special.pages ?? special.story.map(block => ({ story: [block] }));
+  return special.fiction ? [{ note: true }, ...pages] : pages;
+}
+
+function showEndingPage() {
+  const game = app.game;
+  const special = SPECIAL_ENDINGS.find(item => item.id === game.ending.special);
+  const pages = endingPages(special);
+  const index = Math.max(0, Math.min(game.ending.page ?? 0, pages.length - 1));
+  const page = pages[index];
+  app.screen = "endpage";
+  stopTyping();
+  setWorld(`endpage:${special.id}:${getLanguage()}`, sceneWorld(SCENE_ORDER[SCENE_ORDER.length - 1], game, { photoSrc: PHOTOS.rim.src, labels: signLabels() }), { zoom: false });
+  renderHud(game.ending.resources, game.ending.science);
+  const storyIndex = special.fiction ? index - 1 : index;
+  fxEl.innerHTML = special.id === VISITORS_ID && !page.note ? visitorsArt(storyIndex) : "";
+  setFocus(800);
+  const isNew = Boolean(game.ending.newlyFound ?? !profile.endings.includes(special.id));
+  layerEl.innerHTML = `
+  <div class="popup popup--endpage ${special.fiction ? "is-fiction" : ""}" role="dialog" aria-labelledby="endpage-title">
+    <p class="end-badge">${icon("star")}${esc(special.fiction ? ts(special.fictionLabel) : t(isNew ? "ending.specialNew" : "ending.specialAgain"))}</p>
+    <h2 id="endpage-title" data-focus tabindex="-1">${esc(ts(index === 0 ? special.title : page.title ?? special.title))}</h2>
+    ${page.note
+      ? `<p class="lead fiction-note">${icon("info")}${esc(ts(special.fictionNote))}</p>`
+      : page.story.map(block => `<p class="end-line end-line--${block.speakerId}">${block.speakerId === "duti" ? `<b>${esc(MISSION.robot.displayName)}:</b> ` : ""}${esc(ts(block.text))}</p>`).join("")}
+    ${special.fiction && !page.note ? `<p class="fineprint">${icon("info")}${esc(ts(special.fictionNote))}</p>` : ""}
+    <p class="endpage-dots" aria-label="${esc(t("ending.page", { n: index + 1, total: pages.length }))}">${pages.map((_, i) => `<i class="${i === index ? "on" : ""}"></i>`).join("")}</p>
+    <div class="actions actions--split">
+      ${index > 0 ? `<button class="btn btn--ghost" data-action="end-back">${esc(t("ending.back"))}</button>` : `<button class="btn btn--ghost" data-action="end-skip">${esc(t("ending.skipStory"))}</button>`}
+      <button class="btn btn--primary btn--big" data-action="end-next">${esc(t(index < pages.length - 1 ? "dialog.next" : "ending.toReport"))}${icon("arrow")}</button>
+    </div>
+  </div>`;
+  finishRender();
+  pop(".popup", { duration: 450 });
+  if (index === 0) play("secret");
+}
+
 function showEnding() {
+  const pendingPages = app.game?.ending?.special && (app.game.ending.page ?? 0) < endingPages(SPECIAL_ENDINGS.find(item => item.id === app.game.ending.special)).length;
+  if (pendingPages) return showEndingPage();
   app.screen = "ending";
   stopTyping();
   const game = app.game;
@@ -1107,6 +1168,9 @@ function showEnding() {
   if (h.greenhouseStudied) items.push(["good", t("ending.hl.greenhouse")]);
   if (h.lowPowerCount) items.push(["warn", t("ending.hl.lowPower", { n: h.lowPowerCount })]);
   if (h.riskyOutdoorWork) items.push(["warn", t("ending.hl.risky")]);
+  if (h.livingTray) items.push(["good", t("ending.hl.tray")]);
+  if (game.history.includes("4A") && game.history.includes("7B")) items.push(["good", t("ending.hl.earthRover")]);
+  if (game.history.includes("1B") && game.history.includes("8B")) items.push(["good", t("ending.hl.pictures")]);
   if (!items.length) items.push(["info", t("ending.hl.none")]);
   const failed = ending.status === "failed";
   if (failed) {
@@ -1153,7 +1217,8 @@ function showEnding() {
       </div>
     </div>
     ${special ? `<section class="end-story">
-      ${special.story.map(block => `<p class="end-line end-line--${block.speakerId}">${block.speakerId === "duti" ? `<b>${esc(MISSION.robot.displayName)}:</b> ` : ""}${esc(ts(block.text))}</p>`).join("")}
+      ${special.fiction ? `<p class="fineprint">${icon("info")}${esc(ts(special.fictionLabel))}: ${esc(ts(special.fictionNote))}</p>` : ""}
+      <button class="btn btn--small btn--ghost" data-action="end-replay-story">${icon("book")}${esc(t("ending.readAgain"))}</button>
       <h3>${esc(t("ending.evidence"))}</h3>
       <ul class="list">${special.evidence.map(text => `<li class="is-good">${icon("check")}<span>${esc(ts(text))}</span></li>`).join("")}</ul>
       <p class="fineprint">${icon("info")}${esc(ts(special.scienceBoundary))}</p>
@@ -1289,7 +1354,7 @@ function journalModal() {
     }).join("")}</ul>
     <h3 class="journal-section">${icon("book")}${esc(t("journal.endingsTitle"))}</h3>
     <ul class="journal journal--endings">${profile.endings.map(id => SPECIAL_ENDINGS.find(e => e.id === id)).filter(Boolean).map(e => `
-      <li class="journal-item is-found is-secret"><span class="journal-kind">${icon("star")}${esc(t("journal.endingKind"))}</span><p><b>${esc(ts(e.title))}</b></p><p>${esc(ts(e.replayHint))}</p></li>`).join("")}
+      <li class="journal-item is-found is-secret"><span class="journal-kind">${icon("star")}${esc(e.fiction ? ts(e.fictionLabel) : t("journal.endingKind"))}</span><p><b>${esc(ts(e.title))}</b></p>${e.journalSummary ? `<p>${esc(ts(e.journalSummary))}</p><p class="fineprint">${esc(ts(e.fictionNote))}</p>` : ""}<p>${esc(ts(e.replayHint))}</p></li>`).join("")}
       <li class="journal-item is-missing"><span class="journal-q" aria-hidden="true">?</span><p>${esc(t(profile.endings.length ? "journal.endingMore" : "journal.endingNone"))}</p></li>
     </ul>
     <h3 id="journal-places" class="journal-section">${icon("star")}${esc(t("journal.placesTitle"))}</h3>
@@ -1374,6 +1439,7 @@ function redraw() {
     case "result": return app.game.phase === "feedback" ? renderFeedbackLine() : showEnding();
     case "transition": case "ledger": app.screen = "transition"; return showLedger();
     case "ending": return showEnding();
+    case "endpage": return showEndingPage();
     default: return showTitle();
   }
 }
@@ -1425,7 +1491,7 @@ function advance() {
     return;
   }
   if (app.screen === "result" && app.game.phase === "feedback") {
-    if (app.line < app.game.pending.feedback.length - 1) {
+    if (app.line < feedbackLines().length - 1) {
       app.line += 1;
       renderFeedbackLine();
       return;
@@ -1573,6 +1639,32 @@ const actions = {
   },
   ready: () => openChoicesAfterStory(),
   "pan-left": () => setFocus(focusX - 280),
+  "end-next"() {
+    const ending = app.game?.ending;
+    if (!ending) return;
+    ending.page = (ending.page ?? 0) + 1;
+    fxEl.innerHTML = "";
+    showEnding();
+  },
+  "end-back"() {
+    const ending = app.game?.ending;
+    if (!ending) return;
+    ending.page = Math.max(0, (ending.page ?? 0) - 1);
+    showEndingPage();
+  },
+  "end-skip"() {
+    const ending = app.game?.ending;
+    if (!ending) return;
+    ending.page = 99;
+    fxEl.innerHTML = "";
+    showEnding();
+  },
+  "end-replay-story"() {
+    const ending = app.game?.ending;
+    if (!ending?.special) return;
+    ending.page = 0;
+    showEndingPage();
+  },
   "skip-story"() {
     if (app.screen !== "story") return;
     stopTyping();
@@ -1649,6 +1741,7 @@ function nextByKeyOrClick(event) {
   else if (app.screen === "transition") run = () => { if (app.screen === "transition") showLedger(); };
   else if (event.type === "keydown" && app.screen === "fact") run = () => layerEl.querySelector('[data-action="collect-fact"]:not(:disabled)')?.click();
   else if (event.type === "keydown" && app.screen === "ledger") run = () => layerEl.querySelector('[data-action="next-sol"]')?.click();
+  else if (event.type === "keydown" && app.screen === "endpage") run = () => layerEl.querySelector('[data-action="end-next"]')?.click();
   if (!run) return false;
   event.preventDefault();
   if (event.type !== "keydown" || !["fact", "ledger"].includes(app.screen)) play("next");
@@ -1661,7 +1754,7 @@ document.addEventListener("keydown", event => {
   const focused = document.activeElement;
   if (focused && ["INPUT", "TEXTAREA", "SELECT"].includes(focused.tagName)) return;
   // On reading screens these keys always mean "next", even if a button still has focus.
-  const reading = ["story", "spot", "explore-line", "intro", "transition", "fact", "ledger"].includes(app.screen) || (app.screen === "result" && app.game?.phase === "feedback");
+  const reading = ["story", "spot", "explore-line", "intro", "transition", "fact", "ledger", "endpage"].includes(app.screen) || (app.screen === "result" && app.game?.phase === "feedback");
   if (!reading && focused && (focused.tagName === "BUTTON" || focused.tagName === "A" || focused.getAttribute("role") === "button")) return;
   if (!reading && event.key === "ArrowRight") return;
   nextByKeyOrClick(event);

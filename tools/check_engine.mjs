@@ -67,6 +67,7 @@ const examples = [
   { path: "1A 2A 3A 4A 5B 6C 7B 8A 9A 10B", resources: [5, 4, 8], science: 10, status: "success", special: "the-smallest-garden" },
   { path: "1B 2A 3A 4B 5A 6B 7B 8B 9B 10C", resources: [5, 4, 9], science: 10, status: "success", special: "dutis-secret-constellation" },
   { path: "1A 2A 3A 4A 5B 6A 7B 8C 9A 10A", resources: [5, 4, 8], science: 10, status: "success", special: "the-lantern-network" },
+  { path: "1A 2C 3A 4C 5B 6C 7C 8C 9A 10A", resources: [5, 7, 8], science: 10, status: "success", special: "the-visitors-beyond-the-window" },
   { path: "1A 2A 3A 4A 5A 6B 7A 8A 9A 10A", resources: [4, 2, 8], science: 10, status: "success", special: null },
   { path: "1A 2B 3A 4B 5A", resources: [6, 0, 8], science: 3, status: "failed", special: null },
 ];

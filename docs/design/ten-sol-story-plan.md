@@ -4,7 +4,7 @@
 
 **Date:** November 15, 2026 · **Status:** original design and narrative handoff. **Implemented** in the playable game in v1.9.0 (November 15, 2026); see [the integration notes](ten-sol-integration-notes.md) for what is implemented, what intentionally differs (for example, no forecast or "Later" text on choice cards) and what remains open. Statements below that the game still ends after six sols describe the situation when this plan was written.
 
-**New story handoff, November 15:** [The Visitors Beyond the Window](#planned-fifth-ending-the-visitors-beyond-the-window) adds a fifth, explicitly fictional ending and conditional clues. That appendix is **not implemented** in v1.10.3. The original four endings, JSON design, runtime, translations and balance values remain unchanged in this publication. The original grounded equipment explanation below still applies; the appendix adds a separate science-fiction epilogue on one qualifying trail.
+**New story handoff, November 15:** [The Visitors Beyond the Window](#planned-fifth-ending-the-visitors-beyond-the-window) adds a fifth, explicitly fictional ending and conditional clues. That appendix was **not implemented** in v1.10.3 and is **implemented in v1.11.0** (November 15, 2026): the ending is playable, the mystery-light beats are appended after the existing lines, and the five ending pages begin with the fiction note as a page before page 1. The original four endings, JSON design, runtime, translations and balance values remain unchanged in this publication. The original grounded equipment explanation below still applies; the appendix adds a separate science-fiction epilogue on one qualifying trail.
 
 **For Tuğra:** [machine-readable design](../../data/ten-sol-story-design.json) · [integration checklist](ten-sol-implementation-handoff.md). The current six-sol game remains playable. This is a new continuation of that story, not the retired ten-sol model in the archive. The design was prepared against commit `e815009a9d16cfcf32f17bc1274bcf07b99983fd`.
 
@@ -492,7 +492,7 @@ The narrative and predicates are ready for implementation. Runtime integration, 
 
 > AI/SI disclosure: this appendix was generated with OpenAI ChatGPT/Codex on November 15, 2026. The user selected the previously AI-proposed visitor-ending direction and requested an engaging English story and an implementation handoff. The detailed clues, prose and predicate below are AI-generated. No human review or NASA approval is claimed.
 
-**Status:** story design ready for Tuğra to implement; not present in the playable v1.10.3 game. **Baseline:** `648bf30` (runtime `6bd524b`). This appendix supplements the original ten-sol plan; it does not silently change the four implemented endings or their machine-readable design.
+**Status:** implemented in v1.11.0 (November 15, 2026). Presentation choices: the mystery-light beats are appended after existing lines; five pages, with the fiction note as a page before page 1 and on each page, in the report and in the Journal. Earlier status: story design ready to implement; not present in the playable v1.10.3 game. **Baseline:** `648bf30` (runtime `6bd524b`). This appendix supplements the original ten-sol plan; it does not silently change the four implemented endings or their machine-readable design.
 
 ### Story promise and boundaries
 

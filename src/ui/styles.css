@@ -882,3 +882,16 @@ body[data-scene="solar-radiation-alert"] .world::after { content: ""; position: 
 .journal--notebook .journal-item.is-clue.is-found { border-color: rgba(255, 214, 92, 0.6); }
 .w-far-blink { animation: far-blink 2.4s ease-in-out infinite; }
 @keyframes far-blink { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+/* ---------- 1.11.0: why lines, paged endings, fiction label ---------- */
+.dialog-why { display: flex; gap: 6px; align-items: flex-start; margin: 2px 0 4px; padding: 5px 10px; border-radius: 10px; background: rgba(126, 240, 255, 0.12); color: #c9f3ff; font-size: 0.86rem; font-weight: 600; }
+.dialog-why .icon { flex: 0 0 auto; margin-top: 0.12em; }
+.popup--endpage { width: min(620px, calc(100vw - 24px)); }
+.popup--endpage .end-line { font-size: 1.08rem; }
+.popup--endpage.is-fiction { border-color: rgba(159, 231, 201, 0.8); }
+.fiction-note { display: flex; gap: 8px; align-items: flex-start; padding: 10px 14px; border-radius: 14px; background: rgba(159, 231, 201, 0.14); border: 1px solid rgba(159, 231, 201, 0.6); }
+.endpage-dots { display: flex; gap: 6px; justify-content: center; }
+.endpage-dots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); }
+.endpage-dots i.on { background: var(--energy); }
+.actions--split { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.fx--activity .act-target.is-done .act-ring { stroke: #7be495; }

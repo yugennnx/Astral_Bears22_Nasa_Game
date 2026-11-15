@@ -70,7 +70,7 @@
     {
       "path": "src/game/scenes.js",
       "status": "ai-generated-and-revised",
-      "scope": "ChatGPT/Codex initial module and current provenance/source wording; Claude-assisted v1.2 rules and cards. NASA observations remain external. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sol names replace scene numbers in player-facing text). Claude-assisted 1.9.0 update (ten-sol scene data generated from data/ten-sol-story-design.json, Sol 6 checkpoint, Sol 8 gate, special endings, Sols 7-10 locations).",
+      "scope": "ChatGPT/Codex initial module and current provenance/source wording; Claude-assisted v1.2 rules and cards. NASA observations remain external. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sol names replace scene numbers in player-facing text). Claude-assisted 1.9.0 update (ten-sol scene data generated from data/ten-sol-story-design.json, Sol 6 checkpoint, Sol 8 gate, special endings, Sols 7-10 locations). Claude-assisted 1.11.0 update (fifth special ending added to SPECIAL_ENDINGS from the ChatGPT/Codex-generated design; choice \"Why\" lines, 2C source data and 7A/9A task data).",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -151,7 +151,7 @@
     {
       "path": "AI_USAGE.md",
       "status": "ai-generated",
-      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound audio note). Claude-assisted 1.8.0 update (1.8.0 contributions paragraph). OpenAI ChatGPT/Codex recorded the November 15 ten-sol story request, generated narrative/ending/balance work, and design-only implementation status. Claude-assisted 1.9.0 update (1.9.0 contributions paragraph). Claude-assisted 1.10.0 update (1.10.0 update paragraph). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). OpenAI Codex recorded the independent 1.10.1 regression review and its documentation-only publication. OpenAI Codex recorded the independent 1.10.2 follow-up and its documentation-only publication. OpenAI Codex recorded independent 1.10.3 verification and its documentation-only publication. OpenAI ChatGPT/Codex recorded the visitor theme selected by the user, the AI-proposed title, generated story/predicate details, temporary numerical probe and documentation-only publication status.",
+      "scope": "AI/SI disclosure drafted with ChatGPT/Codex, updated with explicit team statements about Claude use, idea origin and timing. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound audio note). Claude-assisted 1.8.0 update (1.8.0 contributions paragraph). OpenAI ChatGPT/Codex recorded the November 15 ten-sol story request, generated narrative/ending/balance work, and design-only implementation status. Claude-assisted 1.9.0 update (1.9.0 contributions paragraph). Claude-assisted 1.10.0 update (1.10.0 update paragraph). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). OpenAI Codex recorded the independent 1.10.1 regression review and its documentation-only publication. OpenAI Codex recorded the independent 1.10.2 follow-up and its documentation-only publication. OpenAI Codex recorded independent 1.10.3 verification and its documentation-only publication. OpenAI ChatGPT/Codex recorded the visitor theme selected by the user, the AI-proposed title, generated story/predicate details, temporary numerical probe and documentation-only publication status. Claude-assisted 1.11.0 update (1.11.0 update paragraph separating the ChatGPT/Codex fifth-ending story, the OpenAI Codex-assisted education priority list, and the Claude implementation).",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -160,7 +160,7 @@
     {
       "path": "ai-usage.json",
       "status": "ai-generated",
-      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound inventory entry). Claude-assisted 1.8.0 update (1.8.0 inventory notes). OpenAI ChatGPT/Codex recorded the ten-sol design package and changed-file scopes; previous provider contributions remain intact. Claude-assisted 1.9.0 update (inventory entries and notes). Claude-assisted 1.10.0 update (manifest entry for src/ui/memories.js and this note). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.10.3 fix (page language, HUD labels and task banner refreshed on a language switch) after regression-review-326f941.md. OpenAI ChatGPT/Codex recorded file-level scopes for the documentation-only visitor-ending handoff; no runtime, dataset, media, translation or license change is included.",
+      "scope": "Machine-readable disclosure and artifact inventory. Claude-assisted path/link updates in the 1.2.1 repository restructure. Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound inventory entry). Claude-assisted 1.8.0 update (1.8.0 inventory notes). OpenAI ChatGPT/Codex recorded the ten-sol design package and changed-file scopes; previous provider contributions remain intact. Claude-assisted 1.9.0 update (inventory entries and notes). Claude-assisted 1.10.0 update (manifest entry for src/ui/memories.js and this note). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.10.3 fix (page language, HUD labels and task banner refreshed on a language switch) after regression-review-326f941.md. OpenAI ChatGPT/Codex recorded file-level scopes for the documentation-only visitor-ending handoff; no runtime, dataset, media, translation or license change is included. Claude-assisted 1.11.0 update (manifest entry for src/ui/beats.js and these notes).",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -229,7 +229,7 @@
     {
       "path": "package.json",
       "status": "ai-generated",
-      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (version bump). Claude-assisted 1.8.0 update (version bump). OpenAI ChatGPT/Codex added check:expansion and included independent proposed-design enumeration in npm run check. Claude-assisted 1.9.0 update (version bump). Claude-assisted 1.10.0 update (version bump). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.10.3 fix (page language, HUD labels and task banner refreshed on a language switch) after regression-review-326f941.md.",
+      "scope": "Claude-generated npm scripts and project metadata (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (version bump). Claude-assisted 1.8.0 update (version bump). OpenAI ChatGPT/Codex added check:expansion and included independent proposed-design enumeration in npm run check. Claude-assisted 1.9.0 update (version bump). Claude-assisted 1.10.0 update (version bump). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.10.3 fix (page language, HUD labels and task banner refreshed on a language switch) after regression-review-326f941.md. Claude-assisted 1.11.0 update (version bump to 1.11.0).",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -238,7 +238,7 @@
     {
       "path": "CHANGELOG.md",
       "status": "ai-generated",
-      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound and kinder endings). Claude-assisted 1.8.0 update (1.8.0 version history). OpenAI ChatGPT/Codex added the November 15 unreleased ten-sol design entry. Claude-assisted 1.9.0 update (1.9.0 version history). Claude-assisted 1.10.0 update (1.10.0 version history). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.10.3 fix (page language, HUD labels and task banner refreshed on a language switch) after regression-review-326f941.md. OpenAI ChatGPT/Codex recorded the unreleased, documentation-only visitor-ending design and its numerical verification limits; runtime version remains 1.10.3.",
+      "scope": "Claude-generated version history (1.2.1 restructure). Claude-assisted updates for the 1.3.0 playable prototype. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound and kinder endings). Claude-assisted 1.8.0 update (1.8.0 version history). OpenAI ChatGPT/Codex added the November 15 unreleased ten-sol design entry. Claude-assisted 1.9.0 update (1.9.0 version history). Claude-assisted 1.10.0 update (1.10.0 version history). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.10.3 fix (page language, HUD labels and task banner refreshed on a language switch) after regression-review-326f941.md. OpenAI ChatGPT/Codex recorded the unreleased, documentation-only visitor-ending design and its numerical verification limits; runtime version remains 1.10.3. Claude-assisted 1.11.0 update (1.11.0 version history).",
       "tools": [
         "Anthropic Claude",
         "OpenAI ChatGPT/Codex"
@@ -279,7 +279,7 @@
     {
       "path": "tools/check_engine.mjs",
       "status": "ai-generated",
-      "scope": "Claude-generated engine verification against the reference model. Claude-assisted 1.9.0 update (compares the engine with ten-sol reference counts, witnesses, checkpoint and 8A gate).",
+      "scope": "Claude-generated engine verification against the reference model. Claude-assisted 1.9.0 update (compares the engine with ten-sol reference counts, witnesses, checkpoint and 8A gate). Claude-assisted 1.11.0 update (visitor witness 1A 2C 3A 4C 5B 6C 7C 8C 9A 10A checked against 5/7/8 and Science 10).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -287,7 +287,7 @@
     {
       "path": "tools/list_story_strings.mjs",
       "status": "ai-generated",
-      "scope": "Claude-generated string extractor for translation coverage. Claude-assisted 1.9.0 update (lists special endings, checkpoint and unavailable reasons).",
+      "scope": "Claude-generated string extractor for translation coverage. Claude-assisted 1.9.0 update (lists special endings, checkpoint and unavailable reasons). Claude-assisted 1.11.0 update (lists the fiction label, note, journal summary and ending page titles).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -303,7 +303,7 @@
     {
       "path": "src/i18n/ui.js",
       "status": "ai-generated",
-      "scope": "Claude-generated English interface strings and Turkish translations. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound switch, careful warnings, kinder endings and prediction strings in English and Turkish). Claude-assisted 1.8.0 update (English and Turkish strings for keyboard and click continue, explore panel, Mars Journal fact cards and choice cards without later consequences). Claude-assisted 1.9.0 update (65 English and Turkish interface strings for the ten-sol edition). Claude-assisted 1.10.0 update (61 new and 14 revised English and Turkish interface strings). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md).",
+      "scope": "Claude-generated English interface strings and Turkish translations. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound switch, careful warnings, kinder endings and prediction strings in English and Turkish). Claude-assisted 1.8.0 update (English and Turkish strings for keyboard and click continue, explore panel, Mars Journal fact cards and choice cards without later consequences). Claude-assisted 1.9.0 update (65 English and Turkish interface strings for the ten-sol edition). Claude-assisted 1.10.0 update (61 new and 14 revised English and Turkish interface strings). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.11.0 update (English interface strings for the fifth ending, reason lines and new tasks; Turkish synchronisation is tracked separately).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -311,7 +311,7 @@
     {
       "path": "src/i18n/story.tr.js",
       "status": "ai-generated",
-      "scope": "Claude-assisted Turkish translation of the story strings. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (Turkish sol names replace scene numbers in player-facing text). Claude-assisted 1.9.0 update (Turkish for the ten-sol story; stale entries removed).",
+      "scope": "Claude-assisted Turkish translation of the story strings. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (Turkish sol names replace scene numbers in player-facing text). Claude-assisted 1.9.0 update (Turkish for the ten-sol story; stale entries removed). Claude-assisted 1.11.0 update (story-string entries for the fifth ending and reason lines; Turkish synchronisation is tracked separately).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -319,7 +319,7 @@
     {
       "path": "src/ui/app.js",
       "status": "ai-generated",
-      "scope": "Claude-generated browser interface. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound hooks and switch, careful warnings, kinder endings, situation-based predictions, storm vignette). Claude-assisted 1.8.0 update (keyboard and click to continue, explore panel and look buttons, choice cards without later consequences, Mars Journal fact-card section). Claude-assisted 1.9.0 update (save v3, checkpoint line in morning summary, special ending screen, endings in Mars Journal, living tray line, safety shortfall). Claude-assisted 1.10.0 update (memory lines after the story, replay skip-ahead, predictions only on interesting nights, quiet fact-card saving, Mars Journal lantern trail section). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.10.3 fix (page language, HUD labels and task banner refreshed on a language switch) after regression-review-326f941.md.",
+      "scope": "Claude-generated browser interface. Claude-assisted 1.4.0 redesign (full-screen pop-up flow, new locations, rewritten Turkish). Claude-assisted 1.5.0 update (choice activities, spotlights, fact cards). Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.6.0 update (free exploration, Mars Journal, player name, predictions). Claude-assisted 1.7.0 update (sound hooks and switch, careful warnings, kinder endings, situation-based predictions, storm vignette). Claude-assisted 1.8.0 update (keyboard and click to continue, explore panel and look buttons, choice cards without later consequences, Mars Journal fact-card section). Claude-assisted 1.9.0 update (save v3, checkpoint line in morning summary, special ending screen, endings in Mars Journal, living tray line, safety shortfall). Claude-assisted 1.10.0 update (memory lines after the story, replay skip-ahead, predictions only on interesting nights, quiet fact-card saving, Mars Journal lantern trail section). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.10.3 fix (page language, HUD labels and task banner refreshed on a language switch) after regression-review-326f941.md. Claude-assisted 1.11.0 update (special-ending pages with Back/Next and skip links, report evidence, Journal fiction label, beats hookup).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -364,7 +364,7 @@
     {
       "path": "src/ui/world.js",
       "status": "ai-generated",
-      "scope": "Claude-generated SVG location illustrations drawn in code (title planet, landing site, power room, greenhouse, radio room, solar storm, crater rim with a NASA photo, night time-lapse); no NASA branding. Claude-assisted 1.8.0 update (power-room alarm lamp drawing moved lower). Claude-assisted 1.9.0 update (four existing locations reused for Sols 7-10). Claude-assisted 1.10.0 update (lasting visual traces of choices drawn in code).",
+      "scope": "Claude-generated SVG location illustrations drawn in code (title planet, landing site, power room, greenhouse, radio room, solar storm, crater rim with a NASA photo, night time-lapse); no NASA branding. Claude-assisted 1.8.0 update (power-room alarm lamp drawing moved lower). Claude-assisted 1.9.0 update (four existing locations reused for Sols 7-10). Claude-assisted 1.10.0 update (lasting visual traces of choices drawn in code). Claude-assisted 1.11.0 update (visitorsArt drawn in code for the fifth ending; AI-assisted illustration, not a NASA image).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -372,7 +372,7 @@
     {
       "path": "src/ui/activities.js",
       "status": "ai-generated",
-      "scope": "Claude-generated hands-on activities (one per choice), DUTİ spotlights before choices, and their SVG sprites drawn in code. Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.8.0 update (activity targets moved up the screen for easier reach). Claude-assisted 1.9.0 update (spotlights and tasks for Sols 7-10). Claude-assisted 1.10.0 update (Sol 1 opening mystery spotlight, observe-first spotlights on Sols 2 and 3, three new thinking tasks, Hint button on every task). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md).",
+      "scope": "Claude-generated hands-on activities (one per choice), DUTİ spotlights before choices, and their SVG sprites drawn in code. Claude-assisted 1.5.1 layout fixes (no overlaps or pop-up scrolling). Claude-assisted 1.8.0 update (activity targets moved up the screen for easier reach). Claude-assisted 1.9.0 update (spotlights and tasks for Sols 7-10). Claude-assisted 1.10.0 update (Sol 1 opening mystery spotlight, observe-first spotlights on Sols 2 and 3, three new thinking tasks, Hint button on every task). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.10.2 fix (task prompt kept across a language switch) after the Codex-generated regression review (regression-review-5834e11.md). Claude-assisted 1.11.0 update (tasks 7A and 9A, 2C source details, reason lines).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -402,6 +402,15 @@
       ]
     },
     {
+      "path": "src/ui/beats.js",
+      "status": "ai-generated",
+      "scope": "Claude-generated mystery-light beats for the Sol 1 glint, the Sol 2/5/7/8/9 lines on the qualifying lantern trail and the Sol 10 bridge when the run will end with the visitors. Presentation only, derived from this run's history. The beats' English prose comes from the OpenAI ChatGPT/Codex appendix in docs/design/ten-sol-story-plan.md (planned fifth ending). Created in the Claude-assisted 1.11.0 update.",
+      "tools": [
+        "Anthropic Claude",
+        "OpenAI ChatGPT/Codex"
+      ]
+    },
+    {
       "path": "src/ui/sound.js",
       "status": "ai-generated",
       "scope": "Claude-generated browser sound effects and soft wind ambience, synthesised at run time with the Web Audio API (oscillators and filtered noise). No audio files, samples, recordings or downloaded audio. The on/off choice is saved on the device.",
@@ -412,7 +421,7 @@
     {
       "path": "src/ui/styles.css",
       "status": "ai-generated",
-      "scope": "Claude-generated browser interface styles. Claude-assisted 1.9.0 update (styles for the ten-sol interface changes, special ending screen and checkpoint display). Claude-assisted 1.10.0 update (styles for memory lines, clue trail, lasting traces, hints and skip-ahead). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md).",
+      "scope": "Claude-generated browser interface styles. Claude-assisted 1.9.0 update (styles for the ten-sol interface changes, special ending screen and checkpoint display). Claude-assisted 1.10.0 update (styles for memory lines, clue trail, lasting traces, hints and skip-ahead). Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). Claude-assisted 1.11.0 update (styles for ending pages, fiction label and reason lines).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -420,7 +429,7 @@
     {
       "path": "docs/design/ten-sol-story-plan.md",
       "status": "ai-generated",
-      "scope": "OpenAI ChatGPT/Codex generated the English ten-sol narrative, four new scenes, twelve new choices/feedback, four special endings, predicates, and proposed balancing rules. First-six choice tables and mechanics are inherited from the separately attributed OpenAI/Claude-assisted scene module. Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). OpenAI ChatGPT/Codex generated the November 15 planned fifth-ending appendix, The Visitors Beyond the Window: conditional English clues, six-choice predicate, five short fictional ending pages, fiction labels, all-profile numerical witnesses and implementation acceptance requirements. This addition is not implemented in the runtime or JSON design.",
+      "scope": "OpenAI ChatGPT/Codex generated the English ten-sol narrative, four new scenes, twelve new choices/feedback, four special endings, predicates, and proposed balancing rules. First-six choice tables and mechanics are inherited from the separately attributed OpenAI/Claude-assisted scene module. Claude-assisted 1.10.1 fixes after the independent Codex-generated review (repository-review-761bb66.md). OpenAI ChatGPT/Codex generated the November 15 planned fifth-ending appendix, The Visitors Beyond the Window: conditional English clues, six-choice predicate, five short fictional ending pages, fiction labels, all-profile numerical witnesses and implementation acceptance requirements. This addition is not implemented in the runtime or JSON design. Claude-assisted 1.11.0 status notes only (the fifth ending is marked implemented in v1.11.0; the ChatGPT/Codex story and predicate text are unchanged).",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -429,7 +438,7 @@
     {
       "path": "data/ten-sol-story-design.json",
       "status": "ai-generated",
-      "scope": "OpenAI ChatGPT/Codex generated the machine-readable proposed continuation: replacement opening prose, four new scenes, choice effects and flags, checkpoint, forecasts, ending predicates, and ending text. Numerical effects are fictional. Claude made a small 1.9.0 status/integration change (status set to implemented-in-runtime); the design content remains OpenAI ChatGPT/Codex-generated. Since 1.9.0 the runtime generates ten-sol scene data from this file in src/game/scenes.js.",
+      "scope": "OpenAI ChatGPT/Codex generated the machine-readable proposed continuation: replacement opening prose, four new scenes, choice effects and flags, checkpoint, forecasts, ending predicates, and ending text. Numerical effects are fictional. Claude made a small 1.9.0 status/integration change (status set to implemented-in-runtime); the design content remains OpenAI ChatGPT/Codex-generated. Since 1.9.0 the runtime generates ten-sol scene data from this file in src/game/scenes.js. Claude-assisted 1.11.0 update (fifth ending implemented in the machine-readable design; the education priority list came from an OpenAI Codex-assisted review chosen by the team).",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -446,7 +455,7 @@
     {
       "path": "docs/design/ten-sol-integration-notes.md",
       "status": "ai-generated",
-      "scope": "Anthropic Claude wrote the 1.9.0 integration notes: where each ten-sol design item is implemented, decisions that differ from the handoff, check descriptions and open items. They describe the Claude-assisted implementation of OpenAI ChatGPT/Codex-generated design content. Claude-assisted 1.10.0 update (section 8 on the changes that affect the ten-sol design).",
+      "scope": "Anthropic Claude wrote the 1.9.0 integration notes: where each ten-sol design item is implemented, decisions that differ from the handoff, check descriptions and open items. They describe the Claude-assisted implementation of OpenAI ChatGPT/Codex-generated design content. Claude-assisted 1.10.0 update (section 8 on the changes that affect the ten-sol design). Claude-assisted 1.11.0 update (section 9 on the fifth ending and clearer reasons).",
       "tools": [
         "Anthropic Claude"
       ]
@@ -462,7 +471,7 @@
     {
       "path": "tools/check_ten_sol_design.mjs",
       "status": "ai-generated",
-      "scope": "OpenAI ChatGPT/Codex generated an independent proposed-design enumerator and prose/predicate/boundary checks; this is not the production engine. Claude made a small 1.9.0 status/integration change: it rebuilds Sols 1-6 from base mechanics plus JSON overrides and checks runtime scene order and forecasts against the JSON. It remains independent of the production engine.",
+      "scope": "OpenAI ChatGPT/Codex generated an independent proposed-design enumerator and prose/predicate/boundary checks; this is not the production engine. Claude made a small 1.9.0 status/integration change: it rebuilds Sols 1-6 from base mechanics plus JSON overrides and checks runtime scene order and forecasts against the JSON. It remains independent of the production engine. Claude-assisted 1.11.0 update (expects five endings).",
       "tools": [
         "OpenAI ChatGPT/Codex",
         "Anthropic Claude"
@@ -471,7 +480,7 @@
     {
       "path": "docs/design/ten-sol-balance-report.md",
       "status": "ai-generated",
-      "scope": "OpenAI ChatGPT/Codex generated the report via tools/check_ten_sol_design.mjs, recording exhaustive proposed-design counts and complete reachable witnesses for every profile. These are game-design calculations, not NASA measurements or browser-playtest results.",
+      "scope": "OpenAI ChatGPT/Codex generated the report via tools/check_ten_sol_design.mjs, recording exhaustive proposed-design counts and complete reachable witnesses for every profile. These are game-design calculations, not NASA measurements or browser-playtest results. Claude-assisted 1.11.0 update (report regenerated by tools/check_ten_sol_design.mjs --write-report for five endings).",
       "tools": [
         "OpenAI ChatGPT/Codex"
       ]

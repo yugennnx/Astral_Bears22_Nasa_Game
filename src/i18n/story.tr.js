@@ -545,4 +545,54 @@ export const STORY_TR = {
     "Yararlı bir cevap, dikkatli bir hazırlık ve riskli işi yapan bir makine aynı hikâyenin parçası olabilir.",
   ["The older crew, survey network, cassette, and relay are fictional story props, not real NASA assets or an operational Mars network."]:
     "Eski ekip, ölçüm ağı, kaset ve röle hayalî hikâye malzemeleridir; gerçek NASA varlıkları ya da çalışan bir Mars ağı değildir.",
+
+  // Fictional fifth ending: The Visitors Beyond the Window
+  ["The Visitors Beyond the Window"]:
+    "Pencerenin Ötesindeki Ziyaretçiler",
+  ["Beyond the glass, something silver unfolds like a tiny flower. Two small figures stand beside it on the ridge."]:
+    "Camın ötesinde, küçük bir çiçek gibi açılan gümüşi bir şey var. Sırtın üstünde, yanında duran iki küçük figür görünüyor.",
+  ["Those are not our survey robots."]:
+    "Bunlar bizim ölçüm robotlarımız değil.",
+  ["One visitor raises a hand with four long fingers. DUTİ raises its little metal paw. For a moment, nobody moves."]:
+    "Ziyaretçilerden biri dört uzun parmaklı bir el kaldırıyor. DUTİ de küçük metal pençesini kaldırıyor. Bir an için kimse kıpırdamıyor.",
+  ["I have practised many greetings. Somehow, I forgot all of them."]:
+    "Onlarca selam çalıştım. Nedense hepsini unuttum.",
+  ["DUTİ holds the notebook to the window, open at UNKNOWN LIGHTS. The visitor points toward the sky, then gently toward the notebook."]:
+    "DUTİ defteri pencereye tutuyor; defter BİLİNMEYEN IŞIKLAR sayfasında açık. Ziyaretçi önce gökyüzüne, sonra nazikçe deftere işaret ediyor.",
+  ["I do not know what that means. But I think we have another question."]:
+    "Bunun ne anlama geldiğini bilmiyorum. Ama sanırım bir sorumuz daha var.",
+  ["The figures return to their silver craft. It lifts beyond the ridge, quiet behind the thick window. One pale light remains, then fades."]:
+    "Figürler gümüşi araçlarına dönüyor. Araç, kalın pencerenin ardında sessizce sırtın ötesine yükseliyor. Geriye soluk bir ışık kalıyor, sonra sönüyor.",
+  ["We kept looking carefully. And this story became bigger than our notebook."]:
+    "Dikkatle bakmaya devam ettik. Ve bu hikâye defterimizden daha büyük bir hâl aldı.",
+  ["Beneath the final entry, DUTİ draws a small waving paw. Then it turns to a fresh page."]:
+    "Son notun altına DUTİ küçük, sallanan bir pençe çiziyor. Sonra yeni bir sayfaya dönüyor.",
+  ["If someone out there keeps a notebook too... what do you think they wrote about us?"]:
+    "Dışarıda da bir defter tutan biri varsa... sence bizim hakkımızda ne yazmışlardır?",
+  ["You saved the indoor camera record on Sol 2 and the robot view on Sol 5."]:
+    "2. Mars gününde iç mekân kamera kaydını, 5. Mars gününde robotun görüntüsünü sakladın.",
+  ["You checked equipment logs on Sol 7 and preserved the cassette picture on Sol 8."]:
+    "7. Mars gününde ekipman günlüklerini kontrol ettin, 8. Mars gününde kasetteki fotoğrafı koruyup sakladın.",
+  ["You compared observations without claiming proof, then shared the report on Sol 10."]:
+    "Kanıt iddia etmeden gözlemleri karşılaştırdın, sonra 10. Mars gününde raporu paylaştın.",
+  ["What other questions might a different trail leave in DUTİ's notebook?"]:
+    "Başka bir izin DUTİ'nin defterinde hangi başka soruları bırakabileceğini düşünüyorsun?",
+  ["Fictional science-fiction epilogue. The lights, pictures, visitors and craft are invented story elements. No extraterrestrial life has been confirmed, and no NASA discovery is claimed."]:
+    "Kurgusal bilimkurgu epilogu. Işıklar, fotoğraflar, ziyaretçiler ve araç uydurma hikâye öğeleridir. Dünya dışı yaşam doğrulanmadı ve hiçbir NASA keşfi iddia edilmiyor.",
+  ["Fictional science-fiction ending"]:
+    "Kurgusal bilimkurgu sonu",
+  ["This encounter is fictional. No extraterrestrial life has been confirmed."]:
+    "Bu karşılaşma kurgudur. Dünya dışı yaşam doğrulanmadı.",
+  ["You kept the pictures, checked the equipment, compared the records and shared what remained unknown. In this fictional ending, the last look through the window revealed friendly visitors."]:
+    "Fotoğrafları sakladın, ekipmanı kontrol ettin, kayıtları karşılaştırdın ve bilinmeyen kalanları paylaştın. Bu kurgusal sonda, pencereden yapılan son bakış dost canlısı ziyaretçileri ortaya çıkardı.",
+  ["The light returns"]:
+    "Işık geri döner",
+  ["A very small hello"]:
+    "Çok küçük bir merhaba",
+  ["The page we left open"]:
+    "Açık bıraktığımız sayfa",
+  ["Beyond the ridge"]:
+    "Sırtın ötesinde",
+  ["A new beginning"]:
+    "Yeni bir başlangıç",
 };

@@ -33,9 +33,9 @@ assert.equal(design.successRequirements.science, design.scienceTarget);
 assert.equal(scenes.length, 10);
 assert.equal(allIds.size, 29);
 assert.equal(new Set(scenes.map(scene => scene.id)).size, 10);
-assert.equal(design.specialEndings.length, 4);
-assert.equal(new Set(design.specialEndings.map(ending => ending.id)).size, 4);
-assert.equal(new Set(design.specialEndings.map(ending => ending.priority)).size, 4);
+assert.equal(design.specialEndings.length, 5);
+assert.equal(new Set(design.specialEndings.map(ending => ending.id)).size, 5);
+assert.equal(new Set(design.specialEndings.map(ending => ending.priority)).size, 5);
 assert.equal(design.checkpoint.afterSol, 6);
 assert.equal(design.initialFlags[design.checkpoint.onceFlag], false);
 assert.deepEqual(design.checkpoint.effects, { energy: 2, oxygen: 4, safety: 0, science: 0 });
@@ -175,7 +175,7 @@ for (const profile of MISSION.profiles) {
   console.log(`${profile.id}: ${counts.success} success, ${counts.partial} partial, ${counts.stopped} stopped; max Science ${maxScience}.`);
   for (const [id, witness] of Object.entries(witnesses)) console.log(`  ${id}: ${witness.history.join(" ")} => E${witness.resources.energy}/O${witness.resources.oxygen}/S${witness.resources.safety}, Science ${witness.science}`);
 }
-console.log("Ten-sol design verified: 10 scenes, 29 choices, four mutually exclusive special endings and ordinary success reachable in every profile; every choice appears on a successful path.");
+console.log("Ten-sol design verified: 10 scenes, 29 choices, five mutually exclusive special endings (one fictional) and ordinary success reachable in every profile; every choice appears on a successful path.");
 
 if (process.argv.includes("--write-report")) {
   let report = "# Ten-Sol Design Balance Report\n\n> AI/SI disclosure: generated with OpenAI ChatGPT/Codex by the design checker. See [AI_USAGE.md](../../AI_USAGE.md) and [ai-usage.json](../../ai-usage.json).\n\n**Date:** November 15, 2026. These are exhaustive results for the proposed design, not the playable runtime or a child playtest. All scores are fictional. Reproduce with `npm run check:expansion`; regenerate with `node tools/check_ten_sol_design.mjs --write-report`.\n\nA stopped branch is counted when it stops; its unplayed future choices are not expanded. Success/partial counts are full ten-decision histories.\n";
@@ -186,6 +186,6 @@ if (process.argv.includes("--write-report")) {
       report += `| ${id} | ${count} | ${w.history.join(" → ")} | ${w.resources.energy} / ${w.resources.oxygen} / ${w.resources.safety} | ${w.science} |\n`;
     }
   }
-  report += "\nAll 29 choices appear on at least one successful history in each profile. Each special ending's required decisions are necessary for its predicate. There is no overlap among the four special predicates. Checkpoint depletion, pre-release low-power calculation, and the unavailable greenhouse-tray option were checked explicitly. The reference checker also verifies that the story and JSON prose agree.\n";
+  report += "\nAll 29 choices appear on at least one successful history in each profile. Each special ending's required decisions are necessary for its predicate. There is no overlap among the five special predicates. Checkpoint depletion, pre-release low-power calculation, and the unavailable greenhouse-tray option were checked explicitly. The reference checker also verifies that the story and JSON prose agree.\n";
   await writeFile(new URL("../docs/design/ten-sol-balance-report.md", import.meta.url), report);
 }

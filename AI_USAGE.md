@@ -72,6 +72,16 @@ On November 15, 2026, OpenAI Codex independently verified commit `6bd524b` in th
 
 After an OpenAI ChatGPT/Codex discussion suggested a fictional visitor ending, the user selected **The Visitors Beyond the Window**, requested an exciting continuation of the existing story, and authorized publication for Tuğra to implement. OpenAI ChatGPT/Codex generated the detailed English conditional clues, six-choice predicate, five-page encounter, uncertainty/fiction wording, numerical witness analysis and implementation checklist in [the story appendix](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window). It revised the story-plan/handoff/README/changelog links and these disclosure records. The user supplied the desired visitor theme and engagement goal; the detailed text and unlock recipe are AI-generated. A temporary probe evaluated the proposed predicate against the unchanged production engine in all profiles; it was not added as a permanent test. This publication is story/documentation only: no runtime, machine-readable design, translation, image/audio, save or license change is included. The fifth ending is not yet playable, and no child playtest, completed human review or NASA approval is claimed.
 
+## 1.11.0 update (The Visitors Beyond the Window and clearer reasons)
+
+Version 1.11.0 separates three kinds of contribution:
+
+- **The fifth ending's story, clues and predicate.** The Visitors Beyond the Window, its conditional clues, six-choice predicate, five fictional pages and fiction wording were generated with **OpenAI ChatGPT/Codex** as part of the teammate's design (commit `cd71176`; appendix in [the ten-sol story plan](docs/design/ten-sol-story-plan.md#planned-fifth-ending-the-visitors-beyond-the-window)). The user supplied the visitor theme and engagement goal.
+- **The education priority list.** The one-sentence "Why" lines, the 2C data-source line, the two new thinking tasks (7A and 9A) and the extra ending-report decision chains come from a priority list produced with **OpenAI Codex** assistance. The team chose which items to implement.
+- **The implementation.** **Anthropic Claude** generated the runtime and presentation code: `src/ui/beats.js`, the special-ending pages and report, the visitor art drawn in code, the `SPECIAL_ENDINGS` entry and related scene data, the English and Turkish interface strings, the checks and these documentation updates. The beats' prose comes from the ChatGPT/Codex appendix. File-level scopes are recorded in [`ai-usage.json`](ai-usage.json).
+
+No completed human code review, child playtest or browser verification is claimed for this version; browser checking is left to the team reviewer. The checks run for this version are automated data and numerical checks only.
+
 ## Selected Prompt Record
 
 The following are English summaries or translations of project-related user requests, not a complete chat transcript:

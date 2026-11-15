@@ -35,6 +35,7 @@ export function collectStoryStrings() {
   }
   for (const ending of SPECIAL_ENDINGS) {
     add(ending.title); blocks(ending.story); (ending.evidence ?? []).forEach(add); add(ending.replayHint); add(ending.scienceBoundary);
+    add(ending.fictionLabel); add(ending.fictionNote); add(ending.journalSummary); (ending.pages ?? []).forEach(page => add(page.title));
   }
   Object.values(NASA_SOURCES).forEach(source => { add(source.title); add(source.observationPeriod); });
   return out;

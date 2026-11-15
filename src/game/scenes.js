@@ -748,7 +748,8 @@ export const ENDINGS = {
 };
 
 /**
- * Special endings (team design, generated with OpenAI ChatGPT/Codex). Shown only after a
+ * Special endings (team design, generated with OpenAI ChatGPT/Codex; the fifth, fictional
+ * "Visitors" ending follows docs/design/ten-sol-story-plan.md). Shown only after a
  * successful Sol 10 when this run's history matches. They grant no resources or Science.
  * Story-world inventions only: no real NASA discovery is claimed (see scienceBoundary).
  */
@@ -901,6 +902,140 @@ export const SPECIAL_ENDINGS = [
     ],
     replayHint: "A useful reply, a careful preparation, and a machine doing the risky work can belong to the same story.",
     scienceBoundary: "The older crew, survey network, cassette, and relay are fictional story props, not real NASA assets or an operational Mars network."
+  },
+  {
+    id: "the-visitors-beyond-the-window",
+    title: "The Visitors Beyond the Window",
+    priority: 5,
+    allChoices: [
+      "2C",
+      "5B",
+      "7C",
+      "8C",
+      "9A",
+      "10A"
+    ],
+    anyChoiceGroups: [],
+    fiction: true,
+    fictionLabel: "Fictional science-fiction ending",
+    fictionNote: "This encounter is fictional. No extraterrestrial life has been confirmed.",
+    pages: [
+      {
+        title: "The light returns",
+        story: [
+          {
+            speakerId: "narrator",
+            text: "Beyond the glass, something silver unfolds like a tiny flower. Two small figures stand beside it on the ridge."
+          },
+          {
+            speakerId: "duti",
+            text: "Those are not our survey robots."
+          }
+        ]
+      },
+      {
+        title: "A very small hello",
+        story: [
+          {
+            speakerId: "narrator",
+            text: "One visitor raises a hand with four long fingers. DUTİ raises its little metal paw. For a moment, nobody moves."
+          },
+          {
+            speakerId: "duti",
+            text: "I have practised many greetings. Somehow, I forgot all of them."
+          }
+        ]
+      },
+      {
+        title: "The page we left open",
+        story: [
+          {
+            speakerId: "narrator",
+            text: "DUTİ holds the notebook to the window, open at UNKNOWN LIGHTS. The visitor points toward the sky, then gently toward the notebook."
+          },
+          {
+            speakerId: "duti",
+            text: "I do not know what that means. But I think we have another question."
+          }
+        ]
+      },
+      {
+        title: "Beyond the ridge",
+        story: [
+          {
+            speakerId: "narrator",
+            text: "The figures return to their silver craft. It lifts beyond the ridge, quiet behind the thick window. One pale light remains, then fades."
+          },
+          {
+            speakerId: "duti",
+            text: "We kept looking carefully. And this story became bigger than our notebook."
+          }
+        ]
+      },
+      {
+        title: "A new beginning",
+        story: [
+          {
+            speakerId: "narrator",
+            text: "Beneath the final entry, DUTİ draws a small waving paw. Then it turns to a fresh page."
+          },
+          {
+            speakerId: "duti",
+            text: "If someone out there keeps a notebook too... what do you think they wrote about us?"
+          }
+        ]
+      }
+    ],
+    story: [
+      {
+        speakerId: "narrator",
+        text: "Beyond the glass, something silver unfolds like a tiny flower. Two small figures stand beside it on the ridge."
+      },
+      {
+        speakerId: "duti",
+        text: "Those are not our survey robots."
+      },
+      {
+        speakerId: "narrator",
+        text: "One visitor raises a hand with four long fingers. DUTİ raises its little metal paw. For a moment, nobody moves."
+      },
+      {
+        speakerId: "duti",
+        text: "I have practised many greetings. Somehow, I forgot all of them."
+      },
+      {
+        speakerId: "narrator",
+        text: "DUTİ holds the notebook to the window, open at UNKNOWN LIGHTS. The visitor points toward the sky, then gently toward the notebook."
+      },
+      {
+        speakerId: "duti",
+        text: "I do not know what that means. But I think we have another question."
+      },
+      {
+        speakerId: "narrator",
+        text: "The figures return to their silver craft. It lifts beyond the ridge, quiet behind the thick window. One pale light remains, then fades."
+      },
+      {
+        speakerId: "duti",
+        text: "We kept looking carefully. And this story became bigger than our notebook."
+      },
+      {
+        speakerId: "narrator",
+        text: "Beneath the final entry, DUTİ draws a small waving paw. Then it turns to a fresh page."
+      },
+      {
+        speakerId: "duti",
+        text: "If someone out there keeps a notebook too... what do you think they wrote about us?"
+      }
+    ],
+    evidence: [
+      "You saved the indoor camera record on Sol 2 and the robot view on Sol 5.",
+      "You checked equipment logs on Sol 7 and preserved the cassette picture on Sol 8.",
+      "You compared observations without claiming proof, then shared the report on Sol 10."
+    ],
+    journalSummary: "You kept the pictures, checked the equipment, compared the records and shared what remained unknown. In this fictional ending, the last look through the window revealed friendly visitors.",
+    replayHint: "What other questions might a different trail leave in DUTİ's notebook?",
+    scienceBoundary: "Fictional science-fiction epilogue. The lights, pictures, visitors and craft are invented story elements. No extraterrestrial life has been confirmed, and no NASA discovery is claimed."
   }
 ];
 

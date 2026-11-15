@@ -532,3 +532,29 @@ export function memoryProps(sceneId, state) {
   }
   return out.join("");
 }
+
+/**
+ * Static art for the fictional "Visitors Beyond the Window" ending pages (no flashing, no motion
+ * required). Drawn on the overlay layer in the crater-rim artwork's 1600 x 900 frame.
+ * Story-world illustration drawn in code with AI assistance; not a NASA image.
+ */
+export function visitorsArt(page) {
+  const craft = (y, open) => `<g transform="translate(1040 ${y})">
+    <ellipse cx="0" cy="0" rx="70" ry="18" fill="#cfd8e6" stroke="#8b93a8" stroke-width="4"/>
+    <path d="M-40 -6q40-${open ? 52 : 36} 80 0Z" fill="#e8eef7" stroke="#8b93a8" stroke-width="4"/>
+    ${[-40, 0, 40].map(x => `<circle cx="${x}" cy="4" r="5" fill="#bff3ff"/>`).join("")}
+  </g>`;
+  const visitor = (x, wave) => `<g transform="translate(${x} 470)">
+    <ellipse cx="0" cy="58" rx="16" ry="5" fill="#000" opacity=".25"/>
+    <rect x="-9" y="10" width="18" height="44" rx="9" fill="#9fe7c9"/>
+    <ellipse cx="0" cy="-6" rx="17" ry="20" fill="#b9f2da"/>
+    <ellipse cx="-6" cy="-6" rx="4" ry="6" fill="#0b1026"/><ellipse cx="6" cy="-6" rx="4" ry="6" fill="#0b1026"/>
+    <path d="M9 20q14 ${wave ? -26 : 4} 18 ${wave ? -34 : 14}" stroke="#9fe7c9" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>`;
+  let inner = "";
+  if (page === 0) inner = craft(470, true) + visitor(960, false) + visitor(1120, false);
+  else if (page === 1 || page === 2) inner = craft(470, true) + visitor(960, true) + visitor(1120, false);
+  else if (page === 3) inner = craft(330, false) + `<circle cx="1040" cy="330" r="60" fill="#e8f7ff" opacity=".18"/>`;
+  else inner = `<circle cx="1040" cy="260" r="6" fill="#e8f7ff" opacity=".7"/>`;
+  return `<svg class="fx fx--visitors" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${inner}</svg>`;
+}
