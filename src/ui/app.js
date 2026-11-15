@@ -200,7 +200,7 @@ function setFocus(x = 800) {
 }
 window.addEventListener("resize", () => setFocus(focusX));
 
-const signLabels = () => ({ lab: t("sign.lab"), route: t("sign.route"), plants: t("sign.plants"), mars: t("sign.mars"), earth: t("sign.earth"), delay: t("sign.delay"), sample: t("sign.sample"), tomorrow: t("sign.tomorrow") });
+const signLabels = () => ({ heater: t("sign.heater"), lab: t("sign.lab"), route: t("sign.route"), plants: t("sign.plants"), mars: t("sign.mars"), earth: t("sign.earth"), delay: t("sign.delay"), sample: t("sign.sample"), tomorrow: t("sign.tomorrow") });
 
 /** Keep the whole job between the real HUD and instructions, including after a resize or translation. */
 function layoutActivity() {
@@ -606,19 +606,51 @@ function showSpotlight() {
   app.observing = Boolean(observe);
   if (observe) {
     // The child tries the device first and watches the gauge; DUTİ explains afterwards.
-    const svg = fxEl.querySelector("svg");
-    svg?.insertAdjacentHTML("beforeend", `<g class="spot-observe" transform="translate(${spot.observe.x} ${spot.observe.y})" role="button" tabindex="0" aria-label="${esc(t(spot.observe.key))}">
-      <circle r="58" fill="rgba(255,214,92,.18)" stroke="#ffd65c" stroke-width="6"/><circle class="spot-observe-pulse" r="58" fill="none" stroke="#fff3c4" stroke-width="3"/>
-      <path d="M-16-18h32v36h-32Z" fill="#ffb55a" stroke="#6b4300" stroke-width="4"/><path d="M-8-6h16M-8 4h16" stroke="#6b4300" stroke-width="4" stroke-linecap="round"/></g>`);
-    const target = svg?.querySelector(".spot-observe");
-    const go = event => { event.stopPropagation(); observeDevice(spot); };
-    target?.addEventListener("click", go);
-    target?.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); go(event); } });
   }
   showLine({ speakerId: "duti", text: "" }, `${app.spot + 1} / ${spots.length}`, t(observe ? spot.observe.key : spot.key, { ...app.game.resources }));
-  if (spot.y > 520) layerEl.querySelector(".dialog")?.classList.add("dialog--top");
-  if (observe) layerEl.querySelector(".dialog-next")?.classList.add("is-waiting");
+  // While the child is asked to try the device, the dialog goes to the top so it never covers the button.
+  if (spot.y > 520 || observe) layerEl.querySelector(".dialog")?.classList.add("dialog--top");
+  if (observe) {
+    layerEl.querySelector(".dialog-next")?.classList.add("is-waiting");
+    placeObserveButton(spot);
+  }
   finishRender({ focus: false });
+}
+
+/**
+ * A real, focusable HTML button over the device in the drawing. It lives in the top layer, so no
+ * dialog or SVG transform can hide or move it, and screen readers can reach it.
+ */
+function placeObserveButton(spot) {
+  layerEl.querySelector(".observe-btn")?.remove();
+  const svg = fxEl.querySelector("svg");
+  const matrix = svg?.getScreenCTM();
+  if (!svg || !matrix) return;
+  const point = svg.createSVGPoint();
+  point.x = spot.observe.x;
+  point.y = spot.observe.y;
+  const at = point.matrixTransform(matrix);
+  const button = document.createElement("button");
+  button.className = "observe-btn";
+  button.type = "button";
+  button.dataset.action = "observe";
+  button.innerHTML = `<span class="observe-icon" aria-hidden="true">${icon("energy")}</span><span>${esc(t(spot.observe.label))}</span>`;
+  layerEl.append(button);
+  const box = button.getBoundingClientRect();
+  const left = Math.max(8, Math.min(innerWidth - box.width - 8, at.x - box.width / 2));
+  // Never under the dialog: keep the device's position if free, otherwise go just above or below the dialog.
+  const dialog = layerEl.querySelector(".dialog-box")?.getBoundingClientRect();
+  const hudBottom = Math.ceil(hudEl.getBoundingClientRect().bottom) + 8;
+  const clamp = y => Math.max(hudBottom, Math.min(innerHeight - box.height - 8, y));
+  let top = clamp(at.y - box.height / 2);
+  if (dialog && top < dialog.bottom + 8 && top + box.height > dialog.top - 8) {
+    const above = dialog.top - box.height - 10;
+    const below = dialog.bottom + 10;
+    top = above >= hudBottom ? above : below + box.height <= innerHeight - 8 ? below : clamp(above);
+  }
+  button.style.left = `${Math.round(left)}px`;
+  button.style.top = `${Math.round(top)}px`;
+  button.focus({ preventScroll: true });
 }
 
 /** The device runs for a moment: the gauge visibly dips, then DUTİ explains what we saw. */
@@ -710,11 +742,12 @@ function showExplore({ animateIn = false } = {}) {
   }
 }
 
-function discover(id, element) {
+function discover(id, element, { replay = false } = {}) {
+  app.exploreLineId = id;
   const sceneId = app.game.sceneId;
   const item = DISCOVERIES[sceneId].find(d => d.id === id);
   if (!item) return;
-  const isNew = !profile.discoveries.includes(id);
+  const isNew = !replay && !profile.discoveries.includes(id);
   if (isNew) {
     profile.discoveries.push(id);
     saveProfile();
@@ -733,7 +766,7 @@ function discover(id, element) {
   }
   const trail = item.thread ? SCENE_ORDER.flatMap(sid => (DISCOVERIES[sid] ?? []).filter(d => d.thread === item.thread)) : [];
   const seenBefore = item.thread && trail.slice(0, trail.findIndex(d => d.id === id)).some(d => profile.discoveries.includes(d.id));
-  play(isNew && (item.secret || item.kind === "clue") ? "secret" : "discover");
+  if (!replay) play(isNew && (item.secret || item.kind === "clue") ? "secret" : "discover");
   app.screen = "explore-line";
   const label = isNew ? (item.secret ? t("explore.secret") : item.kind === "clue" ? t("explore.clue") : t("explore.new")) : t("explore.again");
   showLine({ speakerId: "duti", text: "" }, label, `${seenBefore ? `${t("clue.seenBefore")} ` : ""}${t(`disc.${id}`)}`);
@@ -1253,7 +1286,7 @@ function showEnding() {
         ${playerName() && ending.status === "success" ? `<p class="end-name">${esc(t("ending.byName", { name: playerName() }))}</p>` : ""}
         ${special ? `<p class="end-badge">${icon("star")}${esc(t(newEnding ? "ending.specialNew" : "ending.specialAgain"))}</p>` : ""}
         <h2 id="end-title" data-focus tabindex="-1">${esc(ts(special?.title ?? copy.title))}</h2>
-        <p class="lead">${esc(failed ? t("ending.cheer") : special ? ts(copy.text) : ts(copy.text))}</p>
+        <p class="lead">${esc(failed ? t("ending.cheer") : ts(copy.text))}</p>
         ${reasons.map(text => `<p class="alert alert--strong">${icon("info")}${esc(text)}</p>`).join("")}
       </div>
     </div>
@@ -1450,10 +1483,16 @@ function redraw() {
   switch (app.screen) {
     case "title": return showTitle();
     case "briefing": return showBriefing();
-    case "intro": return startStory();
+    case "intro": return showIntro();
     case "story": return renderStoryLine();
     case "spot": return showSpotlight();
-    case "explore": case "explore-line": return showExplore();
+    case "explore": return showExplore();
+    case "explore-line": {
+      const open = app.exploreLineId;
+      showExplore();
+      if (open) discover(open, null, { replay: true });
+      return;
+    }
     case "predict": return showPredict();
     case "fact": return showFact();
     case "activity": {
@@ -1511,8 +1550,9 @@ function advance() {
   if (app.screen === "spot") {
     if (app.observing) {
       // Waiting for the child to try the device: point at it again instead of moving on.
-      const target = fxEl.querySelector(".spot-observe");
-      if (target && !reducedMotion()) animate(target, { scale: [1, 1.25, 1], duration: 500, ease: "outBack(3)" });
+      // Point at the device button again (a CSS pulse; no transform on the drawing).
+      const target = layerEl.querySelector(".observe-btn");
+      if (target) { target.classList.remove("is-nudged"); void target.offsetWidth; target.classList.add("is-nudged"); target.focus({ preventScroll: true }); }
       return;
     }
     const spots = SPOTLIGHTS[app.game.sceneId];
@@ -1689,6 +1729,10 @@ const actions = {
   },
   ready: () => openChoicesAfterStory(),
   "pan-left": () => setFocus(focusX - 280),
+  observe() {
+    const spot = SPOTLIGHTS[app.game?.sceneId]?.[app.spot];
+    if (app.screen === "spot" && spot?.observe) observeDevice(spot);
+  },
   "end-next"() {
     const ending = app.game?.ending;
     if (!ending) return;
@@ -1804,6 +1848,7 @@ document.addEventListener("keydown", event => {
   if (modal.open || event.repeat || ![" ", "Enter", "ArrowRight"].includes(event.key)) return;
   const focused = document.activeElement;
   if (focused && ["INPUT", "TEXTAREA", "SELECT"].includes(focused.tagName)) return;
+  if (focused?.classList?.contains("observe-btn")) return; // Space/Enter press the device button itself
   // On reading screens these keys always mean "next", even if a button still has focus.
   const reading = ["story", "spot", "explore-line", "intro", "transition", "fact", "ledger", "endpage"].includes(app.screen) || (app.screen === "result" && app.game?.phase === "feedback");
   if (!reading && focused && (focused.tagName === "BUTTON" || focused.tagName === "A" || focused.getAttribute("role") === "button")) return;

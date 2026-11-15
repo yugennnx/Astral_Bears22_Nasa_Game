@@ -865,12 +865,10 @@ body[data-scene="solar-radiation-alert"] .world::after { content: ""; position: 
 }
 
 /* ---------- 1.10.0: clues, memories, observing, thinking tasks ---------- */
-.fx--spot .spot-observe { pointer-events: auto; cursor: pointer; outline: none; }
-.spot-observe-pulse { animation: hot-ring 1.4s ease-in-out infinite; }
 .dialog-next.is-waiting { opacity: 0.35; }
 .gauge.is-observed { box-shadow: 0 0 0 3px var(--danger); }
 .dialog--memory .dialog-box { border-color: rgba(199, 155, 255, 0.85); }
-.dialog--memory .dialog-counter { color: #d8c2ff; font-weight: 700; }
+.dialog--memory .dialog-counter { color: #5b2fa0; font-weight: 700; }
 .dialog--clue .dialog-box { border-color: rgba(255, 214, 92, 0.85); }
 .dialog-skip { margin-right: auto; min-height: 32px; padding: 4px 12px; font-size: 0.8rem; }
 .task { position: absolute; }
@@ -885,7 +883,9 @@ body[data-scene="solar-radiation-alert"] .world::after { content: ""; position: 
 @keyframes far-blink { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
 
 /* ---------- 1.11.0: why lines, paged endings, fiction label ---------- */
-.dialog-why { display: flex; gap: 6px; align-items: flex-start; margin: 2px 0 4px; padding: 5px 10px; border-radius: 10px; background: rgba(126, 240, 255, 0.12); color: #c9f3ff; font-size: 0.86rem; font-weight: 600; }
+/* Readable on the cream DUTİ box (dark teal on pale blue, contrast > 7:1) and on the dark narrator box. */
+.dialog-why { display: flex; gap: 6px; align-items: flex-start; margin: 2px 0 6px; padding: 6px 10px; border-radius: 10px; background: #e3f4fb; border: 1px solid #9ccfe3; color: #0f3d52; font-size: 0.9rem; font-weight: 650; }
+.dialog--narrator .dialog-why { background: rgba(126, 240, 255, 0.14); border-color: rgba(126, 240, 255, 0.4); color: #dff8ff; }
 .dialog-why .icon { flex: 0 0 auto; margin-top: 0.12em; }
 .popup--endpage { width: min(620px, calc(100vw - 24px)); }
 .popup--endpage .end-line { font-size: 1.08rem; }
@@ -919,3 +919,19 @@ body[data-screen="activity"] .world::after { display: none; }
 }
 /* A little air between the cost chips and the "Choose this" button. */
 .card-choice.is-selected .card-more { padding-top: 10px; }
+
+/* Buttons inside the cream DUTİ box need dark text. */
+.dialog:not(.dialog--narrator) .dialog-skip { color: #2a2140; border-color: #c9a97c; background: #fff3dc; }
+
+/* Observe-first device button (HTML, above the dialog layer). */
+.observe-btn { position: fixed; z-index: 6; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; min-height: 48px; border-radius: 999px; border: 3px solid #6b4300; background: #ffd65c; color: #2a1c00; font-weight: 800; font-size: 1rem; box-shadow: 0 0 0 6px rgba(255, 214, 92, 0.35), 0 10px 24px rgba(0, 0, 0, 0.45); cursor: pointer; pointer-events: auto; animation: observe-pulse 1.6s ease-in-out infinite; }
+.observe-btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.observe-btn .icon { width: 22px; height: 22px; }
+.observe-btn.is-nudged { animation: observe-nudge 0.5s ease-out, observe-pulse 1.6s ease-in-out 0.5s infinite; }
+@keyframes observe-pulse { 0%, 100% { box-shadow: 0 0 0 4px rgba(255, 214, 92, 0.3), 0 10px 24px rgba(0, 0, 0, 0.45); } 50% { box-shadow: 0 0 0 12px rgba(255, 214, 92, 0.15), 0 10px 24px rgba(0, 0, 0, 0.45); } }
+@keyframes observe-nudge { 0% { scale: 1; } 40% { scale: 1.15; } 100% { scale: 1; } }
+@media (prefers-reduced-motion: reduce) { .observe-btn, .observe-btn.is-nudged { animation: none; } }
+@media (max-width: 640px) {
+  /* Keep the start buttons clear of the AI-illustration note at the bottom of the title screen. */
+  .title .actions { margin-bottom: 18px; }
+}

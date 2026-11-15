@@ -495,6 +495,12 @@ const drawerCabinet = name => `<g class="w-prop w-prop--drawer" transform="trans
   <rect x="-22" y="28" width="44" height="10" rx="5" fill="#ffd65c"/>
   ${lanternMark(78, -52, 0.55)}
 </g>`;
+const heaterPanel = (x, y, name) => `<g class="w-prop w-prop--heater" transform="translate(${x} ${y})">
+  <rect x="-62" y="-46" width="124" height="92" rx="14" fill="#3a4170" stroke="#8b93a8" stroke-width="5"/>
+  ${[-36, -12, 12, 36].map(px => `<rect x="${px - 7}" y="-30" width="14" height="52" rx="7" fill="#ffb55a" stroke="#c9693f" stroke-width="3"/>`).join("")}
+  <rect x="-54" y="50" width="108" height="24" rx="6" fill="#fff7ea"/>
+  <text y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="17" font-weight="800" fill="#2a2140">${name}</text>
+</g>`;
 const farBlink = () => `<g class="w-prop w-far-blink" transform="translate(1415 330)">${lanternMark(0, 0, 0.45)}</g>`;
 
 /**
@@ -510,6 +516,7 @@ export function memoryProps(sceneId, state, labels = {}) {
       if (f.shelterPrepared) out.push(crateProp(372, 702), crateProp(418, 716, 0.6));
       break;
     case "power":
+      out.push(heaterPanel(630, 470, labels.heater ?? "HEATER"));
       if (f.sampleCollected) out.push(sampleJar(560, 728, labels.sample ?? "SOL 2"));
       if (f.greenhouseMode) out.push(plantPot(690, 732, f.greenhouseMode));
       if (sceneId === "power-shortage") out.push(clipboard(1000, 708));

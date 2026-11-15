@@ -91,7 +91,7 @@ export const STORY_TR = {
   ["Prepare the storm shelter"]:
     "Fırtına sığınağını hazırla",
   ["Moving into the shelter on Sol 5 will cost 0 Energy instead of 1. The panels remain unserviced."]:
-    "5. günde sığınağa geçmek (5A) 1 yerine 0 Enerji harcar. Paneller ise tozlu kalır.",
+    "5. Mars gününde sığınağa geçmek 1 yerine 0 Enerji harcar. Paneller ise tozlu kalır.",
   ["The water packs and protective supplies are in place. If a warning arrives, we can get ready faster. The panels will have to wait."]:
     "Su paketleri ve koruyucu malzemeler yerli yerinde. Bir uyarı gelirse çok daha hızlı hazırlanırız. Paneller biraz bekleyecek.",
   ["Power Shortage"]:
@@ -101,9 +101,9 @@ export const STORY_TR = {
   ["Real NASA data: Mars nights are very cold"]:
     "Gerçek NASA verisi: Mars'ta geceler çok soğuk",
   ["NASA's Perseverance rover measured the air in Jezero Crater on Sol 290 (December 13, 2021). The warmest reading was about −3 °C and the coldest was about −77 °C. A Mars base needs batteries and heaters when the Sun goes down. Our dust and recharge values are game values."]:
-    "NASA'nın Perseverance gezgini, Jezero Krateri'nde 290. Mars gününde (13 Aralık 2021) havanın sıcaklığını ölçtü. Gün içinde en sıcak yaklaşık −3 °C, gece en soğuk yaklaşık −77 °C oldu. Güneş batınca bir Mars üssünün bataryaya ve ısıtıcıya ihtiyacı vardır. Oyundaki toz ve şarj sayıları ise uydurmadır.",
+    "NASA'nın Perseverance gezgini, Jezero Krateri'nde 290. Mars gününde (13 Aralık 2021) havanın sıcaklığını ölçtü. Gün içinde en sıcak yaklaşık −3 °C, gece en soğuk yaklaşık −77 °C oldu. Güneş batınca bir Mars üssünün bataryaya ve ısıtıcıya ihtiyacı vardır. Oyundaki toz ve şarj sayıları ise oyun için seçilmiş kurgusal değerlerdir.",
   ["Recorded sample minimum/maximum of calibrated MEDA air temperature sensor 1 for the selected sol, rounded. The summary uses a simple plausibility filter; additional instrument quality flags are not applied. It is not a global climate or dust measurement. The game's dust forecast is fictional."]:
-    "Seçilen gün için MEDA hava sıcaklığı sensörü 1'in kaydettiği en düşük ve en yüksek değerler, yuvarlanmış halde. Basit bir hata ayıklama filtresi kullanıldı; cihazın diğer kalite işaretleri uygulanmadı. Bu, Mars'ın genel iklimi ya da bir toz ölçümü değildir. Oyundaki toz tahmini uydurmadır.",
+    "Seçilen gün için MEDA hava sıcaklığı sensörü 1'in kaydettiği en düşük ve en yüksek değerler, yuvarlanmış halde. Basit bir mantıklılık filtresi kullanıldı; cihazın diğer kalite işaretleri uygulanmadı. Bu, Mars'ın genel iklimi ya da bir toz ölçümü değildir. Oyundaki toz tahmini kurgusaldır.",
   ["Produce more oxygen"]:
     "Daha fazla oksijen üret",
   ["Build the oxygen reserve, but skip today's research."]:
@@ -149,7 +149,7 @@ export const STORY_TR = {
   ["We saved our energy. We will use packaged food during this mission. We cannot expect a new greenhouse harvest, and a future team will need to restart food production."]:
     "Enerjimizi koruduk. Bu görevde paket yemek yiyeceğiz. Seradan yeni hasat çıkmayacak ve sonraki ekip yiyecek üretimine en baştan başlamak zorunda kalacak.",
   ["Greenhouse research points are earned only if studied on Sol 6."]:
-    "Sera araştırmasının puanları ancak 6. günde incelenirse kazanılır.",
+    "Sera araştırmasının puanları ancak 6. Mars gününde incelenirse kazanılır.",
   ["Message From Earth"]:
     "Dünya'dan Mesaj",
   ["Earth's support takes time to arrive. Spending more energy cannot make the signal travel faster."]:
@@ -161,7 +161,7 @@ export const STORY_TR = {
   ["Ask Earth and wait for a reply"]:
     "Dünya'ya sor ve cevabı bekle",
   ["Once the reply arrives, the robot task on Sol 5 will cost 1 Energy instead of 2."]:
-    "Cevap gelince 5. gündeki robot görevi (5B) 2 yerine 1 Enerji harcar.",
+    "Cevap gelince 5. Mars günündeki robot görevi 2 yerine 1 Enerji harcar.",
   ["Message sent. The reply is still on its way."]:
     "Mesaj gönderildi. Cevap hâlâ yolda.",
   ["The reply is here! The signals needed about 40 minutes for the round trip, and the Earth team needed time to prepare their answer. We can run the robot with less energy now. We used some of our life-support reserves while waiting."]:
@@ -185,7 +185,7 @@ export const STORY_TR = {
   ["Real NASA event: the May 2024 solar storm (archival data, not live)"]:
     "Gerçek NASA olayı: Mayıs 2024 güneş fırtınası (arşiv verisi, canlı değil)",
   ["NASA's DONKI database recorded a fast cloud leaving the Sun on May 20, 2024. Separately, NASA reported a large radiation event at Mars that day. These records help us explore why astronauts need protection. Our Safety points are fictional game values."]:
-    "NASA'nın uzay havası veritabanı DONKI, 20 Mayıs 2024'te Güneş'ten çok hızlı bir madde bulutunun koptuğunu kaydetti. NASA ayrıca aynı gün Mars'ta büyük bir radyasyon olayı yaşandığını bildirdi. Bu kayıtlar astronotların neden korunmaya ihtiyaç duyduğunu anlamamıza yardım ediyor. Oyundaki Güvenlik puanları ise uydurmadır.",
+    "NASA'nın uzay havası veritabanı DONKI, 20 Mayıs 2024'te Güneş'ten çok hızlı bir madde bulutunun koptuğunu kaydetti. NASA ayrıca aynı gün Mars'ta büyük bir radyasyon olayı yaşandığını bildirdi. Bu kayıtlar astronotların neden korunmaya ihtiyaç duyduğunu anlamamıza yardım ediyor. Oyundaki Güvenlik puanları ise oyun için seçilmiş kurgusal değerlerdir.",
   ["DONKI record 2024-05-20T05:36:00-CME-001 describes a near-Sun CME; its listed impact forecasts do not identify Mars. This project has not established an event-level match to the Mars article. The article reports 8,100 micrograys for a hypothetical astronaut beside Curiosity, independently of the DONKI record. No dose-to-Safety conversion is made."]:
     "DONKI kaydı 2024-05-20T05:36:00-CME-001, Güneş'in yakınındaki bir koronal kütle atımını (CME) anlatır; kayıttaki etki tahminlerinde Mars geçmez. Bu kayıt ile Mars haberindeki olayın aynı olay olduğu kanıtlanmadı. Haber, Curiosity gezgininin yanında duran hayalî bir astronotun 8.100 mikrogray radyasyon alacağını bildiriyor; bu bilgi DONKI kaydından bağımsızdır. Radyasyon dozu Güvenlik puanına çevrilmedi.",
   ["Move the crew into the storm shelter"]:
@@ -251,13 +251,13 @@ export const STORY_TR = {
   ["Mission stopped: not enough resources to continue."]:
     "Görev durdu: devam etmeye yetecek kaynak kalmadı.",
   ["Speaking Percy's Language: How to Talk so Perseverance Will Listen"]:
-    "Speaking Percy's Language: How to Talk so Perseverance Will Listen (İngilizce)",
+    "Perseverance'la nasıl konuşulur? (İngilizce sayfa: “Speaking Percy's Language”)",
   ["NASA DONKI record 2024-05-20T05:36:00-CME-001"]:
     "NASA DONKI kaydı 2024-05-20T05:36:00-CME-001",
   ["May 20, 2024"]:
     "20 Mayıs 2024",
   ["NASA Watches Mars Light Up During Epic Solar Storm"]:
-    "NASA Watches Mars Light Up During Epic Solar Storm (İngilizce)",
+    "NASA, büyük güneş fırtınasında Mars'ın parladığını gözlemledi (İngilizce sayfa)",
   ["May 2024 (published June 10, 2024)"]:
     "Mayıs 2024 (yayın tarihi: 10 Haziran 2024)",
   ["Mars 2020 Perseverance MEDA data (NASA Planetary Data System)"]:
@@ -265,17 +265,17 @@ export const STORY_TR = {
   ["Sol 290 (December 13, 2021)"]:
     "290. Mars günü (13 Aralık 2021)",
   ["Growing Plants in Space"]:
-    "Growing Plants in Space (İngilizce)",
+    "Uzayda bitki yetiştirmek (İngilizce sayfa)",
   ["NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission"]:
-    "NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission (İngilizce)",
+    "NASA'nın oksijen üreten deneyi MOXIE Mars görevini tamamladı (İngilizce sayfa)",
   ["2021–2023 (published September 6, 2023)"]:
     "2021–2023 (yayın tarihi: 6 Eylül 2023)",
   ["Mars: Facts"]:
-    "Mars: Facts (İngilizce)",
+    "Mars: Temel bilgiler (İngilizce sayfa)",
   ["Mars Rock Samples (Perseverance)"]:
-    "Mars Rock Samples (Perseverance) (İngilizce)",
+    "Perseverance'ın Mars kaya örnekleri (İngilizce sayfa)",
   ["Sunset in Mars' Gale Crater"]:
-    "Sunset in Mars' Gale Crater (İngilizce)",
+    "Mars'taki Gale Krateri'nde gün batımı (İngilizce sayfa)",
   ["Sol 956 (April 15, 2015)"]:
     "956. Mars günü (15 Nisan 2015)",
   // Ten-sol continuation (Sols 7–10, endings)
@@ -284,7 +284,7 @@ export const STORY_TR = {
   ["The scheduled compartment opens. The crew connects the stored oxygen supply and charged battery pack. DUTİ checks each new reserve reading."]:
     "Planlanan bölme açılıyor. Ekip depodaki oksijen tüpünü ve şarjlı batarya paketini bağlıyor. DUTİ yeni yedek ölçümlerinin her birini kontrol ediyor.",
   ["That completes our first chapter. And that little chime? It has returned. Three notes, a pause, then three notes again. Tomorrow, let us find out what is making it."]:
-    "İlk bölümümüz burada bitiyor. Peki o küçük tın? Geri döndü. Üç nota, bir duraklama, sonra yine üç nota. Yarın, bu sesi neyin çıkardığını bulalım.",
+    "İlk bölümümüz burada bitiyor. Peki o küçük zil sesi? Yine duyuldu. Üç nota, bir duraklama, sonra yine üç nota. Yarın bu sesin nereden geldiğini bulalım.",
   ["DUTİ draws an empty dot in its notebook. Outside, dusty panels need attention. Inside, the storm shelter still needs supplies."]:
     "DUTİ notlarına boş bir nokta çiziyor. Dışarıda tozlu paneller ilgi bekliyor. İçeride ise fırtına sığınağına hâlâ malzeme lazım.",
   ["What should we prepare first? Small choices can leave very long trails."]:
@@ -316,7 +316,7 @@ export const STORY_TR = {
   ["Our sensors warn of increased solar-particle risk. Protecting people comes first. An astronaut could try to finish outside, but that would use oxygen and greatly reduce our safety margin."]:
     "Sensörlerimiz güneş parçacıklarının tehlikesinin arttığını bildiriyor. Önce insanları korumak gerekir. Bir astronot dışarıda işi bitirmeye çalışabilir, ama bu oksijen harcar ve güvenlik payımızı büyük ölçüde azaltır.",
   ["A faint three-note chime appears in a saved equipment log. There is no urgent message attached. DUTİ marks it: investigate later, when the crew is safe."]:
-    "Kaydedilmiş bir ekipman günlüğünde silik bir üç notalık tın beliriyor. Ekli acil bir mesaj yok. DUTİ bunu işaretliyor: Ekip güvende olunca sonra inceleyelim.",
+    "Kaydedilmiş bir ekipman günlüğünde üç notalı, kısık bir zil sesi var. Yanında acil bir mesaj yok. DUTİ bir not alıyor: Ekip güvende olunca bunu inceleyelim.",
   ["The First Research Review"]:
     "İlk Araştırma Değerlendirmesi",
   ["Local sensors show that the fictional solar event has subsided. DUTİ places three research cards on the desk: laboratory, exploration route, and greenhouse."]:
@@ -338,7 +338,7 @@ export const STORY_TR = {
   ["On the screen, the pattern sits beside your old notes. It might come from nearby equipment. It might become clearer if you compare it with your measurements. A rover could look for its source without sending anyone outside."]:
     "Ekranda bu örüntü eski notlarınla yan yana duruyor. Yakındaki bir ekipmandan gelmiş olabilir. Ölçümlerinle karşılaştırırsan daha net hale gelebilir. Bir gezgin, kimseyi dışarı göndermeden kaynağını arayabilir.",
   ["We have a question, not an answer. Shall we study the pattern, follow the signal, or check the old equipment logs while we refill oxygen?"]:
-    "Elimizde bir cevap değil, bir soru var. Bu örüntüyü mi inceleyelim, sinyali mi takip edelim, yoksa oksijen yedeğimizi doldururken eski ekipman günlüklerine mi bakalım?",
+    "Elimizde bir cevap değil, bir soru var. Bu örüntüyü mü inceleyelim, sinyali mi takip edelim, yoksa oksijen yedeğimizi doldururken eski ekipman günlüklerine mi bakalım?",
   ["Compare possible explanations before calling a repeating pattern a discovery."]:
     "Tekrar eden bir örüntüye keşif demeden önce olası açıklamaları karşılaştır.",
   ["Compare the three-note pattern"]:
@@ -358,13 +358,13 @@ export const STORY_TR = {
   ["Build the oxygen reserve and find the relay inventory entry, but miss today's new signal measurements."]:
     "Oksijen yedeğini artırır ve röle envanter kaydını bulursun, ama bugünkü yeni sinyal ölçümlerini kaçırırsın.",
   ["The logs list a survey relay with a three-note test signal. We have a possible explanation and more oxygen. We have not measured where it is."]:
-    "Günlükler, üç notalık test sinyali veren bir ölçüm rölesini listeliyor. Olası bir açıklamamız ve daha fazla oksijenimiz var. Ama röleyin nerede olduğunu ölçmedik.",
+    "Günlükler, üç notalık test sinyali veren bir ölçüm rölesini listeliyor. Olası bir açıklamamız ve daha fazla oksijenimiz var. Ama rölenin nerede olduğunu ölçmedik.",
   ["The Drawer Marked Tomorrow"]:
     "Yarın Yazan Çekmece",
   ["A routine store-room check reveals a drawer labeled TOMORROW. DUTİ cannot resist reading the smaller print: For whoever asks the next good question."]:
     "Rutin depo kontrolünde YARIN yazan bir çekmece ortaya çıkıyor. DUTİ, küçük yazıyı okumadan duramıyor: Bir sonraki güzel soruyu soracak kişi için.",
   ["Inside: an insulated plant tray, a spare recorder part, and a survey cassette. We can finish one careful job with our work time today."]:
-    "İçinde yalıtımlı bir bitki tepsisi, yedek bir kayıt cihazı parçası ve bir ölçüm kaseti var. Bugün çalışma zamanımızla bir dikkatli işi bitirebiliriz.",
+    "İçinde yalıtımlı bir bitki tepsisi, yedek bir kayıt cihazı parçası ve eski bir ölçüm kaseti var. Bugün bunlardan yalnızca biriyle dikkatlice ilgilenecek vaktimiz var.",
   ["If you kept plants growing, a living tray can be protected for the next crew. The recorder part could restore DUTİ's missing notebook pictures. The cassette could explain who left the relay outside."]:
     "Bitkileri büyütmeye devam ettiysen, canlı bir tepsi bir sonraki ekip için korunabilir. Kayıt cihazı parçası DUTİ'nin kayıp defter resimlerini geri getirebilir. Kaset ise röleyi dışarıda kimin bıraktığını açıklayabilir.",
   ["Three ways to save something. Which kind of tomorrow should we prepare?"]:
@@ -376,13 +376,13 @@ export const STORY_TR = {
   ["Preserve plants already growing before arrival and their care notes. This can support a living-garden ending after the Sol 6 greenhouse study."]:
     "Gelmeden önce büyüyen bitkileri ve bakım notlarını koru. Bu, 6. Mars günündeki sera çalışmasından sonra canlı bir bahçe sonunu destekleyebilir.",
   ["The greenhouse was shut down on Sol 3. No living experiment tray remains to protect."]:
-    "Sera 3. günde kapatıldı. Korunacak canlı bir deney tepsisi kalmadı.",
+    "Sera 3. Mars gününde kapatıldı. Korunacak canlı bir deney tepsisi kalmadı.",
   ["The living tray is protected, and its care instructions are ready. These are plants we kept growing, not seeds that grew overnight."]:
     "Canlı tepsi korunuyor ve bakım talimatları hazır. Bunlar gece içinde filizlenen tohumlar değil, bizim büyütmeye devam ettiğimiz bitkiler.",
   ["Restore DUTİ's notebook pictures"]:
     "DUTİ'nin defter resimlerini geri getir",
   ["Recover DUTİ's saved pictures of earlier preparations. Spare supplies organized in 1B reduce this cost to 0 Energy."]:
-    "DUTİ'nin önceki hazırlıklara ait kayıtlı resimlerini geri getir. 1B'de düzenlenen yedek malzemeler bu bedeli 0 Enerjiye indirir.",
+    "DUTİ'nin önceki hazırlıklara ait kayıtlı resimlerini geri getir. 1. Mars gününde sığınak için hazırlanan yedek malzemeler bu bedeli 0 Enerjiye indirir.",
   ["My pictures are back! A packed shelter. A crew working together. I had saved the ordinary moments, too."]:
     "Resimlerim geri geldi! Dolu bir sığınak. Birlikte çalışan bir ekip. Sıradan anları da saklamıştım.",
   ["Open the survey cassette"]:
@@ -432,7 +432,7 @@ export const STORY_TR = {
   ["We do not have to leave every kind of treasure. We can leave the one we took the time to make."]:
     "Her türlü hazineyi bırakmak zorunda değiliz. Emek verip yaptığımız tek bir şeyi bırakabiliriz.",
   ["Communicate discoveries and uncertainty, and recognize that a mission can leave different kinds of useful legacy."]:
-    "Keşifleri ve belirsizlikleri paylaş. Bir görevin farklı türden yararlı miraslar bırakabileceğini unutma.",
+    "Keşiflerini ve emin olmadığın şeyleri paylaş. Bir görev, sonraki ekiplere farklı türden faydalı şeyler bırakabilir.",
   ["Send our evidence packet to Earth"]:
     "Kanıt paketini Dünya'ya gönder",
   ["Can reveal the rock-pattern or relay-network ending when the matching earlier investigation is complete. Acknowledge transmission locally; no instant Earth reply."]:
@@ -578,13 +578,13 @@ export const STORY_TR = {
   ["What other questions might a different trail leave in DUTİ's notebook?"]:
     "Başka bir izin DUTİ'nin defterinde hangi başka soruları bırakabileceğini düşünüyorsun?",
   ["Fictional science-fiction epilogue. The lights, pictures, visitors and craft are invented story elements. No extraterrestrial life has been confirmed, and no NASA discovery is claimed."]:
-    "Kurgusal bilimkurgu epilogu. Işıklar, fotoğraflar, ziyaretçiler ve araç uydurma hikâye öğeleridir. Dünya dışı yaşam doğrulanmadı ve hiçbir NASA keşfi iddia edilmiyor.",
+    "Kurgusal bilimkurgu sonu. Işıklar, fotoğraflar, ziyaretçiler ve araç bu hikâye için hayal edilmiştir. Dünya dışı yaşam doğrulanmadı ve hiçbir NASA keşfi iddia edilmiyor.",
   ["Fictional science-fiction ending"]:
     "Kurgusal bilimkurgu sonu",
   ["This encounter is fictional. No extraterrestrial life has been confirmed."]:
     "Bu karşılaşma kurgudur. Dünya dışı yaşam doğrulanmadı.",
   ["You kept the pictures, checked the equipment, compared the records and shared what remained unknown. In this fictional ending, the last look through the window revealed friendly visitors."]:
-    "Fotoğrafları sakladın, ekipmanı kontrol ettin, kayıtları karşılaştırdın ve bilinmeyen kalanları paylaştın. Bu kurgusal sonda, pencereden yapılan son bakış dost canlısı ziyaretçileri ortaya çıkardı.",
+    "Fotoğrafları sakladın, ekipmanı kontrol ettin, kayıtları karşılaştırdın ve hâlâ cevabını bilmediğimiz soruları da paylaştın. Bu kurgusal sonda, pencereden son bir bakış dost canlısı ziyaretçileri gösterdi.",
   ["The light returns"]:
     "Işık geri döner",
   ["A very small hello"]:

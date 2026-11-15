@@ -1,6 +1,6 @@
 {
   "name": "compass-outpost",
-  "version": "1.11.2",
+  "version": "1.11.3",
   "private": true,
   "description": "Compass Outpost: Ten Sols of Questions - a narrative decision game for ages 7-12 (NASA Space Apps 2026, Junior Astronaut Mission Trainer).",
   "type": "module",

@@ -4,6 +4,17 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.3 — Readable text, a working heater button, better Turkish (2026-11-15)
+
+Fixes for the team's play test and an independent Antigravity review:
+
+- Readability: the "Why?" line and DUTİ's memory counter used very light blue and lilac text on the cream dialog box. They now use dark text (dark teal on pale blue; dark purple), and the "Skip ahead" button has dark text on the cream box.
+- Heater / grow-light button (Sols 2 and 3): it is now a real, focusable HTML button with a text label, placed over the device and never under the dialog (it moves above or below the dialog when needed, and always stays on screen). Pressing Next while it waits no longer moves it. The power room now shows a labelled heater.
+- Turkish: removed choice codes such as "(5A)" and "1B'de"; fixed spelling and grammar ("mü", "rölenin", "maceramız"); replaced the unnatural "tın" with "zil sesi"; replaced "uydurma" with "kurgusal / oyun için seçilmiş"; rewrote all "Neden?" lines as natural sentences; consistent "N. Mars günü"; Turkish titles for NASA sources with "(İngilizce sayfa)"; several stiff sentences rewritten.
+- Language switch: an open discovery line stays open and is translated; the Sol intro card is redrawn instead of skipping ahead.
+- Phones: more space under the title buttons. A duplicate branch in the ending text was removed.
+- Checked with `npm run check` and focused browser measurements (1280 × 650 and 375 × 812).
+
 ## 1.11.2 — Two layout fixes found in a visual audit (2026-11-15)
 
 - Wide screens: in the slim exploration panel, the "I'm ready to decide" button covered the hint text and the discovery counter. The button now sits on its own full-width row; the panel keeps its narrow width, so the Sol 1 rover discovery stays free.

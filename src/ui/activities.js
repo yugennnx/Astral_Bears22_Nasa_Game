@@ -24,11 +24,11 @@ export const SPOTLIGHTS = {
     { x: 650, y: 612, r: 100, key: "spot.landing.lantern" },
   ],
   "power-shortage": [
-    { x: 500, y: 440, r: 190, key: "spot.power.battery", observe: { x: 630, y: 470, gauge: "energy", key: "spot.power.try" } },
+    { x: 500, y: 440, r: 190, key: "spot.power.battery", observe: { x: 630, y: 470, gauge: "energy", key: "spot.power.try", label: "spot.observe.heater" } },
     { x: 1115, y: 500, r: 190, key: "spot.power.oxygen" },
   ],
   "greenhouse-problem": [
-    { x: 800, y: 320, r: 260, key: "spot.greenhouse.lights", observe: { x: 800, y: 380, gauge: "energy", key: "spot.greenhouse.try" } },
+    { x: 800, y: 320, r: 260, key: "spot.greenhouse.lights", observe: { x: 800, y: 380, gauge: "energy", key: "spot.greenhouse.try", label: "spot.observe.lights" } },
     { x: 800, y: 600, r: 230, key: "spot.greenhouse.plants" },
   ],
   "message-from-earth": [
