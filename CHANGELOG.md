@@ -4,6 +4,11 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.7 — Dialog accessibility (2026-11-15)
+
+- The story dialog is now a labelled group ("Next" / "İleri") instead of a button, so the "Skip ahead" button inside it is no longer a button nested in a button. Clicking, tapping, Enter and Space still advance the story, and Skip ahead still works. Found in an independent Antigravity review of 1.11.6.
+- Checked with `npm run check` and a headless-browser test of the replayed Sol 1 story.
+
 ## 1.11.6 — Fixes from a full automated audit (2026-11-15)
 
 Four automated auditors (desktop English visuals, phone Turkish visuals and wording, interaction and state, code review and English proofreading) played the game in a headless browser. Fixes:

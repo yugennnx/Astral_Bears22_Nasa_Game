@@ -414,7 +414,7 @@ function dialogHtml(block, counter) {
   const isDuti = block.speakerId === "duti";
   const caption = block.caption ? `<span class="dialog-caption">${icon("clock")}${esc(ts(block.caption))}</span>` : "";
   return `
-  <div class="dialog ${isDuti ? "dialog--duti" : "dialog--narrator"}" data-action="advance" role="button" tabindex="0">
+  <div class="dialog ${isDuti ? "dialog--duti" : "dialog--narrator"}" data-action="advance" role="group" aria-label="${esc(t("dialog.next"))}" tabindex="0">
     ${isDuti ? `<div class="dialog-portrait">${duti(dutiMood())}</div>` : ""}
     <div class="dialog-box">
       <div class="dialog-name">${isDuti ? esc(MISSION.robot.displayName) : esc(t("dialog.story"))}${caption}</div>
