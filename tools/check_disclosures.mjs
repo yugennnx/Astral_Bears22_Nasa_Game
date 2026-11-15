@@ -20,9 +20,12 @@ for (const feature of manifest.originalityAttestation.featureStatuses) {
   for (const path of feature.evidence) await access(new URL(`../${path}`, import.meta.url));
 }
 assert.equal(manifest.modelIdentifier, null);
-assert.equal(manifest.licenseDecision.status, "deferred-by-user");
-assert.equal(manifest.licenseDecision.projectLicenseAdded, false);
+assert.equal(manifest.licenseDecision.status, "apache-2.0-authorized-by-user");
+assert.equal(manifest.licenseDecision.projectLicenseAdded, true);
 
+assert.equal(manifest.licenseDecision.spdx, "Apache-2.0");
+assert.equal(JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8")).license, "Apache-2.0");
+await access(new URL("../LICENSE", import.meta.url));
 const inventory = new Map();
 for (const artifact of manifest.artifacts) {
   assert(!inventory.has(artifact.path), `Duplicate disclosure entry: ${artifact.path}`);
@@ -44,7 +47,7 @@ for (const path of new Set(files)) {
   if (/\.(md|js|mjs|py|json|html|svg|ya?ml)$/i.test(path) || /(^|\/)\.[^/]+$/.test(path)) {
     assert(inventory.has(path), `Missing file-level provenance: ${path}`);
   }
-  assert(!/^LICENSE(?:\..+)?$/i.test(path), "User deferred project licensing; no LICENSE file should be added.");
+  if (/^LICENSE(?:\..+)?$/i.test(path)) assert.equal(path, "LICENSE", "Unexpected competing root license");
 }
 
 assert.equal(AI_DISCLOSURE.aiAssistanceUsed, true);
@@ -86,4 +89,4 @@ assert(disclosure.includes("Anthropic Claude") && disclosure.includes("OpenAI Ch
 assert(!disclosure.includes("earlier tool provenance is not confirmed"));
 assert(!disclosure.includes("github.com/nasa/spaceapps/discussions/"), "Use only official 2026 website pages as rule authorities.");
 console.log(`Disclosure inventory verified: ${inventory.size} artifacts, ChatGPT/Codex and Claude, exported metadata, raw-source hash, and source receipts.`);
-console.log("License decision remains deferred. This check does not certify rights, human originality, registration, or final submission.");
+console.log("Apache-2.0 selection is recorded. This check does not certify rights, human originality, registration, or final submission.");

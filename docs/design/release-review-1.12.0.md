@@ -17,7 +17,7 @@ Date: November 15, 2026. Baseline: `d5776a7` (1.11.9). The isolated maintenance 
 | Medium | AI metadata still marked choice-sequence features unimplemented and omitted some artifact types | Per-feature statuses, broader HTML/SVG/YAML inventory coverage and current contribution scopes; no invented human certification |
 | Medium | Submission work and optional product/deployment work were mixed | Official-2026-only checklist, current status and NASA resource map distinguish required team actions from recommendations |
 
-No engine balance, mission profile, choice effect, ending predicate or original NASA source bytes were changed. The existing title-screen simplification and per-mission discoveries remain intact. No project license was added; the team's explicit deferral is preserved.
+No engine balance, mission profile, choice effect, ending predicate or original NASA source bytes were changed. The existing title-screen simplification and per-mission discoveries remain intact. The initial publication preserved the license deferral. The user subsequently authorized Apache-2.0 after official-rule verification; the licensing follow-up adds the canonical LICENSE and explicit third-party exclusions without changing runtime behavior.
 
 ## Verification
 
@@ -29,8 +29,8 @@ Local environment: Windows, Node.js 26.8.1, npm 11.19.0, installed Chrome 157.0.
 | `npm run check` | PASS: story, engine, translation, independent expansion, disclosure and documentation checks |
 | `npm run check:browser` with installed Chrome | PASS: 164 tests; four viewports; all 29 choices plus the greenhouse-off 6C variant; eight fresh full campaigns; all five endings; save/reload; normal-motion keyboard smoke |
 | Translation parity | PASS: 293 story strings and 488 interface strings with matching placeholders |
-| Disclosure inventory | PASS: 71 artifacts; raw-source hash and source receipt checks |
-| Documentation links | PASS: 26 Markdown files, 145 local links/anchors, current version and runtime counts |
+| Disclosure inventory | PASS: 73 artifacts; raw-source hash and source receipt checks |
+| Documentation links | PASS: 27 Markdown files, 156 local links/anchors, current version and runtime counts |
 | `git diff --check` | PASS: no whitespace errors |
 | Engine/design/NASA-file diff against baseline | PASS: no change to `src/game/`, `data/` or NASA photographs |
 | Raw DONKI bytes and attributes | PASS: SHA-256 `469a405b51f04890be0b41a3ff2b9130d0d6e1ab18e9e5042a889ab468557072`; manifest match; `text` unset and binary diff behavior retained |
@@ -53,3 +53,9 @@ The browser suite uses actual Chromium pointer/touch actions with no forced clic
 - Review all generated material and third-party rights. AI disclosure records assistance; it does not certify originality, rights or eligibility.
 
 Source refresh used the central official 2026 resources, project-submission, judging, participant FAQ and legal pages linked in [the compliance audit](../compliance/compliance-audit.md). No third-party competition-rule authority was substituted.
+
+## CI and licensing follow-up
+
+The first [remote run](https://github.com/yugennnx/Astral_Bears22_Nasa_Game/actions/runs/43755499153) recorded 161 passing cases and three fresh-campaign timeouts (including retries). Logs show the test waiting for an intro skip control after the reduced-motion intro had already advanced automatically. The harness now awaits that automatic transition instead of clicking a transient element; the runtime is unchanged. This first run is not represented as passing. After the harness correction, all eight full campaigns passed locally again (47.9 seconds). Current remote rerun results remain visible in Actions.
+
+The user subsequently authorized Apache-2.0 after the official Terms were reread. Canonical legal text is externally sourced and hash-checked; LICENSING.md excludes NASA and third-party rights from the contributor grant. Package metadata, current documentation and disclosure checks reflect this authorization. Final rights declarations and actual NASA submission still require the team.

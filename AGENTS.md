@@ -29,6 +29,8 @@
 - A public repository is accepted as a final-project link; GitHub Pages is optional. Save Progress is not Submit for Judging. Use `docs/submission-checklist.md`; do not invent additional mandatory files, public team identities or a requirement to upload an AI model/chat history.
 - Never assert that disqualification is impossible or that this audit is official approval. Never rewrite Git history to obscure development timing or authorship.
 
+- The user authorized Apache-2.0 on November 15, superseding the earlier deferral. Preserve the canonical LICENSE and LICENSING.md exclusions; never relicense NASA or third-party material as contributor-owned.
+
 ## Checks Before Publishing
 
 ```sh

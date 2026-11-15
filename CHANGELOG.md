@@ -12,7 +12,7 @@ All notable changes to this project. Gameplay numbers are fictional educational 
 - Corrected MEDA extrema wording in English/Turkish and made generated-art labels explicit.
 - Added a Node-only local server, locked Playwright development dependency, permanent responsive browser regressions, Markdown/version checks and a pinned GitHub Actions workflow.
 - Reconciled current README, runtime contract, five-ending story status, handoff, NASA data mapping and AI contribution records; older reports remain marked history.
-- Added an official-2026-only submission checklist. Demo, registrations, final rights/license decision and Submit for Judging remain team actions. No project license was selected.
+- Added an official-2026-only submission checklist. Demo, registrations, final rights/license decision and Submit for Judging remain team actions. The initial deferral was subsequently superseded by user-authorized Apache-2.0, with canonical LICENSE, explicit scope/exclusions and aligned metadata.
 - Verification and limits: [release review](docs/design/release-review-1.12.0.md). A configured CI workflow is not itself evidence of a successful remote run.
 
 ## 1.11.9 — Fresh discoveries in every new game (2026-11-15)

@@ -23,7 +23,9 @@ for (const language of ["en", "tr"]) {
       }
       const screen = await page.locator("body").getAttribute("data-screen");
       if (screen === "ending") break;
-      if (screen === "intro") await activate(page, '[data-action="intro-done"]');
+      // Reduced-motion intros advance automatically on the next timer tick. Do not
+      // race that timer by waiting for a transient skip control that may be gone.
+      if (screen === "intro") await page.waitForFunction(() => document.body.dataset.screen !== "intro");
       else if (screen === "story" || screen === "result") await activate(page, '[data-action="advance"]');
       else if (screen === "spot") {
         if (await page.locator(".observe-btn").count()) {
@@ -49,7 +51,7 @@ for (const language of ["en", "tr"]) {
       } else if (screen === "fact") {
         await activate(page, '[data-action="collect-fact"]:not(:disabled)');
         await page.waitForFunction(() => document.body.dataset.screen !== "fact");
-      } else if (screen === "transition") await activate(page, '[data-action="skip-cinema"]');
+      } else if (screen === "transition") await page.waitForFunction(() => document.body.dataset.screen !== "transition");
       else if (screen === "ledger") await activate(page, '[data-action="next-sol"]');
       else if (screen === "endpage") await activate(page, '[data-action="end-next"]');
       else throw new Error(`Unexpected campaign screen: ${screen}`);

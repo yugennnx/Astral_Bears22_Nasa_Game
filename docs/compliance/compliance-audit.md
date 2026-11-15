@@ -27,7 +27,7 @@ Only these central official 2026 pages establish competition rules; no prior-yea
 | At least one NASA data/resource for a Global Award | MEDA/DONKI source cards and a real-data comparison are implemented. [NASA mapping](../nasa-data-map.md) separates observations from fiction. |
 | SI disclosure and originality | Team attests underlying idea preceded AI. Substantial generated details are attributed. The form's SI description and original-work declaration still need team review. |
 | Generated-content labeling and NASA-brand restrictions | Code-generated SVG has visible AI-generation labeling; NASA photos are separately credited. Generated media must not contain or modify NASA branding. Final demo assets need their own check. |
-| References and rights | [References](references.md) list scientific sources, photographs, libraries and tools; raw DONKI and MEDA receipts preserve provenance. Project-license decision remains deferred; rights attestation is not certified. |
+| References and rights | [References](references.md) list scientific sources, photographs, libraries and tools; raw DONKI and MEDA receipts preserve provenance. The user authorized Apache-2.0; [scope/exclusions](../../LICENSING.md) are explicit. Rights attestation is not certified. |
 | Under-18 participation and media restrictions | Parent/legal-guardian registration/accompaniment applies where relevant. Do not put under-18 recognizable names, voices, photos/video/likenesses in submission content. The team's final media have not been inspected. |
 | Actual submission | Save Progress is not submission. Accept accurate declarations, use Submit for Judging and verify the success message before the deadline. No official submission was performed by this maintenance work. |
 

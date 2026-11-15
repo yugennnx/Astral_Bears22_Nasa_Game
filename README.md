@@ -73,6 +73,6 @@ OpenAI ChatGPT/Codex and Anthropic Claude assisted with substantial story, code,
 
 The optional player name, mission save, language/sound preferences and Journal are stored in this browser's local storage. They are not sent to a project server. Clearing this site's browser data removes them. Shared devices share this local profile; use a fictional commander name for demonstrations.
 
-**The team has deferred its project-license decision.** No project-wide license has been selected or added; do not describe this repository as Apache-2.0-licensed. Vendored components retain their own license texts. NASA/third-party materials retain their source-specific terms. See [references and rights](docs/compliance/references.md) before making the submission's rights declaration.
+Project-original code and text are available under [Apache License 2.0](LICENSE), as authorized by the user on November 15, 2026. See [licensing scope and exclusions](LICENSING.md). NASA materials, vendored libraries and fonts retain their own terms and notices; no NASA branding rights or endorsement are granted. Review [references and rights](docs/compliance/references.md) before the final submission declaration.
 
 This is an independent participant project. NASA references do not imply NASA endorsement.

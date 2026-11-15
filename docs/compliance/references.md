@@ -66,17 +66,15 @@ DUTİ, the Mars locations (`src/ui/world.js`), the icons, the compass mark and t
 | [canvas-confetti](https://github.com/catdad/canvas-confetti) | 1.9.4 | ISC | `assets/vendor/canvas-confetti/` |
 | [Fredoka](https://fonts.google.com/specimen/Fredoka) via Fontsource | 5.3.0 | SIL Open Font License 1.1 | `assets/fonts/fredoka/` |
 
-License texts are stored next to the files. These components keep their own licenses regardless of the project's eventual license.
+License texts are stored next to the files. These components keep their own licenses regardless of the project's license.
 
-Before adding an asset, record its exact source, creator/credit line, applicable permission/license, modifications, and any generation tool. NASA branding has separate restrictions. The official submission guide links [NASA's Brand Guidelines](https://www.nasa.gov/nasa-brand-center/brand-guidelines/); media guidance is available at [NASA Images and Media](https://www.nasa.gov/nasa-brand-center/images-and-media/). Do not apply the project's eventual license to NASA or third-party material or imply NASA endorsement.
+Before adding an asset, record its exact source, creator/credit line, applicable permission/license, modifications, and any generation tool. NASA branding has separate restrictions. The official submission guide links [NASA's Brand Guidelines](https://www.nasa.gov/nasa-brand-center/brand-guidelines/); media guidance is available at [NASA Images and Media](https://www.nasa.gov/nasa-brand-center/images-and-media/). Do not apply the project's license to NASA or third-party material or imply NASA endorsement.
 
-## Project License: Deferred
+## Project License: Apache-2.0
 
-The team explicitly asked on November 14, 2026 to defer the license decision. **No project license is added and no Apache-2.0 license status is claimed.** The separately prepared Apache text was only a proposal, outside this repository.
+The user authorized Apache-2.0 on November 15, 2026, superseding the November 14 deferral. The canonical [LICENSE](../../LICENSE) text was downloaded unmodified from the Apache Software Foundation. [LICENSING.md](../../LICENSING.md) states the applicable contributor-rights scope and third-party exclusions.
 
-The official [2026 Terms and Conditions](https://www.spaceappschallenge.org/legal/) describe unrestricted/OSI-compatible availability for original work and state NASA's default Apache 2.0 distribution provision when no specific compliant license is identified. That provision is not represented here as a license selected by the team for this GitHub repository. Final licensing and rights attestations remain the team's responsibility.
-
-NASA data and any future third-party assets retain their own source-specific rights and usage conditions. This audit is not a blanket grant of rights or legal approval.
+The official [2026 Terms](https://www.spaceappschallenge.org/legal/) accept unrestricted/OSI-compatible original work and name Apache 2.0 as NASA's default distribution license when none is specified. The team now selects it explicitly. NASA observations/photos and third-party libraries/fonts retain their own terms; this choice does not certify all rights or final eligibility.
 
 ## Development and Verification Tools (1.12.0)
 

@@ -44,7 +44,7 @@ Use [NASA mapping](nasa-data-map.md), [references](compliance/references.md), [A
 - [ ] Exclude under-18 persons' recognizable names, voices, photos/video/likenesses from submission content as described by the Terms. A screen-only demo with English text avoids filming team members; use a fictional commander name.
 - [ ] Disclose SI use in the form and the project. Generated images/video need a visible generation watermark; audio needs descriptive attribution and metadata; code/data need descriptive attribution and metadata. SI-generated content must not use/contain/modify NASA branding/design elements.
 - [ ] Review the team's idea-origin and rights statements honestly. SI assistance does not itself certify originality, and the assistant is not a registered team member.
-- [ ] Resolve the deferred project-license decision and verify permissions/third-party license documentation before accepting the rights declaration. The Terms describe a default NASA Apache 2.0 distribution provision if no specific compliant license is identified; this repository has not selected that license.
+- [ ] Review the selected [Apache-2.0 license scope](../LICENSING.md) and verify permissions/third-party license documentation before accepting the rights declaration. The user authorized this selection on November 15; adding a license does not certify every source right.
 
 GitHub Pages, a particular disclosure filename, a PDF report, a project ZIP, child-playtest results and a bug-free completed product are not separately mandated documents in the reviewed guide. A direct game URL, clear README and automated tests are useful presentation/quality measures. Website filter classification is an optional recommendation in the guide, not a submission requirement.
 

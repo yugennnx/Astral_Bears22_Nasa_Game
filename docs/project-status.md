@@ -36,14 +36,14 @@ Verification evidence is recorded in [the 1.12.0 review](design/release-review-1
 | Required | Complete the eight English project-form sections | Submission editor | Saved official form; source/SI entries reviewed |
 | Required | Provide a public demo within the official limits | Team | Tested external demo link |
 | Required | Verify final-project link and referenced materials without login | Team | Private-window check; a public repository is accepted |
-| Required | Resolve rights/license attestation | Team | Explicit team decision; third-party credits/licenses reviewed |
+| Required | Resolve rights/license attestation | Team | Apache-2.0 selection recorded; team must still verify third-party rights/credits |
 | Required | Submit for judging and retain confirmation before deadline | Team Owner | Official success banner/message |
 | Recommended | Publish a direct playable URL | Developer | Anonymous desktop/phone check; GitHub Pages itself is not mandatory |
 | Recommended | Review generated content and conduct a short child playtest | Team | Factual dated findings, without overstating learning gains |
 
 The user reports Universal Event participation and a Team Owner residing in Türkiye. These are team statements, not independently inspected registration records. The official Universal deadline is November 15, 2026 at 23:59 in the Team Owner's area of residence: 23:59 Türkiye time for the reported residence. See [the submission checklist](submission-checklist.md).
 
-The project-license decision remains explicitly deferred. No license was added or rights approval invented. The official form, demo, hosted link and participant registrations have not been certified by this maintenance work.
+The user authorized Apache-2.0 on November 15, 2026; [licensing scope](../LICENSING.md) and the root license are now present. Third-party rights approval is not inferred. The official form, demo, hosted link and participant registrations have not been certified by this maintenance work.
 
 ## Later product work
 
