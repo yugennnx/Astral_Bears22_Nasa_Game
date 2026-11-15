@@ -12,7 +12,8 @@ import {
 import { t, ts, signed, getLanguage, setLanguage } from "../i18n/index.js";
 import { icon, duti, dutiAvatar, weatherIcon } from "./art.js";
 import { titleWorld, sceneWorld, nightWorld, LOCATIONS } from "./world.js";
-import { SPOTLIGHTS, spotlightSvg, activityFor, runActivity } from "./activities.js";
+import { SPOTLIGHTS, spotlightSvg, activityFor, runActivity, pulseHint } from "./activities.js";
+import { memoriesFor } from "./memories.js";
 import { FACTS, FACT_BY_CHOICE, pickFact } from "../game/facts.js";
 import { DISCOVERIES, DISCOVERY_SOURCES, secretSprite } from "./discoveries.js";
 import { animate, stagger } from "../../assets/vendor/animejs/anime.esm.min.js";
@@ -65,15 +66,22 @@ const profile = (() => {
       discoveries: Array.isArray(stored?.discoveries) ? stored.discoveries : [],
       facts: Array.isArray(stored?.facts) ? stored.facts.filter(id => id in FACTS) : [],
       endings: Array.isArray(stored?.endings) ? stored.endings.filter(id => SPECIAL_ENDINGS.some(e => e.id === id)) : [],
+      seen: Array.isArray(stored?.seen) ? stored.seen.filter(item => typeof item === "string").slice(-200) : [],
     };
   } catch {
-    return { name: "", discoveries: [], facts: [], endings: [] };
+    return { name: "", discoveries: [], facts: [], endings: [], seen: [] };
   }
 })();
 function saveProfile() {
   try { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); } catch { /* optional */ }
 }
 const playerName = () => profile.name.trim();
+const hasSeen = key => profile.seen.includes(key);
+function markSeen(key) {
+  if (hasSeen(key)) return;
+  profile.seen.push(key);
+  saveProfile();
+}
 
 const $ = selector => document.querySelector(selector);
 const worldEl = $("#world");
@@ -489,25 +497,53 @@ async function showIntro() {
   if (app.screen === "intro" && app.introToken === token) startStory();
 }
 
+/** The scene's story, followed by up to two lines in which DUTİ remembers earlier choices. */
+function storyLines() {
+  const scene = getScene(app.game);
+  const found = id => profile.discoveries.includes(id);
+  const memories = memoriesFor(scene.id, app.game, found).map(item => ({ speakerId: "duti", memory: item.id }));
+  return [...scene.story, ...memories];
+}
+
 function startStory() {
   app.screen = "story";
   app.line = 0;
+  app.storyLines = storyLines();
   renderStoryLine();
 }
 
 function renderStoryLine() {
   const scene = getScene(app.game);
   app.screen = "story";
+  if (!app.storyLines?.length) app.storyLines = storyLines();
+  const lines = app.storyLines;
+  const block = lines[Math.min(app.line, lines.length - 1)];
   fxEl.innerHTML = "";
   worldForScene();
   renderHud(app.game.resources, app.game.science);
-  showLine(scene.story[app.line], `${app.line + 1} / ${scene.story.length}`);
+  const replay = hasSeen(`story:${scene.id}`);
+  if (block.memory) {
+    const fresh = !hasSeen(`mem:${block.memory}`);
+    showLine({ speakerId: "duti", text: "" }, fresh ? t("mem.new") : t("mem.label"), t(`mem.${block.memory}`));
+    layerEl.querySelector(".dialog")?.classList.add("dialog--memory");
+    markSeen(`mem:${block.memory}`);
+  } else {
+    showLine(block, `${app.line + 1} / ${scene.story.length}`);
+    if (replay) {
+      stopTyping(true); // known lines appear at once on a replay
+      const foot = layerEl.querySelector(".dialog-foot");
+      foot?.insertAdjacentHTML("afterbegin", `<button class="btn btn--small btn--ghost dialog-skip" data-action="skip-story">${esc(t("dialog.skip"))}</button>`);
+    }
+  }
   finishRender({ focus: false });
 }
 
 function afterStory() {
-  if (SPOTLIGHTS[app.game.sceneId]?.length) {
+  markSeen(`story:${app.game.sceneId}`);
+  // Spotlights teach the place once; replays go straight to exploring.
+  if (SPOTLIGHTS[app.game.sceneId]?.length && !hasSeen(`spot:${app.game.sceneId}`)) {
     app.spot = 0;
+    app.observed = null;
     showSpotlight();
     return;
   }
@@ -527,9 +563,44 @@ function showSpotlight() {
     animate(fxEl.querySelector(".spot-dim"), { opacity: [0, 0.62], duration: 500 });
     animate(fxEl.querySelector(".spot-ring"), { scale: [1.4, 1], opacity: [0, 1], duration: 600, ease: "outBack(1.6)" });
   }
-  showLine({ speakerId: "duti", text: "" }, `${app.spot + 1} / ${spots.length}`, t(spot.key, { ...app.game.resources }));
+  const observe = spot.observe && app.observed !== app.spot;
+  app.observing = Boolean(observe);
+  if (observe) {
+    // The child tries the device first and watches the gauge; DUTİ explains afterwards.
+    const svg = fxEl.querySelector("svg");
+    svg?.insertAdjacentHTML("beforeend", `<g class="spot-observe" transform="translate(${spot.observe.x} ${spot.observe.y})" role="button" tabindex="0" aria-label="${esc(t(spot.observe.key))}">
+      <circle r="58" fill="rgba(255,214,92,.18)" stroke="#ffd65c" stroke-width="6"/><circle class="spot-observe-pulse" r="58" fill="none" stroke="#fff3c4" stroke-width="3"/>
+      <path d="M-16-18h32v36h-32Z" fill="#ffb55a" stroke="#6b4300" stroke-width="4"/><path d="M-8-6h16M-8 4h16" stroke="#6b4300" stroke-width="4" stroke-linecap="round"/></g>`);
+    const target = svg?.querySelector(".spot-observe");
+    const go = event => { event.stopPropagation(); observeDevice(spot); };
+    target?.addEventListener("click", go);
+    target?.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); go(event); } });
+  }
+  showLine({ speakerId: "duti", text: "" }, `${app.spot + 1} / ${spots.length}`, t(observe ? spot.observe.key : spot.key, { ...app.game.resources }));
   if (spot.y > 520) layerEl.querySelector(".dialog")?.classList.add("dialog--top");
+  if (observe) layerEl.querySelector(".dialog-next")?.classList.add("is-waiting");
   finishRender({ focus: false });
+}
+
+/** The device runs for a moment: the gauge visibly dips, then DUTİ explains what we saw. */
+async function observeDevice(spot) {
+  if (!app.observing) return;
+  app.observing = false;
+  const key = spot.observe.gauge;
+  const gauge = hudEl.querySelector(`[data-gauge="${key}"]`);
+  const num = gauge?.querySelector(".gauge-num");
+  const value = app.game.resources[key];
+  play("loss");
+  if (gauge && num) {
+    gauge.classList.add("is-observed");
+    num.textContent = String(Math.max(0, value - 1));
+    bumpGauge(key, -1);
+  }
+  await wait(1500);
+  if (num) num.textContent = String(value);
+  gauge?.classList.remove("is-observed");
+  app.observed = app.spot;
+  if (app.screen === "spot") showSpotlight();
 }
 
 /* ---------- free exploration ---------- */
@@ -621,10 +692,13 @@ function discover(id, element) {
   if (item.secret && isNew && !reducedMotion()) {
     confetti({ particleCount: 60, spread: 60, origin: { y: 0.3 }, colors: ["#ffd65c", "#fff3c4", "#c79bff"] });
   }
-  play(item.secret && isNew ? "secret" : "discover");
+  const trail = item.thread ? SCENE_ORDER.flatMap(sid => (DISCOVERIES[sid] ?? []).filter(d => d.thread === item.thread)) : [];
+  const seenBefore = item.thread && trail.slice(0, trail.findIndex(d => d.id === id)).some(d => profile.discoveries.includes(d.id));
+  play(isNew && (item.secret || item.kind === "clue") ? "secret" : "discover");
   app.screen = "explore-line";
-  const label = isNew ? (item.secret ? t("explore.secret") : t("explore.new")) : t("explore.again");
-  showLine({ speakerId: "duti", text: "" }, label, t(`disc.${id}`));
+  const label = isNew ? (item.secret ? t("explore.secret") : item.kind === "clue" ? t("explore.clue") : t("explore.new")) : t("explore.again");
+  showLine({ speakerId: "duti", text: "" }, label, `${seenBefore ? `${t("clue.seenBefore")} ` : ""}${t(`disc.${id}`)}`);
+  if (item.kind === "clue") layerEl.querySelector(".dialog")?.classList.add("dialog--clue");
   const dialog = layerEl.querySelector(".dialog");
   dialog?.classList.add(item.y > 520 ? "dialog--top" : "dialog--explore");
   if (item.mood) dialog?.querySelector(".duti")?.setAttribute("class", `duti duti--${item.mood}`);
@@ -763,22 +837,31 @@ async function playActivity(choiceId, flagsBefore, before) {
   app.screen = "activity";
   app.activityId = id;
   stopTyping();
-  setWorld(`act:${id}:${app.game.history.length}:${getLanguage()}`, sceneWorld(def.backdrop, app.game, {
+  app.activityDef = def;
+  setWorld(`act:${id}:${app.game.history.length}:${getLanguage()}`, sceneWorld(def.backdrop, { ...app.game, flags: flagsBefore }, {
     dusty: false, photoSrc: PHOTOS.rim.src, labels: signLabels(),
     cast: def.backdrop !== "solar-radiation-alert", // Sol 5 tasks draw (and move) the crew and robot themselves
   }));
   renderHud(before.resources, before.science);
-  const total = def.order === "find" ? 1 : (def.targets[0].repeat ?? def.targets.length);
+  const total = def.total ?? (def.order === "find" ? 1 : (def.targets[0].repeat ?? def.targets.length));
   layerEl.innerHTML = taskBanner(def, 0, total);
   finishRender({ focus: false });
   if (!reducedMotion()) animate(layerEl.querySelector(".task"), { translateY: [-60, 0], opacity: [0, 1], duration: 600, ease: "outBack(1.6)" });
   await wait(450);
   fxEl.innerHTML = "";
-  const xs = def.targets.map(target => target.x).concat(def.focusExtra ?? []);
+  const xs = def.targets ? def.targets.map(target => target.x).concat(def.focusExtra ?? []) : [800];
   const focusOn = (Math.min(...xs) + Math.max(...xs)) / 2;
   setTimeout(() => setFocus(focusOn), 0);
   await runActivity(fxEl, def, {
     t,
+    onSay: (text, miss) => {
+      const line = layerEl.querySelector(".task-text");
+      if (!line) return;
+      line.textContent = text;
+      line.classList.toggle("is-miss", Boolean(miss));
+      if (miss) play("wrong");
+      if (!reducedMotion()) animate(line, { opacity: [0.3, 1], duration: 300 });
+    },
     ariaTarget: (n, count) => t("act.target", { n, total: count }),
     onProgress: (n, count) => {
       play(n >= count ? (SOBER_DONE[id] ? "done" : "success") : "step");
@@ -793,6 +876,7 @@ async function playActivity(choiceId, flagsBefore, before) {
   fxEl.innerHTML = "";
   setFocus(800);
   app.activityId = null;
+  app.activityDef = null;
 }
 
 /** Jobs that are not a reason to celebrate: no confetti, an honest closing line. */
@@ -808,13 +892,33 @@ function taskBanner(def, done, total, finished = false) {
       <p class="task-text">${esc(finished ? t(sober?.key ?? "act.done") : t(def.task))}</p>
       <p class="task-progress"><span class="task-dots">${dots}</span><span>${esc(t("act.progress", { n: done, total }))}</span></p>
     </div>
+    ${finished ? "" : `<button class="task-hint" data-action="hint" aria-label="${esc(t("act.hint"))}" title="${esc(t("act.hint"))}">?</button>`}
   </div>`;
 }
 
 /** "Did you know?" collectible card after DUTİ's feedback. */
+/** Save the pending card without a screen (used when the sol already asked a prediction). */
+function saveFactQuietly() {
+  const id = app.pendingFact;
+  app.pendingFact = null;
+  if (!id || !FACTS[id]) return;
+  if (!app.facts.includes(id)) app.facts.push(id);
+  if (!profile.facts.includes(id)) {
+    profile.facts.push(id);
+    saveProfile();
+    app.quietCard = id;
+  }
+}
+
 function showFact() {
   const id = app.pendingFact;
   if (!id || !FACTS[id]) return false;
+  if (profile.facts.includes(id)) {
+    // Already in the journal from an earlier mission: no extra screen on replays.
+    if (!app.facts.includes(id)) app.facts.push(id);
+    app.pendingFact = null;
+    return false;
+  }
   app.screen = "fact";
   stopTyping();
   const source = NASA_SOURCES[FACTS[id].sourceId];
@@ -934,6 +1038,7 @@ async function showTransition() {
 
 function showLedger() {
   if (app.screen !== "transition") return;
+  if (app.ledgerSol !== app.game.sol) { app.ledgerSol = app.game.sol; app.quietCardShown = app.quietCard; }
   app.cinemaToken = null;
   app.screen = "ledger";
   const game = app.game;
@@ -957,6 +1062,7 @@ function showLedger() {
     ${tr.note ? `<p class="fineprint">${icon("info")}${esc(ts(tr.note))}</p>` : ""}
     </div><div class="ledger-side">
     ${predictionResult(tr)}
+    ${app.quietCard ? `<button class="note note--card" data-action="journal">${icon("book")}${esc(t("fact.saved"))}</button>` : ""}
     <div class="lesson"><p class="label">${icon("star")}${esc(t("transition.lesson"))}</p><p>${esc(ts(scene.learningGoal))}</p></div>
     </div></div>
     <div class="actions actions--end"><button class="btn btn--primary btn--big" data-action="next-sol">${esc(t("transition.toSol", { n: nextSol }))}${icon("arrow")}</button></div>
@@ -1159,6 +1265,11 @@ function journalModal() {
       <a class="pill" href="#journal-facts">${icon("satellite")}${esc(t("journal.factsTotal", { n: profile.facts.length, total: Object.keys(FACTS).length }))}</a>
       <a class="pill" href="#journal-places">${icon("star")}${esc(t("journal.total", { n: profile.discoveries.filter(id => all.some(d => d.id === id)).length, total: all.length }))}</a>
     </nav>
+    <h3 class="journal-section">${icon("search")}${esc(t("journal.notebookTitle"))}</h3>
+    <p class="small">${esc(t("journal.notebookIntro"))}</p>
+    <ol class="journal journal--notebook">${SCENE_ORDER.flatMap(sceneId => (DISCOVERIES[sceneId] ?? []).filter(d => d.kind === "clue").map(d => ({ d, sol: SCENES[sceneId].sol }))).map(({ d, sol }) => profile.discoveries.includes(d.id) ? `
+      <li class="journal-item is-found is-clue"><span class="journal-kind">${icon("search")}${esc(t("ending.sol", { n: sol }))} · ${esc(t("journal.kind.clue"))}</span><p>${esc(t(`disc.${d.id}`))}</p></li>` : `
+      <li class="journal-item is-missing is-clue"><span class="journal-q" aria-hidden="true">?</span><p>${esc(t("journal.clueUnknown", { n: sol }))}</p></li>`).join("")}</ol>
     <h3 id="journal-facts" class="journal-section">${icon("satellite")}${esc(t("journal.factsTitle"))}</h3>
     <ul class="journal journal--facts">${Object.keys(FACTS).map(id => {
       const source = NASA_SOURCES[FACTS[id].sourceId];
@@ -1261,11 +1372,18 @@ function advance() {
   if (app.busy) return;
   if (stopTyping(true)) return; // the first tap finishes the sentence
   if (app.screen === "spot") {
+    if (app.observing) {
+      // Waiting for the child to try the device: point at it again instead of moving on.
+      const target = fxEl.querySelector(".spot-observe");
+      if (target && !reducedMotion()) animate(target, { scale: [1, 1.25, 1], duration: 500, ease: "outBack(3)" });
+      return;
+    }
     const spots = SPOTLIGHTS[app.game.sceneId];
     if (app.spot < spots.length - 1) {
       app.spot += 1;
       showSpotlight();
     } else {
+      markSeen(`spot:${app.game.sceneId}`);
       fxEl.innerHTML = "";
       showExplore({ animateIn: true });
     }
@@ -1276,8 +1394,8 @@ function advance() {
     return;
   }
   if (app.screen === "story") {
-    const scene = getScene(app.game);
-    if (app.line < scene.story.length - 1) {
+    const lines = app.storyLines ?? getScene(app.game).story;
+    if (app.line < lines.length - 1) {
       app.line += 1;
       renderStoryLine();
     } else {
@@ -1320,7 +1438,10 @@ function predictionFor(game) {
 
 function needsPrediction() {
   const game = app.game;
-  return Boolean(game?.pending && getScene(game).transition && getScene(game).sol !== MISSION.checkpoint?.afterSol && app.predict?.sol !== game.sol);
+  if (!game?.pending || !getScene(game).transition || getScene(game).sol === MISSION.checkpoint?.afterSol || app.predict?.sol === game.sol) return false;
+  // Ask only when the night is interesting (dust, cleaned panels, low battery, a full battery), plus once on Sol 1.
+  const info = predictionFor(game);
+  return Boolean(info) && (game.sol === 1 || ["energyDusty", "energyPanels", "oxygenLow", "full"].includes(info.kind));
 }
 
 const arrowIcon = dir => `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${dir === 0
@@ -1364,7 +1485,7 @@ async function makeGuess(dir) {
   if (lead) lead.textContent = t("predict.wait");
   save();
   await wait(1100);
-  if (showFact()) return;
+  saveFactQuietly();
   app.game = finishFeedback(app.game);
   screenForPhase();
 }
@@ -1431,6 +1552,20 @@ const actions = {
   },
   ready: () => openChoicesAfterStory(),
   "pan-left": () => setFocus(focusX - 280),
+  "skip-story"() {
+    if (app.screen !== "story") return;
+    stopTyping();
+    // Jump to DUTİ's memory lines (if any), otherwise past the story.
+    const firstMemory = (app.storyLines ?? []).findIndex(line => line.memory);
+    if (firstMemory > app.line) { app.line = firstMemory; renderStoryLine(); } else afterStory();
+  },
+  hint() {
+    const def = app.activityDef;
+    if (!def) return;
+    const line = layerEl.querySelector(".task-text");
+    if (line) { line.textContent = t(def.hint ?? "act.hint.default"); line.classList.remove("is-miss"); }
+    pulseHint(fxEl);
+  },
   "pan-right": () => setFocus(focusX + 280),
   journal: journalModal,
   guess(target) { makeGuess(Number(target.dataset.dir)); },
@@ -1462,6 +1597,7 @@ const actions = {
     collectFact();
   },
   "next-sol"() {
+    app.quietCard = null;
     app.game = finishTransition(app.game);
     screenForPhase();
   },

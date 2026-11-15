@@ -68,6 +68,19 @@ All new props are labelled as **our outpost** (story world) or general science. 
 
 The full list is in [CHANGELOG.md](../../CHANGELOG.md).
 
+## 8. After integration: 1.10.0
+
+Version 1.10.0 adds play-test suggestions from a teammate. No ten-sol rule, number, scene order, special-ending condition or balance value changed; `npm run check:engine` still matches the independent ten-sol model.
+
+- **Clue trail and the lantern.** The five notebook clues (Sols 1, 2, 4, 7 and 8) follow the lantern symbol already in your design's Sol 4 and Sol 7 text. A clue says "I've seen this before!" when an earlier one was found. The Mars Journal lists the trail.
+- **Lasting traces.** Shelter crates, the Sol 2 rock jar, the greenhouse plant pot, Earth's sticky note, the lantern sign, the Sol 2 power log, the Sol 4 equipment list, the Sol 7 distant lantern and the Sol 8 TOMORROW drawer are drawn in the scenes. They show choices already made; they do not add new choices.
+- **DUTİ remembers.** Up to two short lines per sol (`src/ui/memories.js`) connect today with earlier choices and clues. They hint that earlier choices belong together, without naming a special ending.
+- **Fewer prediction screens.** Prediction questions appear only on interesting nights (dust, cleaned panels, low or full battery) and once on Sol 1. The questions now say "from this evening to tomorrow morning".
+- **Fact cards only when new.** A card appears only the first time, and after a prediction it is saved quietly with a notice on the morning summary.
+- **Other changes.** Observe-first spotlights on Sols 2 and 3, three new thinking tasks, a Hint button on every task, a Sol 1 opening mystery, and faster replays with "Skip ahead".
+
+Browser checks for 1.10.0 are recorded in the team's test notes. This is not a child play test.
+
 ## 6. Browser checks done for 1.9.0
 
 Automated browser runs (not a child play test):

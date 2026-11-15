@@ -20,13 +20,14 @@ export const SPOTLIGHTS = {
   "welcome-to-mars": [
     { x: 1310, y: 670, r: 190, key: "spot.landing.panels" },
     { x: 470, y: 680, r: 120, key: "spot.landing.shelter" },
+    { x: 650, y: 612, r: 100, key: "spot.landing.lantern" },
   ],
   "power-shortage": [
-    { x: 500, y: 440, r: 190, key: "spot.power.battery" },
+    { x: 500, y: 440, r: 190, key: "spot.power.battery", observe: { x: 630, y: 470, gauge: "energy", key: "spot.power.try" } },
     { x: 1115, y: 500, r: 190, key: "spot.power.oxygen" },
   ],
   "greenhouse-problem": [
-    { x: 800, y: 320, r: 260, key: "spot.greenhouse.lights" },
+    { x: 800, y: 320, r: 260, key: "spot.greenhouse.lights", observe: { x: 800, y: 380, gauge: "energy", key: "spot.greenhouse.try" } },
     { x: 800, y: 600, r: 230, key: "spot.greenhouse.plants" },
   ],
   "message-from-earth": [
@@ -42,7 +43,7 @@ export const SPOTLIGHTS = {
     { x: 1345, y: 300, r: 150, key: "spot.mystery.rover" },
   ],
   "the-drawer-marked-tomorrow": [
-    { x: 800, y: 625, r: 150, key: "spot.drawer.label" },
+    { x: 990, y: 700, r: 150, key: "spot.drawer.label" },
     { x: 500, y: 440, r: 190, key: "spot.drawer.battery" },
   ],
   "two-stories-one-signal": [
@@ -568,7 +569,23 @@ export function activityFor(choiceId, flags) {
  * host: element that receives the overlay; t: interface translator; onProgress(done, total).
  * Resolves when the player has finished the task.
  */
-export function runActivity(host, def, { t, onProgress, ariaTarget }) {
+export function runActivity(host, def, { t, onProgress, ariaTarget, onSay }) {
+  if (def.custom) {
+    // Thinking tasks build their own targets and decide when they are solved.
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("class", "fx fx--activity");
+    svg.setAttribute("viewBox", "0 0 1600 900");
+    svg.setAttribute("preserveAspectRatio", "xMidYMid slice");
+    svg.innerHTML = `<g class="act-sprites"></g><g class="act-targets"></g>`;
+    host.append(svg);
+    const api = {
+      t,
+      progress: (n, total) => onProgress?.(n, total),
+      say: text => onSay?.(text, false),
+      miss: text => onSay?.(text, true),
+    };
+    return Promise.resolve(def.custom(svg, api)).then(() => sleep(800));
+  }
   const ctx = { special: Math.floor(Math.random() * def.targets.length) };
   const svg = document.createElementNS(NS, "svg");
   svg.setAttribute("class", "fx fx--activity");
@@ -650,4 +667,142 @@ export function runActivity(host, def, { t, onProgress, ariaTarget }) {
     if (def.prelude) Promise.resolve(def.prelude(svg)).catch(() => {}).then(start);
     else start();
   });
+}
+
+/* ---------- thinking tasks: share, compare, deduce (1.10.0) ---------- */
+
+const svgEl = (tag, attrs = {}, html = "") => {
+  const el = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, String(v));
+  if (html) el.innerHTML = html;
+  return el;
+};
+
+/** A tappable spot used by the thinking tasks. `correct` lets the Hint button point at it. */
+function tapSpot(layer, { x, y, r, label: name, correct = false }, onTap) {
+  const g = svgEl("g", { class: `act-target ${correct ? "is-correct" : ""}`, transform: `translate(${x} ${y})`, tabindex: 0, role: "button", "aria-label": name },
+    `<circle class="act-hit" r="${r}" fill="transparent"/><circle class="act-ring" r="${r * 0.82}" fill="none" stroke="#ffd65c" stroke-width="5" stroke-dasharray="14 10"/>`);
+  const fire = event => { event.stopPropagation(); onTap(g); };
+  g.addEventListener("click", fire);
+  g.addEventListener("keydown", event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); fire(event); } });
+  layer.append(g);
+  return g;
+}
+
+const panelBox = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="30" fill="#071028" opacity=".93" stroke="#58d3ff" stroke-width="6"/>`;
+const escSvg = text => String(text).replace(/[&<>"]/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch]));
+const label = (x, y, text, size = 30, fill = "#fff7ea") => `<text x="${x}" y="${y}" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="${size}" font-weight="700" fill="${fill}">${escSvg(text)}</text>`;
+
+/** 2A: share three power cubes between the air machine, the heater and the lamp. */
+async function shareEnergy(svg, api) {
+  const devices = [
+    { id: "air", x: 620, icon: `<rect x="-40" y="-60" width="80" height="110" rx="18" fill="#dfe7f2"/><rect x="-26" y="-44" width="52" height="56" rx="10" fill="#7ef0ff"/><text y="38" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="26" font-weight="700" fill="#27335f">O2</text>` },
+    { id: "heat", x: 800, icon: `<rect x="-48" y="-50" width="96" height="96" rx="16" fill="#ffb55a"/><path d="M-30-24h60M-30 0h60M-30 24h60" stroke="#c9693f" stroke-width="8" stroke-linecap="round"/>` },
+    { id: "lamp", x: 980, icon: `<path d="M-30 30h60l-12-60h-36Z" fill="#ffd65c"/><rect x="-6" y="30" width="12" height="24" fill="#8b93a8"/><circle cy="-40" r="14" fill="#fff6c9"/>` },
+  ];
+  const counts = { air: 0, heat: 0, lamp: 0 };
+  let left = 3;
+  const art = svgEl("g", { class: "act-panel" }, panelBox(480, 330, 640, 420)
+    + devices.map(d => `<g transform="translate(${d.x} 520)">${d.icon}</g>${label(d.x, 640, api.t(`act.share.${d.id}`), 26)}<g class="act-cubes" data-cubes="${d.id}"></g>`).join("")
+    + `<text class="act-left" x="800" y="384" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="28" font-weight="700" fill="#ffd65c"></text>`);
+  svg.querySelector(".act-sprites").append(art);
+  const drawCubes = () => {
+    for (const d of devices) {
+      art.querySelector(`[data-cubes="${d.id}"]`).innerHTML = Array.from({ length: counts[d.id] }, (_, i) => `<rect x="${d.x - 50 + i * 36}" y="662" width="28" height="28" rx="6" fill="#ffd65c" stroke="#6b4300" stroke-width="3"/>`).join("");
+    }
+    art.querySelector(".act-left").textContent = api.t("act.share.left", { n: left });
+  };
+  drawCubes();
+  const layer = svg.querySelector(".act-targets");
+  await new Promise(resolve => {
+    let checking = false;
+    for (const d of devices) {
+      tapSpot(layer, { x: d.x, y: 540, r: 85, label: api.t(`act.share.${d.id}`), correct: d.id === "air" }, async () => {
+        if (left <= 0 || checking) return;
+        counts[d.id] += 1;
+        left -= 1;
+        burst(svg, d.x, 520, "#ffd65c");
+        drawCubes();
+        api.progress(3 - left, 3);
+        if (left > 0) return;
+        const wrong = counts.lamp > 0 ? "lamp" : counts.air < 2 ? "air" : counts.heat < 1 ? "heat" : null;
+        if (!wrong) { resolve(); return; }
+        checking = true;
+        api.miss(api.t(`act.share.wrong.${wrong}`));
+        await sleep(1600);
+        counts.air = 0; counts.heat = 0; counts.lamp = 0; left = 3;
+        drawCubes();
+        api.progress(0, 3);
+        checking = false;
+      });
+    }
+  });
+}
+
+/** 2C: compare two real MEDA readings, then work out the difference. */
+async function compareReadings(svg, api) {
+  const art = svgEl("g", { class: "act-panel" }, panelBox(470, 300, 660, 470)
+    + [{ x: 680, t: -3, name: "A" }, { x: 920, t: -77, name: "B" }].map(r => {
+      const h = Math.round(((r.t + 80) / 80) * 250);
+      const color = r.t > -40 ? "#ffb55a" : "#58d3ff";
+      return `<rect x="${r.x - 26}" y="360" width="52" height="270" rx="26" fill="#1b2350" stroke="#9fe2ff" stroke-width="4"/>
+        <rect x="${r.x - 16}" y="${620 - h}" width="32" height="${h}" rx="16" fill="${color}"/>
+        <circle cx="${r.x}" cy="640" r="34" fill="${color}" stroke="#9fe2ff" stroke-width="4"/>
+        ${label(r.x, 716, `${r.name}: ${r.t === -3 ? "−3" : "−77"} °C`, 32)}`;
+    }).join(""));
+  svg.querySelector(".act-sprites").append(art);
+  const layer = svg.querySelector(".act-targets");
+  api.say(api.t("act.cmp.q1"));
+  await new Promise(resolve => {
+    tapSpot(layer, { x: 680, y: 520, r: 110, label: "A" }, () => api.miss(api.t("act.cmp.wrong1")));
+    tapSpot(layer, { x: 920, y: 520, r: 110, label: "B", correct: true }, () => { burst(svg, 920, 500, "#58d3ff"); resolve(); });
+  });
+  layer.innerHTML = "";
+  api.progress(1, 2);
+  api.say(api.t("act.cmp.q2"));
+  const options = [7, 74, 30];
+  art.append(svgEl("g", {}, options.map((n, i) => `<g transform="translate(${640 + i * 160} 236)"><circle r="56" fill="#ffd65c" stroke="#6b4300" stroke-width="5"/>${label(0, 12, `${n}°`, 36, "#2a1c00")}</g>`).join("")));
+  await new Promise(resolve => {
+    options.forEach((n, i) => tapSpot(layer, { x: 640 + i * 160, y: 236, r: 62, label: `${n}°`, correct: n === 74 }, () => {
+      if (n === 74) { burst(svg, 800, 236, "#ffd65c"); resolve(); } else api.miss(api.t("act.cmp.wrong2"));
+    }));
+  });
+  api.progress(2, 2);
+}
+
+/** 2B: use the scanner's two clues to find the right rock. */
+async function deduceRock(svg, api) {
+  const looks = ["stripes", "sparkle", "both", "spots"].sort(() => Math.random() - 0.5);
+  const spots = [[560, 715, 0.95], [720, 740, 0.85], [890, 718, 1], [1050, 738, 0.9]];
+  const rockArt = look => `
+    <path d="M-58 30l-6-30 22-30 36-12 34 10 26 26-4 36Z" fill="${look === "spots" ? "#7a4a3a" : "#8a4a32"}" stroke="#5e2416" stroke-width="5"/>
+    ${look === "stripes" || look === "both" ? `<path d="M-50 4h96M-46 18h90M-30-10h66" stroke="#d9a07a" stroke-width="6" stroke-linecap="round"/>` : ""}
+    ${look === "spots" ? [[-30, 4], [0, 14], [22, -6], [-10, -12]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="7" fill="#d9a07a"/>`).join("") : ""}
+    ${look === "sparkle" || look === "both" ? `<path d="M24-30l5 12 12 5-12 5-5 12-5-12-12-5 12-5Z" fill="#7ef0ff" stroke="#e8fdff" stroke-width="2"/>` : ""}`;
+  const art = svgEl("g", {}, spots.map(([x, y, s], i) => `<g transform="translate(${x} ${y}) scale(${s})"><g class="act-rockbox" data-rock="${i}"><ellipse cx="0" cy="34" rx="62" ry="12" fill="#000" opacity=".25"/>${rockArt(looks[i])}</g></g>`).join(""));
+  svg.querySelector(".act-sprites").append(art);
+  const layer = svg.querySelector(".act-targets");
+  await new Promise(resolve => {
+    spots.forEach(([x, y], i) => tapSpot(layer, { x, y: y - 6, r: 64, label: api.t("act.rock", { n: i + 1 }), correct: looks[i] === "both" }, () => {
+      const box = art.querySelector(`[data-rock="${i}"]`);
+      if (looks[i] === "both") { anim(box, { scale: [1, 1.2, 1], duration: 600, ease: "outBack(3)" }); burst(svg, x, y - 20, "#7ef0ff"); resolve(); return; }
+      anim(box, { translateX: [0, -8, 8, -4, 0], duration: 450 });
+      api.miss(api.t(`act.rock.${looks[i]}`));
+    }));
+  });
+  api.progress(1, 1);
+}
+
+Object.assign(ACTIVITIES, {
+  "2A": { backdrop: "power-shortage", task: "act.2A", hint: "act.2A.hint", total: 3, custom: shareEnergy },
+  "2B": { backdrop: "welcome-to-mars", task: "act.2B", hint: "act.2B.hint", total: 1, custom: deduceRock },
+  "2C": { backdrop: "power-shortage", task: "act.2C", hint: "act.2C.hint", total: 2, custom: compareReadings },
+});
+
+/** Hint button: point at the right target (or the next one) for a moment. */
+export function pulseHint(host) {
+  const target = host.querySelector(".act-target.is-correct") ?? host.querySelector(".act-target");
+  if (!target) return;
+  target.classList.add("is-hinted");
+  setTimeout(() => target.classList.remove("is-hinted"), 2400);
 }

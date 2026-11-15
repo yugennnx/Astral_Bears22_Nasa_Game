@@ -427,13 +427,108 @@ export const LOCATIONS = {
 };
 
 /** Artwork for the scene being played. */
-export function sceneWorld(sceneId, state, { dusty = false, photoSrc = "", labels = {}, cast = true } = {}) {
+export function sceneWorld(sceneId, state, { dusty = false, photoSrc = "", labels = {}, cast = true, props = true } = {}) {
+  let svg;
   switch (LOCATIONS[sceneId]) {
-    case "power": return powerWorld(state, dusty);
-    case "greenhouse": return greenhouseWorld(state);
-    case "comms": return commsWorld(state, labels);
-    case "storm": return stormWorld(state, cast);
-    case "final": return finalWorld(state, photoSrc, labels);
-    default: return landingWorld(state);
+    case "power": svg = powerWorld(state, dusty); break;
+    case "greenhouse": svg = greenhouseWorld(state); break;
+    case "comms": svg = commsWorld(state, labels); break;
+    case "storm": svg = stormWorld(state, cast); break;
+    case "final": svg = finalWorld(state, photoSrc, labels); break;
+    default: svg = landingWorld(state);
   }
+  const extra = props ? memoryProps(sceneId, state) : "";
+  return extra ? svg.replace(`<rect width="${W}" height="${H}" fill="url(#wVignette)"`, `<g class="w-memory">${extra}</g><rect width="${W}" height="${H}" fill="url(#wVignette)"`) : svg;
+}
+
+/* ---------- memory props: earlier choices stay visible in later scenes ---------- */
+
+export const lanternMark = (x, y, scale = 1) => `<g class="w-lantern" transform="translate(${x} ${y}) scale(${scale})">
+  <circle r="22" fill="#0b1026" opacity=".35"/>
+  <path d="M-7-13q7-10 14 0" fill="none" stroke="#ffe8a8" stroke-width="3"/>
+  <rect x="-10" y="-13" width="20" height="24" rx="5" fill="#ffd65c" stroke="#6b4300" stroke-width="3"/>
+  <circle cy="-1" r="5" fill="#fff6c9"/><path d="M-12 13h24" stroke="#6b4300" stroke-width="3" stroke-linecap="round"/>
+</g>`;
+const sampleJar = (x, y) => `<g class="w-prop w-prop--sample" transform="translate(${x} ${y})">
+  <ellipse cy="34" rx="34" ry="7" fill="#000" opacity=".25"/>
+  <rect x="-26" y="-30" width="52" height="62" rx="12" fill="#bfe9ff" opacity=".45" stroke="#e8fdff" stroke-width="4"/>
+  <rect x="-28" y="-40" width="56" height="14" rx="5" fill="#8b93a8"/>
+  <path d="M-16 24l-4-16 12-14 18-2 12 12-2 20Z" fill="#8a4a32" stroke="#5e2416" stroke-width="3"/>
+  <path d="M-12 8h20M-8 16h18" stroke="#c98a5a" stroke-width="3" stroke-linecap="round"/>
+  <rect x="-20" y="38" width="40" height="14" rx="4" fill="#fff7ea"/><text y="49" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="11" font-weight="700" fill="#2a2140">SOL 2</text>
+</g>`;
+const plantPot = (x, y, mode) => `<g class="w-prop w-prop--pot" transform="translate(${x} ${y})">
+  <ellipse cy="30" rx="30" ry="6" fill="#000" opacity=".25"/>
+  ${mode === "off" ? `<path d="M-4 0q-6-14 -2-24M4 0q8-10 4-20" stroke="#8a6a4a" stroke-width="4" fill="none" stroke-linecap="round"/>`
+    : `<path d="M0 0v-34" stroke="#3fae6a" stroke-width="5"/><ellipse cx="-12" cy="-20" rx="14" ry="7" fill="#59d188" transform="rotate(-30 -12 -20)"/><ellipse cx="12" cy="-28" rx="14" ry="7" fill="#7be495" transform="rotate(30 12 -28)"/>${mode === "full" ? `<ellipse cx="-10" cy="-38" rx="11" ry="6" fill="#7be495" transform="rotate(-40 -10 -38)"/><circle cx="4" cy="-40" r="7" fill="#ff7b6b"/>` : ""}`}
+  <path d="M-24 0h48l-8 30h-32Z" fill="#c9693f" stroke="#7a3a1f" stroke-width="3"/>
+</g>`;
+const crateProp = (x, y, scale = 0.7) => `<g class="w-prop w-prop--crate" transform="translate(${x} ${y}) scale(${scale})">
+  <rect x="-38" y="-34" width="76" height="62" rx="8" fill="#c98a4a" stroke="#7a4c27" stroke-width="5"/>
+  <path d="M-38-10h76M-10-34v62" stroke="#7a4c27" stroke-width="4"/>
+</g>`;
+const earthNote = (x, y) => `<g class="w-prop w-prop--note" transform="translate(${x} ${y}) rotate(6)">
+  <rect x="-34" y="-26" width="68" height="52" rx="4" fill="#fff3a8" stroke="#d9c25a" stroke-width="3"/>
+  <circle cx="-14" cy="-6" r="8" fill="#58a7e0"/><path d="M-18-8q4-4 8 0" stroke="#59d188" stroke-width="3" fill="none"/>
+  <path d="M0-8h22M0 2h22M-24 14h46" stroke="#8a7a3a" stroke-width="3" stroke-linecap="round"/>
+</g>`;
+const clipboard = (x, y) => `<g class="w-prop" transform="translate(${x} ${y}) rotate(-4)">
+  <rect x="-40" y="-52" width="80" height="100" rx="8" fill="#c98a4a" stroke="#7a4c27" stroke-width="4"/>
+  <rect x="-32" y="-42" width="64" height="84" rx="4" fill="#fff7ea"/>
+  <rect x="-14" y="-58" width="28" height="14" rx="4" fill="#8b93a8"/>
+  <path d="M-24-8h48M-24 4h48M-24 16h36M-24 28h40" stroke="#b9b2c7" stroke-width="3" stroke-linecap="round"/>
+  ${lanternMark(0, -26, 0.55)}
+</g>`;
+const listPaper = (x, y) => `<g class="w-prop" transform="translate(${x} ${y}) rotate(5)">
+  <rect x="-44" y="-30" width="88" height="60" rx="5" fill="#fff7ea" stroke="#d8cdb8" stroke-width="3"/>
+  <path d="M-34-16h40M-34-4h56M-34 8h50M-34 20h36" stroke="#b9b2c7" stroke-width="3" stroke-linecap="round"/>
+  ${lanternMark(30, -14, 0.5)}
+</g>`;
+const drawerCabinet = () => `<g class="w-prop w-prop--drawer" transform="translate(990 712)">
+  <ellipse cy="72" rx="110" ry="12" fill="#000" opacity=".25"/>
+  <rect x="-100" y="-60" width="200" height="130" rx="12" fill="#3a4170" stroke="#8b93a8" stroke-width="5"/>
+  <rect x="-86" y="-46" width="172" height="48" rx="8" fill="#27335f" stroke="#8b93a8" stroke-width="3"/>
+  <rect x="-60" y="-34" width="120" height="24" rx="5" fill="#fff7ea"/>
+  <text y="-16" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="17" font-weight="800" fill="#2a2140">TOMORROW</text>
+  <rect x="-86" y="10" width="172" height="48" rx="8" fill="#27335f" stroke="#8b93a8" stroke-width="3"/>
+  <rect x="-22" y="28" width="44" height="10" rx="5" fill="#ffd65c"/>
+  ${lanternMark(78, -52, 0.55)}
+</g>`;
+const farBlink = () => `<g class="w-prop w-far-blink" transform="translate(1415 330)">${lanternMark(0, 0, 0.45)}</g>`;
+
+/**
+ * Small, lasting signs of earlier choices and of the lantern clue trail (story-world props).
+ * Coordinates use each location's 1600 x 900 artwork; most props stay inside x 440–1160.
+ */
+export function memoryProps(sceneId, state) {
+  const f = state?.flags ?? {};
+  const out = [];
+  switch (LOCATIONS[sceneId]) {
+    case "landing":
+      out.push(lanternMark(650, 612, 0.75));
+      if (f.shelterPrepared) out.push(crateProp(372, 702), crateProp(418, 716, 0.6));
+      break;
+    case "power":
+      if (f.sampleCollected) out.push(sampleJar(560, 728));
+      if (f.greenhouseMode) out.push(plantPot(690, 732, f.greenhouseMode));
+      if (sceneId === "power-shortage") out.push(clipboard(1000, 708));
+      if (sceneId === "the-drawer-marked-tomorrow") out.push(drawerCabinet());
+      break;
+    case "comms":
+      if (f.earthGuide) out.push(earthNote(1146, 156));
+      if (f.sampleCollected) out.push(sampleJar(520, 560));
+      if (sceneId === "message-from-earth") out.push(listPaper(1095, 612));
+      if (sceneId === "the-three-note-mystery") out.push(farBlink());
+      break;
+    case "storm":
+      if (f.shelterPrepared) out.push(crateProp(470, 712, 0.65), crateProp(770, 716, 0.6));
+      break;
+    case "final":
+      if (f.sampleCollected) out.push(sampleJar(450, 640));
+      if (f.greenhouseMode) out.push(plantPot(1210, 650, f.greenhouseMode));
+      break;
+    default:
+      break;
+  }
+  return out.join("");
 }

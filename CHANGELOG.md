@@ -1,8 +1,23 @@
 # Changelog
 
-> AI/SI disclosure: drafted with Anthropic Claude; ten-sol design notes added with OpenAI ChatGPT/Codex; ten-sol implementation (1.9.0) with Anthropic Claude. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json).
+> AI/SI disclosure: drafted with Anthropic Claude; ten-sol design notes added with OpenAI ChatGPT/Codex; ten-sol implementation (1.9.0) with Anthropic Claude; 1.10.0 play-test changes with Anthropic Claude. See [AI_USAGE.md](AI_USAGE.md) and [ai-usage.json](ai-usage.json).
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
+
+## 1.10.0 — Questions worth following (2026-11-15)
+
+- The ideas in this version came from a teammate's play-test suggestions. Anthropic Claude helped implement them; no rule or number was changed.
+- The game opens with a mystery: a tiny lantern shows up on Sol 1, and the spotlight invites the child to look closer before anything is explained.
+- Fewer forced screens: story lines already seen are shown at once on replays, with a "Skip ahead" button, and spotlights that were already seen are skipped.
+- Prediction questions appear only on interesting nights (dust, cleaned solar panels, low or full battery), plus once on Sol 1. The questions now say "from this evening to tomorrow morning".
+- Varied thinking tasks: sharing three power cubes between the air machine, heater and lamp (wrong shares get a reason and a retry); finding a rock from two scanner clues; comparing two real Perseverance MEDA temperature readings (−3 °C and −77 °C) and working out the difference (74 degrees). Every task has a Hint button.
+- Observe first: on Sols 2 and 3 the child taps the heater or the grow lights and watches the Energy gauge dip before DUTİ explains why.
+- A notebook clue trail (the lantern trail) with five clues on Sols 1, 2, 4, 7 and 8. A clue says "I've seen this before!" when an earlier clue was already found, and the Mars Journal lists the trail.
+- DUTİ remembers: up to two short lines per sol connect today with earlier choices and clues. They hint that earlier choices belong together, without naming any ending.
+- Lasting traces of choices appear in the scenes: shelter crates, a rock sample jar, a plant pot for the greenhouse choice, a sticky note for Earth's advice, the lantern sign on the base, an old power log, an equipment list, a distant blinking lantern and a TOMORROW drawer.
+- Fact cards appear only when they are new. After a prediction, the card is saved quietly and the morning summary shows a "New card saved in your Mars Journal" button.
+- Clearer, faster replays and English and Turkish interface updated (61 new strings, 14 revised).
+- Checked with `npm run check`; browser checks are recorded in the team's test notes.
 
 ## 1.9.0 — Ten sols of questions (2026-11-15)
 

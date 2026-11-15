@@ -5,6 +5,7 @@
  */
 
 const ICON_PATHS = {
+  search: '<circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.6"/><path d="M15.5 15.5l5 5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/>',
   book: '<path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5c-.8 0-1.5.7-1.5 1.5V5.5Z" fill="currentColor"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5V5.5Z" fill="currentColor" opacity=".7"/>',
   energy: '<path d="M13.5 2 5 13.2h5.6L9.5 22 19 10.2h-5.9L13.5 2Z" fill="currentColor"/>',
   oxygen: '<circle cx="9" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M17 15.2c0-1.6 3.6-1.5 3.6-3.6 0-1.1-.9-1.8-2-1.8-1 0-1.7.5-2 1.3M17 15.6h3.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>',
