@@ -4,6 +4,11 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.9 — Fresh discoveries in every new game (2026-11-15)
+
+- Bug fix: in a new game every explore object already showed a green tick, because the ticks were read from the lasting Mars Journal. Each game now keeps its own list of finds (saved with the game, so a reload keeps them). Ticks, the "N of 6 found" counter, the "New discovery!" badge, the clue-trail line and DUTİ's memories use this game's finds. The Mars Journal still keeps every discovery from every game.
+- Checked with `npm run check` and a headless-browser test: a profile with all 52 discoveries starts a new game with 0 ticks, a new find gets one tick, and the tick survives a reload.
+
 ## 1.11.8 — Simpler title screen (2026-11-15)
 
 - Title screen: removed the "Ages 7–12" and "About 20 minutes" badges (and their Turkish strings) at the team's request. Only the "Real NASA data" badge remains.

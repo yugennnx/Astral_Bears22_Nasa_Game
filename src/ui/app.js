@@ -98,13 +98,16 @@ let typing = null; // active typewriter
 
 /* ---------- saving ---------- */
 
+/** Discoveries found in the current game (ticks on the explore screen start empty in a new game). */
+const foundNow = id => (app.found ?? []).includes(id);
+
 function save() {
   try {
     if (app.screen !== "title") app.resumeScreen = app.screen;
     localStorage.setItem(SAVE_KEY, JSON.stringify({
       language: getLanguage(), game: app.game, screen: app.resumeScreen,
       lastProfileId: app.lastProfileId, seenCards: app.seenCards, facts: app.facts,
-      predict: app.predict, score: app.score, pendingFact: app.pendingFact,
+      predict: app.predict, score: app.score, pendingFact: app.pendingFact, found: app.found ?? [],
     }));
   } catch { /* storage can be unavailable; the game still works */ }
 }
@@ -191,7 +194,7 @@ function setFocus(x = 800) {
   const svgs = [worldEl.querySelector(".world-scene:last-child > svg"), ...fxEl.querySelectorAll("svg")];
   svgs.forEach(svg => svg?.setAttribute("viewBox", viewBox));
   if (app.screen === "explore" && app.game) {
-    const waiting = (DISCOVERIES[app.game.sceneId] ?? []).filter(d => !d.secret && !profile.discoveries.includes(d.id));
+    const waiting = (DISCOVERIES[app.game.sceneId] ?? []).filter(d => !d.secret && !foundNow(d.id));
     const left = waiting.some(d => d.x < center - visible / 2 + 40);
     const right = waiting.some(d => d.x > center + visible / 2 - 40);
     layerEl.querySelector(".pan--left")?.classList.toggle("has-more", left);
@@ -548,7 +551,7 @@ async function showIntro() {
 /** The scene's story, followed by up to two lines in which DUTİ remembers earlier choices. */
 function storyLines() {
   const scene = getScene(app.game);
-  const found = id => profile.discoveries.includes(id);
+  const found = foundNow;
   const memories = memoriesFor(scene.id, app.game, found).map(item => ({ speakerId: "duti", memory: item.id }));
   return [...scene.story, ...storyBeats(scene.id), ...memories];
 }
@@ -702,9 +705,9 @@ function exploreSvg(sceneId) {
   const list = DISCOVERIES[sceneId] ?? [];
   return `
   <svg class="fx fx--explore" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="false">
-    ${list.filter(d => d.secret).map(d => `<g class="secret-art ${profile.discoveries.includes(d.id) ? "is-found" : ""}">${secretSprite(d.id)}</g>`).join("")}
+    ${list.filter(d => d.secret).map(d => `<g class="secret-art ${foundNow(d.id) ? "is-found" : ""}">${secretSprite(d.id)}</g>`).join("")}
     ${list.map((d, i) => {
-      const found = profile.discoveries.includes(d.id);
+      const found = foundNow(d.id);
       return `
       <g class="hotspot ${found ? "is-found" : ""} ${d.secret ? "is-secret" : ""}" data-disc="${d.id}" transform="translate(${d.x} ${d.y})" tabindex="0" role="button" aria-label="${esc(t("explore.spotN", { n: i + 1, total: list.length }))}">
         <circle class="hot-hit" r="${Math.max(d.r, 60)}" fill="transparent"/>
@@ -720,9 +723,9 @@ function exploreSvg(sceneId) {
 function exploreBar(sceneId) {
   const list = DISCOVERIES[sceneId] ?? [];
   const normal = list.filter(d => !d.secret);
-  const found = normal.filter(d => profile.discoveries.includes(d.id)).length;
+  const found = normal.filter(d => foundNow(d.id)).length;
   const secrets = list.filter(d => d.secret);
-  const secretFound = secrets.filter(d => profile.discoveries.includes(d.id)).length;
+  const secretFound = secrets.filter(d => foundNow(d.id)).length;
   const name = playerName();
   const hint = found < normal.length ? t("explore.hint")
     : secretFound < secrets.length ? t("explore.hintSecret") : t("explore.hintAll");
@@ -732,7 +735,7 @@ function exploreBar(sceneId) {
     <div class="explore-text">
       <p class="explore-title">${esc(name ? t("explore.title", { name }) : t("explore.titleNoName"))}</p>
       <p class="explore-hint">${esc(hint)}</p>
-      <p class="explore-count"><span class="explore-dots">${normal.map(d => `<i class="${profile.discoveries.includes(d.id) ? "on" : ""}"></i>`).join("")}${secrets.map(d => `<i class="is-secret ${profile.discoveries.includes(d.id) ? "on" : ""}">${icon("star")}</i>`).join("")}</span>${esc(t("explore.countSplit", { n: found, total: normal.length }))}</p>
+      <p class="explore-count"><span class="explore-dots">${normal.map(d => `<i class="${foundNow(d.id) ? "on" : ""}"></i>`).join("")}${secrets.map(d => `<i class="is-secret ${foundNow(d.id) ? "on" : ""}">${icon("star")}</i>`).join("")}</span>${esc(t("explore.countSplit", { n: found, total: normal.length }))}</p>
     </div>
     <button class="btn btn--primary" data-action="ready">${esc(t("explore.ready"))}${icon("arrow")}</button>
   </div>
@@ -769,9 +772,13 @@ function discover(id, element, { replay = false } = {}) {
   const sceneId = app.game.sceneId;
   const item = DISCOVERIES[sceneId].find(d => d.id === id);
   if (!item) return;
-  const isNew = replay ? Boolean(app.exploreLineNew) : !profile.discoveries.includes(id);
+  const isNew = replay ? Boolean(app.exploreLineNew) : !foundNow(id);
   app.exploreLineNew = isNew;
   if (isNew && !replay) {
+    app.found = [...(app.found ?? []), id];
+    save();
+  }
+  if (!profile.discoveries.includes(id)) {
     profile.discoveries.push(id);
     saveProfile();
   }
@@ -788,7 +795,7 @@ function discover(id, element, { replay = false } = {}) {
     confetti({ particleCount: 60, spread: 60, origin: { y: 0.3 }, colors: ["#ffd65c", "#fff3c4", "#c79bff"] });
   }
   const trail = item.thread ? SCENE_ORDER.flatMap(sid => (DISCOVERIES[sid] ?? []).filter(d => d.thread === item.thread)) : [];
-  const seenBefore = item.thread && trail.slice(0, trail.findIndex(d => d.id === id)).some(d => profile.discoveries.includes(d.id));
+  const seenBefore = item.thread && trail.slice(0, trail.findIndex(d => d.id === id)).some(d => foundNow(d.id));
   if (!replay) play(isNew && (item.secret || item.kind === "clue") ? "secret" : "discover");
   app.screen = "explore-line";
   const label = isNew ? (item.secret ? t("explore.secret") : item.kind === "clue" ? t("explore.clue") : t("explore.new")) : t("explore.again");
@@ -1730,6 +1737,7 @@ function startNewGame() {
   app.game = createGame(profileId);
   app.seenCards = [];
   app.facts = [];
+  app.found = [];
   app.pendingFact = null;
   app.predict = null;
   app.score = { right: 0, total: 0 };
@@ -1929,6 +1937,7 @@ setLanguage(saved?.language ?? "en"); // English first; Turkish is opt-in
 app.lastProfileId = saved?.lastProfileId ?? null;
 app.seenCards = saved?.seenCards ?? [];
 app.facts = saved?.facts ?? [];
+app.found = saved?.found ?? [];
 app.predict = saved?.predict ?? null;
 app.score = saved?.score ?? { right: 0, total: 0 };
 // A card that was shown but not yet collected before a reload is offered again.
