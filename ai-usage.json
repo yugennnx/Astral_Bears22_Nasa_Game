@@ -634,7 +634,7 @@
     {
       "path": "docs/submission/compass-outpost-demo-slides.html",
       "status": "ai-generated",
-      "scope": "Claude-generated seven-slide English project demo (cover, introduction, gameplay, NASA data, impact and validation, AI/SI use and limits, references) at the team's request; text content follows the repository sources.",
+      "scope": "Claude-generated seven-slide English project demo (cover, introduction, gameplay, NASA data, impact and validation, AI/SI use and limits, references) at the team's request; text content follows the repository sources. Revised for capitalization and spelling, and given six game screenshots (docs/submission/img/, captured with an automated headless browser; the game art in them is AI-generated SVG and carries its in-game label).",
       "tools": [
         "Anthropic Claude"
       ]
