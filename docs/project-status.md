@@ -34,7 +34,7 @@ Verification evidence is recorded in [the 1.12.0 review](design/release-review-1
 | --- | --- | --- | --- |
 | Required | Confirm all members' Universal Event registration and team membership | Team Owner | Actual Members tab, no pending member |
 | Required | Complete the eight English project-form sections | Submission editor | Saved official form; source/SI entries reviewed |
-| Required | Provide a public demo within the official limits | Team | Tested external demo link |
+| Required | Enter the prepared public demo in the form | Team | [29-second English demo](demo.md); actual form entry remains unverified |
 | Required | Verify final-project link and referenced materials without login | Team | Private-window check; a public repository is accepted |
 | Required | Resolve rights/license attestation | Team | Apache-2.0 selection recorded; team must still verify third-party rights/credits |
 | Required | Submit for judging and retain confirmation before deadline | Team Owner | Official success banner/message |
@@ -43,7 +43,7 @@ Verification evidence is recorded in [the 1.12.0 review](design/release-review-1
 
 The user reports Universal Event participation and a Team Owner residing in Türkiye. These are team statements, not independently inspected registration records. The official Universal deadline is November 15, 2026 at 23:59 in the Team Owner's area of residence: 23:59 Türkiye time for the reported residence. See [the submission checklist](submission-checklist.md).
 
-The user authorized Apache-2.0 on November 15, 2026; [licensing scope](../LICENSING.md) and the root license are now present. Third-party rights approval is not inferred. The official form, demo, hosted link and participant registrations have not been certified by this maintenance work.
+The user authorized Apache-2.0 on November 15, 2026; [licensing scope](../LICENSING.md) and the root license are now present. Third-party rights approval is not inferred. The [English demo](demo.md) is prepared and encoded at 29 seconds. The official form, playable deployment and participant registrations have not been certified by this work.
 
 ## Later product work
 

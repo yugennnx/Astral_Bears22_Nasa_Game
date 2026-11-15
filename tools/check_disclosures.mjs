@@ -44,7 +44,7 @@ const files = execFileSync("git", ["ls-files", "--cached", "--others", "--exclud
   .trim().split(/\r?\n/).filter(Boolean);
 for (const path of new Set(files)) {
   // Content files plus repository configuration dotfiles (e.g. .gitignore, .gitattributes, .editorconfig).
-  if (/\.(md|js|mjs|py|json|html|svg|ya?ml)$/i.test(path) || /(^|\/)\.[^/]+$/.test(path)) {
+  if (/\.(md|js|mjs|py|json|html|svg|ya?ml|mp4|vtt)$/i.test(path) || /(^|\/)\.[^/]+$/.test(path)) {
     assert(inventory.has(path), `Missing file-level provenance: ${path}`);
   }
   if (/^LICENSE(?:\..+)?$/i.test(path)) assert.equal(path, "LICENSE", "Unexpected competing root license");

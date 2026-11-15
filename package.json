@@ -11,10 +11,11 @@
     "check:i18n": "node tools/check_i18n.mjs",
     "check:disclosures": "node tools/check_disclosures.mjs",
     "check:expansion": "node tools/check_ten_sol_design.mjs",
-    "check": "npm run check:story && npm run check:engine && npm run check:i18n && npm run check:expansion && npm run check:disclosures && npm run check:docs",
+    "check": "npm run check:story && npm run check:engine && npm run check:i18n && npm run check:expansion && npm run check:disclosures && npm run check:docs && npm run check:demo",
     "verify:sources": "python tools/verify_nasa_sources.py",
     "check:docs": "node tools/check_docs.mjs",
-    "check:browser": "playwright test"
+    "check:browser": "playwright test",
+    "check:demo": "node tools/check_demo.mjs"
   },
   "engines": {
     "node": ">=20"

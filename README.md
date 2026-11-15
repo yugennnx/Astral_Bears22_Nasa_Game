@@ -19,7 +19,7 @@ npm start
 
 Open **http://127.0.0.1:5173**. Any static web host can serve the game. Runtime libraries, fonts and NASA photographs are stored locally; the game makes no external data/API requests during play. Clicking a source link opens its external source.
 
-A deployed game URL and submission demo have not been supplied in this repository. The official submission guide accepts a public repository as a final-project link; GitHub Pages is an optional hosting choice, not a separate eligibility requirement.
+The [29-second English project demo](docs/demo.md) is available, with public video URL, caption transcript and source/SI details. A direct deployed game URL has not been supplied in this repository. The official submission guide accepts a public repository as a final-project link; GitHub Pages is an optional hosting choice, not a separate eligibility requirement.
 
 ## Play
 

@@ -36,6 +36,7 @@ Run one case with `npm run check:browser -- --project=phone --grep 'ending visit
 | `check:expansion` | Independent design calculation; does not call the production engine |
 | `check:disclosures` | File inventory, metadata and saved source hashes; not a rights/eligibility certificate |
 | `check:docs` | Local Markdown targets/anchors and professional current-document hygiene |
+| `check:demo` | Actual MP4 duration/tracks/dimensions/frame count/hash and caption record; frame review remains separate |
 | `check:browser` | Actual UI controls, responsive targets, live translations and persistence |
 
 `npm run check` runs all non-browser checks. CI also installs Chromium and runs the browser suite. Actions are pinned to official release commit SHAs; Playwright is an exact development dependency with a lockfile. No workflow publishes the game or submits anything to Space Apps.
@@ -51,3 +52,5 @@ Run one case with `npm run check:browser -- --project=phone --grep 'ending visit
 7. Publish only the reviewed change. Check the actual CI run, and verify external links separately before submission.
 
 Current open team decisions are in [submission checklist](submission-checklist.md) and [project status](project-status.md). Historical reports are evidence of earlier commits, not blanket approval of future releases.
+
+Demo capture/encoding instructions and build-tool scope are in [the demo handoff](demo.md). Final encoded video bytes are protected by .gitattributes; do not change the metadata hash without reviewing a replacement video.

@@ -3,3 +3,6 @@
 
 # Unmodified NASA source responses: keep byte-exact (SHA-256 is checked).
 data/raw/** binary
+
+# Published demo video: preserve encoded bytes and verification hash.
+docs/demo/*.mp4 binary

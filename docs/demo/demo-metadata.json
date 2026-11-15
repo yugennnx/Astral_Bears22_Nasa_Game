@@ -1,0 +1,66 @@
+{
+  "title": "Compass Outpost: Ten Sols of Questions - Project Demo",
+  "date": "2026-11-15",
+  "language": "en",
+  "durationSeconds": 29,
+  "width": 1920,
+  "height": 1080,
+  "framesPerSecond": 30,
+  "videoCodec": "H.264",
+  "pixelFormat": "yuv420p",
+  "audioStreams": 0,
+  "frameCount": 870,
+  "byteSize": 1673453,
+  "sha256": "56474973152a7da61533310b77f7bd725bd8d8ba4562ac0404329dda90b36ff7",
+  "gameBuildCommit": "e27dbd67b706f5990faef0f2682df5839d3656bf",
+  "sourceDescription": "Actual UI interactions from selected reachable production-engine states, edited into six excerpts; not a continuous ten-sol playthrough.",
+  "aiAssistanceUsed": true,
+  "demoTool": "OpenAI Codex",
+  "gameTools": [
+    "OpenAI ChatGPT/Codex",
+    "Anthropic Claude"
+  ],
+  "visibleWatermark": "AI-GENERATED DEMO · AI-generated game illustrations",
+  "humanFootage": false,
+  "humanVoice": false,
+  "nasaMeasurementsGeneratedByAi": false,
+  "ruleSources": [
+    "https://www.spaceappschallenge.org/resources/project-submission-guide/",
+    "https://www.spaceappschallenge.org/legal/"
+  ],
+  "dataSources": [
+    "https://pds.nasa.gov/ds-view/pds/viewBundle.jsp?identifier=urn:nasa:pds:mars2020_meda",
+    "https://ccmc.gsfc.nasa.gov/tools/DONKI/"
+  ],
+  "photoSource": {
+    "id": "PIA26373",
+    "credit": "NASA/JPL-Caltech/ASU/MSSS",
+    "url": "https://images.nasa.gov/details/PIA26373"
+  },
+  "licenseScope": "../../LICENSING.md",
+  "disclosure": "../../AI_USAGE.md",
+  "captions": "compass-outpost-demo.vtt",
+  "gameChangedForRecording": false,
+  "officialSubmissionPerformed": false,
+  "verification": {
+    "durationFromMp4Headers": true,
+    "fullDecodeCompleted": true,
+    "browserPlayback": {
+      "durationSeconds": 29,
+      "width": 1920,
+      "height": 1080,
+      "error": null,
+      "finalFrameSeekPassed": true
+    },
+    "sampledFrameReviewTimesSeconds": [
+      0.1,
+      3.1,
+      8.1,
+      12,
+      15.1,
+      20.1,
+      24.1,
+      28.9
+    ]
+  }
+}

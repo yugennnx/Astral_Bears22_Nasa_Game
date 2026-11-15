@@ -84,3 +84,7 @@ The official [2026 Terms](https://www.spaceappschallenge.org/legal/) accept unre
 - **OpenAI Codex:** 1.12.0 code/documentation/test revisions; earlier Claude-generated artwork and implementation remain separately attributed in AI_USAGE.md and ai-usage.json. Current code-drawn art carries the visible label “AI-generated SVG illustration”; NASA photographs keep separate credits.
 
 The team must include any other tools actually used in its final references. A dependency's license is not a project-wide license decision, and test configuration is not proof that its remote CI run has passed.
+
+## Demo production
+
+The [English demo](../demo.md) uses existing gameplay and the separately credited NASA PIA26373 photo, not new NASA-branded generated assets. OpenAI Codex produced the editorial layout/captions/capture/edit. Playwright 1.65.1 and installed Chrome recorded the interface; FFmpeg 7.1 via imageio-ffmpeg 0.6.0 encoded it as H.264 with no audio. Encoder binaries/raw clips are not distributed. The video uses existing Fredoka gameplay text and system Arial overlay text. Visible SI labeling and structured metadata are included; no real person appears. Source-specific rights remain as stated above.

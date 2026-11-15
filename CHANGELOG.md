@@ -6,6 +6,8 @@ All notable changes to this project. Gameplay numbers are fictional educational 
 
 ## 1.12.0 — Repository readiness and persistent browser checks (2026-11-15)
 
+- Submission demo: added a 29-second, silent English 1080p video from actual gameplay, visible AI watermark, source/SI metadata, caption transcript, reproducible capture/encoding helpers and independent MP4 checks. Runtime and NASA observations remain unchanged.
+
 - Fixed special endings being registered only after all pages; discovery now persists immediately and completed pages/reports can be reviewed after reload.
 - Fixed narrow task cameras cropping required controls. Retained the latest 1.11.9 per-mission discovery behavior and all game numbers, gates and ending predicates.
 - Fixed cross-screen keyboard debounce swallowing the first Enter on an explicitly focused control; reading-area protection remains.
