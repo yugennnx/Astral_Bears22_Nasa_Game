@@ -4,6 +4,12 @@
 
 All notable changes to this project. Gameplay numbers are fictional educational values; NASA observations are cited separately.
 
+## 1.11.4 — Turkish review and small-text contrast (2026-11-15)
+
+- Turkish: a full review of every Turkish story and interface string (51 strings revised): consistent "N. Mars günü", "kurgusal" instead of "uydurma/hayalî", natural prediction questions ("Şimdi ile yarın sabah arasında"), grammar fixes, child-friendly words ("tepe" instead of "sırt"), and a clearer replay invitation.
+- Contrast: the dialog line counter is darker on the cream box, the "New card!" badge has a darker background, and the title-screen AI note is larger and lighter on the dark sky.
+- Checked with `npm run check`. The Turkish review was an AI-assisted audit (Anthropic Claude), not a native-speaker human review.
+
 ## 1.11.3 — Readable text, a working heater button, better Turkish (2026-11-15)
 
 Fixes for the team's play test and an independent Antigravity review:

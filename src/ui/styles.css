@@ -206,7 +206,7 @@ body[data-screen="title"] .topbar { background: none; }
 .badges .icon { color: var(--energy); }
 .title-duti { justify-self: center; width: min(32vw, 330px); filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.55)); animation: float 5s ease-in-out infinite; }
 .title-duti .duti { width: 100%; height: auto; display: block; }
-.footnote { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; font-size: 0.72rem; color: #c4c8e0; padding: 0 140px; }
+.footnote { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; font-size: 0.78rem; color: #d6d9ec; padding: 0 140px; }
 @keyframes float { 50% { translate: 0 -14px; rotate: 1.5deg; } }
 
 /* ---------- briefing ---------- */
@@ -253,7 +253,7 @@ body[data-screen="title"] .topbar { background: none; }
 .dialog-text { font-size: clamp(1.05rem, 0.95rem + 0.45vw, 1.3rem); line-height: 1.45; font-weight: 480; min-height: 3em; }
 .dialog--narrator .dialog-text { font-style: italic; color: #eeeaf8; }
 .dialog-foot { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
-.dialog-counter { color: #8c7a6a; font-weight: 600; }
+.dialog-counter { color: #6b5a4a; font-weight: 600; }
 .dialog--narrator .dialog-counter { color: var(--muted); }
 .dialog-next { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; background: #2a2140; color: #ffe9c7; font-weight: 650; animation: nudge 1.4s ease-in-out infinite; }
 .dialog--narrator .dialog-next { background: var(--energy); color: #2a1c00; }
@@ -564,7 +564,7 @@ body[data-screen="title"] .topbar { background: none; }
 .factcard-head h2 { font-size: clamp(1.4rem, 1.2rem + 1vw, 1.9rem); color: #2a2140; }
 .factcard-badge { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: #2a2140; color: #58d3ff; flex: none; }
 .factcard-badge .icon { width: 28px; height: 28px; }
-.factcard-new { margin-left: auto; padding: 4px 12px; border-radius: 999px; background: #e2703a; color: #fff; font-weight: 700; font-size: 0.85rem; rotate: 6deg; }
+.factcard-new { margin-left: auto; padding: 4px 12px; border-radius: 999px; background: #b5482a; color: #fff; font-weight: 700; font-size: 0.85rem; rotate: 6deg; }
 .factcard-text { position: relative; font-size: clamp(1.08rem, 1rem + 0.4vw, 1.28rem); line-height: 1.45; font-weight: 520; }
 .factcard-foot { position: relative; display: grid; gap: 6px; padding-top: 10px; border-top: 2px dashed #c9a97c; font-size: 0.82rem; color: #5b4a3a; }
 .factcard-foot a { color: #1f5fa8; font-weight: 600; }

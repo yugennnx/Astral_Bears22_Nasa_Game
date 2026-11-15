@@ -47,21 +47,21 @@ export const STORY_TR = {
   ["Game time fast-forwarded"]:
     "Oyun zamanı hızlandırıldı",
   ["All numerical effects are educational game-design values, not NASA measurements. Safety is an abstract game indicator, not a radiation dose."]:
-    "Oyundaki bütün sayılar öğrenmek için uydurulmuş değerlerdir, NASA ölçümü değildir. Güvenlik puanı bir oyun göstergesidir, gerçek bir radyasyon ölçümü değildir.",
+    "Oyundaki bütün sayılar öğrenmek için seçilmiş kurgusal oyun değerleridir, NASA ölçümü değildir. Güvenlik puanı bir oyun göstergesidir, gerçek bir radyasyon ölçümü değildir.",
   ["Standard Mission"]:
     "Normal Görev",
   ["Dust is expected after Sol 2, Sol 4 and Sol 8. Supplies are full."]:
-    "2., 4. ve 8. günlerden sonra toz bekleniyor. Malzemeler tam.",
+    "2., 4. ve 8. Mars günlerinden sonra toz bekleniyor. Malzemeler tam.",
   ["Dusty Season"]:
     "Tozlu Mevsim",
   ["Dust is expected after Sols 2, 3, 4, 7 and 8. Clean panels will matter more!"]:
-    "2., 3., 4., 7. ve 8. günlerden sonra toz bekleniyor. Temiz paneller çok işe yarayacak!",
+    "2., 3., 4., 7. ve 8. Mars günlerinden sonra toz bekleniyor. Temiz paneller çok işe yarayacak!",
   ["Small Oxygen Supply"]:
     "Az Oksijen",
   ["Clear skies are expected except after Sol 2 and Sol 8, but the oxygen tanks are not full."]:
-    "Sadece 2. ve 8. günlerden sonra toz var, gerisi açık. Ama oksijen tankları tam dolu değil.",
+    "Sadece 2. ve 8. Mars günlerinden sonra toz var, gerisi açık. Ama oksijen tankları tam dolu değil.",
   ["Mission profiles and dust forecasts are fictional game settings, not measured Mars weather."]:
-    "Görev türleri ve toz tahminleri oyun için uydurulmuştur, gerçek Mars hava durumu değildir.",
+    "Görev türleri ve toz tahminleri kurgusal oyun ayarlarıdır, gerçek Mars hava durumu değildir.",
   ["Is the base ready for the next crew?"]:
     "Üs bir sonraki ekip için hazır mı?",
   ["Fresh food: ready. The greenhouse is growing well for the next crew."]:
@@ -103,11 +103,11 @@ export const STORY_TR = {
   ["NASA's Perseverance rover measured the air in Jezero Crater on Sol 290 (December 13, 2021). The warmest reading was about −3 °C and the coldest was about −77 °C. A Mars base needs batteries and heaters when the Sun goes down. Our dust and recharge values are game values."]:
     "NASA'nın Perseverance gezgini, Jezero Krateri'nde 290. Mars gününde (13 Aralık 2021) havanın sıcaklığını ölçtü. Gün içinde en sıcak yaklaşık −3 °C, gece en soğuk yaklaşık −77 °C oldu. Güneş batınca bir Mars üssünün bataryaya ve ısıtıcıya ihtiyacı vardır. Oyundaki toz ve şarj sayıları ise oyun için seçilmiş kurgusal değerlerdir.",
   ["Recorded sample minimum/maximum of calibrated MEDA air temperature sensor 1 for the selected sol, rounded. The summary uses a simple plausibility filter; additional instrument quality flags are not applied. It is not a global climate or dust measurement. The game's dust forecast is fictional."]:
-    "Seçilen gün için MEDA hava sıcaklığı sensörü 1'in kaydettiği en düşük ve en yüksek değerler, yuvarlanmış halde. Basit bir mantıklılık filtresi kullanıldı; cihazın diğer kalite işaretleri uygulanmadı. Bu, Mars'ın genel iklimi ya da bir toz ölçümü değildir. Oyundaki toz tahmini kurgusaldır.",
+    "Seçilen gün için MEDA hava sıcaklığı sensörü 1'in kaydettiği en düşük ve en yüksek değerler, yuvarlanmış halde. Basit bir kontrol filtresi kullanıldı; cihazın diğer kalite işaretleri uygulanmadı. Bu, Mars'ın genel iklimi ya da bir toz ölçümü değildir. Oyundaki toz tahmini kurgusaldır.",
   ["Produce more oxygen"]:
     "Daha fazla oksijen üret",
   ["Build the oxygen reserve, but skip today's research."]:
-    "Oksijen yedeğin artar, ama bu günün araştırma fırsatını kaçırırsın.",
+    "Oksijen yedeğin artar, ama bugünkü araştırmayı kaçırırsın.",
   ["The oxygen system has filled more of our reserve. We have more breathing supplies, but our research will have to wait."]:
     "Oksijen makinesi yedeğimizi doldurdu. Nefes alacak daha çok havamız var, ama araştırmamız beklemek zorunda.",
   ["Collect a rock sample outside"]:
@@ -129,7 +129,7 @@ export const STORY_TR = {
   ["Growing food takes time and energy"]:
     "Yiyecek yetiştirmek zaman ve enerji ister",
   ["NASA studies how plants grow in space. Our Mars greenhouse is fictional, and its plants were started before this mission. The crew's packaged food lasts through this short mission."]:
-    "NASA, bitkilerin uzayda nasıl büyüdüğünü araştırıyor. Bizim Mars seramız hayalî bir sera ve bitkileri bu görevden önce ekildi. Ekibin paket yemekleri bu kısa görev boyunca yetiyor.",
+    "NASA, bitkilerin uzayda nasıl büyüdüğünü araştırıyor. Bizim Mars seramız kurgusaldır ve bitkileri bu görevden önce ekilmişti. Ekibin paket yemekleri bu kısa görev boyunca yetiyor.",
   ["Keep the full experiment shelf running"]:
     "Bütün deney rafını çalıştır",
   ["Prepare a harvest and detailed growth records. The Sol 6 greenhouse study will award 3 Science."]:
@@ -157,7 +157,7 @@ export const STORY_TR = {
   ["Messages need time to travel"]:
     "Mesajların yolculuğu zaman alır",
   ["The 20-minute delay is a selected value for this fictional mission. Actual Earth–Mars communication delays vary with the planets' positions."]:
-    "20 dakikalık gecikmeyi bu hayalî görev için biz seçtik. Gerçekte Dünya ile Mars arasındaki gecikme, iki gezegenin birbirine ne kadar uzak olduğuna göre değişir.",
+    "20 dakikalık gecikme bu kurgusal görev için seçilmiş bir değerdir. Gerçekte Dünya ile Mars arasındaki gecikme, iki gezegenin birbirine ne kadar uzak olduğuna göre değişir.",
   ["Ask Earth and wait for a reply"]:
     "Dünya'ya sor ve cevabı bekle",
   ["Once the reply arrives, the robot task on Sol 5 will cost 1 Energy instead of 2."]:
@@ -175,7 +175,7 @@ export const STORY_TR = {
   ["Refill our oxygen reserve first"]:
     "Önce oksijen yedeğini doldur",
   ["Improve the oxygen reserve, but skip Earth's guidance and today's research."]:
-    "Oksijen yedeğin güçlenir, ama Dünya'nın yardımını da bu günün araştırmasını da kaçırırsın.",
+    "Oksijen yedeğin güçlenir, ama Dünya'nın yardımını ve bugünkü araştırmayı kaçırırsın.",
   ["Our oxygen reserve is stronger. We did not investigate the robot's settings during this time slot. We have more oxygen for the next decision."]:
     "Oksijen yedeğimiz güçlendi. Bu arada robotun ayarlarına bakamadık. Bir sonraki karar için daha çok oksijenimiz var.",
   ["Solar Radiation Alert"]:
@@ -187,11 +187,11 @@ export const STORY_TR = {
   ["NASA's DONKI database recorded a fast cloud leaving the Sun on May 20, 2024. Separately, NASA reported a large radiation event at Mars that day. These records help us explore why astronauts need protection. Our Safety points are fictional game values."]:
     "NASA'nın uzay havası veritabanı DONKI, 20 Mayıs 2024'te Güneş'ten çok hızlı bir madde bulutunun koptuğunu kaydetti. NASA ayrıca aynı gün Mars'ta büyük bir radyasyon olayı yaşandığını bildirdi. Bu kayıtlar astronotların neden korunmaya ihtiyaç duyduğunu anlamamıza yardım ediyor. Oyundaki Güvenlik puanları ise oyun için seçilmiş kurgusal değerlerdir.",
   ["DONKI record 2024-05-20T05:36:00-CME-001 describes a near-Sun CME; its listed impact forecasts do not identify Mars. This project has not established an event-level match to the Mars article. The article reports 8,100 micrograys for a hypothetical astronaut beside Curiosity, independently of the DONKI record. No dose-to-Safety conversion is made."]:
-    "DONKI kaydı 2024-05-20T05:36:00-CME-001, Güneş'in yakınındaki bir koronal kütle atımını (CME) anlatır; kayıttaki etki tahminlerinde Mars geçmez. Bu kayıt ile Mars haberindeki olayın aynı olay olduğu kanıtlanmadı. Haber, Curiosity gezgininin yanında duran hayalî bir astronotun 8.100 mikrogray radyasyon alacağını bildiriyor; bu bilgi DONKI kaydından bağımsızdır. Radyasyon dozu Güvenlik puanına çevrilmedi.",
+    "DONKI kaydı 2024-05-20T05:36:00-CME-001, Güneş'in yakınındaki bir koronal kütle atımını (CME) anlatır; kayıttaki etki tahminlerinde Mars geçmez. Bu kayıt ile Mars haberindeki olayın aynı olay olduğu kanıtlanmadı. Haber, Curiosity gezgininin yanında duran varsayımsal bir astronotun 8.100 mikrogray radyasyon alacağını bildiriyor; bu bilgi DONKI kaydından bağımsızdır. Radyasyon dozu Güvenlik puanına çevrilmedi.",
   ["Move the crew into the storm shelter"]:
     "Ekibi fırtına sığınağına götür",
   ["Protect the crew, but stop the outdoor experiment and earn no Science today."]:
-    "Ekip güvende olur, ama dış deney yarım kalır ve bu gün Bilim Puanı kazanamazsın.",
+    "Ekip güvende olur, ama dış deney yarım kalır ve bugün Bilim Puanı kazanamazsın.",
   ["Our crew is in the shelter. We could not finish the outdoor experiment this time. Protecting people came first."]:
     "Ekibimiz sığınakta. Dış deneyi bu kez bitiremedik. Önce insanları korumak gerekiyordu.",
   ["Keep the crew inside and use the robot"]:
@@ -296,7 +296,7 @@ export const STORY_TR = {
   ["The rock is interesting, but the oxygen tank matters too. DUTİ leaves a blank space in the notebook: What could we learn if we saved something for later?"]:
     "Kaya ilginç, ama oksijen tankı da önemli. DUTİ deftere boş bir yer bırakıyor: Bir şeyi sonra kullanmak üzere saklarsak neler öğrenebiliriz?",
   ["A leaf taps the greenhouse window. These plants were growing before your team arrived. One tray is almost ready to harvest; another still has much to do."]:
-    "Bir yaprak sera penceresine vuruyor. Bu bitkiler ekibiniz gelmeden önce büyüyordu. Bir tepsi neredeyse hasada hazır; diğeri ise daha çok bakım istiyor.",
+    "Bir yaprak sera penceresine vuruyor. Bu bitkiler sen ve ekibin gelmeden önce de büyüyordu. Bir tepsi neredeyse hasada hazır; diğeri ise daha çok bakım istiyor.",
   ["The lights use energy. We can care for all the experiment plants, keep a smaller group, or switch the greenhouse off and use our packaged food."]:
     "Lambalar enerji harcıyor. Bütün deney bitkilerine bakabilir, daha küçük bir grubu tutabilir ya da serayı kapatıp paket yemeklerimizi kullanabiliriz.",
   ["On a shelf sits an empty seed box labeled NEXT CREW. Nothing goes inside it yet."]:
@@ -314,13 +314,13 @@ export const STORY_TR = {
   ["The outdoor-work light changes to a warning symbol. DUTİ opens the shelter map. The crew can stay inside while the robot takes measurements, or pause research and move into the shelter."]:
     "Dış görev ışığı bir uyarı simgesine dönüşüyor. DUTİ sığınak haritasını açıyor. Robot ölçüm yaparken ekip içeride kalabilir ya da araştırmaya ara verip sığınağa geçebilir.",
   ["Our sensors warn of increased solar-particle risk. Protecting people comes first. An astronaut could try to finish outside, but that would use oxygen and greatly reduce our safety margin."]:
-    "Sensörlerimiz güneş parçacıklarının tehlikesinin arttığını bildiriyor. Önce insanları korumak gerekir. Bir astronot dışarıda işi bitirmeye çalışabilir, ama bu oksijen harcar ve güvenlik payımızı büyük ölçüde azaltır.",
+    "Sensörlerimiz güneş parçacığı tehlikesinin arttığını bildiriyor. Önce insanları korumak gerekir. Bir astronot dışarıda işi bitirmeye çalışabilir, ama bu oksijen harcar ve güvenlik payımızı büyük ölçüde azaltır.",
   ["A faint three-note chime appears in a saved equipment log. There is no urgent message attached. DUTİ marks it: investigate later, when the crew is safe."]:
     "Kaydedilmiş bir ekipman günlüğünde üç notalı, kısık bir zil sesi var. Yanında acil bir mesaj yok. DUTİ bir not alıyor: Ekip güvende olunca bunu inceleyelim.",
   ["The First Research Review"]:
     "İlk Araştırma Değerlendirmesi",
   ["Local sensors show that the fictional solar event has subsided. DUTİ places three research cards on the desk: laboratory, exploration route, and greenhouse."]:
-    "Üssün sensörleri, hayalî güneş olayının dindiğini gösteriyor. DUTİ masaya üç araştırma kartı koyuyor: laboratuvar, keşif rotası ve sera.",
+    "Üssün sensörleri, kurgusal güneş olayının dindiğini gösteriyor. DUTİ masaya üç araştırma kartı koyuyor: laboratuvar, keşif rotası ve sera.",
   ["First research review! The rock you saved, the plants you cared for, and the supplies you kept have changed what we can do. We have time for one study today."]:
     "İlk araştırma değerlendirmesi! Sakladığın kaya, baktığın bitkiler ve tuttuğun malzemeler neler yapabileceğimizi değiştirdi. Bugün bir çalışmaya vaktimiz var.",
   ["A sealed reserve compartment is scheduled to open after the review. Its oxygen supplies and charged battery pack were stored here before your arrival."]:
@@ -352,7 +352,7 @@ export const STORY_TR = {
   ["Locate an old survey relay without sending an astronaut outside. Earlier Earth guidance reduces this task to 1 Energy."]:
     "Bir astronotu dışarı göndermeden eski bir ölçüm rölesini bul. Daha önceki Dünya tavsiyesi bu görevi 1 Enerjiye indirir.",
   ["The rover found an old survey relay behind a ridge. A lantern symbol is painted on its case. This is equipment, not a visitor!"]:
-    "Gezgin, bir sırtın arkasında eski bir ölçüm rölesi buldu. Kutusunun üstünde bir fener simgesi boyalı. Bu bir ekipman, ziyaretçi değil!",
+    "Gezgin, bir tepenin arkasında eski bir ölçüm rölesi buldu. Kutusunun üstünde bir fener simgesi boyalı. Bu bir ekipman, ziyaretçi değil!",
   ["Read the equipment logs and refill oxygen"]:
     "Ekipman günlüklerini oku ve oksijen yedeğini doldur",
   ["Build the oxygen reserve and find the relay inventory entry, but miss today's new signal measurements."]:
@@ -388,7 +388,7 @@ export const STORY_TR = {
   ["Open the survey cassette"]:
     "Ölçüm kasetini aç",
   ["Recover a fictional older crew's relay-test log. Combine it with a located relay to investigate a network of instruments."]:
-    "Hayalî eski bir ekibin röle test günlüğünü geri getir. Bulduğun röleyle birleştirip bir cihaz ağını incelersin.",
+    "Kurgusal eski bir ekibin röle test günlüğünü geri getir. Bulduğun röleyle birleştirip bir cihaz ağını incelersin.",
   ["The cassette says the three notes are a test call from an old survey network. There may be more stations than the one in our equipment list."]:
     "Kaset, üç notanın eski bir ölçüm ağından gelen bir test çağrısı olduğunu söylüyor. Ekipman listemizdeki istasyondan daha fazla istasyon olabilir.",
   ["Two Stories, One Signal"]:
@@ -444,7 +444,7 @@ export const STORY_TR = {
   ["With the greenhouse study and a protected living tray, leave a garden handover. Otherwise leave only the actual records and materials collected."]:
     "Sera çalışması ve korunan canlı tepsiyle birlikte bir bahçe devri bırakırsın. Aksi halde yalnızca gerçekten toplanan kayıtları ve malzemeleri bırakırsın.",
   ["The handover capsule is labeled with exactly what we saved. No imaginary harvests. No missing instructions. A real beginning for the next crew."]:
-    "Devir kapsülünün üzerine tam olarak neyi sakladığımız yazılı. Hayalî hasat yok. Eksik talimat yok. Sonraki ekip için gerçek bir başlangıç.",
+    "Devir kapsülünün üzerine tam olarak neyi sakladığımız yazılı. Var olmayan hasatlar yok. Eksik talimat yok. Sonraki ekip için gerçek bir başlangıç.",
   ["Leave a welcome message in the outpost"]:
     "Üsse bir karşılama mesajı bırak",
   ["A no-extra-cost final action. Restored pictures and a crew recording can reveal DUTİ's special memory-map farewell."]:
@@ -466,7 +466,7 @@ export const STORY_TR = {
   ["A Safe Pause"]:
     "Güvenli Mola",
   ["DUTİ helps the team stop work and begin the base's emergency procedures. Our research mission is paused."]:
-    "DUTİ, ekibin işi durdurmasına ve üssün acil durum prosedürlerini başlatmasına yardım ediyor. Araştırma görevimiz duraklatıldı.",
+    "DUTİ, ekibin işi durdurmasına ve üssün acil durum planını başlatmasına yardım ediyor. Araştırma görevimiz duraklatıldı.",
   ["We can try another plan. Which reserve needed help earlier?"]:
     "Başka bir plan deneyebiliriz. Hangi yedek daha önce yardıma ihtiyaç duydu?",
   ["The Stone That Kept Time"]:
@@ -486,11 +486,11 @@ export const STORY_TR = {
   ["A small thing saved early can become a much bigger question later."]:
     "Erken saklanan küçük bir şey, sonra çok daha büyük bir soruya dönüşebilir.",
   ["Fictional research lead only. No confirmed rock age, water history, living organism, or NASA discovery is asserted."]:
-    "Yalnızca hayalî bir araştırma ipucu. Kanıtlanmış bir kaya yaşı, su geçmişi, canlı organizma ya da NASA keşfi iddia edilmiyor.",
+    "Yalnızca kurgusal bir araştırma ipucu. Kanıtlanmış bir kaya yaşı, su geçmişi, canlı organizma ya da NASA keşfi iddia edilmiyor.",
   ["The Smallest Garden on Mars"]:
     "Mars'taki En Küçük Bahçe",
   ["Inside the handover case, a protected tray holds plants your team kept alive. Beside it are the greenhouse measurements, care instructions, and a blank page labeled NEXT OBSERVATION."]:
-    "Devir kutusunun içinde, ekibinizin canlı tuttuğu bitkileri barındıran korunmuş bir tepsi var. Yanında sera ölçümleri, bakım talimatları ve SONRAKİ GÖZLEM yazan boş bir sayfa duruyor.",
+    "Devir kutusunun içinde, ekibinin canlı tuttuğu bitkilerin durduğu korumalı bir tepsi var. Yanında sera ölçümleri, bakım talimatları ve SONRAKİ GÖZLEM yazan boş bir sayfa duruyor.",
   ["We did not grow a whole farm. We kept one careful experiment going. Somebody else can ask the next question."]:
     "Koca bir çiftlik yetiştirmedik. Dikkatli bir deneyi sürdürdük. Bir sonraki soruyu başkası sorabilir.",
   ["DUTİ slips the once-empty seed box onto the shelf beside the tray. Its label now reads: A garden is also a promise to look after something. The next page belongs to another crew."]:
@@ -508,11 +508,11 @@ export const STORY_TR = {
   ["DUTİ's Secret Constellation"]:
     "DUTİ'nin Gizli Takımyıldızı",
   ["DUTİ dims its screen. Small dots appear: the shelter you prepared, the room where the crew waited safely, and the desk where you restored its pictures. Thin lines join them into the outline of a little bear."]:
-    "DUTİ ekranını karartıyor. Küçük noktalar beliriyor: hazırladığın sığınak, ekibin güvenle beklediği oda ve resimlerini geri getirdiğin masa. İnce çizgiler bunları küçük bir ayının çizgilerine bağlıyor.",
+    "DUTİ ekranını karartıyor. Küçük noktalar beliriyor: hazırladığın sığınak, ekibin güvenle beklediği oda ve resimlerini geri getirdiğin masa. İnce çizgiler bunları küçük bir ayı şeklinde birleştiriyor.",
   ["It is not a real constellation. It is my map of when we looked after one another. I was saving it for the last page."]:
     "Bu gerçek bir takımyıldızı değil. Birbirimize ne zaman göz kulak olduğumuzun haritası. Onu son sayfa için saklıyordum.",
   ["Your crew recording begins. Behind the voices is DUTİ's smallest beep. You leave the map beside the welcome message, where the next Commander will find it."]:
-    "Ekip kaydın başlıyor. Seslerin arkasında DUTİ'nin en küçük bip sesi var. Haritayı, sıradaki Komutanın bulacağı karşılama mesajının yanına bırakıyorsun.",
+    "Ekip kaydın başlıyor. Seslerin arkasında DUTİ'nin en küçük bip sesi var. Haritayı, sıradaki Komutan'ın bulacağı karşılama mesajının yanına bırakıyorsun.",
   ["We measured a lot of things. Thank you for remembering the people doing the measuring."]:
     "Pek çok şeyi ölçtük. Ölçüm yapan insanları unutmadığın için teşekkür ederiz.",
   ["You prepared the shelter and used it during the alert."]:
@@ -524,15 +524,15 @@ export const STORY_TR = {
   ["Not every important moment earns a Science Point."]:
     "Her önemli an bir Bilim Puanı kazandırmaz.",
   ["A fictional memory-map image, not a real astronomical constellation or a claim that DUTİ is a living being."]:
-    "Hayalî bir hafıza haritası görüntüsü; gerçek bir astronomik takımyıldızı değil ve DUTİ'nin canlı bir varlık olduğu iddiası değil.",
+    "Kurgusal bir hafıza haritası görüntüsü; gerçek bir astronomik takımyıldızı değil ve DUTİ'nin canlı bir varlık olduğu iddiası da değil.",
   ["The Lantern Network"]:
     "Fener Ağı",
   ["The rover location and survey cassette finally fit together. One lantern symbol becomes several on the old map. Your careful comparison identifies the three-note call as a test message used by a fictional survey network."]:
-    "Gezginin konumu ve ölçüm kaseti sonunda birbirine uydu. Eski haritada bir fener simgesi birkaç taneye çoğalıyor. Dikkatli karşılaştırmanla üç notalık çağrının, hayalî bir ölçüm ağının kullandığı bir test mesajı olduğunu buldun.",
+    "Gezginin konumu ve ölçüm kaseti sonunda birbirine uydu. Eski haritada bir fener simgesi birkaç taneye çoğalıyor. Dikkatli karşılaştırmanla üç notalık çağrının, kurgusal bir ölçüm ağının kullandığı bir test mesajı olduğunu buldun.",
   ["Our panel work helped the power budget. Earth helped us use the robot efficiently. Then we kept the crew inside and let our machines investigate. Those choices brought these pieces together."]:
     "Panel çalışmamız enerji bütçemize yardım etti. Dünya, robotu verimli kullanmamızı sağladı. Sonra ekibi içeride tuttuk ve makinelerimizin araştırma yapmasına izin verdik. Bu seçimler parçaları bir araya getirdi.",
   ["Your packet contains the relay location, the cassette log, and the questions still untested. Farther along the old map are other marked stations. No one claims they are working yet."]:
-    "Paketinde röle konumu, kaset günlüğü ve henüz sınanmamış sorular var. Eski haritada daha ileride işaretli başka istasyonlar da var. Henüz hiçbiri çalışıyor diye iddia edilmiyor.",
+    "Paketinde röle konumu, kaset günlüğü ve henüz sınanmamış sorular var. Eski haritada daha ileride işaretli başka istasyonlar da var. Hiçbirinin hâlâ çalıştığı iddia edilmiyor.",
   ["One signal answered. A whole map of questions left to ask."]:
     "Bir sinyal cevap verdi. Sorulacak bütün bir soru haritası kaldı.",
   ["You serviced the panels and received Earth's guidance."]:
@@ -544,13 +544,13 @@ export const STORY_TR = {
   ["A useful reply, a careful preparation, and a machine doing the risky work can belong to the same story."]:
     "Yararlı bir cevap, dikkatli bir hazırlık ve riskli işi yapan bir makine aynı hikâyenin parçası olabilir.",
   ["The older crew, survey network, cassette, and relay are fictional story props, not real NASA assets or an operational Mars network."]:
-    "Eski ekip, ölçüm ağı, kaset ve röle hayalî hikâye malzemeleridir; gerçek NASA varlıkları ya da çalışan bir Mars ağı değildir.",
+    "Eski ekip, ölçüm ağı, kaset ve röle kurgusal hikâye malzemeleridir; gerçek NASA varlıkları ya da çalışan bir Mars ağı değildir.",
 
   // Fictional fifth ending: The Visitors Beyond the Window
   ["The Visitors Beyond the Window"]:
     "Pencerenin Ötesindeki Ziyaretçiler",
   ["Beyond the glass, something silver unfolds like a tiny flower. Two small figures stand beside it on the ridge."]:
-    "Camın ötesinde, küçük bir çiçek gibi açılan gümüşi bir şey var. Sırtın üstünde, yanında duran iki küçük figür görünüyor.",
+    "Camın ötesinde, küçük bir çiçek gibi açılan gümüşi bir şey var. Tepenin üstünde, yanında duran iki küçük figür görünüyor.",
   ["Those are not our survey robots."]:
     "Bunlar bizim ölçüm robotlarımız değil.",
   ["One visitor raises a hand with four long fingers. DUTİ raises its little metal paw. For a moment, nobody moves."]:
@@ -562,7 +562,7 @@ export const STORY_TR = {
   ["I do not know what that means. But I think we have another question."]:
     "Bunun ne anlama geldiğini bilmiyorum. Ama sanırım bir sorumuz daha var.",
   ["The figures return to their silver craft. It lifts beyond the ridge, quiet behind the thick window. One pale light remains, then fades."]:
-    "Figürler gümüşi araçlarına dönüyor. Araç, kalın pencerenin ardında sessizce sırtın ötesine yükseliyor. Geriye soluk bir ışık kalıyor, sonra sönüyor.",
+    "Figürler gümüşi araçlarına dönüyor. Araç, kalın pencerenin ardında sessizce tepenin ötesine yükseliyor. Geriye soluk bir ışık kalıyor, sonra sönüyor.",
   ["We kept looking carefully. And this story became bigger than our notebook."]:
     "Dikkatle bakmaya devam ettik. Ve bu hikâye defterimizden daha büyük bir hâl aldı.",
   ["Beneath the final entry, DUTİ draws a small waving paw. Then it turns to a fresh page."]:
@@ -576,7 +576,7 @@ export const STORY_TR = {
   ["You compared observations without claiming proof, then shared the report on Sol 10."]:
     "Kanıt iddia etmeden gözlemleri karşılaştırdın, sonra 10. Mars gününde raporu paylaştın.",
   ["What other questions might a different trail leave in DUTİ's notebook?"]:
-    "Başka bir izin DUTİ'nin defterinde hangi başka soruları bırakabileceğini düşünüyorsun?",
+    "Farklı seçimler yapsaydın, DUTİ'nin defterinde hangi yeni sorular olurdu?",
   ["Fictional science-fiction epilogue. The lights, pictures, visitors and craft are invented story elements. No extraterrestrial life has been confirmed, and no NASA discovery is claimed."]:
     "Kurgusal bilimkurgu sonu. Işıklar, fotoğraflar, ziyaretçiler ve araç bu hikâye için hayal edilmiştir. Dünya dışı yaşam doğrulanmadı ve hiçbir NASA keşfi iddia edilmiyor.",
   ["Fictional science-fiction ending"]:
@@ -592,7 +592,7 @@ export const STORY_TR = {
   ["The page we left open"]:
     "Açık bıraktığımız sayfa",
   ["Beyond the ridge"]:
-    "Sırtın ötesinde",
+    "Tepenin ötesinde",
   ["A new beginning"]:
     "Yeni bir başlangıç",
 };
